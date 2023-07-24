@@ -2,6 +2,12 @@ export ENABLE_WASM=
 export EDITOR="nvim"
 export VISUAL="nvim" 
 export SHELL='/usr/bin/zsh'
+# Path to your oh-my-zsh installation.
+export ZSH="/home/20015441/.oh-my-zsh"
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -14,8 +20,6 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 export PATH=/usr/local/jdk-1.8.0/bin:$PATH
 export JAVA_HOME=/usr/local/jdk-1.8.0/
 export LC_CTYPE=en_US.UTF-8
-# Path to your oh-my-zsh installation.
-export ZSH="/home/20015441/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -99,31 +103,30 @@ zinit light-mode for \
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  man
-  git
-  github
-  ssh-agent
-  systemd
-  tmux
-  tmuxinator
-  ruby
-  rust
-  golang
-  python
-  aws
-  terraform
-  zsh-fzf-history-search
-  asdf
-  docker
-  docker-compose
-  direnv
-  kubectl
-  vault
-  node
-  poetry
-  pyenv
-  pylint
-)
+ man
+ git
+ github
+ systemd
+ tmux
+ tmuxinator
+ ruby
+ rust
+ golang
+ python
+ aws
+ terraform
+ zsh-fzf-history-search
+ docker
+ docker-compose
+ direnv
+ kubectl
+ vault
+ node
+ pip
+ poetry
+ pyenv
+ pylint
+ torrent asdf)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -131,29 +134,20 @@ source $ZSH/oh-my-zsh.sh
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='mvim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
 # ssh
 export SSH_KEY_PATH="~/.ssh/id_rsa"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 
 source ~/z.sh
 alias c=clear
@@ -173,16 +167,12 @@ zinit ice lucid wait'0'
 zinit light joshskidmore/zsh-fzf-history-search
 
 alias running_services='systemctl list-units  --type=service  --state=running'
+
 export PATH=$PATH:$HOME/.tfenv/bin
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 
-
-
-# Load pyenv automatically by appending
-# the following to 
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
 . "$HOME/.asdf/asdf.sh"
+. "$HOME/.asdf/plugins/golang/set-env.zsh"
+
+

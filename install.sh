@@ -17,6 +17,9 @@ handle_error() {
   exit 1
 }
 
+# Versions
+ASDF_VERSION=v0.12.0
+
 # Install packages that are not already installed
 install_packages() {
   # List of packages to install
@@ -26,6 +29,7 @@ install_packages() {
     cmake
     python3-pip
     neovim
+    jq
   )
 
   # Check which package provides the 'ctags' virtual package and install it
@@ -65,20 +69,24 @@ fi
 # Create symlinks for necessary files
 symlink_files() {
   # Tmux
-  rm -f ~/.tmux.conf
+  rm -f "$HOME/.tmux.conf"
   ln -s ~/.dotfiles/dotfiles/tmux/tmux.conf ~/.tmux.conf
   echo "Linked .tmux.conf"
 
   # Zsh
-  rm -f ~/.zshrc
+  rm -f "$HOME/.zshrc"
   ln -s ~/.dotfiles/dotfiles/zsh/zshrc ~/.zshrc
   echo "Linked .zshrc"
 
   # NeoVim
-  rm -Rf ~/.config/nvim
+  rm -Rf "$HOME/.config/nvim"
   ln -s ~/.dotfiles/dotfiles/nvim ~/.config
   echo "Linked init.vim"
 
+  # asdf
+  rm -f "$HOME/.tool-versions"
+  ln -s ~/.dotfiles/dotfiles/tool-versions ~/.tool-versions
+  echo "Linked asdf tool versions"
 }
 
 # Run the symlink function
@@ -91,10 +99,42 @@ fi
 
 # Bootstrap vim config
 cd ~/.vim
-make
+# make
 
 # Install neovim plugins
 echo "Installing neovim plugins..."
-nvim +PlugInstall +qall
-
+# nvim +PlugInstall +qall
 echo "Installation completed successfully!"
+
+
+# Install asdf
+echo "Installing asdf..."
+# Define the destination folder for cloning
+dest_folder="$HOME/.asdf"
+
+# Check if the folder exists
+if [ -d "$dest_folder" ]; then
+    # If the folder exists, go to the repository directory
+    cd "$dest_folder"
+    # Update the repository to the latest changes
+    git pull origin master
+    # Checkout the desired version
+    git checkout $ASDF_VERSION
+    echo "Updated and checked out version $ASDF_VERSION in $dest_folder"
+else
+    # If the folder does not exist, perform the git clone command
+    git clone https://github.com/asdf-vm/asdf.git "$dest_folder"
+     / --branch $ASDF_VERSION
+    echo "Cloned version $ASDF_VERSION in $dest_folder"
+fi
+
+source "$HOME/.asdf/asdf.sh"
+asdf plugin update --all
+
+asdf plugin add tfstate-lookup https://github.com/carnei-ro/asdf-tfstate-lookup.git
+asdf plugin add bat https://gitlab.com/wt0f/asdf-bat
+asdf plugin add golang https://github.com/asdf-community/asdf-golang.git
+asdf plugin add ctop https://github.com/NeoHsu/asdf-ctop.git
+asdf plugin add terraformer https://github.com/grimoh/asdf-terraformer.git
+
+# asdf install

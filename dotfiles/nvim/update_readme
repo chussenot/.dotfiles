@@ -1,8 +1,9 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
 
-
 # Crude hack to update the end of the README file with the list of plugins
+
+require 'pry'
 
 plugins = File.open(File.expand_path('./plugs.vim')).readlines.map do |line|
   if match = %r{^\A*Plug\s+(?<quote>["'])(?<plug_name>.*?)\k<quote>}.match(line)
@@ -13,9 +14,9 @@ plugins = File.open(File.expand_path('./plugs.vim')).readlines.map do |line|
   end
 end.compact.sort.join("\n")
 
-
 File.open("./README.markdown", 'r+') do |readme|
   content = readme.read
   readme.rewind
-  readme.write content.sub(/^(## Plugins:).*\Z/ms, "\\1\n\n#{plugins}")
+  readme.write content.sub(/^(## Plugins:)[\s\S]*?\Z/m, "\\1\n\n#{plugins}")
 end
+
