@@ -63,7 +63,7 @@ install_packages
 # Install oh-my-zsh
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
   echo "Installing oh-my-zsh..."
-  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  sudo sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 
 # Create symlinks for necessary files
@@ -91,6 +91,10 @@ symlink_files() {
 
 # Run the symlink function
 symlink_files
+
+if [ ! -d "$HOME/.pyenv" ]; then
+  git clone --no-checkout https://github.com/pyenv/pyenv.git ~/.pyenv
+fi
 
 # Install my tools with asdf
 source "$(dirname "${BASH_SOURCE[0]}")/dotfiles/asdf/install.sh"
