@@ -176,6 +176,7 @@ plugins=(
   "k9s https://github.com/looztra/asdf-k9s"
   "kubectl https://github.com/asdf-community/asdf-kubectl.git"
   "ctop https://github.com/NeoHsu/asdf-ctop.git"
+  "gcloud https://github.com/jthegedus/asdf-gcloud"
 
 )
 
