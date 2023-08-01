@@ -1,8 +1,10 @@
 tfstate-lookup 0.0.5
 bat 0.12.1
 golang 1.15.8
-terraformer 0.8.24 # https://github.com/GoogleCloudPlatform/terraformer/tags
+ctop 0.7.7
+terraformer 0.8.24
 rust 1.71.0
 crystal 1.9.2
 k9s 0.27.4
 kubectl 1.9.9
+ctop 0.7.7
