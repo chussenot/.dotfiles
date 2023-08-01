@@ -1,7 +1,8 @@
 # My vim config
 
-
 My little own vim configuration. Use and fork as you see fit.
+This <3 [config](https://github.com/changa/vimconfig) his based on the work of my friend Changa
+
 
 
 ## Dependencies
@@ -14,10 +15,8 @@ My little own vim configuration. Use and fork as you see fit.
 
 ## Usage
 
-  * git clone the project: `git clone https://github.com/changa/vimconfig ~/.vim`
-  * boostrap: `cd ~/.vim && make`
+  * boostrap: `cd ~/.config/nvim && make`
   * add your local settings or overrides in `~/.vim/vimrc.local`
   * Profit!
-
 
 ## Plugins (handled by [vim-plug](https://github.com/junegunn/vim-plug))

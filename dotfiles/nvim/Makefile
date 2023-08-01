@@ -16,10 +16,10 @@ init.vim: vimrc ~/.config/nvim
 	ln -sf $< $@
 
 save-snapshot:
-	vim -c "PlugSnapshot! snapshot.vim" -c "qall"
+	nvim -c "PlugSnapshot! snapshot.vim" -c "qall"
 
 restore-snapshot:
-	vim -c "PlugClean!" -S snapshot.vim -c "qall"
+	nvim -c "PlugClean!" -S snapshot.vim -c "qall"
 
 configure_vim_sensible: make_dirs
 
