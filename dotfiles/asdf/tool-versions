@@ -6,7 +6,5 @@ terraformer 0.8.24
 rust 1.71.0
 crystal 1.9.2
 k9s 0.27.4
-kubectl 1.9.9
 ctop 0.7.7
-gcloud 440.0.0
 neovim nightly

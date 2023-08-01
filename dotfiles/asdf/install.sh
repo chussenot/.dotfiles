@@ -66,9 +66,9 @@ plugins=(
   "rust https://github.com/asdf-community/asdf-rust.git"
   "crystal https://github.com/asdf-community/asdf-crystal.git"
   "k9s https://github.com/looztra/asdf-k9s"
-  "kubectl https://github.com/asdf-community/asdf-kubectl.git"
+  # "kubectl https://github.com/asdf-community/asdf-kubectl.git"
   "ctop https://github.com/NeoHsu/asdf-ctop.git"
-  "gcloud https://github.com/jthegedus/asdf-gcloud"
+  # "gcloud https://github.com/jthegedus/asdf-gcloud"
 
 )
 
