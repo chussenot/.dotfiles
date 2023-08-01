@@ -88,7 +88,7 @@ symlink_files() {
 
   # asdf
   rm -f "$HOME/.tool-versions"
-  ln -s ~/.dotfiles/dotfiles/tool-versions ~/.tool-versions
+  ln -s ~/.dotfiles/dotfiles/asdf/tool-versions ~/.tool-versions
   echo "Linked asdf tool versions"
 }
 
