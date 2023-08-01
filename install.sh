@@ -26,7 +26,6 @@ install_packages() {
   packages=(
     zsh
     tmux
-    neovim
     python3-pip
     jq
     nasm
@@ -166,6 +165,7 @@ install_tool() {
 }
 
 plugins=(
+  "neovim https://github.com/richin13/asdf-neovim"
   "tfstate-lookup https://github.com/carnei-ro/asdf-tfstate-lookup.git"
   "bat https://gitlab.com/wt0f/asdf-bat"
   "golang https://github.com/asdf-community/asdf-golang.git"
