@@ -1,6 +1,9 @@
-# dotfiles
+# Dotfiles
 
-This repository contains my personal configuration files for various tools and applications. Feel free to use any part of it that you find useful.
+This repository contains my personal configuration files for various tools and applications.
+Feel free to use any part of it that you find useful.
+
+I'm using the `zsh` shell for my day-to-day work...
 
 ## Installation
 
@@ -24,15 +27,41 @@ This will create symbolic links from your home directory to the dotfiles in `~/.
 
 ## What's included?
 
+- Tmux integration and configuration with [tpm](https://github.com/tmux-plugins/tpm)
 - Neovim configuration with plugins managed by [vim-plug](https://github.com/junegunn/vim-plug)
 - Zsh configuration with [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh)
-- Tmux configuration with [tpm](https://github.com/tmux-plugins/tpm)
 - Various other configuration files for tools like Git, Ripgrep, and fd
+
+But also...
+
+- Oh-My-Zsh: A community-driven framework for managing Zsh configuration, including themes, plugins, and settings.
+- Zinit: A flexible and fast Zsh plugin manager.
+- ASDF: A version manager that handles multiple runtime versions, such as Node.js, Python, Ruby, and more.
+- FZF: A fuzzy finder that helps you quickly search and select files, directories, and other items from the command line.
+- Ag: The Silver Searcher, a fast code searching tool.
+- Direnv: An environment switcher for the shell.
+- Tmuxinator: A tool for managing complex Tmux sessions through YAML configuration files.
+- Docker: A platform for developing, shipping, and running applications inside containers.
+- Docker Compose: A tool for defining and running multi-container Docker applications.
+- Kubectl: The command-line tool for interacting with Kubernetes clusters.
+- Helm: A package manager for Kubernetes that simplifies the deployment and management of applications.
+- Gcloud: The command-line interface for Google Cloud Platform.
+- Volta: A tool for managing JavaScript command-line tools.
+
+And few languages...
+
+- Python: A popular programming language.
+- Ruby: Another popular programming language.
+- Go (Golang): A programming language developed by Google.
+- Rust: A systems programming language that focuses on performance and safety.
+- Java: A widely used programming language for building cross-platform applications.
+- Node.js: A JavaScript runtime that allows you to execute JavaScript code outside a web browser.
 
 ## Notes
 
 ### Tmux Configuration
 
+Tmux is a terminal multiplexer that allows you to run multiple terminal sessions within a single window.
 My Tmux configuration makes the following changes:
 
 - The prefix key is changed from `C-b` to `C-a`
