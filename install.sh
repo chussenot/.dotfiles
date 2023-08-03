@@ -102,6 +102,16 @@ if [ ! -d "$HOME/.pyenv" ]; then
   git clone --no-checkout https://github.com/pyenv/pyenv.git ~/.pyenv
 fi
 
+
+# Install Volta to mange node versions
+# Check if the ~/.volta folder exists
+if [[ ! -d "$HOME/.volta" ]]; then
+    # Install Volta
+    curl https://get.volta.sh | bash
+    volta install node
+fi
+
+
 # Install my tools with asdf
 source "$(dirname "${BASH_SOURCE[0]}")/dotfiles/asdf/install.sh"
 
