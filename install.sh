@@ -87,6 +87,12 @@ symlink_files() {
   rm -f "$HOME/.tool-versions"
   ln -s ~/.dotfiles/dotfiles/asdf/tool-versions ~/.tool-versions
   echo "Linked asdf tool versions"
+
+  # z
+  rm -f "$HOME/z.sh"
+  ln -s ~/.dotfiles/dotfiles/z.sh ~/z.sh
+  echo "Linked z.sh"
+
 }
 
 # Run the symlink function
