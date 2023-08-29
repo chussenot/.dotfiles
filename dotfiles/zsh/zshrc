@@ -184,6 +184,10 @@ export PATH=$PATH:$HOME/.tfenv/bin
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 
+export DENO_INSTALL="$HOME/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
+
 . "$HOME/.asdf/asdf.sh"
 . "$HOME/.asdf/plugins/golang/set-env.zsh"
 eval "$(~/.rbenv/bin/rbenv init - zsh)"
