@@ -17,7 +17,7 @@ export SHELL='/usr/bin/zsh'
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='mvim'
+  export EDITOR='nvim'
 fi
 
 # Language and locale settings
@@ -43,6 +43,7 @@ export PATH=$HOME/.cargo/bin:$PATH
 export PATH=/usr/local/jdk-1.8.0/bin:$PATH
 export JAVA_HOME=/usr/local/jdk-1.8.0/
 
+
 # Jump in directories
 source ~/z.sh
 
@@ -53,8 +54,6 @@ export PATH=$PATH:$HOME/.tfenv/bin
 
 # Volta is a hassle-free way to manage 
 # your JavaScript command-line tools.
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
 
 . "$HOME/.asdf/asdf.sh"
 . "$HOME/.asdf/plugins/golang/set-env.zsh"
@@ -104,6 +103,7 @@ plugins=(
  kubectl helm
  vault
  node
+ yarn
  python pip poetry pyenv pylint
  torrent asdf gcloud ag volta)
 
@@ -181,8 +181,6 @@ export PATH=$PATH:$HOME/.tfenv/bin
 
 # Volta is a hassle-free way to manage 
 # your JavaScript command-line tools.
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
 
 export DENO_INSTALL="$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
@@ -267,3 +265,16 @@ alias update-nvim-master='asdf uninstall neovim ref:master && asdf install neovi
 source $ZSH/oh-my-zsh.sh
 
 
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
+# Golang
+export PATH=$(go env GOPATH)/bin:$PATH
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
+# add Pulumi to the PATH
+export PATH=$PATH:$HOME/.pulumi/bin
+
+alias tg=terragrunt

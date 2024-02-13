@@ -110,9 +110,12 @@ require'nvim-treesitter.configs'.setup {
   autotag = {
     enable = true
   },
-  context_commentstring = {
-    enable = true
-  }
+
+  lua << EOF
+    require('ts_context_commentstring').setup {}
+    vim.g.skip_ts_context_commentstring_module = true
+  EOF
+
 }
 require('spellsitter').setup {
 -- Whether enabled, can be a list of filetypes, e.g. {'python', 'lua'}
