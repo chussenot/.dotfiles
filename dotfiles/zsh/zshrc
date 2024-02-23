@@ -137,3 +137,6 @@ export PATH=$(go env GOPATH)/bin:$PATH
 
 # Add Pulumi to the PATH
 export PATH=$PATH:$HOME/.pulumi/bin
+export DENO_INSTALL="/home/chussenot/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
