@@ -47,8 +47,6 @@ source ~/z.sh
 
 export PATH=$PATH:$HOME/.tfenv/bin
 
-. "$HOME/.asdf/asdf.sh"
-. "$HOME/.asdf/plugins/golang/set-env.zsh"
 eval "$(~/.rbenv/bin/rbenv init - zsh)"
 
 ### Added by Zinit's installer
@@ -95,7 +93,7 @@ plugins=(
  node
  yarn
  python pip poetry pyenv pylint
- torrent asdf gcloud ag volta)
+ torrent mise gcloud ag volta)
 
 # Check if the .zsh.local folder exists
 if [[ -d "$HOME/.zsh.local" ]]; then
@@ -115,9 +113,12 @@ function reload {
 
 # Misc
 alias running_services='systemctl list-units  --type=service  --state=running'
-alias update-nvim-stable='asdf uninstall neovim stable && asdf install neovim stable'
-alias update-nvim-nightly='asdf uninstall neovim nightly && asdf install neovim nightly'
-alias update-nvim-master='asdf uninstall neovim ref:master && asdf install neovim ref:master'
+
+# alias update-nvim-stable='asdf uninstall neovim stable && asdf install neovim stable'
+# alias update-nvim-nightly='asdf uninstall neovim nightly && asdf install neovim nightly'
+# alias update-nvim-master='asdf uninstall neovim ref:master && asdf install neovim ref:master'
+# alias go-reshim='asdf reshim golang && export GOROOT="$(asdf where golang)/go/" && export GOPATH="$(asdf where golang)/packages/" && export GOMODCACHE="$(asdf where golang)/packages/pkg/mod/" && go env'
+
 alias tg=terragrunt
 
 # Utils
@@ -142,7 +143,6 @@ alias la='f(){ exa -lla --group-directories-first "$@";  unset -f f; }; f'
 alias git="GIT_SSL_NO_VERIFY=true git"
 alias clean-crash='sudo /bin/rm -rf /var/crash/*'
 alias goog='google-chrome'
-alias go-reshim='asdf reshim golang && export GOROOT="$(asdf where golang)/go/" && export GOPATH="$(asdf where golang)/packages/" && export GOMODCACHE="$(asdf where golang)/packages/pkg/mod/" && go env'
 alias carbo='docker run -ti fathyb/carbonyl'
 alias ipa='ip -br a | grep -vF DOWN | cut -d/ -f1'
 alias kill-click='sudo kill -9 $(get-pid-click)'
@@ -294,8 +294,6 @@ source $ZSH/oh-my-zsh.sh
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 
-# Golang
-export PATH=$(go env GOPATH)/bin:$PATH
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
@@ -304,4 +302,15 @@ export PATH=$(go env GOPATH)/bin:$PATH
 export PATH=$PATH:$HOME/.pulumi/bin
 export DENO_INSTALL="/home/chussenot/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
+
+eval "$(~/.local/bin/mise activate zsh)"
+
+# Golang
+# export PATH=$(go env GOPATH)/bin:$PATH
+
+
+autoload -U compinit; compinit
+
+# Generated for pdtm. Do not edit.
+export PATH=$PATH:/home/chussenot/.pdtm/go/bin
 
