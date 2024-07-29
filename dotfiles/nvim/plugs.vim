@@ -537,15 +537,14 @@ Plug 'junegunn/fzf.vim'
 " }}
 "
 
-" Treesitter powered spellchecker 
+" Treesitter powered spellchecker
 Plug 'lewis6991/spellsitter.nvim'
 
-
+" https://github.com/tmux-plugins/vim-tmux
+Plug 'tmux-plugins/vim-tmux'
 
 "
-
-
-"  TO TEST SOME DAY
+"https://github.com/tmux-plugins/vim-tmux  TO TEST SOME DAY
 "
 " All of kana's plugins, especially:
 " kana/vim-smarttill

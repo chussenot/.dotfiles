@@ -45,7 +45,7 @@ But also...
 
 - Oh-My-Zsh: A community-driven framework for managing Zsh configuration, including themes, plugins, and settings.
 - Zinit: A flexible and fast Zsh plugin manager.
-- ASDF: A version manager that handles multiple runtime versions, such as Node.js, Python, Ruby, and more.
+- MISE: A version manager that handles multiple runtime versions, such as Node.js, Python, Ruby, and more.
 - FZF: A fuzzy finder that helps you quickly search and select files, directories, and other items from the command line.
 - Ag: The Silver Searcher, a fast code searching tool.
 - Direnv: An environment switcher for the shell.

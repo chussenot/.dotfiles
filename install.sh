@@ -83,10 +83,10 @@ symlink_files() {
   ln -s ~/.dotfiles/dotfiles/nvim ~/.config
   echo "Linked init.vim"
 
-  # asdf
+  # mise
   rm -f "$HOME/.tool-versions"
-  ln -s ~/.dotfiles/dotfiles/asdf/tool-versions ~/.tool-versions
-  echo "Linked asdf tool versions"
+  ln -s ~/.dotfiles/dotfiles/mise/tool-versions ~/.tool-versions
+  echo "Linked mise-en-place tool versions"
 
   # z
   rm -f "$HOME/z.sh"
@@ -112,8 +112,8 @@ if [[ ! -d "$HOME/.volta" ]]; then
 fi
 
 
-# Install my tools with asdf
-source "$(dirname "${BASH_SOURCE[0]}")/dotfiles/asdf/install.sh"
+# Install my tools with mise
+source "$(dirname "${BASH_SOURCE[0]}")/dotfiles/mise/install.sh"
 
 # Bootstrap vim config
 cd ~/.vim
