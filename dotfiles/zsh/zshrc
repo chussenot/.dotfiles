@@ -91,7 +91,6 @@ plugins=(
  docker docker-compose
  direnv
  kubectl helm
- vault
  node
  yarn
  python pip poetry pyenv pylint
