@@ -88,6 +88,10 @@ set nobackup
 set nowritebackup
 set noswapfile
 
+" Denops
+"
+autocmd VimEnter * call denops#cache#update(#{reload: v:true})
+
 " Spaces and tabs
 "
 set listchars=nbsp:·,tab:»–,trail:·
