@@ -90,7 +90,8 @@ set noswapfile
 
 " Denops
 "
-autocmd VimEnter * call denops#cache#update(#{reload: v:true})
+
+" autocmd VimEnter * call denops#cache#update(#{reload: v:true})
 
 " Spaces and tabs
 "

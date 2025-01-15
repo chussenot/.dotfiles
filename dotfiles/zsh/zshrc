@@ -56,8 +56,6 @@ export PATH=/usr/local/jdk-1.8.0/bin:$PATH
 export JAVA_HOME=/usr/local/jdk-1.8.0/
 
 # NodeJS
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
 export PNPM_HOME="/home/chussenot/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
@@ -107,7 +105,8 @@ zinit light-mode for \
     zdharma-continuum/zinit-annex-as-monitor \
     zdharma-continuum/zinit-annex-bin-gem-node \
     zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-rust
+    zdharma-continuum/zinit-annex-rust \
+    agkozak/zsh-z
 ### End of Zinit's installer chunk
 
 # zsh-fzf-history-search
@@ -127,7 +126,6 @@ plugins=(
   terraform
   docker docker-compose
   direnv
-  mise
   kubectl helm argocd kind
   volta node yarn npm nvm
   python pip pyenv pylint
@@ -153,6 +151,14 @@ function reload {
   source ~/.zshrc
 }
 
+function update {
+  update-and-clean
+  zinit update
+  autoload -Uz compinit
+  compinit -C
+  nvim --headless +PlugUpdate +qall
+}
+
 source $ZSH/oh-my-zsh.sh
 
 # Zsh autocompletion
@@ -169,8 +175,7 @@ compinit -C
 export PATH=$PATH:/home/chussenot/.pdtm/go/bin
 
 # source <(glab completion -s zsh); compdef _glab glab
-
-source <(warp-cli generate-completions zsh)
+# source <(warp-cli generate-completions zsh)
 
 # Kubectl Krew
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
@@ -362,3 +367,7 @@ alias retdec='dockit blacktop/retdec'
 alias sysdig='docker run --rm -it --privileged --net=host -v /var/run/docker.sock:/host/var/run/docker.sock -v /dev:/host/dev -v /proc:/host/proc:ro -v /boot:/host/boot:ro -v /src:/src -v /lib/modules:/host/lib/modules:ro -v /usr:/host/usr:ro -v /etc:/host/etc:ro -d --name sysdig docker.io/sysdig/sysdig'
 alias swagger-editor='dockit swaggerapi/swagger-editor'
 alias crypt-pad='mkdir datastore; docker run --rm -it -p 3000:3000 -v "$PWD/datastore:/cryptpad/datastore" arno0x0x/docker-cryptpad'
+
+# Search file contents with ripgrep, fzf, bat
+alias fzf-rg="rg --hidden --glob '' --line-number . | fzf --delimiter ':' --preview 'bat --style=numbers --color=always {1} --highlight-line {2}'"
+
