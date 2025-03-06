@@ -42,12 +42,6 @@ export PATH=$HOME/.local/bin:$PATH
 export MISE_HOME="$HOME/.mise"
 eval "$(~/.local/bin/mise activate zsh)"
 
-# Python  
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-export PYTHON_CONFIGURE_OPTS="--enable-shared"
-
 # Rust
 export PATH=$HOME/.cargo/bin:$PATH
 
@@ -75,9 +69,6 @@ export PATH=$PATH:$HOME/.pulumi/bin
 
 # Terraform
 export PATH=$PATH:$HOME/.tfenv/bin
-
-# Ruby
-eval "$(~/.rbenv/bin/rbenv init - zsh)"
 
 ############################
 # Oh-My-Zsh & Plugins Configuration
@@ -371,3 +362,5 @@ alias crypt-pad='mkdir datastore; docker run --rm -it -p 3000:3000 -v "$PWD/data
 # Search file contents with ripgrep, fzf, bat
 alias fzf-rg="rg --hidden --glob '' --line-number . | fzf --delimiter ':' --preview 'bat --style=numbers --color=always {1} --highlight-line {2}'"
 
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
