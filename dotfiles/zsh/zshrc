@@ -16,31 +16,26 @@ fi
 export ENABLE_WASM=
 export EDITOR="nvim"
 export VISUAL="nvim" 
-export SHELL='/usr/bin/zsh'
+# export SHELL='/usr/bin/zsh'
 
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='nvim'
-fi
+export EDITOR='vim'
 
 # Language and locale settings
 export LC_CTYPE=en_US.UTF-8
 export LANG=en_US.UTF-8
 export PATH=$HOME/.local/bin:$PATH
 
-# Envmam
-# https://github.com/bitrise-io/envman
-[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
-
 ############################
 # Language and Runtime Settings
 ############################
 
 # Mise en place
+# export MISE_VERBOSE=1
+# export RUST_BACKTRACE=1
 export MISE_HOME="$HOME/.mise"
+# eval "$(~/.local/bin/mise activate zsh --shims)"
 eval "$(~/.local/bin/mise activate zsh)"
+# export PATH="$HOME/.local/share/mise/shims:$PATH"
 
 # Rust
 export PATH=$HOME/.cargo/bin:$PATH
@@ -106,29 +101,54 @@ zinit light joshskidmore/zsh-fzf-history-search
 
 # Plugin list
 plugins=(
-  man
-  git tig github
+  argocd
+  ansible
+  aws
+  bundler
+  deno
+  direnv
+  docker
+  docker-compose
+  gcloud
+  gem
+  git
   git-extras
   git-flow
+  gh
   gitignore
-  systemd
-  tmux tmuxinator
-  aws gcloud
-  terraform
-  docker docker-compose
-  direnv
-  kubectl helm argocd kind
-  volta node yarn npm nvm
-  python pip pyenv pylint
-  ruby gem
-  rust
   golang
-  zsh-fzf-history-search
-  torrent nmap
-  deno
+  helm
+  kind
+  kubectl
+  man
+  mise
+  nmap
+  node
+  npm
+  nvm
+  pip
+  pylint
+  pyenv
+  python
+  rake
   rsync
+  ruby
+  rust
+  screen
+  ssh
+  ssh-agent
+  systemd
+  sudo
   supervisor
+  systemd
+  terraform
+  tig
+  tmux
+  tmuxinator
+  torrent
   vscode
+  yarn
+  zsh-fzf-history-search
 )
 
 # Load local Zsh configurations from ~/.zsh.local
@@ -143,11 +163,12 @@ function reload {
 }
 
 function update {
-  update-and-clean
   zinit update
   autoload -Uz compinit
   compinit -C
   nvim --headless +PlugUpdate +qall
+  omz update
+  mise upgrade
 }
 
 source $ZSH/oh-my-zsh.sh
@@ -362,5 +383,4 @@ alias crypt-pad='mkdir datastore; docker run --rm -it -p 3000:3000 -v "$PWD/data
 # Search file contents with ripgrep, fzf, bat
 alias fzf-rg="rg --hidden --glob '' --line-number . | fzf --delimiter ':' --preview 'bat --style=numbers --color=always {1} --highlight-line {2}'"
 
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
+alias update-and-clean='sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt purge -y'
