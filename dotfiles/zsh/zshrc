@@ -54,32 +54,103 @@ eval "$(~/.local/bin/mise activate zsh)"
 # Rust
 export PATH=$HOME/.cargo/bin:$PATH
 
-### Added by Zinit's installer
+############################
+# Zinit Plugin Manager
+############################
+
+# Install Zinit if not present
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
-    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    print -P "%F{33}Installing %F{220}ZDHARMA-CONTINUUM %F{33}Plugin Manager...%f"
     command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
-    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
-        print -P "%F{33} %F{34}Installation successful.%f%b" || \
-        print -P "%F{160} The clone has failed.%f%b"
+    command git clone --depth=1 https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33}✓ %F{34}Installation successful.%f" || \
+        print -P "%F{160}✗ Installation failed.%f"
 fi
 
+# Load Zinit
 source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-# Load a few important annexes, without Turbo
-# (this is currently required for annexes)
-zinit light-mode for \
+############################
+# Completion System
+############################
+
+# Initialize completion system
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+    compinit
+else
+    compinit -C  # Skip integrity check for speed
+fi
+
+# Completion styling
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' special-dirs true
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+############################
+# Zinit Plugins
+############################
+
+# Load Zinit annexes
+zinit light-mode wait"0" lucid for \
     zdharma-continuum/zinit-annex-as-monitor \
     zdharma-continuum/zinit-annex-bin-gem-node \
     zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-rust \
-    agkozak/zsh-z
-### End of Zinit's installer chunk
+    zdharma-continuum/zinit-annex-rust
 
-# zsh-fzf-history-search
-zinit ice lucid wait'0'
+# Navigation and productivity plugins
+zinit wait"0" lucid for \
+    blockf atpull"zinit creinstall -q ." \
+    zsh-users/zsh-completions
+
+# Syntax highlighting
+zinit ice wait"0" lucid atinit"ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay"
+zinit light zdharma-continuum/fast-syntax-highlighting
+
+# History search
+zinit ice lucid wait"0"
 zinit light joshskidmore/zsh-fzf-history-search
+
+# Git tools
+zinit ice wait"1" lucid
+zinit light paulirish/git-open
+
+# Oh-My-Zsh plugins
+zinit wait"1" lucid for \
+    OMZP::extract \
+    OMZP::sudo \
+    OMZP::extract \
+    OMZP::sudo \
+    OMZP::git \
+    OMZP::docker \
+    OMZP::docker-compose \
+    OMZP::kubectl \
+    OMZP::terraform \
+    OMZP::golang \
+    OMZP::python \
+    OMZP::rust \
+    OMZP::tmux \
+    OMZP::fzf \
+    OMZP::direnv \
+    OMZP::gh \
+    OMZP::git-extras \
+    OMZP::gitignore \
+    OMZP::golang \
+    OMZP::helm \
+    OMZP::kind \
+
+############################
+# Key Bindings
+############################
+
+# Navigation and history search
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey '^R' fzf-history-widget
+bindkey '^[[1;5C' forward-word   # Ctrl+Right
+bindkey '^[[1;5D' backward-word  # Ctrl+Left
 
 # Plugin list
 plugins=(
@@ -141,22 +212,60 @@ if [[ -d "$HOME/.zsh.local" ]]; then
 fi
 
 function reload {
+  echo "🔄 Reloading ZSH configuration..."
   source ~/.zshrc
+  echo "✅ ZSH configuration reloaded successfully!"
+}
+
+# Quick edit and reload zshrc
+function zshconfig {
+  $EDITOR ~/.zshrc && reload
+}
+
+# List all available aliases
+function aliases {
+  echo "🔍 Your current aliases:"
+  alias | sort | grep -v "^_" | bat --style=plain --language=bash
 }
 
 function update {
-  zinit update
+  echo "🔄 Updating your development environment..."
+  
+  # Update zinit and plugins
+  echo "📦 Updating zinit plugins..."
+  zinit self-update
+  zinit update --parallel
+  
+  # Refresh completions
+  echo "🔄 Refreshing completions..."
   autoload -Uz compinit
   compinit -C
-  nvim --headless +PlugUpdate +qall
+  
+  # Update Neovim plugins
+  if command -v nvim &>/dev/null; then
+    echo "🧩 Updating Neovim plugins..."
+    nvim --headless +PlugUpdate +qall
+  fi
+  
+  # Update Oh-My-Zsh
+  echo "🐚 Updating Oh-My-Zsh..."
   omz update
-  mise upgrade
+  
+  # Update mise tools
+  if command -v mise &>/dev/null; then
+    echo "🛠️  Updating mise tools..."
+    mise self-update
+    mise upgrade
+  fi
+  
+  # Update system packages if on Ubuntu/Debian
+  if command -v apt &>/dev/null; then
+    echo "📦 Updating system packages..."
+    sudo apt update && sudo apt upgrade -y
+  fi
+  
+  echo "✅ Update complete! Your system is now up to date."
 }
-
-# Zsh autocompletion
-zstyle ':completion:*' use-cache yes
-autoload -Uz compinit
-compinit -C
 
 ############################
 # Security
@@ -185,6 +294,11 @@ fi
 # Docker
 if command -v docker &>/dev/null; then
   source <(docker completion zsh)
+fi
+
+# ArgoCD
+if command -v argocd &>/dev/null; then
+  source <(argocd completion zsh)
 fi
 
 # Helm
@@ -233,6 +347,9 @@ source ~/z.sh
 
 
 source $ZSH/oh-my-zsh.sh
+
+export FLYCTL_INSTALL="/home/chussenot/.fly"
+export PATH="$FLYCTL_INSTALL/bin:$PATH"
 
 
 ############################
