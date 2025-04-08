@@ -245,7 +245,7 @@ vmap <C-s> <Esc>:w<CR>gv
 " Tips taken from https://robots.thoughtbot.com/vim-splits-move-faster-and-more-naturally#easier-split-navigation
 
 " More natural split opening
-" Open new split panes to right and bottom, which feels more natural than Vim’s default:
+" Open new split panes to right and bottom, which feels more natural than Vim's default:
 set splitbelow
 set splitright
 
@@ -311,3 +311,12 @@ set exrc
 set secure
 
 " }}}
+
+" GitGutter mappings
+nmap gh <Plug>(GitGutterNextHunk)
+nmap gH <Plug>(GitGutterPrevHunk)
+
+" Optional but recommended GitGutter configurations
+set updatetime=100  " Faster update time for git signs
+let g:gitgutter_enable = 1  " Enable GitGutter by default
+let g:gitgutter_signs = 1   " Show git diff signs by default
