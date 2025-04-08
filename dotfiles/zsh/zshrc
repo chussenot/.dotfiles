@@ -131,7 +131,6 @@ zinit wait"1" lucid for \
     OMZP::golang \
     OMZP::python \
     OMZP::rust \
-    OMZP::tmux \
     OMZP::fzf \
     OMZP::direnv \
     OMZP::gh \
