@@ -46,6 +46,7 @@ install_packages() {
   for package in "${packages[@]}"; do
     if ! dpkg -s "$package" >/dev/null 2>&1; then
       echo "Installing $package..."
+      # ⚠️ Concern: Uses sudo without password confirmation
       sudo apt-get update
       sudo apt-get install -y "$package"
     else
@@ -63,6 +64,7 @@ install_packages
 # Install oh-my-zsh
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
   echo "Installing oh-my-zsh..."
+  # ⚠️ Concern: Downloads and executes scripts from GitHub without verification
   sudo sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 
