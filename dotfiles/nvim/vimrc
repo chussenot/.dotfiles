@@ -11,17 +11,15 @@ filetype on
 
 " {{{ Basics
 
-set number     " always show line numbers
-set hlsearch   " highlight searches by default
-set ignorecase " Do not pay attention to word case when searching
-set smartcase  " …unless pattern contains a capital letter
-set cursorline " Show current line with a marker
-set autoread   " Automatically reload an externally modified file
+set number         " always show line numbers
+set hlsearch       " highlight searches by default
+set ignorecase     " Do not pay attention to word case when searching
+set smartcase      " …unless pattern contains a capital letter
+set cursorline     " Show current line with a marker
+set autoread       " Automatically reload an externally modified file
 set visualbell
-set hidden     " Avoid asking to save before hiding
-
-" Don't try to highlight lines longer than 800 characters.
-set synmaxcol=800
+set hidden         " Avoid asking to save before hiding
+set synmaxcol=800  " Don't try to highlight lines longer than 800 characters.
 
 " No need for Balloon Evaluation
 if exists('+noballooneval')
@@ -34,9 +32,10 @@ if has('mouse')
   set mousemodel=popup
 endif
 
-"
-" Indentation
-"
+" }}}
+
+" {{{ Indentation
+
 set autoindent
 set smartindent
 set smarttab
@@ -48,7 +47,9 @@ set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 
-" Soft/Hard Wrapping {{{
+" }}}
+
+" {{{ Wrapping
 
 " Soft wrapping
 " set wrap
@@ -61,24 +62,23 @@ set formatoptions=q
 
 " Automatically insert the current comment leader after hitting <Enter> in
 " Insert mode
-set formatoptions +=r
+set formatoptions+=r
 
 " When formatting text, recognize numbered lists.  This actually uses
 " 'formatlistpat'.
-set formatoptions +=n
+set formatoptions+=n
 
 " Don't break a line after a one-letter word.  It's broken before it instead
 " (if possible)
-set formatoptions +=1
+set formatoptions+=1
 
 " Where it makes sense, remove a comment leader when joining lines.
-set formatoptions +=j
+set formatoptions+=j
 
 " }}}
 
-"
-" History and backup
-"
+" {{{ History and backup
+
 if !has('nvim')
   set viminfo='10,:20,\"100,%,n~/.viminfo
 endif
@@ -88,17 +88,23 @@ set nobackup
 set nowritebackup
 set noswapfile
 
-" Denops
-"
+" }}}
+
+" {{{ Denops
 
 " autocmd VimEnter * call denops#cache#update(#{reload: v:true})
 
-" Spaces and tabs
-"
+" }}}
+
+" {{{ Spaces and tabs
+
 set listchars=nbsp:·,tab:»–,trail:·
 set list
 
-" Color long lines limit
+" }}}
+
+" {{{ Color long lines limit
+
 autocmd BufRead,BufNewFile,BufWinEnter * highlight ColorColumn ctermbg=DarkGrey ctermfg=white
 
 if exists('+colorcolumn')
@@ -111,7 +117,10 @@ else
   au BufRead,BufWinEnter * match ColorColumn /\%81v./
 endif
 
-" Status line
+" }}}
+
+" {{{ Status line
+
 set statusline=
 set statusline+=%3.3n\                       " buffer number
 set statusline+=%f\                          " file name
@@ -138,9 +147,11 @@ set statusline+=0x%-8B\                      " current char
 set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
 
 set laststatus=2 " show a status line even if there's only one window
+
 " }}}
 
 " {{{ Whitespace clean-up
+
 " See http://vimcasts.org/episodes/tidying-whitespace/
 
 " Maps {{{
@@ -169,7 +180,9 @@ endfunction
 " }}}
 
 " {{{ Load key mappings
+
 exec 'source ' . expand("~/.vim/key_mappings/command_line.vim")
+
 " }}}
 
 " {{{ Skeletons
@@ -189,9 +202,10 @@ augroup END
 " {{{ Tags
 
 set tags+=~/.tags,.git/tags,tags
+
 " }}}
 
-" Markers {{{
+" {{{ Markers
 
 function! g:ToggleColorColumn()
   if &colorcolumn != ''
@@ -202,9 +216,11 @@ function! g:ToggleColorColumn()
 endfunction
 
 nnoremap <silent> <leader>cc :call g:ToggleColorColumn()<CR>
+
 " }}}
 
 " {{{ Save with Ctrl-S
+
 " Taken from http://vim.wikia.com/wiki/Map_Ctrl-S_to_save_current_or_new_files
 
 " If the current buffer has never been saved, it will have no name,
@@ -224,14 +240,15 @@ vmap <C-s> <Esc>:w<CR>gv
 
 " }}}
 
-
 " {{{ Splits
+
 " Tips taken from https://robots.thoughtbot.com/vim-splits-move-faster-and-more-naturally#easier-split-navigation
-"
+
 " More natural split opening
 " Open new split panes to right and bottom, which feels more natural than Vim’s default:
 set splitbelow
 set splitright
+
 " }}}
 
 if has("autocmd")
@@ -240,10 +257,9 @@ if has("autocmd")
 
     " save when exiting the buffer or losing focus
     au FocusLost,WinLeave * :silent! wall
-
 endif
 
-" Misc {{{
+" {{{ Misc
 
 " Enable Rainbow parentheses
 let g:rainbow_active = 1  "0 if you want to enable it later via :RainbowToggle"
@@ -255,21 +271,22 @@ let g:MarkdownPreviewTMP = expand("~/.vim/flavors/changa_markdown-preview.vim/tm
 let g:MarkdownPreviewDefaultStyles = expand("~/.vim/flavors/changa_markdown-preview.vim/stylesheets/")
 
 " Encryption
-
 if has("cryptv")
   set cryptmethod=blowfish
 endif
-" }}}
 
 if executable("rg")
   set grepprg=rg\ --vimgrep
 endif
 
-" Colors {{{
+" }}}
+
+" {{{ Colors
 
 " colorscheme gruvbox
 colorscheme brogrammatrix
 set background=dark
+
 " }}}
 
 if has("nvim")
@@ -292,4 +309,5 @@ endif
 " see http://www.ilker.de/specific-vim-settings-per-project.html
 set exrc
 set secure
+
 " }}}
