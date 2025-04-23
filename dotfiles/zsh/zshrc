@@ -106,7 +106,7 @@ zinit wait"0" lucid for \
     zsh-users/zsh-completions
 
 # Syntax highlighting
-zinit ice wait"0" lucid atinit"ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay"
+zinit ice wait"0" lucid atinit"ZINIT[COMPINIT_OPTS]=-C"
 zinit light zdharma-continuum/fast-syntax-highlighting
 
 # History search
@@ -121,14 +121,11 @@ zinit light paulirish/git-open
 zinit wait"1" lucid for \
     OMZP::extract \
     OMZP::sudo \
-    OMZP::extract \
-    OMZP::sudo \
     OMZP::git \
     OMZP::docker \
     OMZP::docker-compose \
     OMZP::kubectl \
     OMZP::terraform \
-    OMZP::golang \
     OMZP::python \
     OMZP::rust \
     OMZP::fzf \
@@ -274,7 +271,11 @@ function update {
 # https://projectdiscovery.io/
 export PATH=$PATH:/home/chussenot/.pdtm/go/bin
 
-source <(glab completion -s zsh); compdef _glab glab
+if command -v glab &>/dev/null; then
+  source <(glab completion -s zsh)
+  compdef _glab glab
+fi
+
 source <(warp-cli generate-completions zsh)
 
 # Additional autocompletions
@@ -339,7 +340,7 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 ############################
 
 # Jump in directories
-source ~/z.sh
+[ -f ~/z.sh ] && source ~/z.sh
 
 # General Fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
