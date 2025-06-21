@@ -534,3 +534,5 @@ alias crypt-pad='mkdir datastore; docker run --rm -it -p 3000:3000 -v "$PWD/data
 alias fzf-rg="rg --hidden --glob '' --line-number . | fzf --delimiter ':' --preview 'bat --style=numbers --color=always {1} --highlight-line {2}'"
 
 alias update-and-clean='sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt purge -y'
+
+fpath+=~/.zfunc; autoload -Uz compinit; compinit
