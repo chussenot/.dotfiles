@@ -26,7 +26,7 @@ create_symlink() {
 create_symlink "$DOTFILES_DIR/configs/terminal/tmux/tmux.conf" "$HOME/.tmux.conf"
 create_symlink "$DOTFILES_DIR/configs/shell/zsh/zshrc" "$HOME/.zshrc"
 create_symlink "$DOTFILES_DIR/configs/editor/nvim" "$HOME/.config/nvim"
-create_symlink "$DOTFILES_DIR/configs/tools/mise/tool-versions" "$HOME/.tool-versions"
+create_symlink "$DOTFILES_DIR/configs/tools/mise/config.toml" "$HOME/.config/mise/config.toml"
 create_symlink "$DOTFILES_DIR/configs/shell/zsh/z.sh" "$HOME/z.sh"
 
 # Create local directories if they don't exist
