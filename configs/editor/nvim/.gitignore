@@ -1,0 +1,18 @@
+# Ignore local-only settings
+/vimrc.local
+/gvimrc.local
+/ginit.vim.local
+
+# Ignore generated flavors file
+/flavors
+
+.netrwhist
+
+# Ignore local dictionaries
+/spell
+
+# Git plug installation dir
+/plugged
+
+# Neovim config is aliased
+init.vim

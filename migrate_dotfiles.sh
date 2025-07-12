@@ -34,8 +34,8 @@ fi
 
 # Move nvim files
 if [ -d "dotfiles/nvim" ]; then
-    cp -r dotfiles/nvim/* configs/editor/nvim/
-    echo "✅ Moved nvim configs"
+    rsync -av --exclude 'plugged' dotfiles/nvim/ configs/editor/nvim/
+    echo "✅ Moved nvim configs (excluding plugged directory)"
 fi
 
 # Move mise files
@@ -46,6 +46,7 @@ fi
 
 # Move tmux controller
 if [ -f "tmux_controller.py" ]; then
+    mkdir -p configs/terminal/tmux/scripts
     cp tmux_controller.py configs/terminal/tmux/scripts/
     echo "✅ Moved tmux controller"
 fi
