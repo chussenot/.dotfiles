@@ -1,0 +1,114 @@
+---
+- name: Setup Dotfiles Testing Environment
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  
+  vars:
+    docker_image: ubuntu:22.04
+    container_name: dotfiles-test
+    test_user: testuser
+    test_home: /home/{{ test_user }}
+    
+  tasks:
+    - name: Ensure Docker is running
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+      become: yes
+      
+    - name: Pull Ubuntu 22.04 image
+      docker_image:
+        name: "{{ docker_image }}"
+        source: pull
+        
+    - name: Create test container
+      docker_container:
+        name: "{{ container_name }}"
+        image: "{{ docker_image }}"
+        state: started
+        interactive: yes
+        tty: yes
+        command: /bin/bash
+        detach: yes
+        restart_policy: unless-stopped
+        volumes:
+          - "{{ playbook_dir }}/../:/dotfiles:ro"
+          - "{{ playbook_dir }}/scripts:/scripts:ro"
+          
+    - name: Wait for container to be ready
+      wait_for:
+        timeout: 10
+        
+    - name: Install basic packages in container
+      docker_container:
+        name: "{{ container_name }}"
+        command: >
+          bash -c "
+          apt-get update &&
+          apt-get install -y curl git sudo zsh tmux python3 python3-pip vim &&
+          useradd -m -s /bin/zsh {{ test_user }} &&
+          echo '{{ test_user }} ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers &&
+          chown -R {{ test_user }}:{{ test_user }} {{ test_home }}
+          "
+        
+    - name: Copy dotfiles to container
+      docker_container:
+        name: "{{ container_name }}"
+        command: >
+          bash -c "
+          cp -r /dotfiles {{ test_home }}/.dotfiles &&
+          chown -R {{ test_user }}:{{ test_user }} {{ test_home }}/.dotfiles
+          "
+          
+    - name: Create test script
+      copy:
+        dest: "{{ playbook_dir }}/test_dotfiles.sh"
+        content: |
+          #!/bin/bash
+          # Test script for dotfiles installation
+          
+          set -e
+          
+          echo "🧪 Starting dotfiles test in container..."
+          
+          # Connect to container as test user
+          docker exec -it {{ container_name }} su - {{ test_user }} -c "
+          cd ~/.dotfiles &&
+          echo 'Testing installation...' &&
+          ./install_new.sh &&
+          echo 'Installation completed successfully!'
+          "
+          
+          echo "✅ Test completed!"
+        mode: '0755'
+        
+    - name: Create cleanup script
+      copy:
+        dest: "{{ playbook_dir }}/cleanup.sh"
+        content: |
+          #!/bin/bash
+          # Cleanup script for dotfiles testing
+          
+          echo "🧹 Cleaning up test environment..."
+          
+          # Stop and remove container
+          docker stop {{ container_name }} 2>/dev/null || true
+          docker rm {{ container_name }} 2>/dev/null || true
+          
+          echo "✅ Cleanup completed!"
+        mode: '0755'
+        
+    - name: Create interactive test script
+      copy:
+        dest: "{{ playbook_dir }}/interactive_test.sh"
+        content: |
+          #!/bin/bash
+          # Interactive test script for dotfiles
+          
+          echo "🚀 Starting interactive test session..."
+          
+          # Connect to container interactively
+          docker exec -it {{ container_name }} su - {{ test_user }}
+        mode: '0755' 
