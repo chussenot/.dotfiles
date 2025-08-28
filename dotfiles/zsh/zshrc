@@ -536,3 +536,10 @@ alias fzf-rg="rg --hidden --glob '' --line-number . | fzf --delimiter ':' --prev
 alias update-and-clean='sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt purge -y'
 
 fpath+=~/.zfunc; autoload -Uz compinit; compinit
+
+# bun completions
+[ -s "/home/chussenot/.bun/_bun" ] && source "/home/chussenot/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
