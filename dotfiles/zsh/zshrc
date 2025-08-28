@@ -32,8 +32,6 @@ export EDITOR="nvim"
 export VISUAL="nvim" 
 export SHELL='/usr/bin/zsh'
 
-export EDITOR='vim'
-
 # Language and locale settings
 export LC_CTYPE=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -76,12 +74,12 @@ autoload -Uz _zinit
 # Completion System
 ############################
 
-# Initialize completion system
-if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
-    compinit
-else
-    compinit -C  # Skip integrity check for speed
-fi
+# Initialize completion system (will be re-initialized after plugins)
+# if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+#     compinit
+# else
+#     compinit -C  # Skip integrity check for speed
+# fi
 
 # Completion styling
 zstyle ':completion:*' menu select
@@ -117,7 +115,7 @@ zinit light joshskidmore/zsh-fzf-history-search
 zinit ice wait"1" lucid
 zinit light paulirish/git-open
 
-# Oh-My-Zsh plugins
+# Oh-My-Zsh plugins (converted to Zinit)
 zinit wait"1" lucid for \
     OMZP::extract \
     OMZP::sudo \
@@ -136,69 +134,55 @@ zinit wait"1" lucid for \
     OMZP::golang \
     OMZP::helm \
     OMZP::kind \
+    OMZP::argocd \
+    OMZP::ansible \
+    OMZP::bundler \
+    OMZP::deno \
+    OMZP::gem \
+    OMZP::man \
+    OMZP::mise \
+    OMZP::nmap \
+    OMZP::node \
+    OMZP::npm \
+    OMZP::nvm \
+    OMZP::pip \
+    OMZP::pylint \
+    OMZP::pyenv \
+    OMZP::rake \
+    OMZP::rsync \
+    OMZP::ruby \
+    OMZP::screen \
+    OMZP::ssh \
+    OMZP::ssh-agent \
+    OMZP::systemd \
+    OMZP::supervisor \
+    OMZP::terraform \
+    OMZP::tig \
+    OMZP::tmux \
+    OMZP::tmuxinator \
+    OMZP::torrent \
+    OMZP::vscode \
+    OMZP::yarn
+
+# Initialize completions after plugins are loaded
+autoload -Uz compinit
+compinit -C
 
 ############################
 # Key Bindings
 ############################
 
-# Navigation and history search
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
+# Navigation and history search - using Zinit's built-in history search
+# bindkey '^[[A' history-substring-search-up
+# bindkey '^[[B' history-substring-search-down
 bindkey '^R' fzf-history-widget
 bindkey '^[[1;5C' forward-word   # Ctrl+Right
 bindkey '^[[1;5D' backward-word  # Ctrl+Left
 
-# Plugin list
-plugins=(
-  argocd
-  ansible
-  aws
-  bundler
-  deno
-  direnv
-  docker
-  docker-compose
-  gcloud
-  gem
-  git
-  git-extras
-  git-flow
-  gh
-  gitignore
-  golang
-  helm
-  kind
-  kubectl
-  man
-  mise
-  nmap
-  node
-  npm
-  nvm
-  pip
-  pylint
-  pyenv
-  python
-  rake
-  rsync
-  ruby
-  rust
-  screen
-  ssh
-  ssh-agent
-  systemd
-  sudo
-  supervisor
-  systemd
-  terraform
-  tig
-  tmux
-  tmuxinator
-  torrent
-  vscode
-  yarn
-  zsh-fzf-history-search
-)
+# Disabled: source $ZSH/oh-my-zsh.sh
+# Sourcing this can cause "ZSH_THEME not set" or "ZSH not defined" errors if $ZSH is not set.
+# If you use Oh-My-Zsh, ensure $ZSH is defined before sourcing:
+[ -n "$ZSH" ] && source "$ZSH/oh-my-zsh.sh"
 
 # Load local Zsh configurations from ~/.zsh.local
 if [[ -d "$HOME/.zsh.local" ]]; then
@@ -207,10 +191,14 @@ if [[ -d "$HOME/.zsh.local" ]]; then
   done
 fi
 
-function reload {
-  echo "🔄 Reloading ZSH configuration..."
-  source ~/.zshrc
-  echo "✅ ZSH configuration reloaded successfully!"
+reload() {
+  echo "🔄 Reloading Zsh configuration..."
+
+  # Unset functions and variables that may have changed
+  unset -f reload zshconfig aliases update
+
+  # Re-exec the current shell to ensure a clean reload
+  exec zsh -l
 }
 
 # Quick edit and reload zshrc
@@ -345,12 +333,8 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 # General Fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-
-source $ZSH/oh-my-zsh.sh
-
 export FLYCTL_INSTALL="/home/chussenot/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
-
 
 ############################
 # Tools & Aliases
@@ -454,7 +438,7 @@ alias recon-certspotter='f(){ xdg-open "https://api.certspotter.com/v1/issuances
 alias recon-virustotal='f(){ xdg-open "https://www.virustotal.com/gui/domain/$1" ;  unset -f f; }; f'
 alias recon-crtsh='f(){ curl -sk "https://crt.sh/?output=json&q=$1" | jq . ; unset -f f; }; f'
 alias recon-wayback='f(){ curl -sk "https://web.archive.org/cdx/search/cdx?fl=original&collapse=urlkey&url=*.$1" ; unset -f f; }; f'
-alias capture-http='f(){ sudo unbuffer tcpdump -A -s 0 "tcp port $@ and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)" | tr "\\n" "\n" ; unset -f f; }; f'
+alias capture-http='f(){ sudo unbuffer tcpdump -A -s 0 "tcp port $@ and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)" | tr "\\n" "\n" ;  unset -f f; }; f'
 alias capture-creds="sudo tcpdump -i enp0s31f6 port http or port ftp or port smtp or port imap or port pop3 or port telnet -l -A | grep -iEB5 --line-buffered 'pass=|pwd=|log=|login=|user=|username=|pw=|passw=|passwd=|password=|pass:|user:|username:|password:|login:|pass |user |authorization:|token'"
 alias nmap-html='nmap --stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl'
 alias arm-vm='source /opt/arm_now/.py3/bin/activate && arm_now start --redir tcp:1234:1234 --clean --sync armv7-eabihf'
@@ -476,7 +460,7 @@ alias vgrep='f(){ grep -rnH "$1" "$2" | fzf --preview="bat --pager never --color
 # Docker Utils
 alias docker-norestart='docker update --restart=no $(docker ps -q)'
 alias docker-stopall='docker stop $(docker ps -q)'
-alias docker-get-image-size='f(){ docker manifest inspect -v "$1" | jq -c "if type == \"array\" then .[] else . end" |  jq -r "[ ( .Descriptor.platform | [ .os, .architecture, .variant, .\"os.version\" ] | del(..|nulls) | join(\"/\") ), ( [ .SchemaV2Manifest.layers[].size ] | add ) ] | join(\" \")" | numfmt --to iec --format "%.2f" --field 2 | column -t ;  unset -f f; }; f'
+alias docker-get-image-size='f(){ docker manifest inspect -v "$1" | jq -c "if type == \"array\" then .[] else . end" |  jq -r "[ ( .Descriptor.platform | [ .os, .architecture, .variant, .\"os.version\" ] | del(..|nulls) | join(\"/\") ), ( [ .SchemaV2Manifest.layers[].size ] | add ) ] | join(\" \")" | numfmt --to iec --format \"%.2f\" --field 2 | column -t ;  unset -f f; }; f'
 alias dockex='docker exec -it $(docker ps | grep -vF "CONTAINER ID" | fzf | cut -d" " -f1)'
 alias dockit='docker run --rm -it -v "$PWD":/host --net=host'
 alias dps='docker ps'
@@ -535,7 +519,7 @@ alias fzf-rg="rg --hidden --glob '' --line-number . | fzf --delimiter ':' --prev
 
 alias update-and-clean='sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt purge -y'
 
-fpath+=~/.zfunc; autoload -Uz compinit; compinit
+fpath+=~/.zfunc
 
 # bun completions
 [ -s "/home/chussenot/.bun/_bun" ] && source "/home/chussenot/.bun/_bun"
