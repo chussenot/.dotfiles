@@ -45,9 +45,13 @@ export PATH=$HOME/.local/bin:$PATH
 # export MISE_VERBOSE=1
 # export RUST_BACKTRACE=1
 export MISE_HOME="$HOME/.mise"
-# eval "$(~/.local/bin/mise activate zsh --shims)"
-eval "$(~/.local/bin/mise activate zsh)"
-# export PATH="$HOME/.local/share/mise/shims:$PATH"
+# Ensure shims available even if activate fails
+export PATH="$HOME/.local/share/mise/shims:$PATH"
+
+if [ -t 1 ] && [ -x "$HOME/.local/bin/mise" ]; then
+  # full activate for zsh (fast + safe)
+  eval "$("$HOME/.local/bin/mise" activate zsh)"
+fi
 
 # Rust
 export PATH=$HOME/.cargo/bin:$PATH
