@@ -16,23 +16,23 @@ Your feedback and contributions to enhance cross-distribution compatibility are 
 
 ## Installation
 
-1. Clone the repository to your home directory:
+1- Clone the repository to your home directory:
 
-```
+```sh
 git clone https://github.com/chussenot/dotfiles.git ~/.dotfiles
 ```
 
-2. Run the install script:
+2- Run the install script:
 
-```
+```sh
 cd ~/.dotfiles && ./install.sh
 ```
 
 This will create symbolic links from your home directory to the dotfiles in `~/.dotfiles`, and install any necessary dependencies.
 
-3. Customize your local settings or overrides in `~/.vim/vimrc.local`.
+3- Customize your local settings or overrides in `~/.vim/vimrc.local`.
 
-4. Enjoy!
+4- Enjoy!
 
 ## What's included?
 
@@ -88,4 +88,3 @@ My Zsh configuration uses the [ys theme](https://github.com/ohmyzsh/ohmyzsh/wiki
 ### Neovim Configuration
 
 My Neovim configuration uses [vim-plug](https://github.com/junegunn/vim-plug) to manage plugins, and includes settings for a number of languages, including Ruby, Python, and Rust. Various plugins are included to provide functionality like autocompletion, fuzzy finding, and linting.
-
