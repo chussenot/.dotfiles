@@ -1,22 +1,31 @@
 [tools]
+# Cloud & Infrastructure
 awscli = "latest"
-bat = "latest"
-deno = "latest"
-gh = "latest"
-glab = "latest"
-ruby = "latest"
+gcloud = "latest"
+terraform = "latest"
+terragrunt = "latest"
 terraform-docs = "latest"
 terraformer = "latest"
-vault = "latest"
-terragrunt = "latest"
-terraform = "latest"
-rust = "latest"
-k9s = "latest"
-kubectl = "latest"
-crystal = "latest"
 tfstate-lookup = "latest"
+vault = "latest"
+
+# Container & Kubernetes
+kubectl = "latest"
+k9s = "latest"
 ctop = "latest"
-direnv = "latest"
-neovim = "latest"
+
+# Development Languages & Runtimes
 go = "latest"
-gcloud = "latest"
+rust = "latest"
+ruby = "latest"
+crystal = "latest"
+deno = "latest"
+
+# Development Tools
+neovim = "latest"
+direnv = "latest"
+bat = "latest"
+
+# Git & Version Control
+gh = "latest"
+glab = "latest"
