@@ -12,7 +12,6 @@ help:
 	@echo "  make save-snapshot      - Save current plugin state to snapshot.vim"
 	@echo "  make restore-snapshot   - Restore plugins from snapshot.vim"
 	@echo "  make make_dirs          - Create necessary directories for Vim"
-	@echo "  make README.markdown    - Update README with current plugin list"
 
 # Install target to set up symlinks and restore plugin snapshot
 install: ~/.vimrc ~/.gvimrc init.vim restore-snapshot make_dirs
@@ -54,8 +53,3 @@ make_dirs:
 	mkdir -p ~/.cache/vim/undo \
 		~/.cache/vim/swap \
 		~/.cache/vim/backup
-
-# Update README with current plugin list
-README.markdown: plugs.vim
-	@echo "Updating README.markdown with current plugin list"
-	./update_readme
