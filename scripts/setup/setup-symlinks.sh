@@ -35,6 +35,9 @@ create_symlink "$DOTFILES_DIR/configs/shell/zsh/zshrc" "$HOME/.zshrc"
 mkdir -p "$HOME/.config"
 create_symlink "$DOTFILES_DIR/configs/editor/nvim" "$HOME/.config/nvim"
 
+# Create ~/.vim symlink for backward compatibility with existing vim config
+create_symlink "$DOTFILES_DIR/configs/editor/nvim" "$HOME/.vim"
+
 # Create mise config if it exists
 if [ -f "$DOTFILES_DIR/configs/tools/mise/config.toml" ]; then
     mkdir -p "$HOME/.config/mise"
