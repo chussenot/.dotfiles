@@ -68,12 +68,6 @@ meminfo() {
 cpuinfo() {
     lscpu | grep -E "Model name|CPU\(s\)|Thread|Core"
 }
-
-# Network functions
-myip() {
-    curl -s http://ipecho.net/plain && echo
-}
-
 # Development functions
 pyvenv() {
     python3 -m venv "$1" && source "$1/bin/activate"
@@ -92,4 +86,58 @@ tdev() {
     fi
 }
 
-# Add your custom functions below 
+function reload {
+  echo "🔄 Reloading ZSH configuration..."
+  source ~/.zshrc
+  echo "✅ ZSH configuration reloaded successfully!"
+}
+
+# Quick edit and reload zshrc
+function zshconfig {
+  $EDITOR ~/.zshrc && reload
+}
+
+# List all available aliases
+function aliases {
+  echo "🔍 Your current aliases:"
+  alias | sort | grep -v "^_" | bat --style=plain --language=bash
+}
+
+function update {
+  echo "🔄 Updating your development environment..."
+  
+  # Update zinit and plugins
+  echo "📦 Updating zinit plugins..."
+  zinit self-update
+  zinit update --parallel
+  
+  # Refresh completions
+  echo "🔄 Refreshing completions..."
+  autoload -Uz compinit
+  compinit -C
+  
+  # Update Neovim plugins
+  if command -v nvim &>/dev/null; then
+    echo "🧩 Updating Neovim plugins..."
+    nvim --headless +PlugUpdate +qall
+  fi
+  
+  # Update Oh-My-Zsh
+  echo "🐚 Updating Oh-My-Zsh..."
+  omz update
+  
+  # Update mise tools
+  if command -v mise &>/dev/null; then
+    echo "🛠️  Updating mise tools..."
+    mise self-update
+    mise upgrade
+  fi
+  
+  # Update system packages if on Ubuntu/Debian
+  if command -v apt &>/dev/null; then
+    echo "📦 Updating system packages..."
+    sudo apt update && sudo apt upgrade -y
+  fi
+  
+  echo "✅ Update complete! Your system is now up to date."
+}

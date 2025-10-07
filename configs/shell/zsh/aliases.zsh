@@ -72,7 +72,6 @@ alias mv='mv -i'
 alias mkdir='mkdir -p'
 
 # Network aliases
-alias myip='curl http://ipecho.net/plain; echo'
 alias ports='netstat -tulanp'
 
 ############################
