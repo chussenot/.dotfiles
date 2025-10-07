@@ -72,9 +72,40 @@ else
     print_warning "Oh My Zsh already installed"
 fi
 
+# Install Zinit Plugin Manager
+print_status "🔌 Installing Zinit Plugin Manager..."
+if [[ ! -d "$HOME/.local/share/zinit/zinit.git" ]]; then
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone --depth=1 https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git"
+    print_success "Zinit Plugin Manager installed"
+else
+    print_warning "Zinit Plugin Manager already installed"
+fi
+
+# Install z.sh (directory jumping)
+print_status "📁 Installing z.sh (directory jumping)..."
+if [[ ! -f "$HOME/z.sh" ]]; then
+    curl -fsSL https://raw.githubusercontent.com/rupa/z/master/z.sh -o "$HOME/z.sh"
+    chmod +x "$HOME/z.sh"
+    print_success "z.sh installed"
+else
+    print_warning "z.sh already installed"
+fi
+
 # Setup symlinks
 print_status "🔗 Setting up symlinks..."
 "$SCRIPT_DIR/scripts/setup/setup-symlinks.sh"
+
+# Install mise if not present
+print_status "🛠️ Installing mise (tool version manager)..."
+if ! command -v mise &> /dev/null; then
+    curl https://mise.run | sh
+    # Add mise to PATH for current session
+    export PATH="$HOME/.local/bin:$PATH"
+    print_success "mise installed"
+else
+    print_warning "mise already installed"
+fi
 
 # Install tools with mise
 print_status "🛠️ Installing development tools..."

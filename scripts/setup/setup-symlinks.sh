@@ -49,8 +49,6 @@ if [ -f "$DOTFILES_DIR/configs/tools/mise/tool-versions" ]; then
     create_symlink "$DOTFILES_DIR/configs/tools/mise/tool-versions" "$HOME/.tool-versions"
 fi
 
-create_symlink "$DOTFILES_DIR/configs/shell/zsh/z.sh" "$HOME/z.sh"
-
 # Create zsh directory and symlink aliases and functions
 mkdir -p "$HOME/.zsh"
 create_symlink "$DOTFILES_DIR/configs/shell/zsh/aliases.zsh" "$HOME/.zsh/aliases.zsh"

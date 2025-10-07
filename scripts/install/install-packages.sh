@@ -21,6 +21,12 @@ packages=(
     unzip
     build-essential
     fzf
+    bat
+    htop
+    net-tools
+    tree
+    ripgrep
+    fd-find
 )
 
 # Check for ctags
