@@ -30,6 +30,8 @@ bat = "latest"
 # Git & Version Control
 gh = "latest"
 glab = "latest"
+pdm = "latest"
+pipx = "latest"
 
 [settings]
 experimental = true
