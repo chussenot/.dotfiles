@@ -29,3 +29,6 @@ bat = "latest"
 # Git & Version Control
 gh = "latest"
 glab = "latest"
+
+[settings]
+experimental = true
