@@ -55,6 +55,9 @@ create_symlink "$DOTFILES_DIR/configs/shell/zsh/z.sh" "$HOME/z.sh"
 mkdir -p "$HOME/.zsh"
 create_symlink "$DOTFILES_DIR/configs/shell/zsh/aliases.zsh" "$HOME/.zsh/aliases.zsh"
 create_symlink "$DOTFILES_DIR/configs/shell/zsh/functions.zsh" "$HOME/.zsh/functions.zsh"
+create_symlink "$DOTFILES_DIR/configs/shell/zsh/_completions.zsh" "$HOME/.zsh/_completions.zsh"
+
+mkdir -p ~/.zsh/completions
 
 # Create local directories if they don't exist
 mkdir -p "$HOME/.local/share/zsh"

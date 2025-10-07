@@ -13,6 +13,7 @@ vault = "latest"
 kubectl = "latest"
 k9s = "latest"
 ctop = "latest"
+helm = "latest"
 
 # Development Languages & Runtimes
 go = "latest"
