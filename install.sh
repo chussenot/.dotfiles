@@ -126,39 +126,6 @@ else
     print_warning "Neovim not found, skipping plugin installation"
 fi
 
-# Create local configuration directory
-print_status "📁 Setting up local configuration..."
-mkdir -p "$SCRIPT_DIR/local"
-
-# Create example local zsh config
-if [[ ! -f "$SCRIPT_DIR/local/zsh/local.zsh" ]]; then
-    cat > "$SCRIPT_DIR/local/zsh/local.zsh" << 'EOF'
-# Local zsh configuration
-# This file is for machine-specific settings
-# It will be sourced automatically by the main zshrc
-
-# Example local aliases
-# alias myalias='mycommand'
-
-# Example local environment variables
-# export MY_VAR="value"
-
-# Example local functions
-# myfunction() {
-#     echo "This is a local function"
-# }
-EOF
-    print_success "Created local zsh configuration template"
-fi
-
-# Create .gitignore for local directory
-cat > "$SCRIPT_DIR/local/.gitignore" << 'EOF'
-# Local configuration files
-# These files contain machine-specific settings and should not be committed
-*
-!.gitignore
-EOF
-
 print_success "✅ Installation complete!"
 echo ""
 print_status "📋 Post-installation steps:"

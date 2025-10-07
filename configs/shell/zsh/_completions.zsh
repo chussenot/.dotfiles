@@ -39,18 +39,6 @@ _gen_comp_if_missing gh          "$COMPDIR/_gh"          gh completion -s zsh
 # kind
 _gen_comp_if_missing kind        "$COMPDIR/_kind"        kind completion zsh
 
-# Terraform: try native installer once (creates proper _terraform file);
-# fall back to bashcompinit (below) if unavailable.
-if command -v terraform &>/dev/null; then
-  if [[ ! -s "$COMPDIR/_terraform" && -z "${ZSH_SKIP_TERRAFORM_INSTALL:-}" ]]; then
-    terraform -install-autocomplete &>/dev/null || true
-    # Some installs put it under ~/.zfunc; copy if found
-    if [[ -s "$HOME/.zfunc/_terraform" && ! -s "$COMPDIR/_terraform" ]]; then
-      cp "$HOME/.zfunc/_terraform" "$COMPDIR/_terraform" 2>/dev/null || true
-    fi
-  fi
-fi
-
 # Byte-compile individual completion functions for speed (best-effort)
 for f in "$COMPDIR"/_*; do
   [[ -f "$f" ]] && zcompile "$f" 2>/dev/null || true
