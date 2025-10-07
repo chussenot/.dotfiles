@@ -20,6 +20,7 @@ packages=(
     wget
     unzip
     build-essential
+    fzf
 )
 
 # Check for ctags
@@ -38,5 +39,28 @@ for package in "${packages[@]}"; do
         echo "$package is already installed"
     fi
 done
+
+# Install fzf shell integration if fzf is installed
+if command -v fzf >/dev/null 2>&1; then
+    echo "🔧 Setting up fzf shell integration..."
+    
+    # Check if fzf shell integration is already set up
+    if [[ ! -f "$HOME/.fzf.zsh" ]]; then
+        # Install fzf shell integration
+        if [[ -f "$HOME/.fzf/install" ]]; then
+            # Use existing fzf installation
+            "$HOME/.fzf/install" --all --no-bash --no-fish
+        else
+            # Install fzf from scratch
+            git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
+            "$HOME/.fzf/install" --all --no-bash --no-fish
+        fi
+        echo "✅ fzf shell integration installed"
+    else
+        echo "✅ fzf shell integration already configured"
+    fi
+else
+    echo "⚠️  fzf not found, skipping shell integration setup"
+fi
 
 echo "✅ Package installation complete!"
