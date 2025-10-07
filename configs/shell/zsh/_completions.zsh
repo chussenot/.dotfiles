@@ -34,6 +34,10 @@ _gen_comp_if_missing kubectl     "$COMPDIR/_kubectl"     kubectl completion zsh
 _gen_comp_if_missing pip         "$COMPDIR/_pip"         pip completion --zsh
 # mise
 _gen_comp_if_missing mise        "$COMPDIR/_mise"        mise completion zsh
+# gh (GitHub CLI)
+_gen_comp_if_missing gh          "$COMPDIR/_gh"          gh completion -s zsh
+# kind
+_gen_comp_if_missing kind        "$COMPDIR/_kind"        kind completion zsh
 
 # Terraform: try native installer once (creates proper _terraform file);
 # fall back to bashcompinit (below) if unavailable.
@@ -88,6 +92,18 @@ if command -v npm &>/dev/null; then
   _need_bashcomp=true
   # Using npm completion (bash-style)
   _bash_fallbacks+=("eval 'source <(npm completion)'")
+fi
+
+# Node.js (nvm completion)
+if command -v nvm &>/dev/null; then
+  _need_bashcomp=true
+  _bash_fallbacks+=("source <(nvm completion)")
+fi
+
+# Yarn
+if command -v yarn &>/dev/null; then
+  _need_bashcomp=true
+  _bash_fallbacks+=("source <(yarn completion)")
 fi
 
 if [[ "$_need_bashcomp" == true ]]; then

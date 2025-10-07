@@ -1,3 +1,4 @@
 [tools]
+kind = "latest"
 pdm = "latest"
 python = "latest"

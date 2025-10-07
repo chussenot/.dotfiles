@@ -80,14 +80,7 @@ autoload -Uz _zinit
 # Completion System
 ############################
 
-# Initialize completion system
-if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
-    compinit
-else
-    compinit -C  # Skip integrity check for speed
-fi
-
-# Completion styling
+# Completion styling (compinit is handled by _completions.zsh)
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' special-dirs true
@@ -121,25 +114,15 @@ zinit light joshskidmore/zsh-fzf-history-search
 zinit ice wait"1" lucid
 zinit light paulirish/git-open
 
-# Oh-My-Zsh plugins
+# Oh-My-Zsh plugins (completion-heavy plugins only)
 zinit wait"1" lucid for \
     OMZP::extract \
     OMZP::sudo \
     OMZP::git \
-    OMZP::docker \
-    OMZP::docker-compose \
-    OMZP::kubectl \
-    OMZP::terraform \
-    OMZP::python \
-    OMZP::rust \
-    OMZP::fzf \
     OMZP::direnv \
     OMZP::gh \
     OMZP::git-extras \
     OMZP::gitignore \
-    OMZP::golang \
-    OMZP::helm \
-    OMZP::kind \
 
 ############################
 # Key Bindings
@@ -152,56 +135,15 @@ bindkey '^R' fzf-history-widget
 bindkey '^[[1;5C' forward-word   # Ctrl+Right
 bindkey '^[[1;5D' backward-word  # Ctrl+Left
 
-# Plugin list
+# Plugin list (minimal - completions handled by _completions.zsh)
 plugins=(
-  argocd
-  ansible
-  aws
-  bundler
-  deno
-  direnv
-  docker
-  docker-compose
-  gcloud
-  gem
   git
-  git-extras
-  git-flow
-  gh
-  gitignore
-  golang
-  helm
-  kind
-  kubectl
-  man
-  mise
-  nmap
-  node
-  npm
-  nvm
-  pip
-  pylint
-  pyenv
-  python
-  rake
-  rsync
-  ruby
-  rust
-  screen
-  ssh
-  ssh-agent
-  systemd
   sudo
-  supervisor
-  systemd
-  terraform
-  tig
-  tmux
-  tmuxinator
-  torrent
-  vscode
-  yarn
-  zsh-fzf-history-search
+  extract
+  direnv
+  gh
+  git-extras
+  gitignore
 )
 
 # Load local Zsh configurations from ~/.zsh.local
@@ -244,10 +186,6 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 source $ZSH/oh-my-zsh.sh
 
-export FLYCTL_INSTALL="/home/chussenot/.fly"
-export PATH="$FLYCTL_INSTALL/bin:$PATH"
 
-fpath+=~/.zfunc; autoload -Uz compinit; compinit
 autoload -U +X bashcompinit && bashcompinit
-
 complete -o nospace -C /home/chussenot/.local/share/mise/installs/terraform/1.13.3/terraform terraform
