@@ -223,7 +223,7 @@ fi
 
 # Pdtm - Project Discovery 
 # https://projectdiscovery.io/
-export PATH=$PATH:/home/chussenot/.pdtm/go/bin
+export PATH=$PATH:$HOME/.pdtm/go/bin
 
 if command -v glab &>/dev/null; then
   source <(glab completion -s zsh)
