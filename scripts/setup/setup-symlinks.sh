@@ -51,6 +51,10 @@ fi
 
 create_symlink "$DOTFILES_DIR/configs/shell/zsh/z.sh" "$HOME/z.sh"
 
+# Create zsh directory and symlink aliases
+mkdir -p "$HOME/.zsh"
+create_symlink "$DOTFILES_DIR/configs/shell/zsh/aliases.zsh" "$HOME/.zsh/aliases.zsh"
+
 # Create local directories if they don't exist
 mkdir -p "$HOME/.local/share/zsh"
 mkdir -p "$HOME/.local/share/nvim"
