@@ -32,6 +32,14 @@ gh = "latest"
 glab = "latest"
 pdm = "latest"
 pipx = "latest"
+"pipx:pre-commit" = "latest"
+"pipx:check-jsonschema" = "latest"
+node = "latest"
+"pipx:black" = "latest"
+"pipx:ruff" = "latest"
+"pipx:mypy" = "latest"
+"pipx:yq" = "latest"
+"pipx:pirate-get" = "latest"
 
 [settings]
 experimental = true

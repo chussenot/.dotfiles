@@ -1,4 +1,5 @@
 [tools]
 kind = "latest"
+node = "latest"
 pdm = "latest"
 python = "latest"
