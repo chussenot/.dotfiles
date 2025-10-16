@@ -19,6 +19,10 @@
 : ${CT_SHOW_PYTHON:=true}
 : ${CT_SHOW_NODE:=true}
 : ${CT_SHOW_GO:=true}
+: ${CT_SHOW_LOAD:=true}
+: ${CT_SHOW_JOBS:=true}
+: ${CT_SHOW_DOCKER:=true}
+: ${CT_SHOW_KUBECTL:=false}
 
 # VCS (Version Control System) styling
 CT_VCS_PREFIX=" %{$reset_color%}on%{$fg[blue]%} "
@@ -53,6 +57,19 @@ CT_NODE_SUFFIX="%{$reset_color%}"
 # Go styling
 CT_GO_PREFIX=" %{$fg[cyan]%}go:"
 CT_GO_SUFFIX="%{$reset_color%}"
+
+# System load styling
+CT_LOAD_PREFIX=" %{$fg[magenta]%}load:"
+CT_LOAD_SUFFIX="%{$reset_color%}"
+
+# Background jobs styling
+CT_JOBS_PREFIX=" %{$fg[yellow]%}jobs:"
+CT_JOBS_SUFFIX="%{$reset_color%}"
+
+# Docker styling
+CT_DOCKER_PREFIX=" %{$fg[blue]%}🐳"
+CT_DOCKER_SUFFIX="%{$reset_color%}"
+
 
 # =============================================================================
 # VCS Prompt Functions
@@ -151,6 +168,64 @@ go_version() {
 }
 
 # =============================================================================
+# System Load Function
+# =============================================================================
+
+system_load() {
+    # Check if system load should be shown
+    [[ "$CT_SHOW_LOAD" == "true" ]] || return
+    
+    # Get 1-minute load average
+    local load_avg
+    load_avg=$(uptime 2>/dev/null | awk -F'load average:' '{print $2}' | awk -F',' '{print $1}' | tr -d ' ') || return
+    
+    # Color code based on load (green < 1, yellow < 2, red >= 2)
+    if (( $(echo "$load_avg < 1" | bc -l 2>/dev/null || echo "0") )); then
+        echo "${CT_LOAD_PREFIX}%{$fg[green]%}${load_avg}%{$reset_color%}${CT_LOAD_SUFFIX}"
+    elif (( $(echo "$load_avg < 2" | bc -l 2>/dev/null || echo "0") )); then
+        echo "${CT_LOAD_PREFIX}%{$fg[yellow]%}${load_avg}%{$reset_color%}${CT_LOAD_SUFFIX}"
+    else
+        echo "${CT_LOAD_PREFIX}%{$fg[red]%}${load_avg}%{$reset_color%}${CT_LOAD_SUFFIX}"
+    fi
+}
+
+# =============================================================================
+# Background Jobs Function
+# =============================================================================
+
+background_jobs() {
+    # Check if background jobs should be shown
+    [[ "$CT_SHOW_JOBS" == "true" ]] || return
+    
+    local job_count
+    job_count=$(jobs -r | wc -l 2>/dev/null) || return
+    
+    # Only show if there are background jobs
+    if [[ $job_count -gt 0 ]]; then
+        echo "${CT_JOBS_PREFIX}${job_count}${CT_JOBS_SUFFIX}"
+    fi
+}
+
+# =============================================================================
+# Docker Function
+# =============================================================================
+
+docker_info() {
+    # Check if Docker info should be shown
+    [[ "$CT_SHOW_DOCKER" == "true" ]] || return
+    
+    # Check if Docker is available and running
+    command -v docker >/dev/null 2>&1 || return
+    docker info >/dev/null 2>&1 || return
+    
+    # Check if we're in a Docker container
+    if [[ -f /.dockerenv ]] || [[ -n "${DOCKER_CONTAINER:-}" ]]; then
+        echo "${CT_DOCKER_PREFIX}${CT_DOCKER_SUFFIX}"
+    fi
+}
+
+
+# =============================================================================
 # Prompt Variables (for performance)
 # =============================================================================
 
@@ -189,6 +264,28 @@ else
     local go_info=''
 fi
 
+# System load info (only if enabled)
+if [[ "$CT_SHOW_LOAD" == "true" ]]; then
+    local load_info='$(system_load)'
+else
+    local load_info=''
+fi
+
+# Background jobs info (only if enabled)
+if [[ "$CT_SHOW_JOBS" == "true" ]]; then
+    local jobs_info='$(background_jobs)'
+else
+    local jobs_info=''
+fi
+
+# Docker info (only if enabled)
+if [[ "$CT_SHOW_DOCKER" == "true" ]]; then
+    local docker_info='$(docker_info)'
+else
+    local docker_info=''
+fi
+
+
 # Exit code info (only if enabled)
 if [[ "$CT_SHOW_EXIT_CODE" == "true" ]]; then
     local exit_code='$(exit_code)'
@@ -201,11 +298,11 @@ fi
 # =============================================================================
 
 # Prompt format:
-# PRIVILEGES USER @ MACHINE in DIRECTORY py:VERSION node:VERSION go:VERSION on git:BRANCH STATE C:EXIT_CODE
+# PRIVILEGES USER @ MACHINE in DIRECTORY py:VERSION node:VERSION go:VERSION load:LOAD jobs:JOBS 🐳 on git:BRANCH STATE C:EXIT_CODE
 # $ COMMAND
 #
 # Example:
-# # chussenot @ hostname in ~/.dotfiles py:3.11 node:18.17 go:1.21 on git:main ✓ C:0
+# # chussenot @ hostname in ~/.dotfiles py:3.11 node:18.17 go:1.21 load:0.5 jobs:2 🐳 on git:main ✓ C:0
 # $
 
 # Build the main prompt
@@ -220,6 +317,9 @@ ${venv_info}\
 ${python_info}\
 ${node_info}\
 ${go_info}\
+${load_info}\
+${jobs_info}\
+${docker_info}\
 ${git_info}\
 ${exit_code}
 %{$terminfo[bold]$fg[red]%}$ %{$reset_color%}"
@@ -255,6 +355,9 @@ ZSH_THEME_NAME="chussenot"
 # export CT_SHOW_PYTHON=false
 # export CT_SHOW_NODE=false
 # export CT_SHOW_GO=false
+# export CT_SHOW_LOAD=false
+# export CT_SHOW_JOBS=false
+# export CT_SHOW_DOCKER=false
 #
 # # Use simple symbols instead of fancy ones
 # export CT_VCS_SYMBOLS=false
@@ -268,4 +371,11 @@ ZSH_THEME_NAME="chussenot"
 # export CT_SHOW_PYTHON=true
 # export CT_SHOW_NODE=true
 # export CT_SHOW_GO=true
+# export CT_SHOW_LOAD=true
+# export CT_SHOW_JOBS=true
+# ZSH_THEME="chussenot"
+#
+# # Example DevOps configuration:
+# export CT_SHOW_DOCKER=true
+# export CT_SHOW_LOAD=true
 # ZSH_THEME="chussenot"
