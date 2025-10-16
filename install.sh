@@ -134,3 +134,11 @@ echo "2. Customize your local settings in: $SCRIPT_DIR/local/"
 echo "3. Install any additional tools you need"
 echo ""
 print_status "🎉 Your development environment is ready!" 
+
+# Install chussenot zsh theme
+print_status "🎨 Installing chussenot zsh theme..."
+"$SCRIPT_DIR/scripts/setup/install-theme.sh"
+
+# install the man page
+print_status "📖 Installing man page..."
+"$SCRIPT_DIR/scripts/setup/install-man-page.sh"
