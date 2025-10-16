@@ -106,9 +106,24 @@ zinit wait"0" lucid for \
 zinit ice wait"0" lucid atinit"ZINIT[COMPINIT_OPTS]=-C"
 zinit light zdharma-continuum/fast-syntax-highlighting
 
-# History search
-zinit ice lucid wait"0"
-zinit light joshskidmore/zsh-fzf-history-search
+# Custom fzf history search (replaces plugin)
+fzf-history-widget() {
+  local selected num
+  setopt localoptions noglobsubst noposixbuiltins pipefail no_aliases 2>/dev/null
+  selected=( $(fc -rl 1 | awk '!seen[$0]++' | grep -v -E '(nim|data)' | 
+    FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS --tac -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS --query=${(q)LBUFFER} +m" $(__fzfcmd)) )
+  local ret=$?
+  if [ -n "$selected" ]; then
+    num=$selected[1]
+    if [ -n "$num" ]; then
+      zle vi-fetch-history -n $num
+    fi
+  fi
+  zle reset-prompt
+  return $ret
+}
+zle     -N   fzf-history-widget
+bindkey '^R' fzf-history-widget
 
 # Git tools
 zinit ice wait"1" lucid
@@ -131,7 +146,6 @@ zinit wait"1" lucid for \
 # Navigation and history search
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
-bindkey '^R' fzf-history-widget
 bindkey '^[[1;5C' forward-word   # Ctrl+Right
 bindkey '^[[1;5D' backward-word  # Ctrl+Left
 
