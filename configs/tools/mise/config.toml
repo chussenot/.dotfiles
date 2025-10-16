@@ -40,6 +40,8 @@ node = "latest"
 "pipx:mypy" = "latest"
 "pipx:yq" = "latest"
 "pipx:pirate-get" = "latest"
+"go:github.com/equinix-labs/otel-cli" = "latest"
+"go:github.com/CtrlSpice/otel-desktop-viewer" = "latest"
 
 [settings]
 experimental = true
