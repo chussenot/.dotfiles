@@ -1,0 +1,284 @@
+.TH KEYMAPS 1 "2024-01-15" "dotfiles" "Development Environment Key Mappings"
+.SH NAME
+keymaps \- Display comprehensive key mappings for development environment
+.SH SYNOPSIS
+.B keymaps
+.SH DESCRIPTION
+.B keymaps
+displays a comprehensive, colorized reference of all key mappings across your
+entire development environment, including ZSH shell, FZF fuzzy finder, TMUX
+terminal multiplexer, and NEOVIM editor.
+.PP
+This tool provides a unified interface to view all custom key bindings and
+shortcuts in a well-organized, visually appealing format with color coding
+and logical categorization.
+.SH ENVIRONMENTS COVERED
+.SS ZSH Shell Key Mappings
+History and navigation key bindings including:
+.TP
+.B <Up>/<Down>
+History substring search navigation
+.TP
+.B <C-R>
+Fuzzy search through command history using FZF
+.TP
+.B <C-Left>/<C-Right>
+Word-by-word navigation
+.SS FZF Fuzzy Finder Key Mappings
+File and directory search functionality:
+.TP
+.B <C-T>
+Find and open files
+.TP
+.B <C-R>
+Search command history
+.TP
+.B <C-C>
+Change directory with fuzzy search
+.TP
+.B <Alt-C>
+Alternative directory change
+.PP
+Navigation within FZF interface:
+.TP
+.B <C-J>/<C-K>
+Move down/up in results
+.TP
+.B <C-N>/<C-P>
+Alternative navigation keys
+.TP
+.B <Enter>
+Select current item
+.TP
+.B <Esc>
+Cancel and exit
+.TP
+.B <C-G>
+Abort search
+.SS TMUX Terminal Multiplexer Key Mappings
+Session and window management:
+.TP
+.B <C-A>
+Prefix key (replaces default <C-B>)
+.TP
+.B a
+Send literal Ctrl+A
+.TP
+.B <C-D>
+Detach from current session
+.TP
+.B <C-C>
+Create new window
+.PP
+Window management:
+.TP
+.B <C-N>/<C-P>
+Next/previous window
+.TP
+.B ^\\
+Last window (no prefix required)
+.TP
+.B s/<C-S>
+Horizontal split
+.TP
+.B v/<C-V>
+Vertical split
+.PP
+Pane management:
+.TP
+.B |
+Maximize/unmaximize current pane
+.TP
+.B J/K/H/L
+Resize pane down/up/left/right
+.PP
+Pane navigation (no prefix):
+.TP
+.B <Alt-Left>/<Alt-Right>/<Alt-Up>/<Alt-Down>
+Select panes in respective directions
+.PP
+Session management:
+.TP
+.B <C-K>/<C-J>
+Previous/next session
+.TP
+.B <Alt-Left>/<Alt-Right>
+Alternative session navigation
+.TP
+.B C
+Create new session
+.TP
+.B <Mouse-Left>
+Session switcher menu
+.SS NEOVIM Editor Key Mappings
+General navigation:
+.TP
+.B j/k
+Linewrap-aware movement (gj/gk)
+.TP
+.B gj/gk
+Original Vim movement
+.PP
+Tab navigation:
+.TP
+.B <C-Left>/<C-Right>
+Previous/next tab
+.PP
+Buffer management:
+.TP
+.B <leader><leader>
+Switch to previous buffer
+.TP
+.B <C-w><C-d>
+Close current buffer
+.PP
+Text manipulation:
+.TP
+.B gV
+Visually select last edited/pasted text
+.TP
+.B gp
+Select last pasted text
+.TP
+.B <C-k>/<C-j>
+Move line up/down
+.TP
+.B <C-k>/<C-j> (visual)
+Move selection up/down
+.PP
+Folding:
+.TP
+.B <F8>
+Toggle fold
+.TP
+.B <S-F8>
+Toggle fold recursively
+.TP
+.B <C-F8>
+Open all folds
+.TP
+.B <C-S-F8>
+Close all folds
+.PP
+Visual aids:
+.TP
+.B <F10>
+Toggle column highlighting
+.PP
+Surroundings (visual mode):
+.TP
+.B (/{/[/'/"
+Surround selection with parentheses/braces/brackets/quotes
+.PP
+Configuration:
+.TP
+.B <C-R>
+Reload configuration
+.TP
+.B <C-F11>
+Toggle relative line numbering
+.TP
+.B <F5>
+Toggle paste mode
+.PP
+File operations:
+.TP
+.B <C-s>
+Save current buffer
+.TP
+.B %%
+Expand to directory path
+.TP
+.B $$
+Expand to full file path
+.TP
+.B \\fn
+Insert current filename
+.PP
+Search and highlighting:
+.TP
+.B <C-L>
+Clear search highlighting
+.PP
+Indentation (visual mode):
+.TP
+.B </>
+Indent left/right
+.PP
+Plugin mappings:
+.TP
+.B <C-T>
+Toggle NERDTree
+.TP
+.B <F2>
+Toggle EasyBuffer
+.TP
+.B <F6>
+Toggle Undotree
+.TP
+.B //
+Toggle comment (TComment)
+.TP
+.B gh/gH
+Next/previous GitGutter hunk
+.TP
+.B gx
+Smart search (Open Browser)
+.PP
+Terminal mode:
+.TP
+.B <Esc>
+Switch to normal mode
+.TP
+.B <C-v><Esc>
+Insert literal Escape
+.PP
+Special commands:
+.TP
+.B :W
+Write as superuser
+.TP
+.B Q
+Disable Ex mode
+.PP
+.B Leader Key: <space>
+.br
+The leader key is set to space. Use it with other keys for custom mappings.
+.SH QUICK REFERENCE
+Environment-specific tips:
+.TP
+.B ZSH
+Use <C-R> for fuzzy history search
+.TP
+.B FZF
+<C-T> for files, <C-R> for history, <C-C> for directories
+.TP
+.B TMUX
+<C-A> is the prefix key (replaces <C-B>)
+.TP
+.B NEOVIM
+<space> is the leader key
+.SH FILES
+.TP
+.B ~/.dotfiles/configs/shell/zsh/functions.zsh
+Contains the keymaps function definition
+.TP
+.B ~/.dotfiles/configs/editor/nvim/KEYMAPS.md
+Detailed Neovim key mappings documentation
+.TP
+.B ~/.dotfiles/configs/terminal/tmux/tmux.conf
+TMUX configuration file
+.TP
+.B ~/.dotfiles/configs/shell/zsh/zshrc
+ZSH configuration file
+.SH SEE ALSO
+.BR man (1),
+.BR tmux (1),
+.BR fzf (1),
+.BR nvim (1),
+.BR zsh (1)
+.SH AUTHOR
+Generated for dotfiles configuration by Claude AI Assistant
+.SH BUGS
+Report issues with the keymaps function or missing mappings to the dotfiles
+repository maintainer.
