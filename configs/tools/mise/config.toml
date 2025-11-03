@@ -42,6 +42,7 @@ node = "latest"
 "pipx:pirate-get" = "latest"
 "go:github.com/equinix-labs/otel-cli" = "latest"
 "go:github.com/CtrlSpice/otel-desktop-viewer" = "latest"
+"pipx:mkdocs" = "latest"
 
 [settings]
 experimental = true

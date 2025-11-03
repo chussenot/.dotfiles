@@ -2,6 +2,16 @@
 # Oh-My-Zsh & Plugins Configuration
 ############################
 
+# Load aliases
+if [[ -f "$HOME/.zsh/aliases.zsh" ]]; then
+  source "$HOME/.zsh/aliases.zsh"
+fi
+
+# Load functions
+if [[ -f "$HOME/.zsh/functions.zsh" ]]; then
+  source "$HOME/.zsh/functions.zsh"
+fi
+
 # >>> Fast completions (static, cached)
 source "$HOME/.zsh/_completions.zsh"
 # <<< Fast completions
@@ -165,16 +175,6 @@ if [[ -d "$HOME/.zsh.local" ]]; then
   for file in "$HOME/.zsh.local"/*.zsh; do
     [[ -f "$file" ]] && source "$file"
   done
-fi
-
-# Load aliases
-if [[ -f "$HOME/.zsh/aliases.zsh" ]]; then
-  source "$HOME/.zsh/aliases.zsh"
-fi
-
-# Load functions
-if [[ -f "$HOME/.zsh/functions.zsh" ]]; then
-  source "$HOME/.zsh/functions.zsh"
 fi
 
 ############################

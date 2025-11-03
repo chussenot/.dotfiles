@@ -30,8 +30,6 @@ _gen_comp_if_missing argocd      "$COMPDIR/_argocd"      argocd completion zsh
 _gen_comp_if_missing helm        "$COMPDIR/_helm"        helm completion zsh
 # kubectl
 _gen_comp_if_missing kubectl     "$COMPDIR/_kubectl"     kubectl completion zsh
-# pip
-_gen_comp_if_missing pip         "$COMPDIR/_pip"         pip completion --zsh
 # mise
 _gen_comp_if_missing mise        "$COMPDIR/_mise"        mise completion zsh
 # gh (GitHub CLI)
