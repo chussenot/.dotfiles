@@ -43,6 +43,8 @@ node = "latest"
 "go:github.com/equinix-labs/otel-cli" = "latest"
 "go:github.com/CtrlSpice/otel-desktop-viewer" = "latest"
 "pipx:mkdocs" = "latest"
+"pipx:pytest" = "latest"
+"cargo:cocogitto" = "latest"
 
 [settings]
 experimental = true

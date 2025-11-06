@@ -12,6 +12,7 @@ echo "💾 Creating backup in $BACKUP_DIR"
 files_to_backup=(
     "$HOME/.zshrc"
     "$HOME/.tmux.conf"
+    "$HOME/.inputrc"
     "$HOME/.config/nvim"
     "$HOME/.tool-versions"
     "$HOME/z.sh"
