@@ -70,9 +70,19 @@ require('ts_context_commentstring').setup {}
 vim.g.skip_ts_context_commentstring_module = true
 
 -- Setup for spell checking with Treesitter
-require('spellsitter').setup {
-  enable = true,
-}
+-- Use pcall to safely load spellsitter in case of compatibility issues
+-- and defer initialization to ensure treesitter is fully loaded
+vim.defer_fn(function()
+  local ok, spellsitter = pcall(require, 'spellsitter')
+  if ok then
+    spellsitter.setup {
+      enable = true,
+    }
+  else
+    -- Silently fail if spellsitter can't be loaded (compatibility issue)
+    vim.notify("spellsitter: Could not load plugin (compatibility issue)", vim.log.levels.WARN)
+  end
+end, 100)
 EOD
 
 endif  " End of check if running in NeoVim
