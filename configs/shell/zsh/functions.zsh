@@ -106,25 +106,22 @@ function aliases {
 function update {
   echo "🔄 Updating your development environment..."
   
+  # Update system packages if on Ubuntu/Debian
+  if command -v apt &>/dev/null; then
+    echo "📦 Updating system packages..."
+    sudo apt update && sudo apt upgrade -y
+  fi
+  
   # Update zinit and plugins
   echo "📦 Updating zinit plugins..."
   zinit self-update
   zinit update --parallel
-  
-  # Refresh completions
-  echo "🔄 Refreshing completions..."
-  autoload -Uz compinit
-  compinit -C
-  
+    
   # Update Neovim plugins
   if command -v nvim &>/dev/null; then
     echo "🧩 Updating Neovim plugins..."
     nvim --headless +PlugUpdate +qall
   fi
-  
-  # Update Oh-My-Zsh
-  echo "🐚 Updating Oh-My-Zsh..."
-  omz update
   
   # Update mise tools
   if command -v mise &>/dev/null; then
@@ -133,11 +130,14 @@ function update {
     mise upgrade
   fi
   
-  # Update system packages if on Ubuntu/Debian
-  if command -v apt &>/dev/null; then
-    echo "📦 Updating system packages..."
-    sudo apt update && sudo apt upgrade -y
-  fi
-  
+  # Update Oh-My-Zsh
+  echo "🐚 Updating Oh-My-Zsh..."
+  omz update
+
+  # Refresh completions
+  echo "🔄 Refreshing completions..."
+  autoload -Uz compinit
+  compinit -C
+      
   echo "✅ Update complete! Your system is now up to date."
 }
