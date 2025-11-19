@@ -1,5 +1,14 @@
 [tools]
+hk = "latest"
 kind = "latest"
 node = "latest"
 pdm = "latest"
 python = "latest"
+pkl = "latest"
+prettier = "latest"
+
+[tasks]
+# Pre-lint task: runs before linting (setup/validation)
+prelint = "true"
+# Post-lint task: runs after linting (cleanup/reporting)
+postlint = "true"
