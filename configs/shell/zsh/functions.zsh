@@ -131,3 +131,25 @@ function update {
       
   echo "✅ Update complete! Your system is now up to date."
 }
+
+############################
+# Yazi integration
+############################
+
+if command -v yazi >/dev/null 2>&1; then
+  # yy : ouvre Yazi puis cd dans le dernier dossier visité
+  yy() {
+    local tmp="$(mktemp)"
+    yazi "$@" --cwd-file="$tmp"
+    local cwd
+    cwd="$(cat "$tmp" 2>/dev/null)"
+    rm -f "$tmp"
+    [ -n "$cwd" ] && cd "$cwd"
+  }
+
+  # y : lance juste Yazi dans le dossier courant
+  alias y="yazi"
+fi
+
+# Alt-o pour lancer yy
+bindkey -s '^[o' 'yy\n'

@@ -56,6 +56,12 @@ if [ -f "$DOTFILES_DIR/configs/tools/atuin/config.toml" ]; then
     create_symlink "$DOTFILES_DIR/configs/tools/atuin/config.toml" "$HOME/.config/atuin/config.toml"
 fi
 
+# Create yazi config if it exists
+if [ -f "$DOTFILES_DIR/configs/tools/yazi/yazi.toml" ]; then
+    mkdir -p "$HOME/.config/yazi"
+    create_symlink "$DOTFILES_DIR/configs/tools/yazi/yazi.toml" "$HOME/.config/yazi/yazi.toml"
+fi
+
 # Create zsh directory and symlink aliases and functions
 mkdir -p "$HOME/.zsh"
 create_symlink "$DOTFILES_DIR/configs/shell/zsh/aliases.zsh" "$HOME/.zsh/aliases.zsh"

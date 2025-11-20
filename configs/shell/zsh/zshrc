@@ -46,8 +46,6 @@ export EDITOR="nvim"
 export VISUAL="nvim" 
 export SHELL='/usr/bin/zsh'
 
-export EDITOR='vim'
-
 # Language and locale settings
 export LC_CTYPE=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -196,6 +194,11 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 source $ZSH/oh-my-zsh.sh
+
+# Ensure EDITOR is set to nvim after Oh-My-Zsh loads
+# (some plugins like git may override it)
+export EDITOR="nvim"
+export VISUAL="nvim"
 
 ############################
 # Atuin
