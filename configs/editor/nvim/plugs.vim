@@ -542,7 +542,8 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " Treesitter powered spellchecker
-Plug 'lewis6991/spellsitter.nvim'
+" DISABLED: Compatibility issue with Neovim 0.11.5 - get_query nil error
+" Plug 'lewis6991/spellsitter.nvim'
 
 " https://github.com/tmux-plugins/vim-tmux
 Plug 'tmux-plugins/vim-tmux'

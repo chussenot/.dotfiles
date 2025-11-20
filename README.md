@@ -83,7 +83,18 @@ My Tmux configuration makes the following changes:
 
 ### Zsh Configuration
 
-My Zsh configuration uses the [ys theme](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes#ys) from Oh My Zsh, and includes a number of aliases and environment variables for tools like Ruby and AWS. The [z](https://github.com/rupa/z) tool is also included for directory jumping.
+My Zsh configuration uses a custom theme called `chussenot` that provides a clean, informative prompt with the following features:
+
+- **User and host information**: Displays username, hostname, and current directory
+- **Version control**: Shows Git branch and status (clean/dirty) with customizable symbols
+- **Language versions**: Displays Python, Node.js, and Go versions (configurable)
+- **System information**: Shows system load average with color coding, background jobs count
+- **Virtual environments**: Displays active Python virtual environment
+- **Docker indicator**: Shows when running inside a Docker container
+- **Exit codes**: Displays non-zero exit codes from previous commands
+- **Highly configurable**: All features can be enabled/disabled via environment variables
+
+The configuration also includes a number of aliases and environment variables for tools like Ruby and AWS. The [z](https://github.com/rupa/z) tool is also included for directory jumping.
 
 ### Neovim Configuration
 
