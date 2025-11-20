@@ -43,28 +43,34 @@ This will create symbolic links from your home directory to the dotfiles in `~/.
 
 But also...
 
-- Oh-My-Zsh: A community-driven framework for managing Zsh configuration, including themes, plugins, and settings.
-- Zinit: A flexible and fast Zsh plugin manager.
-- MISE: A version manager that handles multiple runtime versions, such as Node.js, Python, Ruby, and more.
-- FZF: A fuzzy finder that helps you quickly search and select files, directories, and other items from the command line.
-- Ag: The Silver Searcher, a fast code searching tool.
-- Direnv: An environment switcher for the shell.
-- Tmuxinator: A tool for managing complex Tmux sessions through YAML configuration files.
-- Docker: A platform for developing, shipping, and running applications inside containers.
-- Docker Compose: A tool for defining and running multi-container Docker applications.
-- Kubectl: The command-line tool for interacting with Kubernetes clusters.
-- Helm: A package manager for Kubernetes that simplifies the deployment and management of applications.
-- Gcloud: The command-line interface for Google Cloud Platform.
-- Volta: A tool for managing JavaScript command-line tools.
+- [Oh-My-Zsh](https://github.com/ohmyzsh/ohmyzsh): A community-driven framework for managing Zsh configuration, including themes, plugins, and settings.
+- [Zinit](https://github.com/zdharma-continuum/zinit): A flexible and fast Zsh plugin manager.
+- [MISE](https://mise.run): A version manager that handles multiple runtime versions, such as Node.js, Python, Ruby, and more.
+- [FZF](https://github.com/junegunn/fzf): A fuzzy finder that helps you quickly search and select files, directories, and other items from the command line.
+- [Ripgrep (rg)](https://github.com/BurntSushi/ripgrep): A fast code searching tool that recursively searches directories for a regex pattern.
+- [fd](https://github.com/sharkdp/fd): A simple, fast and user-friendly alternative to find.
+- [bat](https://github.com/sharkdp/bat): A cat clone with syntax highlighting and Git integration.
+- [Atuin](https://github.com/atuinsh/atuin): A shell history manager that provides better search, sync, and statistics for your command history.
+- [Yazi](https://github.com/sxyazi/yazi): A terminal file manager written in Rust, designed to be fast and feature-rich.
+- [GitHub CLI (gh)](https://cli.github.com): The official command-line tool for GitHub that allows you to work with issues, pull requests, and more from the terminal.
+- [Glow](https://github.com/charmbracelet/glow): A terminal-based markdown renderer that displays markdown files in a beautiful, readable format.
+- [htop](https://htop.dev): An interactive process viewer and system monitor, providing a better alternative to the standard top command.
+- [k9s](https://github.com/derailed/k9s): A terminal UI for managing Kubernetes clusters with a clean, intuitive interface.
+- [Direnv](https://direnv.net): An environment switcher for the shell that automatically loads and unloads environment variables.
+- [Docker](https://www.docker.com): A platform for developing, shipping, and running applications inside containers.
+- [Docker Compose](https://docs.docker.com/compose/): A tool for defining and running multi-container Docker applications.
+- [Kubectl](https://kubernetes.io/docs/reference/kubectl/): The command-line tool for interacting with Kubernetes clusters.
+- [Helm](https://helm.sh): A package manager for Kubernetes that simplifies the deployment and management of applications.
+- [Gcloud](https://cloud.google.com/sdk/docs/install): The command-line interface for Google Cloud Platform.
 
 And few languages...
 
-- Python: A popular programming language.
-- Ruby: Another popular programming language.
-- Go (Golang): A programming language developed by Google.
-- Rust: A systems programming language that focuses on performance and safety.
-- Java: A widely used programming language for building cross-platform applications.
-- Node.js: A JavaScript runtime that allows you to execute JavaScript code outside a web browser.
+- [Python](https://www.python.org): A popular programming language.
+- [Ruby](https://www.ruby-lang.org): Another popular programming language.
+- [Go (Golang)](https://go.dev): A programming language developed by Google.
+- [Rust](https://www.rust-lang.org): A systems programming language that focuses on performance and safety.
+- [Java](https://openjdk.org): A widely used programming language for building cross-platform applications.
+- [Node.js](https://nodejs.org): A JavaScript runtime that allows you to execute JavaScript code outside a web browser.
 
 ## Notes
 
