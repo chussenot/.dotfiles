@@ -95,41 +95,50 @@ function aliases {
 
 function update {
   echo "🔄 Updating your development environment..."
+  local errors=0
   
   # Update system packages if on Ubuntu/Debian
   if command -v apt &>/dev/null; then
     echo "📦 Updating system packages..."
-    sudo apt update && sudo apt upgrade -y
+    sudo apt update && sudo apt upgrade -y || ((errors++))
   fi
   
   # Update zinit and plugins
-  echo "📦 Updating zinit plugins..."
-  zinit self-update
-  zinit update --parallel
+  if command -v zinit &>/dev/null; then
+    echo "📦 Updating zinit plugins..."
+    zinit self-update 2>/dev/null || true
+    zinit update --parallel 2>/dev/null || ((errors++))
+  fi
     
   # Update Neovim plugins
   if command -v nvim &>/dev/null; then
     echo "🧩 Updating Neovim plugins..."
-    nvim --headless +PlugUpdate +qall
+    nvim --headless +PlugUpdate +qall 2>/dev/null || ((errors++))
   fi
   
   # Update mise tools
   if command -v mise &>/dev/null; then
     echo "🛠️  Updating mise tools..."
-    mise self-update
-    mise upgrade
+    mise self-update 2>/dev/null || true
+    mise upgrade 2>/dev/null || ((errors++))
   fi
   
   # Update Oh-My-Zsh
-  echo "🐚 Updating Oh-My-Zsh..."
-  omz update
+  if command -v omz &>/dev/null; then
+    echo "🐚 Updating Oh-My-Zsh..."
+    omz update 2>/dev/null || ((errors++))
+  fi
 
   # Refresh completions
   echo "🔄 Refreshing completions..."
   autoload -Uz compinit
-  compinit -C
+  compinit -C 2>/dev/null || true
       
-  echo "✅ Update complete! Your system is now up to date."
+  if [[ $errors -eq 0 ]]; then
+    echo "✅ Update complete! Your system is now up to date."
+  else
+    echo "⚠️  Update completed with $errors error(s). Check the output above for details."
+  fi
 }
 
 ############################

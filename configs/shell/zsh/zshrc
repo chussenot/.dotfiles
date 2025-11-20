@@ -30,8 +30,10 @@ HISTFILE=~/.zsh_history
 ############################
 
 # Check if we are inside a tmux session
-if [ -z "$TMUX" ]; then
-  # We are not inside tmux, try to attach to an existing session 0 if it exists
+# Only auto-start tmux if it's available and we're in an interactive shell
+if [[ -z "$TMUX" && -n "$PS1" && -t 0 ]] && command -v tmux &>/dev/null; then
+  # Try to attach to an existing session 'default' if it exists
+  # Otherwise create a new session named 'default'
   tmux attach-session -t default 2>/dev/null || tmux new-session -s default
 fi
 
@@ -39,7 +41,8 @@ fi
 # General Environment Variables
 ############################
 
-export ENABLE_WASM=
+# ENABLE_WASM is intentionally empty (unset if needed)
+# export ENABLE_WASM=
 export EDITOR="nvim"
 export VISUAL="nvim" 
 export SHELL='/usr/bin/zsh'
@@ -84,12 +87,8 @@ unsetopt BEEP
 ############################
 
 # Mise en place
-# export MISE_VERBOSE=1
-# export RUST_BACKTRACE=1
 export MISE_HOME="$HOME/.mise"
-# eval "$(~/.local/bin/mise activate zsh --shims)"
 eval "$(~/.local/bin/mise activate zsh)"
-# export PATH="$HOME/.local/share/mise/shims:$PATH"
 
 # Rust
 export PATH=$HOME/.cargo/bin:$PATH
@@ -142,6 +141,10 @@ zinit wait"0" lucid for \
 zinit ice wait"0" lucid atinit"ZINIT[COMPINIT_OPTS]=-C"
 zinit light zdharma-continuum/fast-syntax-highlighting
 
+# History substring search (required for history-substring-search-up/down bindings)
+zinit ice wait"0" lucid
+zinit light zsh-users/zsh-history-substring-search
+
 # Custom fzf history search (replaces plugin)
 fzf-history-widget() {
   local selected num
@@ -159,6 +162,8 @@ fzf-history-widget() {
   return $ret
 }
 zle     -N   fzf-history-widget
+# Note: fzf-history-widget is defined but not bound by default
+# Uncomment the line below to enable it (conflicts with atuin's Ctrl+R)
 # bindkey '^R' fzf-history-widget
 
 # Git tools
@@ -227,7 +232,10 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 ############################
 
 # General Fuzzy finder
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# Only source if fzf is installed and the file exists
+if command -v fzf &>/dev/null && [[ -f ~/.fzf.zsh ]]; then
+  source ~/.fzf.zsh
+fi
 
 source $ZSH/oh-my-zsh.sh
 
@@ -252,6 +260,6 @@ if command -v zoxide >/dev/null 2>&1; then
   eval "$(zoxide init zsh)"
 fi
 
-
-autoload -U +X bashcompinit && bashcompinit
+# Note: bashcompinit is already handled in _completions.zsh
+# Only set MANPATH here
 export MANPATH="$HOME/.local/share/man:$MANPATH"
