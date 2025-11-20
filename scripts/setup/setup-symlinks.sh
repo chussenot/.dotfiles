@@ -99,6 +99,11 @@ if [ -f "$DOTFILES_DIR/configs/tools/bat/config" ]; then
     create_symlink "$DOTFILES_DIR/configs/tools/bat/config" "$HOME/.config/bat/config"
 fi
 
+# Create tig config if it exists
+if [ -f "$DOTFILES_DIR/configs/tools/tig/tigrc" ]; then
+    create_symlink "$DOTFILES_DIR/configs/tools/tig/tigrc" "$HOME/.tigrc"
+fi
+
 # Create zsh directory and symlink aliases and functions
 mkdir -p "$HOME/.zsh"
 create_symlink "$DOTFILES_DIR/configs/shell/zsh/aliases.zsh" "$HOME/.zsh/aliases.zsh"

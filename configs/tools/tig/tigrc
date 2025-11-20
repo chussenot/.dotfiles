@@ -1,0 +1,22 @@
+# Tig Configuration
+# Minimal configuration with useful keybindings
+
+# Fetch and Pull
+bind generic F ?git fetch %(remote)
+bind main    F ?git fetch %(remote)
+bind generic U ?git pull %(remote)
+
+# Push
+bind generic P ?git push -u %(remote) %(repo:head)
+
+# Stash
+bind generic S ?git stash save "%(prompt Enter stash comment: )"
+
+# Toggle views
+bind generic <Esc>f :toggle file-name
+bind main    <Esc>f :toggle commit-title-refs
+
+# Update current branch (Alt-u)
+bind main    <Esc>u ?sh -c "git checkout %(branch) && git pull %(remote) --ff-only && git checkout -"
+bind diff    <Esc>u ?sh -c "git checkout %(branch) && git pull %(remote) --ff-only && git checkout -"
+bind refs    <Esc>u ?sh -c "git checkout %(branch) && git pull %(remote) --ff-only && git checkout -"
