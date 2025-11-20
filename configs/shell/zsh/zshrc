@@ -47,14 +47,26 @@ export EDITOR="nvim"
 export VISUAL="nvim" 
 export SHELL='/usr/bin/zsh'
 
+# Pager settings
+export PAGER="${PAGER:-less}"
+export LESS="${LESS:--R}"
+
+# Set dotfiles directory for easy access
+export DOTFILES_DIR="${DOTFILES_DIR:-$HOME/.dotfiles}"
+
 # Language and locale settings
 export LC_CTYPE=en_US.UTF-8
 export LANG=en_US.UTF-8
+
+# Timezone (if not already set)
+export TZ="${TZ:-$(cat /etc/timezone 2>/dev/null || echo 'UTC')}"
 
 # XDG Base Directory Specification support
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$UID}"
 
 ############################
 # PATH Management
@@ -95,11 +107,13 @@ setopt HIST_SAVE_NO_DUPS
 # - AUTO_CD: Type directory name to cd into it
 # - AUTO_PUSHD: Make cd push the old directory onto the directory stack
 # - PUSHD_SILENT: Don't print the directory stack after pushd/popd
+# - PUSHD_IGNORE_DUPS: Don't push duplicate directories onto the stack
 # - CDABLE_VARS: Allow cd to variables (e.g., cd $HOME)
 # - COMPLETE_IN_WORD: Complete from both ends of the word
 setopt AUTO_CD
 setopt AUTO_PUSHD
 setopt PUSHD_SILENT
+setopt PUSHD_IGNORE_DUPS
 setopt CDABLE_VARS
 setopt COMPLETE_IN_WORD
 
@@ -112,14 +126,17 @@ setopt NOMATCH
 # Command correction
 # - CORRECT: Try to correct spelling of commands
 # - CORRECT_ALL: Try to correct all arguments
+# Note: These can be annoying, consider unsetting if you prefer
 setopt CORRECT
 setopt CORRECT_ALL
 
 # Disable annoying behaviors
 # - BEEP: Disable terminal bell/beep
 # - FLOW_CONTROL: Disable flow control (Ctrl+S/Ctrl+Q)
+# - MAIL_WARNING: Don't print warning if mail file has been accessed
 unsetopt BEEP
 unsetopt FLOW_CONTROL
+unsetopt MAIL_WARNING
 
 ############################
 # Language and Runtime Settings

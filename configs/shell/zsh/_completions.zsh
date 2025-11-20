@@ -90,6 +90,7 @@ fi
 # We enable bashcompinit ONLY if at least one is present.
 
 _need_bashcomp=false
+typeset -g -a _bash_fallbacks  # Initialize array once at the start
 
 # Terraform fallback: if no native _terraform was produced above
 if command -v terraform &>/dev/null && [[ ! -s "$COMPDIR/_terraform" ]]; then
@@ -98,13 +99,11 @@ if command -v terraform &>/dev/null && [[ ! -s "$COMPDIR/_terraform" ]]; then
     source "$HOME/.terraform.d/autocomplete/zsh_autocomplete" 2>/dev/null || {
       # Fallback to bash-style if native completion failed
       _need_bashcomp=true
-      typeset -g -a _bash_fallbacks
       _bash_fallbacks+=("complete -o nospace -C $(command -v terraform) terraform")
     }
   else
     # Use bash-style completion as fallback
     _need_bashcomp=true
-    typeset -g -a _bash_fallbacks
     _bash_fallbacks+=("complete -o nospace -C $(command -v terraform) terraform")
   fi
 fi

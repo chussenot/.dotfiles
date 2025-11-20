@@ -66,6 +66,10 @@ gac() {
         echo "Usage: gac <commit-message>" >&2
         return 1
     fi
+    if ! git rev-parse --git-dir &>/dev/null; then
+        echo "Error: Not in a git repository" >&2
+        return 1
+    fi
     git add . && git commit -m "$1"
 }
 
@@ -74,7 +78,21 @@ gacp() {
         echo "Usage: gacp <commit-message>" >&2
         return 1
     fi
+    if ! git rev-parse --git-dir &>/dev/null; then
+        echo "Error: Not in a git repository" >&2
+        return 1
+    fi
     git add . && git commit -m "$1" && git push
+}
+
+# Quick git status
+function gst() {
+    if git rev-parse --git-dir &>/dev/null; then
+        git status
+    else
+        echo "Error: Not in a git repository" >&2
+        return 1
+    fi
 }
 
 # Docker functions
@@ -199,14 +217,16 @@ function ff() {
 # Find text in files
 function ftext() {
   if [[ -z "$1" ]]; then
-    echo "Usage: ftext <pattern>" >&2
+    echo "Usage: ftext <pattern> [directory]" >&2
     return 1
   fi
   
+  local search_dir="${2:-.}"
+  
   if command -v rg &>/dev/null; then
-    rg "$1"
+    rg "$1" "$search_dir"
   elif command -v grep &>/dev/null; then
-    grep -r "$1" .
+    grep -r "$1" "$search_dir"
   else
     echo "Error: ripgrep or grep not found" >&2
     return 1
@@ -221,11 +241,32 @@ function tmpdir() {
     return 1
   }
   cd "$tmp_dir" && echo "📁 Created and entered: $tmp_dir"
+  # Store path in variable for easy access
+  export TMPDIR_CURRENT="$tmp_dir"
+}
+
+# Quick access to common directories
+function cdd() {
+  # cd to dotfiles directory
+  cd "${DOTFILES_DIR:-$HOME/.dotfiles}" 2>/dev/null || cd "$HOME/.dotfiles" 2>/dev/null || {
+    echo "Error: dotfiles directory not found" >&2
+    return 1
+  }
+}
+
+# Quick access to temporary directory
+function cdtmp() {
+  if [[ -n "${TMPDIR_CURRENT:-}" ]] && [[ -d "$TMPDIR_CURRENT" ]]; then
+    cd "$TMPDIR_CURRENT"
+  else
+    tmpdir
+  fi
 }
 
 function update {
   echo "🔄 Updating your development environment..."
   local errors=0
+  local start_time=$(date +%s)
   
   # Update system packages if on Ubuntu/Debian
   if command -v apt &>/dev/null; then
@@ -263,11 +304,20 @@ function update {
   echo "🔄 Refreshing completions..."
   autoload -Uz compinit
   compinit -C 2>/dev/null || true
+  
+  # Force completion regeneration if requested
+  if [[ -n "${ZSH_COMP_REFRESH:-}" ]]; then
+    echo "🔄 Forcing completion regeneration..."
+    ZSH_COMP_REFRESH=1 source "${ZDOTDIR:-$HOME}/.zsh/_completions.zsh" 2>/dev/null || true
+  fi
+  
+  local end_time=$(date +%s)
+  local duration=$((end_time - start_time))
       
   if [[ $errors -eq 0 ]]; then
-    echo "✅ Update complete! Your system is now up to date."
+    echo "✅ Update complete! Your system is now up to date. (took ${duration}s)"
   else
-    echo "⚠️  Update completed with $errors error(s). Check the output above for details."
+    echo "⚠️  Update completed with $errors error(s) in ${duration}s. Check the output above for details."
   fi
 }
 
