@@ -187,8 +187,9 @@ zinit wait"1" lucid for \
 ############################
 
 # Navigation and history search
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
+
+bindkey '^[[A' history-substring-search-up # Up arrow: search backward in history for matching substring
+bindkey '^[[B' history-substring-search-down # Down arrow: search forward in history for matching substring
 bindkey '^[[1;5C' forward-word   # Ctrl+Right
 bindkey '^[[1;5D' backward-word  # Ctrl+Left
 
