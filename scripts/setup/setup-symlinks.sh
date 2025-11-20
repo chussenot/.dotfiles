@@ -92,6 +92,12 @@ if [ -f "$DOTFILES_DIR/configs/tools/glow/glow.yml" ]; then
     create_symlink "$DOTFILES_DIR/configs/tools/glow/glow.yml" "$HOME/.config/glow/glow.yml"
 fi
 
+# Create bat config if it exists
+if [ -f "$DOTFILES_DIR/configs/tools/bat/config" ]; then
+    mkdir -p "$HOME/.config/bat"
+    create_symlink "$DOTFILES_DIR/configs/tools/bat/config" "$HOME/.config/bat/config"
+fi
+
 # Create zsh directory and symlink aliases and functions
 mkdir -p "$HOME/.zsh"
 create_symlink "$DOTFILES_DIR/configs/shell/zsh/aliases.zsh" "$HOME/.zsh/aliases.zsh"

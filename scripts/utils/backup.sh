@@ -15,6 +15,7 @@ files_to_backup=(
     "$HOME/.tmux.conf"
     "$HOME/.inputrc"
     "$HOME/.config/nvim"
+    "$HOME/.config/bat"
     "$HOME/.tool-versions"
 )
 
