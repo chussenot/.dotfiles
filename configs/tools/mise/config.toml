@@ -50,6 +50,7 @@ pipx = "latest"
 kind = "latest"
 prettier = "latest"
 "cargo:zoxide" = "latest"
+"cargo:yazi-fm" = "latest"
 
 [settings]
 experimental = true
