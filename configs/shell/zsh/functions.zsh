@@ -33,16 +33,6 @@ bak() {
     cp "$1" "$1.bak"
 }
 
-# Quick directory navigation
-cd() {
-    if [[ -d "$1" ]]; then
-        builtin cd "$1"
-    else
-        echo "Directory '$1' does not exist"
-        return 1
-    fi
-}
-
 # Git functions
 gac() {
     git add . && git commit -m "$1"
