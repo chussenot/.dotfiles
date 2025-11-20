@@ -275,6 +275,23 @@ function update {
     sudo apt update && sudo apt upgrade -y || ((errors++))
   fi
 
+  # Update fzf repository
+  if [[ -d "$HOME/.fzf" ]]; then
+    echo "🔄 Updating fzf repository..."
+    cd "$HOME/.fzf" && git pull --rebase 2>/dev/null && cd - || ((errors++))
+    if [[ $errors -eq 0 ]]; then
+      echo "✅ fzf repository updated successfully!"
+    else
+      echo "⚠️  Error: Failed to update fzf repository"
+    fi
+  fi
+
+  # Update TPM (tmux plugin manager)
+  if [[ -d "$HOME/.tmux/plugins/tpm" ]]; then
+    echo "🔄 Updating TPM..."
+    (cd "$HOME/.tmux/plugins/tpm" && git pull --rebase 2>/dev/null) || ((errors++))
+  fi
+
   # Update zinit and plugins
   if command -v zinit &>/dev/null; then
     echo "📦 Updating zinit plugins..."
