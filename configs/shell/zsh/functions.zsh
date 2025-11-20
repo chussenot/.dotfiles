@@ -3,64 +3,125 @@
 
 # Create a directory and cd into it
 mkcd() {
-    mkdir -p "$1" && cd "$1"
+    if [[ -z "$1" ]]; then
+        echo "Usage: mkcd <directory>" >&2
+        return 1
+    fi
+    mkdir -p "$1" && cd "$1" || {
+        echo "Error: Failed to create or change to directory: $1" >&2
+        return 1
+    }
 }
 
 # Extract various archive formats
 extract() {
-    if [ -f $1 ] ; then
-        case $1 in
-            *.tar.bz2)   tar xjf $1     ;;
-            *.tar.gz)    tar xzf $1     ;;
-            *.bz2)       bunzip2 $1     ;;
-            *.rar)       unrar e $1     ;;
-            *.gz)        gunzip $1      ;;
-            *.tar)       tar xf $1      ;;
-            *.tbz2)      tar xjf $1     ;;
-            *.tgz)       tar xzf $1     ;;
-            *.zip)       unzip $1       ;;
-            *.Z)         uncompress $1  ;;
-            *.7z)        7z x $1        ;;
-            *)          echo "'$1' cannot be extracted via extract()" ;;
-        esac
-    else
-        echo "'$1' is not a valid file"
+    if [[ -z "$1" ]]; then
+        echo "Usage: extract <archive>" >&2
+        return 1
     fi
+    
+    if [[ ! -f "$1" ]]; then
+        echo "Error: '$1' is not a valid file" >&2
+        return 1
+    fi
+    
+    local success=0
+    case "$1" in
+        *.tar.bz2|*.tbz2)   tar xjf "$1" && success=1     ;;
+        *.tar.gz|*.tgz)     tar xzf "$1" && success=1     ;;
+        *.tar.xz)           tar xJf "$1" && success=1     ;;
+        *.tar)              tar xf "$1" && success=1      ;;
+        *.bz2)              bunzip2 "$1" && success=1     ;;
+        *.rar)              unrar e "$1" && success=1     ;;
+        *.gz)               gunzip "$1" && success=1      ;;
+        *.zip)              unzip "$1" && success=1       ;;
+        *.Z)                uncompress "$1" && success=1  ;;
+        *.7z)               7z x "$1" && success=1       ;;
+        *.xz)               xz -d "$1" && success=1       ;;
+        *)                  echo "Error: '$1' cannot be extracted via extract()" >&2 ;;
+    esac
+    
+    [[ $success -eq 1 ]] && echo "✅ Extracted: $1" || return 1
 }
 
 # Create a backup of a file
 bak() {
-    cp "$1" "$1.bak"
+    if [[ -z "$1" ]]; then
+        echo "Usage: bak <file>" >&2
+        return 1
+    fi
+    if [[ ! -f "$1" ]]; then
+        echo "Error: '$1' is not a valid file" >&2
+        return 1
+    fi
+    cp "$1" "$1.bak" && echo "✅ Backup created: $1.bak" || {
+        echo "Error: Failed to create backup" >&2
+        return 1
+    }
 }
 
 # Git functions
 gac() {
+    if [[ -z "$1" ]]; then
+        echo "Usage: gac <commit-message>" >&2
+        return 1
+    fi
     git add . && git commit -m "$1"
 }
 
 gacp() {
+    if [[ -z "$1" ]]; then
+        echo "Usage: gacp <commit-message>" >&2
+        return 1
+    fi
     git add . && git commit -m "$1" && git push
 }
 
 # Docker functions
 dclean() {
+    if ! command -v docker &>/dev/null; then
+        echo "Error: docker is not installed" >&2
+        return 1
+    fi
     docker system prune -f
     docker image prune -f
     docker container prune -f
     docker volume prune -f
+    echo "✅ Docker cleanup complete"
 }
 
 # System functions
 meminfo() {
-    free -h | grep -E "Mem|Swap"
+    if command -v free &>/dev/null; then
+        free -h | grep -E "Mem|Swap"
+    else
+        echo "Error: free command not found" >&2
+        return 1
+    fi
 }
 
 cpuinfo() {
-    lscpu | grep -E "Model name|CPU\(s\)|Thread|Core"
+    if command -v lscpu &>/dev/null; then
+        lscpu | grep -E "Model name|CPU\(s\)|Thread|Core"
+    else
+        echo "Error: lscpu command not found" >&2
+        return 1
+    fi
 }
 # Development functions
 pyvenv() {
-    python3 -m venv "$1" && source "$1/bin/activate"
+    if [[ -z "$1" ]]; then
+        echo "Usage: pyvenv <venv-name>" >&2
+        return 1
+    fi
+    if ! command -v python3 &>/dev/null; then
+        echo "Error: python3 is not installed" >&2
+        return 1
+    fi
+    python3 -m venv "$1" && source "$1/bin/activate" || {
+        echo "Error: Failed to create virtual environment" >&2
+        return 1
+    }
 }
 
 # Tmux functions
@@ -90,7 +151,11 @@ function zshconfig {
 # List all available aliases
 function aliases {
   echo "🔍 Your current aliases:"
-  alias | sort | grep -v "^_" | bat --style=plain --language=bash
+  if command -v bat &>/dev/null; then
+    alias | sort | grep -v "^_" | bat --style=plain --language=bash
+  else
+    alias | sort | grep -v "^_"
+  fi
 }
 
 function update {

@@ -3,7 +3,15 @@
 
 # Directory to store generated completion files
 COMPDIR="${ZDOTDIR:-$HOME}/.zsh/completions"
-mkdir -p "$COMPDIR"
+# Create directory with error handling
+if ! mkdir -p "$COMPDIR" 2>/dev/null; then
+  echo "⚠️  Warning: Could not create completions directory: $COMPDIR" >&2
+  COMPDIR="${TMPDIR:-/tmp}/zsh-completions-$$"
+  mkdir -p "$COMPDIR" || {
+    echo "❌ Error: Failed to create fallback completions directory" >&2
+    return 1
+  }
+fi
 
 # Helper: generate completion file if command exists and file is missing
 # Usage: _gen_comp_if_missing <cmd> <outfile> <generator...>
@@ -38,9 +46,12 @@ _gen_comp_if_missing gh          "$COMPDIR/_gh"          gh completion -s zsh
 _gen_comp_if_missing kind        "$COMPDIR/_kind"        kind completion zsh
 
 # Byte-compile individual completion functions for speed (best-effort)
-for f in "$COMPDIR"/_*; do
-  [[ -f "$f" ]] && zcompile "$f" 2>/dev/null || true
-done
+# Only compile if directory exists and contains files
+if [[ -d "$COMPDIR" ]]; then
+  for f in "$COMPDIR"/_*; do
+    [[ -f "$f" ]] && zcompile "$f" 2>/dev/null || true
+  done
+fi
 
 # Put our completions first in fpath, then init (with caching)
 fpath=("$COMPDIR" $fpath)

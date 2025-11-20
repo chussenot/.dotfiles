@@ -35,7 +35,10 @@ alias v='nvim'
 alias df='df -h'
 alias du='du -h'
 alias free='free -h'
-alias top='htop'
+# Use htop if available, otherwise fall back to top
+if command -v htop &>/dev/null; then
+  alias top='htop'
+fi
 
 # Docker aliases (basic)
 alias d='docker'
@@ -84,18 +87,24 @@ alias tg=terragrunt
 alias sudo='sudo ' # Trick to have ALL aliases available with sudo <3
 alias tn='tmux new'
 alias ta='tmux attach'
-alias tx=tmuxinator
-alias b='bat'
+# Conditional aliases for tools that might not be installed
+if command -v bat &>/dev/null || command -v batcat &>/dev/null; then
+  alias b=$(command -v bat 2>/dev/null || command -v batcat 2>/dev/null)
+fi
 alias vz='v ~/.zshrc'
 alias p='python'
 alias temp='pushd $(mktemp -d)'
 
 # Tools Sysadmin
-alias t='f(){ exa -Tll -L 1 "$@";  unset -f f; }; f'
-alias t2='f(){ exa -Tll -L 2 "$@";  unset -f f; }; f'
-alias t3='f(){ exa -Tll -L 3 "$@";  unset -f f; }; f'
-alias l='f(){ exa -ll --group-directories-first "$@";  unset -f f; }; f'
-alias la='f(){ exa -lla --group-directories-first "$@";  unset -f f; }; f'
+# exa/eza aliases (only if exa or eza is installed)
+if command -v exa &>/dev/null || command -v eza &>/dev/null; then
+  local exa_cmd=$(command -v eza 2>/dev/null || command -v exa 2>/dev/null)
+  alias t="f(){ $exa_cmd -Tll -L 1 \"\$@\";  unset -f f; }; f"
+  alias t2="f(){ $exa_cmd -Tll -L 2 \"\$@\";  unset -f f; }; f"
+  alias t3="f(){ $exa_cmd -Tll -L 3 \"\$@\";  unset -f f; }; f"
+  alias l="f(){ $exa_cmd -ll --group-directories-first \"\$@\";  unset -f f; }; f"
+  alias la="f(){ $exa_cmd -lla --group-directories-first \"\$@\";  unset -f f; }; f"
+fi
 # WARNING: Disabling SSL verification is a security risk!
 # Only use this if you understand the implications and have a valid reason
 # alias git="GIT_SSL_NO_VERIFY=true git"
