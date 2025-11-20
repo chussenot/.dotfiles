@@ -45,6 +45,7 @@ node = "latest"
 "pipx:mkdocs" = "latest"
 "pipx:pytest" = "latest"
 "cargo:cocogitto" = "latest"
+hk = "latest"
 
 [settings]
 experimental = true
