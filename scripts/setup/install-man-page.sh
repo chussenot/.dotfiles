@@ -1,7 +1,8 @@
-#!/bin/bash
-# Install man page for keymaps function
+#!/usr/bin/env bash
 
-set -e
+# Install man page for keymaps function
+set -euo pipefail
+IFS=$'\n\t'
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 MAN_SOURCE="$DOTFILES_DIR/man/man1/keymaps.1"
@@ -30,8 +31,8 @@ else
 fi
 
 # Add to MANPATH if not already present
-if ! echo "$MANPATH" | grep -q "$HOME/.local/share/man"; then
-    echo "export MANPATH=\"\$HOME/.local/share/man:\$MANPATH\"" >> "$HOME/.zshrc"
+if ! echo "${MANPATH:-}" | grep -q "$HOME/.local/share/man"; then
+    echo "export MANPATH=\"\$HOME/.local/share/man:\${MANPATH:-}\"" >> "$HOME/.zshrc"
     echo "✅ Added ~/.local/share/man to MANPATH in .zshrc"
 fi
 

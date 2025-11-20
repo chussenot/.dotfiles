@@ -1,7 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Package installation script
-set -e
+set -euo pipefail
+IFS=$'\n\t'
 
 echo "📦 Installing system packages..."
 

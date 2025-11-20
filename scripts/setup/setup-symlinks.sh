@@ -1,7 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Symlink setup script
-set -e
+set -euo pipefail
+IFS=$'\n\t'
 
 echo "🔗 Setting up symlinks..."
 

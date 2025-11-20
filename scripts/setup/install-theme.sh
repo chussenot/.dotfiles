@@ -1,7 +1,8 @@
-#!/bin/bash
-# Install chussenot zsh theme (symlink version)
+#!/usr/bin/env bash
 
-set -e
+# Install chussenot zsh theme (symlink version)
+set -euo pipefail
+IFS=$'\n\t'
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 THEME_SOURCE="$DOTFILES_DIR/configs/shell/chussenot.zsh-theme"
@@ -27,7 +28,11 @@ mkdir -p "$HOME/.oh-my-zsh/themes"
 
 # If symlink/file exists but is not correct, replace it
 if [ -L "$THEME_DEST" ] || [ -f "$THEME_DEST" ]; then
-    if [ "$(readlink -- "$THEME_DEST" 2>/dev/null)" != "$THEME_SOURCE" ]; then
+    current_link=""
+    if [ -L "$THEME_DEST" ]; then
+        current_link=$(readlink -- "$THEME_DEST" 2>/dev/null || true)
+    fi
+    if [ "$current_link" != "$THEME_SOURCE" ]; then
         echo "⚠️  Removing existing theme file: $THEME_DEST"
         rm -f "$THEME_DEST"
     fi

@@ -1,7 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Backup script for dotfiles
-set -e
+set -euo pipefail
+IFS=$'\n\t'
 
 BACKUP_DIR="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
 mkdir -p "$BACKUP_DIR"
@@ -15,6 +16,7 @@ files_to_backup=(
     "$HOME/.inputrc"
     "$HOME/.config/nvim"
     "$HOME/.tool-versions"
+)
 
 for file in "${files_to_backup[@]}"; do
     if [ -e "$file" ]; then
