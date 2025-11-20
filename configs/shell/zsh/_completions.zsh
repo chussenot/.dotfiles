@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # --- Fast Zsh completions bootstrap -----------------------------------------
 # Goal: generate once, then load fast on every shell start
 
@@ -74,6 +75,7 @@ if [[ -d "$COMPDIR" ]]; then
 fi
 
 # Put our completions first in fpath, then init (with caching)
+# shellcheck disable=SC2206
 fpath=("$COMPDIR" $fpath)
 
 autoload -Uz compinit

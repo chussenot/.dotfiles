@@ -50,7 +50,7 @@ done
 # Install fzf shell integration if fzf is installed
 if command -v fzf >/dev/null 2>&1; then
     echo "🔧 Setting up fzf shell integration..."
-    
+
     # Check if fzf shell integration is already set up
     if [[ ! -f "$HOME/.fzf.zsh" ]]; then
         # Install fzf shell integration

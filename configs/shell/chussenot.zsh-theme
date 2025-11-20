@@ -89,7 +89,7 @@ virtualenv_prompt() {
     # Check if virtual environment should be shown
     [[ "$CT_SHOW_VENV" == "true" ]] || return
     [[ -n "${VIRTUAL_ENV:-}" ]] || return
-    
+
     echo "${CT_VENV_PREFIX}${VIRTUAL_ENV:t}${CT_VENV_SUFFIX}"
 }
 
@@ -100,7 +100,7 @@ virtualenv_prompt() {
 exit_code() {
     # Check if exit code should be shown
     [[ "$CT_SHOW_EXIT_CODE" == "true" ]] || return
-    
+
     local exit_code=$?
     if [[ $exit_code -ne 0 ]]; then
         echo " ${CT_EXIT_CODE_PREFIX}${exit_code}${CT_EXIT_CODE_SUFFIX}"
@@ -114,16 +114,16 @@ exit_code() {
 python_version() {
     # Check if Python version should be shown
     [[ "$CT_SHOW_PYTHON" == "true" ]] || return
-    
+
     # Check if Python is available
     command -v python3 >/dev/null 2>&1 || return
-    
+
     local py_version
     py_version=$(python3 --version 2>/dev/null | sed 's/Python //') || return
-    
+
     # Show only major.minor version (e.g., 3.11 instead of 3.11.5)
     py_version="${py_version%.*}"
-    
+
     echo "${CT_PYTHON_PREFIX}${py_version}${CT_PYTHON_SUFFIX}"
 }
 
@@ -134,16 +134,16 @@ python_version() {
 node_version() {
     # Check if Node.js version should be shown
     [[ "$CT_SHOW_NODE" == "true" ]] || return
-    
+
     # Check if Node.js is available
     command -v node >/dev/null 2>&1 || return
-    
+
     local node_ver
     node_ver=$(node --version 2>/dev/null | sed 's/v//') || return
-    
+
     # Show only major.minor version (e.g., 18.17 instead of 18.17.0)
     node_ver="${node_ver%.*}"
-    
+
     echo "${CT_NODE_PREFIX}${node_ver}${CT_NODE_SUFFIX}"
 }
 
@@ -154,16 +154,16 @@ node_version() {
 go_version() {
     # Check if Go version should be shown
     [[ "$CT_SHOW_GO" == "true" ]] || return
-    
+
     # Check if Go is available
     command -v go >/dev/null 2>&1 || return
-    
+
     local go_ver
     go_ver=$(go version 2>/dev/null | sed 's/go version go//' | awk '{print $1}') || return
-    
+
     # Show only major.minor version (e.g., 1.21 instead of 1.21.5)
     go_ver="${go_ver%.*}"
-    
+
     echo "${CT_GO_PREFIX}${go_ver}${CT_GO_SUFFIX}"
 }
 
@@ -174,11 +174,11 @@ go_version() {
 system_load() {
     # Check if system load should be shown
     [[ "$CT_SHOW_LOAD" == "true" ]] || return
-    
+
     # Get 1-minute load average
     local load_avg
     load_avg=$(uptime 2>/dev/null | awk -F'load average:' '{print $2}' | awk -F',' '{print $1}' | tr -d ' ') || return
-    
+
     # Color code based on load (green < 1, yellow < 2, red >= 2)
     if (( $(echo "$load_avg < 1" | bc -l 2>/dev/null || echo "0") )); then
         echo "${CT_LOAD_PREFIX}%{$fg[green]%}${load_avg}%{$reset_color%}${CT_LOAD_SUFFIX}"
@@ -196,10 +196,10 @@ system_load() {
 background_jobs() {
     # Check if background jobs should be shown
     [[ "$CT_SHOW_JOBS" == "true" ]] || return
-    
+
     local job_count
     job_count=$(jobs -r | wc -l 2>/dev/null) || return
-    
+
     # Only show if there are background jobs
     if [[ $job_count -gt 0 ]]; then
         echo "${CT_JOBS_PREFIX}${job_count}${CT_JOBS_SUFFIX}"
@@ -213,11 +213,11 @@ background_jobs() {
 docker_info() {
     # Check if Docker info should be shown
     [[ "$CT_SHOW_DOCKER" == "true" ]] || return
-    
+
     # Check if Docker is available and running
     command -v docker >/dev/null 2>&1 || return
     docker info >/dev/null 2>&1 || return
-    
+
     # Check if we're in a Docker container
     if [[ -f /.dockerenv ]] || [[ -n "${DOCKER_CONTAINER:-}" ]]; then
         echo "${CT_DOCKER_PREFIX}${CT_DOCKER_SUFFIX}"

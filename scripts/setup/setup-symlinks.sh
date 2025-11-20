@@ -12,19 +12,20 @@ DOTFILES_DIR="$HOME/.dotfiles"
 create_symlink() {
     local source="$1"
     local target="$2"
-    
+
     # Create parent directory if it doesn't exist
-    local parent_dir=$(dirname "$target")
+    local parent_dir
+    parent_dir=$(dirname "$target")
     if [ ! -d "$parent_dir" ]; then
         mkdir -p "$parent_dir"
     fi
-    
+
     if [ -L "$target" ]; then
         rm -f "$target"
     elif [ -f "$target" ] || [ -d "$target" ]; then
         mv "$target" "$target.backup"
     fi
-    
+
     ln -sf "$source" "$target"
     echo "✅ Linked $target"
 }

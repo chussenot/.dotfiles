@@ -1,3 +1,4 @@
+# shellcheck shell=bash disable=SC1090,SC2155,SC2164
 # Zsh Functions
 # This file contains all shell functions
 
@@ -19,12 +20,12 @@ extract() {
         echo "Usage: extract <archive>" >&2
         return 1
     fi
-    
+
     if [[ ! -f "$1" ]]; then
         echo "Error: '$1' is not a valid file" >&2
         return 1
     fi
-    
+
     local success=0
     case "$1" in
         *.tar.bz2|*.tbz2)   tar xjf "$1" && success=1     ;;
@@ -40,7 +41,7 @@ extract() {
         *.xz)               xz -d "$1" && success=1       ;;
         *)                  echo "Error: '$1' cannot be extracted via extract()" >&2 ;;
     esac
-    
+
     [[ $success -eq 1 ]] && echo "✅ Extracted: $1" || return 1
 }
 
@@ -148,7 +149,7 @@ tdev() {
         echo "Error: tmux is not installed" >&2
         return 1
     fi
-    
+
     if tmux has-session -t dev 2>/dev/null; then
         tmux attach-session -t dev
     else
@@ -176,12 +177,12 @@ function reload {
 function zshconfig {
   local zshrc_file="${ZDOTDIR:-$HOME}/.zshrc"
   local editor="${EDITOR:-nvim}"
-  
+
   if ! command -v "$editor" &>/dev/null; then
     echo "❌ Error: $editor not found" >&2
     return 1
   fi
-  
+
   "$editor" "$zshrc_file" && reload
 }
 
@@ -202,7 +203,7 @@ function ff() {
     echo "Usage: ff <pattern>" >&2
     return 1
   fi
-  
+
   if command -v fd &>/dev/null || command -v fdfind &>/dev/null; then
     local fd_cmd=$(command -v fd 2>/dev/null || command -v fdfind 2>/dev/null)
     "$fd_cmd" -i "$1"
@@ -220,9 +221,9 @@ function ftext() {
     echo "Usage: ftext <pattern> [directory]" >&2
     return 1
   fi
-  
+
   local search_dir="${2:-.}"
-  
+
   if command -v rg &>/dev/null; then
     rg "$1" "$search_dir"
   elif command -v grep &>/dev/null; then
@@ -267,33 +268,33 @@ function update {
   echo "🔄 Updating your development environment..."
   local errors=0
   local start_time=$(date +%s)
-  
+
   # Update system packages if on Ubuntu/Debian
   if command -v apt &>/dev/null; then
     echo "📦 Updating system packages..."
     sudo apt update && sudo apt upgrade -y || ((errors++))
   fi
-  
+
   # Update zinit and plugins
   if command -v zinit &>/dev/null; then
     echo "📦 Updating zinit plugins..."
     zinit self-update 2>/dev/null || true
     zinit update --parallel 2>/dev/null || ((errors++))
   fi
-    
+
   # Update Neovim plugins
   if command -v nvim &>/dev/null; then
     echo "🧩 Updating Neovim plugins..."
     nvim --headless +PlugUpdate +qall 2>/dev/null || ((errors++))
   fi
-  
+
   # Update mise tools
   if command -v mise &>/dev/null; then
     echo "🛠️  Updating mise tools..."
     mise self-update 2>/dev/null || true
     mise upgrade 2>/dev/null || ((errors++))
   fi
-  
+
   # Update Oh-My-Zsh
   if command -v omz &>/dev/null; then
     echo "🐚 Updating Oh-My-Zsh..."
@@ -304,16 +305,16 @@ function update {
   echo "🔄 Refreshing completions..."
   autoload -Uz compinit
   compinit -C 2>/dev/null || true
-  
+
   # Force completion regeneration if requested
   if [[ -n "${ZSH_COMP_REFRESH:-}" ]]; then
     echo "🔄 Forcing completion regeneration..."
     ZSH_COMP_REFRESH=1 source "${ZDOTDIR:-$HOME}/.zsh/_completions.zsh" 2>/dev/null || true
   fi
-  
+
   local end_time=$(date +%s)
   local duration=$((end_time - start_time))
-      
+
   if [[ $errors -eq 0 ]]; then
     echo "✅ Update complete! Your system is now up to date. (took ${duration}s)"
   else

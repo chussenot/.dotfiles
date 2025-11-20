@@ -1,3 +1,4 @@
+# shellcheck shell=bash disable=SC2142,SC2139,SC2154,SC2168
 # Zsh Aliases
 # This file contains all shell aliases
 
@@ -44,7 +45,7 @@ fi
 if command -v docker &>/dev/null; then
   alias d='docker'
   alias dex='docker exec -it'
-  
+
   # docker-compose might be a plugin or separate command
   if command -v docker-compose &>/dev/null; then
     alias dc='docker-compose'
@@ -105,6 +106,7 @@ alias tn='tmux new'
 alias ta='tmux attach'
 # Conditional aliases for tools that might not be installed
 if command -v bat &>/dev/null || command -v batcat &>/dev/null; then
+  # shellcheck disable=SC2046,SC2139
   alias b=$(command -v bat 2>/dev/null || command -v batcat 2>/dev/null)
 fi
 alias vz='v ~/.zshrc'
@@ -114,7 +116,7 @@ alias temp='pushd $(mktemp -d)'
 # Tools Sysadmin
 # exa/eza aliases (only if exa or eza is installed)
 if command -v exa &>/dev/null || command -v eza &>/dev/null; then
-  local exa_cmd=$(command -v eza 2>/dev/null || command -v exa 2>/dev/null)
+  exa_cmd=$(command -v eza 2>/dev/null || command -v exa 2>/dev/null)
   alias t="f(){ $exa_cmd -Tll -L 1 \"\$@\";  unset -f f; }; f"
   alias t2="f(){ $exa_cmd -Tll -L 2 \"\$@\";  unset -f f; }; f"
   alias t3="f(){ $exa_cmd -Tll -L 3 \"\$@\";  unset -f f; }; f"

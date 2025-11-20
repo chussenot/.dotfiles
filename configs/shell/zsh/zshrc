@@ -44,7 +44,7 @@ fi
 # ENABLE_WASM is intentionally empty (unset if needed)
 # export ENABLE_WASM=
 export EDITOR="nvim"
-export VISUAL="nvim" 
+export VISUAL="nvim"
 export SHELL='/usr/bin/zsh'
 
 # Pager settings
@@ -221,14 +221,14 @@ fzf-history-widget() {
   if ! command -v fzf &>/dev/null; then
     return 1
   fi
-  
+
   local selected num
   setopt localoptions noglobsubst noposixbuiltins pipefail no_aliases 2>/dev/null
-  
+
   # Use __fzfcmd if available, otherwise use fzf directly
   local fzf_cmd="${__fzfcmd:-fzf}"
-  
-  selected=( $(fc -rl 1 | awk '!seen[$0]++' | grep -v -E '(nim|data)' | 
+
+  selected=( $(fc -rl 1 | awk '!seen[$0]++' | grep -v -E '(nim|data)' |
     FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS --tac -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS --query=${(q)LBUFFER} +m" $fzf_cmd) )
   local ret=$?
   if [ -n "$selected" ]; then
@@ -305,7 +305,7 @@ fi
 # PATH Additions (Tool-specific)
 ############################
 
-# Pdtm - Project Discovery 
+# Pdtm - Project Discovery
 # https://projectdiscovery.io/
 [[ -d "$HOME/.pdtm/go/bin" ]] && export PATH="$PATH:$HOME/.pdtm/go/bin"
 

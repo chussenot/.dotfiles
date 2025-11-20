@@ -8,11 +8,16 @@ I'm using the `zsh` shell for my day-to-day work...
 ## Disclaimer: Ubuntu-Specific Configuration
 
 Please be aware that this configuration has been rigorously tested and is primarily intended for use with Ubuntu.
-Specifically, it has been verified on an Ubuntu system running Linux kernel version `6.14.0-1015-oem`, with gcc version `13.3.0` and GNU ld version `2.42`, as part of the Ubuntu `24.04.3` LTS distribution. While this setup may be compatible with other Linux distributions or versions, optimal performance and compatibility can only be guaranteed for the tested Ubuntu environment detailed above.
+Specifically, it has been verified on an Ubuntu system running Linux kernel version `6.14.0-1015-oem`, with
+gcc version `13.3.0` and GNU ld version `2.42`, as part of the Ubuntu `24.04.3` LTS distribution. While
+this setup may be compatible with other Linux distributions or versions, optimal performance and
+compatibility can only be guaranteed for the tested Ubuntu environment detailed above.
 
-Users attempting to implement this configuration on other systems should proceed with caution and may need to make adjustments to ensure compatibility.
+Users attempting to implement this configuration on other systems should proceed with caution and may need
+to make adjustments to ensure compatibility.
 
-Your feedback and contributions to enhance cross-distribution compatibility are welcome, but support cannot be guaranteed for environments other than the specified Ubuntu setup.
+Your feedback and contributions to enhance cross-distribution compatibility are welcome, but support cannot be
+guaranteed for environments other than the specified Ubuntu setup.
 
 ## Installation
 
@@ -43,20 +48,31 @@ This will create symbolic links from your home directory to the dotfiles in `~/.
 
 But also...
 
-- [Oh-My-Zsh](https://github.com/ohmyzsh/ohmyzsh): A community-driven framework for managing Zsh configuration, including themes, plugins, and settings.
+- [Oh-My-Zsh](https://github.com/ohmyzsh/ohmyzsh): A community-driven framework for managing Zsh configuration,
+  including themes, plugins, and settings.
 - [Zinit](https://github.com/zdharma-continuum/zinit): A flexible and fast Zsh plugin manager.
-- [MISE](https://mise.run): A version manager that handles multiple runtime versions, such as Node.js, Python, Ruby, and more.
-- [FZF](https://github.com/junegunn/fzf): A fuzzy finder that helps you quickly search and select files, directories, and other items from the command line.
-- [Ripgrep (rg)](https://github.com/BurntSushi/ripgrep): A fast code searching tool that recursively searches directories for a regex pattern.
+- [MISE](https://mise.run): A version manager that handles multiple runtime versions, such as Node.js, Python,
+  Ruby, and more.
+- [FZF](https://github.com/junegunn/fzf): A fuzzy finder that helps you quickly search and select files,
+  directories, and other items from the command line.
+- [Ripgrep (rg)](https://github.com/BurntSushi/ripgrep): A fast code searching tool that recursively searches
+  directories for a regex pattern.
 - [fd](https://github.com/sharkdp/fd): A simple, fast and user-friendly alternative to find.
 - [bat](https://github.com/sharkdp/bat): A cat clone with syntax highlighting and Git integration.
-- [Atuin](https://github.com/atuinsh/atuin): A shell history manager that provides better search, sync, and statistics for your command history.
-- [Yazi](https://github.com/sxyazi/yazi): A terminal file manager written in Rust, designed to be fast and feature-rich.
-- [GitHub CLI (gh)](https://cli.github.com): The official command-line tool for GitHub that allows you to work with issues, pull requests, and more from the terminal.
-- [Glow](https://github.com/charmbracelet/glow): A terminal-based markdown renderer that displays markdown files in a beautiful, readable format.
-- [htop](https://htop.dev): An interactive process viewer and system monitor, providing a better alternative to the standard top command.
-- [k9s](https://github.com/derailed/k9s): A terminal UI for managing Kubernetes clusters with a clean, intuitive interface.
-- [Direnv](https://direnv.net): An environment switcher for the shell that automatically loads and unloads environment variables.
+- [Atuin](https://github.com/atuinsh/atuin): A shell history manager that provides better search, sync, and
+  statistics for your command history.
+- [Yazi](https://github.com/sxyazi/yazi): A terminal file manager written in Rust, designed to be fast and
+  feature-rich.
+- [GitHub CLI (gh)](https://cli.github.com): The official command-line tool for GitHub that allows you to work
+  with issues, pull requests, and more from the terminal.
+- [Glow](https://github.com/charmbracelet/glow): A terminal-based markdown renderer that displays markdown files
+  in a beautiful, readable format.
+- [htop](https://htop.dev): An interactive process viewer and system monitor, providing a better alternative to
+  the standard top command.
+- [k9s](https://github.com/derailed/k9s): A terminal UI for managing Kubernetes clusters with a clean, intuitive
+  interface.
+- [Direnv](https://direnv.net): An environment switcher for the shell that automatically loads and unloads
+  environment variables.
 - [Docker](https://www.docker.com): A platform for developing, shipping, and running applications inside containers.
 - [Docker Compose](https://docs.docker.com/compose/): A tool for defining and running multi-container Docker applications.
 - [Kubectl](https://kubernetes.io/docs/reference/kubectl/): The command-line tool for interacting with Kubernetes clusters.
@@ -89,7 +105,8 @@ My Tmux configuration makes the following changes:
 
 ### Zsh Configuration
 
-My Zsh configuration uses a custom theme called `chussenot` that provides a clean, informative prompt with the following features:
+My Zsh configuration uses a custom theme called `chussenot` that provides a clean, informative prompt with the
+following features:
 
 - **User and host information**: Displays username, hostname, and current directory
 - **Version control**: Shows Git branch and status (clean/dirty) with customizable symbols
@@ -100,8 +117,11 @@ My Zsh configuration uses a custom theme called `chussenot` that provides a clea
 - **Exit codes**: Displays non-zero exit codes from previous commands
 - **Highly configurable**: All features can be enabled/disabled via environment variables
 
-The configuration also includes a number of aliases and environment variables for tools like Ruby and AWS. The [z](https://github.com/rupa/z) tool is also included for directory jumping.
+The configuration also includes a number of aliases and environment variables for tools like Ruby and AWS. The
+[z](https://github.com/rupa/z) tool is also included for directory jumping.
 
 ### Neovim Configuration
 
-My Neovim configuration uses [vim-plug](https://github.com/junegunn/vim-plug) to manage plugins, and includes settings for a number of languages, including Ruby, Python, and Rust. Various plugins are included to provide functionality like autocompletion, fuzzy finding, and linting.
+My Neovim configuration uses [vim-plug](https://github.com/junegunn/vim-plug) to manage plugins, and includes
+settings for a number of languages, including Ruby, Python, and Rust. Various plugins are included to provide
+functionality like autocompletion, fuzzy finding, and linting.

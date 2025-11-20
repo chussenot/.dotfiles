@@ -122,7 +122,7 @@ echo "1. Restart your terminal or run: source ~/.zshrc"
 echo "2. Customize your local settings in: $SCRIPT_DIR/local/"
 echo "3. Install any additional tools you need"
 echo ""
-print_status "🎉 Your development environment is ready!" 
+print_status "🎉 Your development environment is ready!"
 
 # Install chussenot zsh theme
 print_status "🎨 Installing chussenot zsh theme..."

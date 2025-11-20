@@ -114,4 +114,3 @@ silent! let g:plugs['vimproc.vim'].commit = '63a4ce0768c7af434ac53d37bdc1e7ff7fd
 silent! let g:plugs['vimroom'].commit = 'b9d1fa7d460dac878cbc8c945a45439d92ce0cb2'
 
 PlugUpdate!
-

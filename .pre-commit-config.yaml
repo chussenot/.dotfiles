@@ -1,10 +1,66 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.2.0
+  # General file checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
     hooks:
-    -   id: trailing-whitespace
-    -   id: end-of-file-fixer
-    -   id: check-yaml
-    -   id: check-added-large-files
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+        args: ['--unsafe']  # Allow custom tags in YAML files
+      - id: check-json
+      - id: check-toml
+      - id: check-added-large-files
+        args: ['--maxkb=500']
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-shebang-scripts-are-executable
+      - id: detect-private-key
+      - id: mixed-line-ending
+        args: ['--fix=lf']
+      - id: fix-byte-order-marker
+
+  # Shell script linting
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.9.0.6
+    hooks:
+      - id: shellcheck
+        args: ['--severity=warning', '--exclude=SC2142,SC2139,SC2154,SC2168']
+        types: [shell]
+
+  # Python code formatting and linting
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.8
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+      - id: ruff-format
+
+  # Markdown linting
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.38.0
+    hooks:
+      - id: markdownlint
+        args: ['--fix', '--config', '.markdownlint.json']
+        types: [markdown]
+
+  # Vim script linting (using local hook)
+  - repo: local
+    hooks:
+      - id: vint
+        name: Vint (Vim Lint)
+        entry: bash -c 'if command -v vint >/dev/null 2>&1; then vint --style-problem --enable-neovim "$@"; else echo "vint not installed, skipping"; exit 0; fi' --
+        language: system
+        types: [file]
+        files: \.vim$
+
+  # Makefile validation (using local hook)
+  - repo: local
+    hooks:
+      - id: checkmake
+        name: CheckMake
+        entry: bash -c 'if command -v checkmake >/dev/null 2>&1; then checkmake "$@"; else echo "checkmake not installed, skipping"; exit 0; fi' --
+        language: system
+        types: [makefile]
