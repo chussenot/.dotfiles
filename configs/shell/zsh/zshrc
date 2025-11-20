@@ -133,7 +133,7 @@ fzf-history-widget() {
   return $ret
 }
 zle     -N   fzf-history-widget
-bindkey '^R' fzf-history-widget
+# bindkey '^R' fzf-history-widget
 
 # Git tools
 zinit ice wait"1" lucid
@@ -199,5 +199,14 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 source $ZSH/oh-my-zsh.sh
+
+############################
+# Atuin
+############################
+
+if command -v atuin >/dev/null 2>&1; then
+  eval "$(atuin init zsh)"
+fi
+
 autoload -U +X bashcompinit && bashcompinit
 export MANPATH="$HOME/.local/share/man:$MANPATH"

@@ -6,6 +6,7 @@ pdm = "latest"
 python = "latest"
 pkl = "latest"
 prettier = "latest"
+"cargo:atuin" = "latest"
 
 [tasks]
 # Pre-lint task: runs before linting (setup/validation)
