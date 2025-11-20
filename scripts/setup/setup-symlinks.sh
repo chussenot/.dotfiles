@@ -62,6 +62,35 @@ if [ -f "$DOTFILES_DIR/configs/tools/yazi/yazi.toml" ]; then
     create_symlink "$DOTFILES_DIR/configs/tools/yazi/yazi.toml" "$HOME/.config/yazi/yazi.toml"
 fi
 
+# Create gitignore_global if it exists
+if [ -f "$DOTFILES_DIR/configs/git/.gitignore_global" ]; then
+    create_symlink "$DOTFILES_DIR/configs/git/.gitignore_global" "$HOME/.gitignore_global"
+fi
+
+# Create GitHub CLI config if it exists
+if [ -f "$DOTFILES_DIR/configs/tools/gh/config.yml" ]; then
+    mkdir -p "$HOME/.config/gh"
+    create_symlink "$DOTFILES_DIR/configs/tools/gh/config.yml" "$HOME/.config/gh/config.yml"
+fi
+
+# Create k9s config if it exists
+if [ -f "$DOTFILES_DIR/configs/tools/k9s/config.yaml" ]; then
+    mkdir -p "$HOME/.config/k9s"
+    create_symlink "$DOTFILES_DIR/configs/tools/k9s/config.yaml" "$HOME/.config/k9s/config.yaml"
+fi
+
+# Create htop config if it exists
+if [ -f "$DOTFILES_DIR/configs/tools/htop/htoprc" ]; then
+    mkdir -p "$HOME/.config/htop"
+    create_symlink "$DOTFILES_DIR/configs/tools/htop/htoprc" "$HOME/.config/htop/htoprc"
+fi
+
+# Create glow config if it exists
+if [ -f "$DOTFILES_DIR/configs/tools/glow/glow.yml" ]; then
+    mkdir -p "$HOME/.config/glow"
+    create_symlink "$DOTFILES_DIR/configs/tools/glow/glow.yml" "$HOME/.config/glow/glow.yml"
+fi
+
 # Create zsh directory and symlink aliases and functions
 mkdir -p "$HOME/.zsh"
 create_symlink "$DOTFILES_DIR/configs/shell/zsh/aliases.zsh" "$HOME/.zsh/aliases.zsh"
