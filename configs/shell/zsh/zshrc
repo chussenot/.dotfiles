@@ -22,7 +22,7 @@ ZSH_THEME="chussenot"
 # History configuration
 HISTSIZE=10000
 SAVEHIST=10000
-HISTFILE=~/.zsh_history
+HISTFILE="${HISTFILE:-$HOME/.zsh_history}"
 # Note: History-related setopt are defined in the "Zsh Shell Options" section below
 
 ############################
@@ -50,6 +50,11 @@ export SHELL='/usr/bin/zsh'
 # Language and locale settings
 export LC_CTYPE=en_US.UTF-8
 export LANG=en_US.UTF-8
+
+# XDG Base Directory Specification support
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 
 ############################
 # PATH Management
@@ -90,9 +95,13 @@ setopt HIST_SAVE_NO_DUPS
 # - AUTO_CD: Type directory name to cd into it
 # - AUTO_PUSHD: Make cd push the old directory onto the directory stack
 # - PUSHD_SILENT: Don't print the directory stack after pushd/popd
+# - CDABLE_VARS: Allow cd to variables (e.g., cd $HOME)
+# - COMPLETE_IN_WORD: Complete from both ends of the word
 setopt AUTO_CD
 setopt AUTO_PUSHD
 setopt PUSHD_SILENT
+setopt CDABLE_VARS
+setopt COMPLETE_IN_WORD
 
 # Globbing and pattern matching
 # - EXTENDED_GLOB: Enable extended globbing patterns (#, ~, ^)
@@ -108,7 +117,9 @@ setopt CORRECT_ALL
 
 # Disable annoying behaviors
 # - BEEP: Disable terminal bell/beep
+# - FLOW_CONTROL: Disable flow control (Ctrl+S/Ctrl+Q)
 unsetopt BEEP
+unsetopt FLOW_CONTROL
 
 ############################
 # Language and Runtime Settings
@@ -133,15 +144,23 @@ fi
 
 # Install Zinit if not present
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
-    print -P "%F{33}Installing %F{220}ZDHARMA-CONTINUUM %F{33}Plugin Manager...%f"
-    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
-    command git clone --depth=1 https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
-        print -P "%F{33}✓ %F{34}Installation successful.%f" || \
-        print -P "%F{160}✗ Installation failed.%f"
+    if ! command -v git &>/dev/null; then
+        echo "⚠️  Warning: git is required to install Zinit" >&2
+    else
+        print -P "%F{33}Installing %F{220}ZDHARMA-CONTINUUM %F{33}Plugin Manager...%f"
+        command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+        command git clone --depth=1 https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+            print -P "%F{33}✓ %F{34}Installation successful.%f" || \
+            print -P "%F{160}✗ Installation failed.%f"
+    fi
 fi
 
 # Load Zinit
-source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+if [[ -f "$HOME/.local/share/zinit/zinit.git/zinit.zsh" ]]; then
+    source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+else
+    echo "⚠️  Warning: Zinit not found. Some plugins may not work." >&2
+fi
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
@@ -181,10 +200,19 @@ zinit light zsh-users/zsh-history-substring-search
 
 # Custom fzf history search (replaces plugin)
 fzf-history-widget() {
+  # Only define if fzf is available
+  if ! command -v fzf &>/dev/null; then
+    return 1
+  fi
+  
   local selected num
   setopt localoptions noglobsubst noposixbuiltins pipefail no_aliases 2>/dev/null
+  
+  # Use __fzfcmd if available, otherwise use fzf directly
+  local fzf_cmd="${__fzfcmd:-fzf}"
+  
   selected=( $(fc -rl 1 | awk '!seen[$0]++' | grep -v -E '(nim|data)' | 
-    FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS --tac -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS --query=${(q)LBUFFER} +m" $(__fzfcmd)) )
+    FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS --tac -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS --query=${(q)LBUFFER} +m" $fzf_cmd) )
   local ret=$?
   if [ -n "$selected" ]; then
     num=$selected[1]
@@ -277,7 +305,12 @@ if command -v fzf &>/dev/null && [[ -f ~/.fzf.zsh ]]; then
   source ~/.fzf.zsh
 fi
 
-source $ZSH/oh-my-zsh.sh
+# Load Oh-My-Zsh if it exists
+if [[ -f "$ZSH/oh-my-zsh.sh" ]]; then
+    source "$ZSH/oh-my-zsh.sh"
+else
+    echo "⚠️  Warning: Oh-My-Zsh not found at $ZSH" >&2
+fi
 
 # Ensure EDITOR is set to nvim after Oh-My-Zsh loads
 # (some plugins like git may override it)

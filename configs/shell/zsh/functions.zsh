@@ -126,6 +126,11 @@ pyvenv() {
 
 # Tmux functions
 tdev() {
+    if ! command -v tmux &>/dev/null; then
+        echo "Error: tmux is not installed" >&2
+        return 1
+    fi
+    
     if tmux has-session -t dev 2>/dev/null; then
         tmux attach-session -t dev
     else
@@ -139,23 +144,83 @@ tdev() {
 
 function reload {
   echo "🔄 Reloading ZSH configuration..."
-  source ~/.zshrc
-  echo "✅ ZSH configuration reloaded successfully!"
+  local zshrc_file="${ZDOTDIR:-$HOME}/.zshrc"
+  if [[ -f "$zshrc_file" ]]; then
+    source "$zshrc_file"
+    echo "✅ ZSH configuration reloaded successfully!"
+  else
+    echo "❌ Error: $zshrc_file not found" >&2
+    return 1
+  fi
 }
 
 # Quick edit and reload zshrc
 function zshconfig {
-  $EDITOR ~/.zshrc && reload
+  local zshrc_file="${ZDOTDIR:-$HOME}/.zshrc"
+  local editor="${EDITOR:-nvim}"
+  
+  if ! command -v "$editor" &>/dev/null; then
+    echo "❌ Error: $editor not found" >&2
+    return 1
+  fi
+  
+  "$editor" "$zshrc_file" && reload
 }
 
 # List all available aliases
 function aliases {
   echo "🔍 Your current aliases:"
-  if command -v bat &>/dev/null; then
-    alias | sort | grep -v "^_" | bat --style=plain --language=bash
+  if command -v bat &>/dev/null || command -v batcat &>/dev/null; then
+    local bat_cmd=$(command -v bat 2>/dev/null || command -v batcat 2>/dev/null)
+    alias | sort | grep -v "^_" | "$bat_cmd" --style=plain --language=bash
   else
     alias | sort | grep -v "^_"
   fi
+}
+
+# Find files by name (case-insensitive)
+function ff() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: ff <pattern>" >&2
+    return 1
+  fi
+  
+  if command -v fd &>/dev/null || command -v fdfind &>/dev/null; then
+    local fd_cmd=$(command -v fd 2>/dev/null || command -v fdfind 2>/dev/null)
+    "$fd_cmd" -i "$1"
+  elif command -v find &>/dev/null; then
+    find . -iname "*$1*" 2>/dev/null
+  else
+    echo "Error: fd or find not found" >&2
+    return 1
+  fi
+}
+
+# Find text in files
+function ftext() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: ftext <pattern>" >&2
+    return 1
+  fi
+  
+  if command -v rg &>/dev/null; then
+    rg "$1"
+  elif command -v grep &>/dev/null; then
+    grep -r "$1" .
+  else
+    echo "Error: ripgrep or grep not found" >&2
+    return 1
+  fi
+}
+
+# Create a temporary directory and cd into it
+function tmpdir() {
+  local tmp_dir
+  tmp_dir=$(mktemp -d) || {
+    echo "Error: Failed to create temporary directory" >&2
+    return 1
+  }
+  cd "$tmp_dir" && echo "📁 Created and entered: $tmp_dir"
 }
 
 function update {

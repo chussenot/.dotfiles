@@ -73,9 +73,20 @@ _need_bashcomp=false
 
 # Terraform fallback: if no native _terraform was produced above
 if command -v terraform &>/dev/null && [[ ! -s "$COMPDIR/_terraform" ]]; then
-  _need_bashcomp=true
-  typeset -g -a _bash_fallbacks
-  _bash_fallbacks+=("complete -o nospace -C $(command -v terraform) terraform")
+  # Try native terraform completion generation first
+  if terraform -install-autocomplete zsh &>/dev/null && [[ -f "$HOME/.terraform.d/autocomplete/zsh_autocomplete" ]]; then
+    source "$HOME/.terraform.d/autocomplete/zsh_autocomplete" 2>/dev/null || {
+      # Fallback to bash-style if native completion failed
+      _need_bashcomp=true
+      typeset -g -a _bash_fallbacks
+      _bash_fallbacks+=("complete -o nospace -C $(command -v terraform) terraform")
+    }
+  else
+    # Use bash-style completion as fallback
+    _need_bashcomp=true
+    typeset -g -a _bash_fallbacks
+    _bash_fallbacks+=("complete -o nospace -C $(command -v terraform) terraform")
+  fi
 fi
 
 # AWS CLI

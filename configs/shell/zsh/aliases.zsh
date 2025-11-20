@@ -40,17 +40,27 @@ if command -v htop &>/dev/null; then
   alias top='htop'
 fi
 
-# Docker aliases (basic)
-alias d='docker'
-alias dc='docker-compose'
-alias dex='docker exec -it'
+# Docker aliases (basic) - only if docker is installed
+if command -v docker &>/dev/null; then
+  alias d='docker'
+  alias dex='docker exec -it'
+  
+  # docker-compose might be a plugin or separate command
+  if command -v docker-compose &>/dev/null; then
+    alias dc='docker-compose'
+  elif docker compose version &>/dev/null; then
+    alias dc='docker compose'
+  fi
+fi
 
-# Kubernetes aliases
-alias k='kubectl'
-alias kg='kubectl get'
-alias kd='kubectl describe'
-alias kl='kubectl logs'
-alias kx='kubectl exec -it'
+# Kubernetes aliases - only if kubectl is installed
+if command -v kubectl &>/dev/null; then
+  alias k='kubectl'
+  alias kg='kubectl get'
+  alias kd='kubectl describe'
+  alias kl='kubectl logs'
+  alias kx='kubectl exec -it'
+fi
 
 # Utility aliases
 alias c='clear'
@@ -60,7 +70,12 @@ alias path='echo -e ${PATH//:/\\n}'
 alias now='date +"%T"'
 alias nowtime=now
 alias nowdate='date +"%d-%m-%Y"'
-alias ports='netstat -tulanp'
+# Network aliases (conditional based on available tools)
+if command -v netstat &>/dev/null; then
+  alias ports='netstat -tulanp'
+elif command -v ss &>/dev/null; then
+  alias ports='ss -tulanp'
+fi
 
 # Safety aliases
 alias rm='rm -i'
@@ -73,14 +88,15 @@ alias mkdir='mkdir -p'
 ############################
 
 # Misc
-alias running_services='systemctl list-units  --type=service  --state=running'
+# Conditional systemctl alias (only on systemd systems)
+if command -v systemctl &>/dev/null; then
+  alias running_services='systemctl list-units --type=service --state=running'
+fi
 
-# alias update-nvim-stable='asdf uninstall neovim stable && asdf install neovim stable'
-# alias update-nvim-nightly='asdf uninstall neovim nightly && asdf install neovim nightly'
-# alias update-nvim-master='asdf uninstall neovim ref:master && asdf install neovim ref:master'
-# alias go-reshim='asdf reshim golang && export GOROOT="$(asdf where golang)/go/" && export GOPATH="$(asdf where golang)/packages/" && export GOMODCACHE="$(asdf where golang)/packages/pkg/mod/" && go env'
-
-alias tg=terragrunt
+# Terragrunt alias (only if installed)
+if command -v terragrunt &>/dev/null; then
+  alias tg=terragrunt
+fi
 
 # Utils
 ## Directories
