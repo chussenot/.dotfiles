@@ -29,24 +29,17 @@ alias gpl='git pull'
 alias py='python3'
 alias pip='pip3'
 alias nv='nvim'
-alias v='vim'
-alias t='tmux'
-alias ta='tmux attach'
-alias tn='tmux new-session'
+alias v='nvim'
 
 # System aliases
 alias df='df -h'
 alias du='du -h'
 alias free='free -h'
 alias top='htop'
-alias ports='netstat -tulanp'
 
-# Docker aliases
+# Docker aliases (basic)
 alias d='docker'
 alias dc='docker-compose'
-alias dps='docker ps'
-alias dpsa='docker ps -a'
-alias di='docker images'
 alias dex='docker exec -it'
 
 # Kubernetes aliases
@@ -64,15 +57,13 @@ alias path='echo -e ${PATH//:/\\n}'
 alias now='date +"%T"'
 alias nowtime=now
 alias nowdate='date +"%d-%m-%Y"'
+alias ports='netstat -tulanp'
 
 # Safety aliases
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 alias mkdir='mkdir -p'
-
-# Network aliases
-alias ports='netstat -tulanp'
 
 ############################
 # Tools & Aliases
@@ -95,11 +86,9 @@ alias tn='tmux new'
 alias ta='tmux attach'
 alias tx=tmuxinator
 alias b='bat'
-alias v='nvim'
 alias vz='v ~/.zshrc'
 alias p='python'
 alias temp='pushd $(mktemp -d)'
-alias c=clear
 
 # Tools Sysadmin
 alias t='f(){ exa -Tll -L 1 "$@";  unset -f f; }; f'
@@ -107,7 +96,9 @@ alias t2='f(){ exa -Tll -L 2 "$@";  unset -f f; }; f'
 alias t3='f(){ exa -Tll -L 3 "$@";  unset -f f; }; f'
 alias l='f(){ exa -ll --group-directories-first "$@";  unset -f f; }; f'
 alias la='f(){ exa -lla --group-directories-first "$@";  unset -f f; }; f'
-alias git="GIT_SSL_NO_VERIFY=true git"
+# WARNING: Disabling SSL verification is a security risk!
+# Only use this if you understand the implications and have a valid reason
+# alias git="GIT_SSL_NO_VERIFY=true git"
 alias clean-crash='sudo /bin/rm -rf /var/crash/*'
 alias goog='google-chrome'
 alias carbo='docker run -ti fathyb/carbonyl'
@@ -122,14 +113,19 @@ alias flameshotz='while true; do flameshot full -p /tmp/; sleep 1; done'
 alias update-and-clean='sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt purge -y'
 alias show-disk-io='watch -cd -- iostat -h'
 alias show-open-ports="sudo ss -latepun | grep -i listen"
-alias ssh='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+# WARNING: Disabling SSH host key checking is a security risk!
+# Only use this if you understand the implications (e.g., for temporary test environments)
+# For production, use proper SSH key management instead
+# alias ssh='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
 alias tmux-bg='f(){ tmux new-window -d zsh -c "echo $@; $@; zsh";  unset -f f; }; f'
 alias tmux-split='f(){ tmux split-window -d zsh -c "echo $@; $@; zsh";  unset -f f; }; f'
 alias toqrcode='qrencode -t ANSI -o -'
 alias upload='f(){ curl -F"file=@$1" https://0x0.st;  unset -f f; }; f'
 alias usleep='f(){ python3 -c "import time; time.sleep($1)";  unset -f f; }; f'
 alias vplay='mplayer -nosound'
-alias wget="wget --no-check-certificate"
+# WARNING: Disabling certificate checking is a security risk!
+# Only use this if you understand the implications
+# alias wget="wget --no-check-certificate"
 alias wifi='nmtui'
 alias b64d='base64 -d'
 alias b64e='base64 -w 0'
@@ -195,13 +191,15 @@ alias fu='ffuf -mc all -t 2 -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) Appl
 # Tools Misc
 alias vgrep='f(){ grep -rnH "$1" "$2" | fzf --preview="bat --pager never --color always -H {2} -r {2}: -p {1}" --delimiter=: ;  unset -f f; }; f'
 
-# Docker Utils
+# Docker Utils (advanced)
 alias docker-norestart='docker update --restart=no $(docker ps -q)'
 alias docker-stopall='docker stop $(docker ps -q)'
 alias docker-get-image-size='f(){ docker manifest inspect -v "$1" | jq -c "if type == \"array\" then .[] else . end" |  jq -r "[ ( .Descriptor.platform | [ .os, .architecture, .variant, .\"os.version\" ] | del(..|nulls) | join(\"/\") ), ( [ .SchemaV2Manifest.layers[].size ] | add ) ] | join(\" \")" | numfmt --to iec --format "%.2f" --field 2 | column -t ;  unset -f f; }; f'
 alias dockex='docker exec -it $(docker ps | grep -vF "CONTAINER ID" | fzf | cut -d" " -f1)'
 alias dockit='docker run --rm -it -v "$PWD":/host --net=host'
 alias dps='docker ps'
+alias dpsa='docker ps -a'
+alias di='docker images'
 alias wipe-docker-all='docker system prune -a -f --volumes'
 alias wipe-docker-image='docker rmi -f $(docker images -q)'
 alias wipe-docker-network='docker network rm $(docker network ls -q | tr "\n" " ")'
@@ -254,5 +252,3 @@ alias crypt-pad='mkdir datastore; docker run --rm -it -p 3000:3000 -v "$PWD/data
 
 # Search file contents with ripgrep, fzf, bat
 alias fzf-rg="rg --hidden --glob '' --line-number . | fzf --delimiter ':' --preview 'bat --style=numbers --color=always {1} --highlight-line {2}'"
-
-alias update-and-clean='sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt purge -y'
