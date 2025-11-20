@@ -138,6 +138,8 @@ function update {
 
 if command -v yazi >/dev/null 2>&1; then
   # yy : ouvre Yazi puis cd dans le dernier dossier visité
+  # Unalias yy if it exists (from plugins or other sources)
+  unalias yy 2>/dev/null || true
   yy() {
     local tmp="$(mktemp)"
     yazi "$@" --cwd-file="$tmp"

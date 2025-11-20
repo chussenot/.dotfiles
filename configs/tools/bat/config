@@ -1,28 +1,29 @@
 # Bat configuration file
 # See `bat --help` for all available options
+# This file contains command-line arguments, one per line
 
 # Use a specific theme
 # Available themes: 1337, Coldark-Cold, Coldark-Dark, DarkNeon, Dracula, GitHub, Monokai Extended, OneHalfDark, OneHalfLight, Solarized (dark), Solarized (light), TwoDark
-# theme = "Dracula"
+# --theme="Dracula"
 
 # Show line numbers, changes, and header
-style = "numbers,changes,header"
+--style="numbers,changes,header"
 
 # Use italic text
-italic-text = "always"
+--italic-text="always"
 
 # Show non-printable characters
-# show-all = true
+# --show-all
 
 # Use a specific pager
-# pager = "less -R"
+# --pager="less -R"
 
 # Always show the header
-decorations = "always"
+--decorations="always"
 
 # Use a specific syntax highlighting theme
-# color = "always"
+# --color="always"
 
 # Wrap long lines
-# wrap = "auto"
+# --wrap="auto"
 
