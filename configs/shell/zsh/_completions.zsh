@@ -45,6 +45,26 @@ _gen_comp_if_missing gh          "$COMPDIR/_gh"          gh completion -s zsh
 # kind
 _gen_comp_if_missing kind        "$COMPDIR/_kind"        kind completion zsh
 
+# k9s (Kubernetes CLI)
+_gen_comp_if_missing k9s         "$COMPDIR/_k9s"        k9s completion zsh
+
+# pdm (Python Dependency Manager)
+_gen_comp_if_missing pdm         "$COMPDIR/_pdm"        pdm completion zsh
+
+# deno
+_gen_comp_if_missing deno        "$COMPDIR/_deno"       deno completions zsh
+
+# atuin (shell history manager)
+_gen_comp_if_missing atuin       "$COMPDIR/_atuin"      atuin gen-completions -s zsh
+
+# cargo (Rust package manager) - if rustup is available
+if command -v rustup &>/dev/null; then
+  _gen_comp_if_missing cargo     "$COMPDIR/_cargo"      rustup completions zsh cargo
+elif command -v cargo &>/dev/null; then
+  # Fallback: cargo might have its own completion
+  _gen_comp_if_missing cargo     "$COMPDIR/_cargo"      cargo completions zsh
+fi
+
 # Byte-compile individual completion functions for speed (best-effort)
 # Only compile if directory exists and contains files
 if [[ -d "$COMPDIR" ]]; then
@@ -128,6 +148,18 @@ if [[ -f "$HOME/.cargo/env" ]]; then
 fi
 
 # --- End fast completions bootstrap -----------------------------------------
+# Note: Some tools handle their own completions via init commands in zshrc:
+# - atuin: handled by 'atuin init zsh' in zshrc
+# - zoxide: handled by 'zoxide init zsh' in zshrc
+# - direnv: completion file generated above, but hook is in OMZP::direnv
+#
+# Tools without standard completion support (or handled differently):
+# - yazi: file manager, doesn't need shell completions
+# - bat: simple tool, doesn't need completions
+# - neovim: editor, doesn't need completions
+# - go, ruby, node: language runtimes, completions handled by tools/plugins
+# - xh, prettier: may have completions but not critical
+#
 # Tips:
 # - Set ZSH_COMP_REFRESH=1 when sourcing this file to force regeneration.
 # - Set ZSH_SKIP_TERRAFORM_INSTALL=1 to skip 'terraform -install-autocomplete'.
