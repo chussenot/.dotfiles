@@ -192,9 +192,6 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 # Fuzzy Finder & Directory Navigation
 ############################
 
-# Jump in directories
-[ -f ~/z.sh ] && source ~/z.sh
-
 # General Fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -207,6 +204,15 @@ source $ZSH/oh-my-zsh.sh
 if command -v atuin >/dev/null 2>&1; then
   eval "$(atuin init zsh)"
 fi
+
+############################
+# zoxide
+############################
+
+if command -v zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init zsh)"
+fi
+
 
 autoload -U +X bashcompinit && bashcompinit
 export MANPATH="$HOME/.local/share/man:$MANPATH"

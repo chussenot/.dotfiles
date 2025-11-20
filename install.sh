@@ -81,17 +81,6 @@ if [[ ! -d "$HOME/.local/share/zinit/zinit.git" ]]; then
 else
     print_warning "Zinit Plugin Manager already installed"
 fi
-
-# Install z.sh (directory jumping)
-print_status "📁 Installing z.sh (directory jumping)..."
-if [[ ! -f "$HOME/z.sh" ]]; then
-    curl -fsSL https://raw.githubusercontent.com/rupa/z/master/z.sh -o "$HOME/z.sh"
-    chmod +x "$HOME/z.sh"
-    print_success "z.sh installed"
-else
-    print_warning "z.sh already installed"
-fi
-
 # Setup symlinks
 print_status "🔗 Setting up symlinks..."
 "$SCRIPT_DIR/scripts/setup/setup-symlinks.sh"

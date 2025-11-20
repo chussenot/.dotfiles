@@ -15,8 +15,6 @@ files_to_backup=(
     "$HOME/.inputrc"
     "$HOME/.config/nvim"
     "$HOME/.tool-versions"
-    "$HOME/z.sh"
-)
 
 for file in "${files_to_backup[@]}"; do
     if [ -e "$file" ]; then
