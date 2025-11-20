@@ -8,7 +8,7 @@ I'm using the `zsh` shell for my day-to-day work...
 ## Disclaimer: Ubuntu-Specific Configuration
 
 Please be aware that this configuration has been rigorously tested and is primarily intended for use with Ubuntu.
-Specifically, it has been verified on an Ubuntu system running Linux kernel version 6.5.0-17-generic, with gcc version 12.3.0 and GNU ld version 2.38, as part of the Ubuntu 22.04 LTS distribution. While this setup may be compatible with other Linux distributions or versions, optimal performance and compatibility can only be guaranteed for the tested Ubuntu environment detailed above.
+Specifically, it has been verified on an Ubuntu system running Linux kernel version `6.14.0-1015-oem`, with gcc version `13.3.0` and GNU ld version `2.42`, as part of the Ubuntu `24.04.3` LTS distribution. While this setup may be compatible with other Linux distributions or versions, optimal performance and compatibility can only be guaranteed for the tested Ubuntu environment detailed above.
 
 Users attempting to implement this configuration on other systems should proceed with caution and may need to make adjustments to ensure compatibility.
 
