@@ -165,7 +165,10 @@ zle     -N   fzf-history-widget
 zinit ice wait"1" lucid
 zinit light paulirish/git-open
 
-# Oh-My-Zsh plugins (completion-heavy plugins only)
+# Oh-My-Zsh plugins loaded via Zinit (lazy-loaded for better performance)
+# IMPORTANT: These plugins are loaded with OMZP:: prefix which loads them from Oh-My-Zsh
+# but through Zinit's lazy-loading system. They are NOT in the plugins=() list below
+# to avoid double-loading. Each plugin is loaded only once via Zinit.
 zinit wait"1" lucid for \
     OMZP::extract \
     OMZP::sudo \
@@ -174,6 +177,10 @@ zinit wait"1" lucid for \
     OMZP::gh \
     OMZP::git-extras \
     OMZP::gitignore \
+    OMZP::docker \
+    OMZP::docker-compose \
+    OMZP::kubectl \
+    OMZP::k9s
 
 ############################
 # Key Bindings
@@ -185,16 +192,16 @@ bindkey '^[[B' history-substring-search-down
 bindkey '^[[1;5C' forward-word   # Ctrl+Right
 bindkey '^[[1;5D' backward-word  # Ctrl+Left
 
-# Plugin list (minimal - completions handled by _completions.zsh)
-plugins=(
-  git
-  sudo
-  extract
-  direnv
-  gh
-  git-extras
-  gitignore
-)
+############################
+# Oh-My-Zsh Configuration
+############################
+
+# Oh-My-Zsh plugin list
+# IMPORTANT: This list is intentionally EMPTY.
+# All plugins are loaded via Zinit (see "Zinit Plugins" section above with OMZP:: prefix).
+# Oh-My-Zsh is only used for the framework and theme system, not for loading plugins.
+# DO NOT add plugins here - they are already loaded via Zinit to avoid double-loading.
+plugins=()
 
 # Load local Zsh configurations from ~/.zsh.local
 if [[ -d "$HOME/.zsh.local" ]]; then
