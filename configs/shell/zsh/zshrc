@@ -23,9 +23,7 @@ ZSH_THEME="chussenot"
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
-setopt HIST_IGNORE_DUPS
-setopt HIST_FIND_NO_DUPS
-setopt SHARE_HISTORY
+# Note: History-related setopt are defined in the "Zsh Shell Options" section below
 
 ############################
 # Tmux Session Management
@@ -50,6 +48,36 @@ export SHELL='/usr/bin/zsh'
 export LC_CTYPE=en_US.UTF-8
 export LANG=en_US.UTF-8
 export PATH=$HOME/.local/bin:$PATH
+
+############################
+# Zsh Shell Options (setopt/unsetopt)
+############################
+# This section centralizes all shell behavior modifications.
+# All options are documented to clearly show what differs from zsh defaults.
+
+# History behavior
+# - HIST_IGNORE_DUPS: Don't record duplicate entries
+# - HIST_FIND_NO_DUPS: Don't display duplicates when searching history
+# - SHARE_HISTORY: Share history between all sessions
+setopt HIST_IGNORE_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt SHARE_HISTORY
+
+# Navigation behavior
+# - AUTO_CD: Type directory name to cd into it
+# - AUTO_PUSHD: Make cd push the old directory onto the directory stack
+# - PUSHD_SILENT: Don't print the directory stack after pushd/popd
+setopt AUTO_CD
+setopt AUTO_PUSHD
+setopt PUSHD_SILENT
+
+# Globbing and pattern matching
+# - EXTENDED_GLOB: Enable extended globbing patterns (#, ~, ^)
+setopt EXTENDED_GLOB
+
+# Disable annoying behaviors
+# - BEEP: Disable terminal bell/beep
+unsetopt BEEP
 
 ############################
 # Language and Runtime Settings
