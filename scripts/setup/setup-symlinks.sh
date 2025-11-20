@@ -50,6 +50,12 @@ if [ -f "$DOTFILES_DIR/configs/tools/mise/tool-versions" ]; then
     create_symlink "$DOTFILES_DIR/configs/tools/mise/tool-versions" "$HOME/.tool-versions"
 fi
 
+# Create atuin config if it exists
+if [ -f "$DOTFILES_DIR/configs/tools/atuin/config.toml" ]; then
+    mkdir -p "$HOME/.config/atuin"
+    create_symlink "$DOTFILES_DIR/configs/tools/atuin/config.toml" "$HOME/.config/atuin/config.toml"
+fi
+
 # Create zsh directory and symlink aliases and functions
 mkdir -p "$HOME/.zsh"
 create_symlink "$DOTFILES_DIR/configs/shell/zsh/aliases.zsh" "$HOME/.zsh/aliases.zsh"
