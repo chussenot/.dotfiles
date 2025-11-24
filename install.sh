@@ -1,10 +1,34 @@
 #!/bin/sh
 
 # Improved Dotfiles Installation Script
-# This script uses the new organized structure
-# POSIX-compliant version
+# Multi-platform POSIX-compliant version
 
 set -eu
+
+# Get the directory where this script is located (POSIX-compatible)
+get_script_dir() {
+    # POSIX-compatible way to get script directory
+    _script_path="$0"
+    _script_dir=""
+    case "${_script_path}" in
+        /*)
+            _script_dir=$(dirname "${_script_path}")
+            ;;
+        *)
+            _script_dir=$(cd "$(dirname "${_script_path}")" && pwd)
+            ;;
+    esac
+    printf '%s\n' "${_script_dir}"
+}
+
+SCRIPT_DIR=$(get_script_dir)
+
+# Source platform detection module
+# shellcheck disable=SC1091
+. "${SCRIPT_DIR}/lib/platform.sh"
+
+# Detect platform early
+platform_detect
 
 # Colors for output (using printf for POSIX compatibility)
 RED='\033[0;31m'
@@ -30,24 +54,6 @@ print_error() {
     printf '%b[ERROR]%b %s\n' "${RED}" "${NC}" "$1"
 }
 
-# Get the directory where this script is located (POSIX-compatible)
-get_script_dir() {
-    # POSIX-compatible way to get script directory
-    _script_path="$0"
-    _script_dir=""
-    case "${_script_path}" in
-        /*)
-            _script_dir=$(dirname "${_script_path}")
-            ;;
-        *)
-            _script_dir=$(cd "$(dirname "${_script_path}")" && pwd)
-            ;;
-    esac
-    printf '%s\n' "${_script_dir}"
-}
-
-SCRIPT_DIR=$(get_script_dir)
-
 # Check if running as root (POSIX-compatible)
 if [ "$(id -u)" -eq 0 ]; then
     print_error "This script should not be run as root"
@@ -55,11 +61,18 @@ if [ "$(id -u)" -eq 0 ]; then
 fi
 
 print_status "🚀 Starting dotfiles installation..."
+print_status "Platform: OS=${PLATFORM_OS}, Distro=${PLATFORM_DISTRO}, Arch=${PLATFORM_ARCH}"
 
 # Check if we're in the right directory
 if [ ! -f "${SCRIPT_DIR}/README.md" ]; then
     print_error "Please run this script from the dotfiles directory"
     exit 1
+fi
+
+# Check platform support
+if [ "${PLATFORM_OS}" = "unknown" ]; then
+    print_warning "Unknown platform detected. Some features may not work."
+    print_warning "Supported platforms: Linux (Ubuntu/Debian), macOS"
 fi
 
 # Create backup before proceeding
@@ -68,11 +81,16 @@ print_status "💾 Creating backup of existing dotfiles..."
     print_warning "Backup script encountered an error, continuing anyway..."
 }
 
-# Install system packages
+# Install system packages (platform-specific)
 print_status "📦 Installing system packages..."
-"${SCRIPT_DIR}/scripts/install/install-packages.sh" || {
-    print_warning "Package installation encountered an error, continuing anyway..."
-}
+if is_linux || is_macos; then
+    "${SCRIPT_DIR}/scripts/install/install-packages.sh" || {
+        print_warning "Package installation encountered an error, continuing anyway..."
+    }
+else
+    print_warning "Package installation not supported on this platform"
+    print_warning "Please install required packages manually"
+fi
 
 # Install Oh My Zsh if not already installed
 if [ ! -d "${HOME}/.oh-my-zsh" ]; then
