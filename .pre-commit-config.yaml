@@ -23,12 +23,14 @@ repos:
       - id: fix-byte-order-marker
 
   # Shell script linting (POSIX-compliant)
+  # Exclude configs/ folder (Zsh config files, not POSIX sh scripts)
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.9.0.6
     hooks:
       - id: shellcheck
         args: ['--shell=sh', '--severity=warning']
         types: [shell]
+        exclude: ^configs/
 
   # POSIX compliance check
   - repo: local
