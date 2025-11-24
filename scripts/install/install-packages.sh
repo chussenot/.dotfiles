@@ -1,73 +1,59 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Package installation script
-set -euo pipefail
-IFS=$'\n\t'
+# POSIX-compliant version
 
-echo "📦 Installing system packages..."
+set -eu
 
-packages=(
-    zsh
-    tmux
-    python3-pip
-    jq
-    nasm
-    gcc
-    gcc-multilib
-    libc6-dev
-    cmake
-    git
-    curl
-    wget
-    unzip
-    build-essential
-    fzf
-    bat
-    htop
-    net-tools
-    tree
-    ripgrep
-    fd-find
-)
+printf '📦 Installing system packages...\n'
 
-# Check for ctags
+# POSIX-compliant package list (using positional parameters)
+# We'll iterate through packages one by one
+_packages="zsh tmux python3-pip jq nasm gcc gcc-multilib libc6-dev cmake git curl wget unzip build-essential fzf bat htop net-tools tree ripgrep fd-find"
+
+# Check for ctags and add to list if available
 if apt-cache show exuberant-ctags >/dev/null 2>&1; then
-    packages+=(exuberant-ctags)
+    _packages="${_packages} exuberant-ctags"
 elif apt-cache show universal-ctags >/dev/null 2>&1; then
-    packages+=(universal-ctags)
+    _packages="${_packages} universal-ctags"
 fi
 
-for package in "${packages[@]}"; do
-    if ! dpkg -s "$package" >/dev/null 2>&1; then
-        echo "Installing $package..."
+# Install packages
+for _package in ${_packages}; do
+    if ! dpkg -s "${_package}" >/dev/null 2>&1; then
+        printf 'Installing %s...\n' "${_package}"
         sudo apt-get update
-        sudo apt-get install -y "$package"
+        sudo apt-get install -y "${_package}"
     else
-        echo "$package is already installed"
+        printf '%s is already installed\n' "${_package}"
     fi
 done
 
 # Install fzf shell integration if fzf is installed
 if command -v fzf >/dev/null 2>&1; then
-    echo "🔧 Setting up fzf shell integration..."
+    printf '🔧 Setting up fzf shell integration...\n'
 
     # Check if fzf shell integration is already set up
-    if [[ ! -f "$HOME/.fzf.zsh" ]]; then
+    if [ ! -f "${HOME}/.fzf.zsh" ]; then
         # Install fzf shell integration
-        if [[ -f "$HOME/.fzf/install" ]]; then
+        if [ -f "${HOME}/.fzf/install" ]; then
             # Use existing fzf installation
-            "$HOME/.fzf/install" --all --no-bash --no-fish
+            "${HOME}/.fzf/install" --all --no-bash --no-fish
         else
             # Install fzf from scratch
-            git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
-            "$HOME/.fzf/install" --all --no-bash --no-fish
+            if command -v git >/dev/null 2>&1; then
+                git clone --depth 1 https://github.com/junegunn/fzf.git "${HOME}/.fzf"
+                "${HOME}/.fzf/install" --all --no-bash --no-fish
+            else
+                printf '⚠️  git not found, cannot install fzf\n'
+            fi
         fi
-        echo "✅ fzf shell integration installed"
+        printf '✅ fzf shell integration installed\n'
     else
-        echo "✅ fzf shell integration already configured"
+        printf '✅ fzf shell integration already configured\n'
     fi
 else
-    echo "⚠️  fzf not found, skipping shell integration setup"
+    printf '⚠️  fzf not found, skipping shell integration setup\n'
 fi
 
-echo "✅ Package installation complete!"
+printf '✅ Package installation complete!\n'

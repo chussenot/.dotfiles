@@ -1,45 +1,68 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Install man page for keymaps function
-set -euo pipefail
-IFS=$'\n\t'
+# POSIX-compliant version
 
-DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-MAN_SOURCE="$DOTFILES_DIR/man/man1/keymaps.1"
-MAN_DEST="$HOME/.local/share/man/man1/keymaps.1"
+set -eu
 
-echo "📖 Installing keymaps man page..."
+# Get script directory (POSIX-compatible)
+_get_script_dir() {
+    _script_path="$0"
+    _script_dir=""
+    case "${_script_path}" in
+        /*)
+            _script_dir=$(dirname "${_script_path}")
+            ;;
+        *)
+            _script_dir=$(cd "$(dirname "${_script_path}")" && pwd)
+            ;;
+    esac
+    printf '%s\n' "${_script_dir}"
+}
+
+_script_dir=$(_get_script_dir)
+DOTFILES_DIR=$(cd "${_script_dir}/../.." && pwd)
+MAN_SOURCE="${DOTFILES_DIR}/man/man1/keymaps.1"
+MAN_DEST="${HOME}/.local/share/man/man1/keymaps.1"
+
+printf '📖 Installing keymaps man page...\n'
 
 # Create man directory if it doesn't exist
-mkdir -p "$HOME/.local/share/man/man1"
+mkdir -p "${HOME}/.local/share/man/man1"
 
 # Copy man page
-if [ -f "$MAN_SOURCE" ]; then
-    cp "$MAN_SOURCE" "$MAN_DEST"
-    echo "✅ Man page copied to $MAN_DEST"
+if [ -f "${MAN_SOURCE}" ]; then
+    cp "${MAN_SOURCE}" "${MAN_DEST}"
+    printf '✅ Man page copied to %s\n' "${MAN_DEST}"
 else
-    echo "❌ Source man page not found: $MAN_SOURCE"
+    printf '❌ Source man page not found: %s\n' "${MAN_SOURCE}"
     exit 1
 fi
 
 # Update man database
 if command -v mandb >/dev/null 2>&1; then
     mandb -q
-    echo "✅ Man database updated"
+    printf '✅ Man database updated\n'
 else
-    echo "⚠️  mandb not found, man page may not be immediately searchable"
+    printf '⚠️  mandb not found, man page may not be immediately searchable\n'
 fi
 
 # Add to MANPATH if not already present
-if ! echo "${MANPATH:-}" | grep -q "$HOME/.local/share/man"; then
-    echo "export MANPATH=\"\$HOME/.local/share/man:\${MANPATH:-}\"" >> "$HOME/.zshrc"
-    echo "✅ Added ~/.local/share/man to MANPATH in .zshrc"
-fi
+_manpath="${MANPATH:-}"
+case ":${_manpath}:" in
+    *:"${HOME}/.local/share/man":*)
+        # Already in MANPATH
+        ;;
+    *)
+        printf 'export MANPATH="%s/.local/share/man:${MANPATH:-}"\n' "${HOME}" >> "${HOME}/.zshrc"
+        printf '✅ Added ~/.local/share/man to MANPATH in .zshrc\n'
+        ;;
+esac
 
-echo ""
-echo "🎉 Installation complete!"
-echo ""
-echo "Usage:"
-echo "  man keymaps    # View the manual page"
-echo ""
-echo "The man page is now available system-wide."
+printf '\n'
+printf '🎉 Installation complete!\n'
+printf '\n'
+printf 'Usage:\n'
+printf '  man keymaps    # View the manual page\n'
+printf '\n'
+printf 'The man page is now available system-wide.\n'

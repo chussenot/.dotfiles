@@ -1,29 +1,33 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Backup script for dotfiles
-set -euo pipefail
-IFS=$'\n\t'
+# POSIX-compliant version
 
-BACKUP_DIR="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
-mkdir -p "$BACKUP_DIR"
+set -eu
 
-echo "💾 Creating backup in $BACKUP_DIR"
+BACKUP_DIR="${HOME}/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
+mkdir -p "${BACKUP_DIR}"
 
-# Backup existing dotfiles
-files_to_backup=(
-    "$HOME/.zshrc"
-    "$HOME/.tmux.conf"
-    "$HOME/.inputrc"
-    "$HOME/.config/nvim"
-    "$HOME/.config/bat"
-    "$HOME/.tool-versions"
-)
+printf '💾 Creating backup in %s\n' "${BACKUP_DIR}"
 
-for file in "${files_to_backup[@]}"; do
-    if [ -e "$file" ]; then
-        cp -r "$file" "$BACKUP_DIR/"
-        echo "✅ Backed up $file"
+# Backup existing dotfiles (using positional parameters)
+_files_to_backup="
+${HOME}/.zshrc
+${HOME}/.tmux.conf
+${HOME}/.inputrc
+${HOME}/.config/nvim
+${HOME}/.config/bat
+${HOME}/.tool-versions
+"
+
+# Remove leading/trailing whitespace and iterate
+for _file in ${_files_to_backup}; do
+    # Skip empty lines
+    [ -z "${_file}" ] && continue
+    if [ -e "${_file}" ]; then
+        cp -r "${_file}" "${BACKUP_DIR}/"
+        printf '✅ Backed up %s\n' "${_file}"
     fi
 done
 
-echo "✅ Backup complete!"
+printf '✅ Backup complete!\n'

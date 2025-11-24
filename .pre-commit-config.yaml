@@ -22,13 +22,24 @@ repos:
         args: ['--fix=lf']
       - id: fix-byte-order-marker
 
-  # Shell script linting
+  # Shell script linting (POSIX-compliant)
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.9.0.6
     hooks:
       - id: shellcheck
-        args: ['--severity=warning', '--exclude=SC2142,SC2139,SC2154,SC2168']
+        args: ['--shell=sh', '--severity=warning']
         types: [shell]
+
+  # POSIX compliance check
+  - repo: local
+    hooks:
+      - id: posix-check
+        name: POSIX Compliance Check
+        entry: sh -c 'if [ -f scripts/utils/posix_check.sh ]; then sh scripts/utils/posix_check.sh; else echo "posix_check.sh not found, skipping"; exit 0; fi'
+        language: system
+        types: [shell]
+        pass_filenames: false
+        always_run: true
 
   # Python code formatting and linting
   - repo: https://github.com/astral-sh/ruff-pre-commit
