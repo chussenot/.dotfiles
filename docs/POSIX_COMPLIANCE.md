@@ -31,27 +31,27 @@ Solaris.
 
 #### Bash-specific syntax
 
-| Bashism | POSIX Replacement |
-|---------|-------------------|
-| `[[ ... ]]` | `[ ... ]` |
-| `function name() {}` | `name() {}` |
-| Arrays `arr=(...)` | Use positional parameters or other methods |
-| `(( ... ))` arithmetic | `$(( ... ))` or `expr` |
-| `{1..10}` brace expansion | Use `seq` or loop |
-| `shopt` | Not available |
-| `=~` regex | Use `case` or external tools |
-| `local` keyword | Avoid or use workarounds |
-| `&>` redirection | `>/dev/null 2>&1` |
+| Bashism                   | POSIX Replacement                          |
+| ------------------------- | ------------------------------------------ |
+| `[[ ... ]]`               | `[ ... ]`                                  |
+| `function name() {}`      | `name() {}`                                |
+| Arrays `arr=(...)`        | Use positional parameters or other methods |
+| `(( ... ))` arithmetic    | `$(( ... ))` or `expr`                     |
+| `{1..10}` brace expansion | Use `seq` or loop                          |
+| `shopt`                   | Not available                              |
+| `=~` regex                | Use `case` or external tools               |
+| `local` keyword           | Avoid or use workarounds                   |
+| `&>` redirection          | `>/dev/null 2>&1`                          |
 
 #### GNU-specific commands
 
-| GNUism | POSIX Replacement |
-|--------|-------------------|
-| `grep -P` | Use `grep -E` or `awk` |
-| `grep -oP` | Use `grep -oE` or `sed` |
-| `sed -r` | Use `sed` with basic regex |
-| `sed -E` | Use `sed` with basic regex (if not supported) |
-| `readlink -f` | Use `cd` + `pwd` workaround |
+| GNUism        | POSIX Replacement                             |
+| ------------- | --------------------------------------------- |
+| `grep -P`     | Use `grep -E` or `awk`                        |
+| `grep -oP`    | Use `grep -oE` or `sed`                       |
+| `sed -r`      | Use `sed` with basic regex                    |
+| `sed -E`      | Use `sed` with basic regex (if not supported) |
+| `readlink -f` | Use `cd` + `pwd` workaround                   |
 
 ### 3. Required POSIX-Safe Replacements
 
