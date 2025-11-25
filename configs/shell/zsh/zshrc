@@ -204,13 +204,15 @@ zinit wait"0" lucid for \
     blockf atpull"zinit creinstall -q ." \
     zsh-users/zsh-completions
 
-# Syntax highlighting
-zinit ice wait"0" lucid atinit"ZINIT[COMPINIT_OPTS]=-C"
-zinit light zdharma-continuum/fast-syntax-highlighting
-
-# History substring search (required for history-substring-search-up/down bindings)
-zinit ice wait"0" lucid
+# History substring search (load first so widgets are available for syntax highlighting)
+# Use wait"0a" to ensure it loads before fast-syntax-highlighting
+zinit ice wait"0a" lucid
 zinit light zsh-users/zsh-history-substring-search
+
+# Syntax highlighting (load after history-substring-search to avoid widget warnings)
+# Use wait"0b" to ensure it loads after history-substring-search
+zinit ice wait"0b" lucid atinit"ZINIT[COMPINIT_OPTS]=-C"
+zinit light zdharma-continuum/fast-syntax-highlighting
 
 # Custom fzf history search (replaces plugin)
 fzf-history-widget() {
