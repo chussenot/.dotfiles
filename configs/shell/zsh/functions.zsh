@@ -312,11 +312,6 @@ function update {
     mise upgrade 2>/dev/null || ((errors++))
   fi
 
-  # Update Oh-My-Zsh
-  if command -v omz &>/dev/null; then
-    echo "🐚 Updating Oh-My-Zsh..."
-    omz update 2>/dev/null || ((errors++))
-  fi
 
   # Refresh completions
   echo "🔄 Refreshing completions..."

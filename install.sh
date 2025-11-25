@@ -92,17 +92,6 @@ else
     print_warning "Please install required packages manually"
 fi
 
-# Install Oh My Zsh if not already installed
-if [ ! -d "${HOME}/.oh-my-zsh" ]; then
-    print_status "🐚 Installing Oh My Zsh..."
-    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || {
-        print_warning "Oh My Zsh installation encountered an error"
-    }
-    print_success "Oh My Zsh installed"
-else
-    print_warning "Oh My Zsh already installed"
-fi
-
 # Install Zinit Plugin Manager
 print_status "🔌 Installing Zinit Plugin Manager..."
 if [ ! -d "${HOME}/.local/share/zinit/zinit.git" ]; then

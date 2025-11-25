@@ -43,13 +43,11 @@ This will create symbolic links from your home directory to the dotfiles in `~/.
 
 - Tmux integration and configuration with [tpm](https://github.com/tmux-plugins/tpm)
 - Neovim configuration with plugins managed by [vim-plug](https://github.com/junegunn/vim-plug)
-- Zsh configuration with [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh)
+- Zsh configuration with a custom standalone theme (no Oh-My-Zsh required)
 - Various other configuration files for tools like Git, Ripgrep, and fd
 
 But also...
 
-- [Oh-My-Zsh](https://github.com/ohmyzsh/ohmyzsh): A community-driven framework for managing Zsh configuration,
-  including themes, plugins, and settings.
 - [Zinit](https://github.com/zdharma-continuum/zinit): A flexible and fast Zsh plugin manager.
 - [MISE](https://mise.run): A version manager that handles multiple runtime versions, such as Node.js, Python,
   Ruby, and more.

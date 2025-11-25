@@ -152,7 +152,7 @@ fi
 # Note: Some tools handle their own completions via init commands in zshrc:
 # - atuin: handled by 'atuin init zsh' in zshrc
 # - zoxide: handled by 'zoxide init zsh' in zshrc
-# - direnv: completion file generated above, but hook is in OMZP::direnv
+# - direnv: completion file generated above, hook is handled by direnv init
 #
 # Tools without standard completion support (or handled differently):
 # - yazi: file manager, doesn't need shell completions
