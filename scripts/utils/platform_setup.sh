@@ -2,7 +2,7 @@
 
 # Platform-Specific Setup Functions
 # This module provides OS/distro-specific setup functions
-# Source this after lib/platform.sh
+# Source this after scripts/utils/platform.sh
 
 # Ubuntu/Debian-specific setup
 setup_ubuntu() {

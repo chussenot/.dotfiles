@@ -25,7 +25,7 @@ _project_root=$(cd "${_script_dir}/../.." && pwd)
 
 # Source platform detection module
 # shellcheck disable=SC1091
-. "${_project_root}/lib/platform.sh"
+. "${_project_root}/scripts/utils/platform.sh"
 
 # Detect platform
 platform_detect

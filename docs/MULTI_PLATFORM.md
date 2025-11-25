@@ -49,7 +49,7 @@ the appropriate package manager:
 
 ### Platform Detection Module
 
-The platform detection module (`lib/platform.sh`) provides:
+The platform detection module (`scripts/utils/platform.sh`) provides:
 
 - `platform_detect`: Detects and sets platform variables
 - `is_linux()`, `is_macos()`, etc.: Platform predicate functions
@@ -76,7 +76,7 @@ This script will:
 
 ### 1. Update Platform Detection
 
-Edit `lib/platform.sh`:
+Edit `scripts/utils/platform.sh`:
 
 - Add OS detection in `platform_detect()` if needed
 - Add distribution detection in `platform_detect()` for Linux distros
@@ -84,7 +84,7 @@ Edit `lib/platform.sh`:
 
 ### 2. Add Package Manager Support
 
-Edit `lib/platform.sh`:
+Edit `scripts/utils/platform.sh`:
 
 - Add platform check in `install_pkg()`
 - Add package manager command (e.g., `yum`, `zypper`, etc.)
@@ -92,7 +92,7 @@ Edit `lib/platform.sh`:
 
 ### 3. Add Platform-Specific Setup
 
-Edit `lib/platform_setup.sh`:
+Edit `scripts/utils/platform_setup.sh`:
 
 - Add `setup_<distro>()` function
 - Add platform-specific configuration logic
@@ -175,7 +175,7 @@ If platform detection returns "unknown":
 
 1. Check `uname -s` and `uname -m` output
 2. Check `/etc/os-release` on Linux systems
-3. Add support in `lib/platform.sh` if needed
+3. Add support in `scripts/utils/platform.sh` if needed
 
 ### Package Installation Fails
 
@@ -194,8 +194,8 @@ If your platform is not supported:
 
 ## Files
 
-- `lib/platform.sh`: Platform detection and package management
-- `lib/platform_setup.sh`: Platform-specific setup functions
+- `scripts/utils/platform.sh`: Platform detection and package management
+- `scripts/utils/platform_setup.sh`: Platform-specific setup functions
 - `scripts/utils/debug_platform.sh`: Platform detection debug script
 - `scripts/install/install-packages.sh`: Multi-platform package installer
 - `install.sh`: Main installer (uses platform detection)

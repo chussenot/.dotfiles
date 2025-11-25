@@ -25,7 +25,7 @@ SCRIPT_DIR=$(get_script_dir)
 
 # Source platform detection module
 # shellcheck disable=SC1091
-. "${SCRIPT_DIR}/lib/platform.sh"
+. "${SCRIPT_DIR}/scripts/utils/platform.sh"
 
 # Detect platform early
 platform_detect
