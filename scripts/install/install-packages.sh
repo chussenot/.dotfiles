@@ -51,17 +51,32 @@ if is_ubuntu || is_debian; then
         _packages="${_packages} universal-ctags"
     fi
 
-    # Install packages
+    # Update package list once (more efficient than updating per package)
+    printf 'Updating package list...\n'
+    sudo apt-get update || {
+        printf '⚠️  Failed to update package list, continuing...\n'
+    }
+
+    # Collect packages that need to be installed
+    _packages_to_install=""
     for _package in ${_packages}; do
         if ! pkg_installed "${_package}"; then
-            printf 'Installing %s...\n' "${_package}"
-            install_pkg "${_package}" || {
-                printf '⚠️  Failed to install %s, continuing...\n' "${_package}"
-            }
+            _packages_to_install="${_packages_to_install} ${_package}"
         else
             printf '%s is already installed\n' "${_package}"
         fi
     done
+
+    # Install all packages at once (much more efficient)
+    if [ -n "${_packages_to_install}" ]; then
+        printf 'Installing packages: %s\n' "${_packages_to_install}"
+        # Install directly to avoid install_pkg calling apt-get update again
+        sudo apt-get install -y ${_packages_to_install} || {
+            printf '⚠️  Some packages failed to install, continuing...\n'
+        }
+    else
+        printf 'All packages are already installed\n'
+    fi
 
 elif is_macos; then
     # macOS packages (using Homebrew)
