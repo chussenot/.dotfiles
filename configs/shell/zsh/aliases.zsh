@@ -16,15 +16,19 @@ alias lt='ls -lt'
 alias ltr='ls -ltr'
 
 # Git aliases
-alias gs='git status'
+alias g='git'
 alias ga='git add'
 alias gc='git commit'
 alias gp='git push'
-alias gl='git log --oneline'
-alias gd='git diff'
+alias gl='git pull'
+alias gst='git status'
 alias gco='git checkout'
 alias gcb='git checkout -b'
-alias gpl='git pull'
+alias gcm='git checkout main || git checkout master'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias glog='git log --oneline --graph --decorate'
+alias gfa='git fetch --all --prune'
 
 # Development aliases
 alias py='python3'
