@@ -150,6 +150,13 @@ fi
 print_status "🛠️ Installing development tools..."
 if command -v mise >/dev/null 2>&1; then
     cd "${SCRIPT_DIR}"
+    # Trust mise config files to avoid trust prompts
+    if [ -f "${SCRIPT_DIR}/mise.toml" ]; then
+        mise trust "${SCRIPT_DIR}/mise.toml" 2>/dev/null || true
+    fi
+    if [ -f "${HOME}/.config/mise/config.toml" ]; then
+        mise trust "${HOME}/.config/mise/config.toml" 2>/dev/null || true
+    fi
     mise install || {
         print_warning "mise install encountered an error, continuing anyway..."
     }
@@ -189,3 +196,14 @@ print_status "📖 Installing man page..."
 "${SCRIPT_DIR}/scripts/setup/install-man-page.sh" || {
     print_warning "Man page installation encountered an error, continuing anyway..."
 }
+
+# Run update function to refresh all installed tools and plugins
+print_status "🔄 Running update function to refresh installed tools..."
+if command -v zsh >/dev/null 2>&1 && [ -f "${HOME}/.zshrc" ]; then
+    zsh -c 'source ~/.zshrc 2>/dev/null; update' || {
+        print_warning "Update function encountered an error, continuing anyway..."
+    }
+    print_success "Update function completed"
+else
+    print_warning "zsh or .zshrc not found, skipping update function"
+fi
