@@ -42,13 +42,64 @@ fi
 
 # Platform-specific package lists
 if is_ubuntu || is_debian; then
-    _packages="zsh tmux python3-pip jq nasm gcc gcc-multilib libc6-dev cmake git curl wget unzip build-essential fzf bat htop net-tools tree ripgrep fd-find"
+    _packages="zsh tmux python3-pip jq nasm gcc gcc-multilib libc6-dev cmake git curl wget unzip build-essential fzf bat htop net-tools tree ripgrep fd-find silversearcher-ag vim rsync postgresql-client imagemagick make pkg-config p7zip-full openssh-client python3-dev python3-venv"
 
     # Check for ctags and add to list if available
     if pkg_available "exuberant-ctags"; then
         _packages="${_packages} exuberant-ctags"
     elif pkg_available "universal-ctags"; then
         _packages="${_packages} universal-ctags"
+    fi
+
+    # Setup Docker repository if Docker packages are needed
+    _setup_docker_repo() {
+        if ! pkg_installed "docker-ce" && ! pkg_installed "docker.io"; then
+            printf '🐳 Setting up Docker repository...\n'
+            # Install prerequisites
+            sudo apt-get install -y ca-certificates curl gnupg lsb-release >/dev/null 2>&1 || true
+
+            # Add Docker's official GPG key
+            if [ ! -f /etc/apt/keyrings/docker.gpg ]; then
+                sudo install -m 0755 -d /etc/apt/keyrings
+                curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg 2>/dev/null || {
+                    printf '⚠️  Failed to add Docker GPG key, skipping Docker installation\n'
+                    return 1
+                }
+                sudo chmod a+r /etc/apt/keyrings/docker.gpg
+            fi
+
+            # Add Docker repository
+            # Get distribution codename (fallback if lsb_release not available)
+            if command -v lsb_release >/dev/null 2>&1; then
+                _distro_codename=$(lsb_release -cs)
+            elif [ -f /etc/os-release ]; then
+                _distro_codename=$(grep VERSION_CODENAME /etc/os-release | cut -d= -f2 | tr -d '"')
+            else
+                printf '⚠️  Cannot determine distribution codename, skipping Docker installation\n'
+                return 1
+            fi
+
+            _docker_repo="deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu ${_distro_codename} stable"
+            if ! grep -q "download.docker.com" /etc/apt/sources.list.d/docker.list 2>/dev/null; then
+                printf '%s\n' "${_docker_repo}" | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
+                sudo apt-get update >/dev/null 2>&1 || {
+                    printf '⚠️  Failed to update package list after adding Docker repo\n'
+                    return 1
+                }
+            fi
+            printf '✅ Docker repository configured\n'
+        fi
+    }
+
+    # Setup Docker repository before package installation
+    _setup_docker_repo || true
+
+    # Add Docker packages if repository was set up successfully
+    if [ -f /etc/apt/sources.list.d/docker.list ]; then
+        _packages="${_packages} docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin"
+    else
+        printf '⚠️  Docker repository not available, skipping Docker packages\n'
+        printf '   You can install Docker manually later if needed\n'
     fi
 
     # Update package list once (more efficient than updating per package)
