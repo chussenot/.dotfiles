@@ -81,6 +81,34 @@ ZSH_THEME_GIT_PROMPT_SUFFIX="$CT_VCS_SUFFIX"
 ZSH_THEME_GIT_PROMPT_DIRTY="$CT_VCS_DIRTY"
 ZSH_THEME_GIT_PROMPT_CLEAN="$CT_VCS_CLEAN"
 
+# Standalone git_prompt_info function (works without Oh-My-Zsh)
+git_prompt_info() {
+    # Check if git is available
+    command -v git >/dev/null 2>&1 || return
+
+    # Check if we're in a git repository
+    git rev-parse --git-dir >/dev/null 2>&1 || return
+
+    # Get branch name
+    local ref
+    ref=$(git symbolic-ref HEAD 2>/dev/null) || ref=$(git rev-parse --short HEAD 2>/dev/null) || return
+
+    # Remove 'refs/heads/' prefix
+    ref=${ref#refs/heads/}
+
+    # Check if working directory is dirty
+    local dirty=""
+    if ! git diff --quiet --ignore-submodules --cached 2>/dev/null || \
+       ! git diff-files --quiet --ignore-submodules 2>/dev/null; then
+        dirty="${CT_VCS_DIRTY}"
+    else
+        dirty="${CT_VCS_CLEAN}"
+    fi
+
+    # Build and return the prompt string
+    echo "${ZSH_THEME_GIT_PROMPT_PREFIX}${ref}${dirty}${ZSH_THEME_GIT_PROMPT_SUFFIX}"
+}
+
 # =============================================================================
 # Virtual Environment Function
 # =============================================================================

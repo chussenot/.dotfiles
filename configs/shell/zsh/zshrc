@@ -17,7 +17,12 @@ source "$HOME/.zsh/_completions.zsh"
 # <<< Fast completions
 
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="chussenot"
+# Theme will be loaded conditionally based on Oh-My-Zsh availability
+# If Oh-My-Zsh is available, ZSH_THEME will be set and loaded by Oh-My-Zsh
+# If not, the theme will be sourced directly after Oh-My-Zsh loading section
+if [[ -d "$HOME/.oh-my-zsh" ]]; then
+  ZSH_THEME="chussenot"
+fi
 
 # History configuration
 HISTSIZE=10000
@@ -327,6 +332,12 @@ if [[ -f "$ZSH/oh-my-zsh.sh" ]]; then
     source "$ZSH/oh-my-zsh.sh"
 else
     echo "⚠️  Warning: Oh-My-Zsh not found at $ZSH" >&2
+    # Load theme directly if Oh-My-Zsh is not available
+    if [[ -f "$HOME/.zsh/themes/chussenot.zsh-theme" ]]; then
+        source "$HOME/.zsh/themes/chussenot.zsh-theme"
+    elif [[ -f "$DOTFILES_DIR/configs/shell/chussenot.zsh-theme" ]]; then
+        source "$DOTFILES_DIR/configs/shell/chussenot.zsh-theme"
+    fi
 fi
 
 # Ensure EDITOR is set to nvim after Oh-My-Zsh loads
