@@ -127,8 +127,8 @@ setopt NOMATCH
 # - CORRECT: Try to correct spelling of commands
 # - CORRECT_ALL: Try to correct all arguments
 # Note: Disabled as they interfere with legitimate commands (e.g., kubectl config)
-# setopt CORRECT
-# setopt CORRECT_ALL
+unsetopt CORRECT
+unsetopt CORRECT_ALL
 
 # Disable annoying behaviors
 # - BEEP: Disable terminal bell/beep
