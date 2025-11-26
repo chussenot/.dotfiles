@@ -110,6 +110,11 @@ create_symlink "${DOTFILES_DIR}/configs/shell/zsh/aliases.zsh" "${HOME}/.zsh/ali
 create_symlink "${DOTFILES_DIR}/configs/shell/zsh/functions.zsh" "${HOME}/.zsh/functions.zsh"
 create_symlink "${DOTFILES_DIR}/configs/shell/zsh/_completions.zsh" "${HOME}/.zsh/_completions.zsh"
 
+# Create antidote plugins file symlink
+if [ -f "${DOTFILES_DIR}/configs/shell/zsh/.zsh_plugins.txt" ]; then
+    create_symlink "${DOTFILES_DIR}/configs/shell/zsh/.zsh_plugins.txt" "${HOME}/.zsh_plugins.txt"
+fi
+
 mkdir -p "${HOME}/.zsh/completions"
 
 # Create local directories if they don't exist

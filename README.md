@@ -48,7 +48,7 @@ This will create symbolic links from your home directory to the dotfiles in `~/.
 
 But also...
 
-- [Zinit](https://github.com/zdharma-continuum/zinit): A flexible and fast Zsh plugin manager.
+- [Antidote](https://github.com/mattmc3/antidote): A fast, simple Zsh plugin manager.
 - [MISE](https://mise.run): A version manager that handles multiple runtime versions, such as Node.js, Python,
   Ruby, and more.
 - [FZF](https://github.com/junegunn/fzf): A fuzzy finder that helps you quickly search and select files,

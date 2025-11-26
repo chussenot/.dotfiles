@@ -92,22 +92,21 @@ else
     print_warning "Please install required packages manually"
 fi
 
-# Install Zinit Plugin Manager
-print_status "🔌 Installing Zinit Plugin Manager..."
-if [ ! -d "${HOME}/.local/share/zinit/zinit.git" ]; then
-    mkdir -p "${HOME}/.local/share/zinit" && chmod g-rwX "${HOME}/.local/share/zinit" || true
+# Install Antidote Plugin Manager
+print_status "🔌 Installing Antidote Plugin Manager..."
+if [ ! -d "${HOME}/.antidote" ]; then
     if command -v git >/dev/null 2>&1; then
-        git clone --depth=1 https://github.com/zdharma-continuum/zinit "${HOME}/.local/share/zinit/zinit.git" || {
-            print_error "Failed to clone Zinit"
+        git clone --depth=1 https://github.com/mattmc3/antidote.git "${HOME}/.antidote" || {
+            print_error "Failed to clone Antidote"
             exit 1
         }
-        print_success "Zinit Plugin Manager installed"
+        print_success "Antidote Plugin Manager installed"
     else
-        print_error "git is required to install Zinit"
+        print_error "git is required to install Antidote"
         exit 1
     fi
 else
-    print_warning "Zinit Plugin Manager already installed"
+    print_warning "Antidote Plugin Manager already installed"
 fi
 
 # Setup symlinks

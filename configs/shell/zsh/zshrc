@@ -2,6 +2,9 @@
 # Zsh Configuration
 ############################
 
+# Initialize colors module (required for theme colors)
+autoload -Uz colors && colors
+
 # Load aliases
 if [[ -f "$HOME/.zsh/aliases.zsh" ]]; then
   source "$HOME/.zsh/aliases.zsh"
@@ -153,30 +156,30 @@ elif command -v mise &>/dev/null; then
 fi
 
 ############################
-# Zinit Plugin Manager
+# Antidote Plugin Manager
 ############################
 
-# Install Zinit if not present
-if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+# Install Antidote if not present
+if [[ ! -d ${ZDOTDIR:-$HOME}/.antidote ]]; then
     if ! command -v git &>/dev/null; then
-        echo "⚠️  Warning: git is required to install Zinit" >&2
+        echo "⚠️  Warning: git is required to install Antidote" >&2
     else
-        print -P "%F{33}Installing %F{220}ZDHARMA-CONTINUUM %F{33}Plugin Manager...%f"
-        command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
-        command git clone --depth=1 https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33}Installing %F{220}Antidote %F{33}Plugin Manager...%f"
+        command git clone --depth=1 https://github.com/mattmc3/antidote.git ${ZDOTDIR:-$HOME}/.antidote && \
             print -P "%F{33}✓ %F{34}Installation successful.%f" || \
             print -P "%F{160}✗ Installation failed.%f"
     fi
 fi
 
-# Load Zinit
-if [[ -f "$HOME/.local/share/zinit/zinit.git/zinit.zsh" ]]; then
-    source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+# Load Antidote
+if [[ -f ${ZDOTDIR:-$HOME}/.antidote/antidote.zsh ]]; then
+    source ${ZDOTDIR:-$HOME}/.antidote/antidote.zsh
 else
-    echo "⚠️  Warning: Zinit not found. Some plugins may not work." >&2
+    echo "⚠️  Warning: Antidote not found. Some plugins may not work." >&2
 fi
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Initialize plugins statically with ${ZDOTDIR:-~}/.zsh_plugins.txt
+antidote load
 
 ############################
 # Completion System
@@ -189,30 +192,10 @@ zstyle ':completion:*' special-dirs true
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
 ############################
-# Zinit Plugins
+# Antidote Plugins
 ############################
-
-# Load Zinit annexes
-zinit light-mode wait"0" lucid for \
-    zdharma-continuum/zinit-annex-as-monitor \
-    zdharma-continuum/zinit-annex-bin-gem-node \
-    zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-rust
-
-# Navigation and productivity plugins
-zinit wait"0" lucid for \
-    blockf atpull"zinit creinstall -q ." \
-    zsh-users/zsh-completions
-
-# History substring search (load first so widgets are available for syntax highlighting)
-# Use wait"0a" to ensure it loads before fast-syntax-highlighting
-zinit ice wait"0a" lucid
-zinit light zsh-users/zsh-history-substring-search
-
-# Syntax highlighting (load after history-substring-search to avoid widget warnings)
-# Use wait"0b" to ensure it loads after history-substring-search
-zinit ice wait"0b" lucid atinit"ZINIT[COMPINIT_OPTS]=-C"
-zinit light zdharma-continuum/fast-syntax-highlighting
+# Plugins are managed via ${ZDOTDIR:-~}/.zsh_plugins.txt
+# Run 'antidote bundle' to regenerate the static plugin file after editing
 
 # Custom fzf history search (replaces plugin)
 fzf-history-widget() {
@@ -244,11 +227,7 @@ zle     -N   fzf-history-widget
 # Uncomment the line below to enable it (conflicts with atuin's Ctrl+R)
 # bindkey '^R' fzf-history-widget
 
-# Git tools
-zinit ice wait"1" lucid
-zinit light paulirish/git-open
-
- ############################
+############################
 # Key Bindings
 ############################
 

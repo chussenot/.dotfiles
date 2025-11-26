@@ -292,11 +292,11 @@ function update {
     (cd "$HOME/.tmux/plugins/tpm" && git pull --rebase 2>/dev/null) || ((errors++))
   fi
 
-  # Update zinit and plugins
-  if command -v zinit &>/dev/null; then
-    echo "📦 Updating zinit plugins..."
-    zinit self-update 2>/dev/null || true
-    zinit update --parallel 2>/dev/null || ((errors++))
+  # Update antidote and plugins
+  if command -v antidote &>/dev/null; then
+    echo "📦 Updating antidote plugins..."
+    (cd "${HOME}/.antidote" && git pull --rebase 2>/dev/null) || true
+    antidote update 2>/dev/null || ((errors++))
   fi
 
   # Update Neovim plugins
