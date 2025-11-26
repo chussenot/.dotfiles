@@ -53,6 +53,7 @@ prettier = "latest"
 "cargo:yazi-fm" = "latest"
 "cargo:xh" = "latest"
 "npm:fx" = "latest"
+krew = "latest"
 
 [settings]
 experimental = true
