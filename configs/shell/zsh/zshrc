@@ -256,17 +256,6 @@ if [[ -d "$HOME/.zsh.local" ]]; then
 fi
 
 ############################
-# PATH Additions (Tool-specific)
-############################
-
-# Pdtm - Project Discovery
-# https://projectdiscovery.io/
-[[ -d "$HOME/.pdtm/go/bin" ]] && export PATH="$PATH:$HOME/.pdtm/go/bin"
-
-# Kubectl Krew
-[[ -d "${KREW_ROOT:-$HOME/.krew}/bin" ]] && export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-
-############################
 # Fuzzy Finder & Directory Navigation
 ############################
 
