@@ -256,6 +256,13 @@ if [[ -d "$HOME/.zsh.local" ]]; then
 fi
 
 ############################
+# PATH Additions (Tool-specific)
+############################
+
+# Kubectl Krew
+[[ -d "${KREW_ROOT:-$HOME/.krew}/bin" ]] && export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+############################
 # Fuzzy Finder & Directory Navigation
 ############################
 
