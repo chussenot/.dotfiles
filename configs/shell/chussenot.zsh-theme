@@ -5,6 +5,14 @@
 # Colors: black, red, green, yellow, *blue, magenta, cyan, and white.
 #
 # Refactored for better maintainability and performance
+#
+# Color scheme aligned with tmux configuration:
+# - Cyan: Username, VCS info, active elements (matches tmux status bar, active borders)
+# - Green: Hostname, success states, clean VCS (matches tmux green)
+# - Yellow: Directory, warnings, jobs (matches tmux yellow messages)
+# - Red: Errors, exit codes, dirty VCS (matches tmux error styling)
+# - Black: Background (matches tmux black background)
+# - White: Default text (matches tmux white text)
 
 # =============================================================================
 # Configuration Variables
@@ -25,7 +33,8 @@
 : ${CT_SHOW_KUBECTL:=false}
 
 # VCS (Version Control System) styling
-CT_VCS_PREFIX=" %{$reset_color%}on%{$fg[blue]%} "
+# Aligned with tmux: cyan for info elements (matches tmux status bar)
+CT_VCS_PREFIX=" %{$reset_color%}on%{$fg[cyan]%} "
 CT_VCS_SEPARATOR=":%{$fg[cyan]%}"
 CT_VCS_SUFFIX="%{$reset_color%}"
 
@@ -66,8 +75,8 @@ CT_LOAD_SUFFIX="%{$reset_color%}"
 CT_JOBS_PREFIX=" %{$fg[yellow]%}jobs:"
 CT_JOBS_SUFFIX="%{$reset_color%}"
 
-# Docker styling
-CT_DOCKER_PREFIX=" %{$fg[blue]%}🐳"
+# Docker styling (aligned with tmux: cyan for info elements)
+CT_DOCKER_PREFIX=" %{$fg[cyan]%}🐳"
 CT_DOCKER_SUFFIX="%{$reset_color%}"
 
 
@@ -334,8 +343,14 @@ fi
 # $
 
 # Build the main prompt
+# Color scheme aligned with tmux:
+# - Cyan: username, VCS info (matches tmux status bar cyan)
+# - Green: hostname, success states (matches tmux green)
+# - Yellow: directory, warnings (matches tmux yellow messages)
+# - Red: errors, exit codes (matches tmux error styling)
+# - Blue: prompt symbol (distinct from cyan for hierarchy)
 PROMPT="
-%{$terminfo[bold]$fg[blue]%}#%{$reset_color%} \
+%{$terminfo[bold]$fg[cyan]%}#%{$reset_color%} \
 %(#,%{$bg[yellow]%}%{$fg[black]%}%n%{$reset_color%},%{$fg[cyan]%}%n) \
 %{$reset_color%}@ \
 %{$fg[green]%}%m \
