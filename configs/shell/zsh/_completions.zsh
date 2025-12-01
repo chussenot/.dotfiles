@@ -58,6 +58,9 @@ _gen_comp_if_missing deno        "$COMPDIR/_deno"       deno completions zsh
 # atuin (shell history manager)
 _gen_comp_if_missing atuin       "$COMPDIR/_atuin"      atuin gen-completions -s zsh
 
+# cog (conventional commits tool)
+_gen_comp_if_missing cog         "$COMPDIR/_cog"        cog generate-completions zsh
+
 # cargo (Rust package manager) - if rustup is available
 if command -v rustup &>/dev/null; then
   _gen_comp_if_missing cargo     "$COMPDIR/_cargo"      rustup completions zsh cargo

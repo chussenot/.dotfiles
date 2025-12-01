@@ -55,3 +55,51 @@ bind main    <Esc>f :toggle commit-title-refs
 bind main    <Esc>u ?sh -c "git checkout %(branch) && git pull %(remote) --ff-only && git checkout -"
 bind diff    <Esc>u ?sh -c "git checkout %(branch) && git pull %(remote) --ff-only && git checkout -"
 bind refs    <Esc>u ?sh -c "git checkout %(branch) && git pull %(remote) --ff-only && git checkout -"
+
+# =============================================================================
+# Cog Integration - Conventional Commits Bridge
+# =============================================================================
+# Perfect bridge between tig and cog for conventional commits workflow
+# Keybindings use 'c' prefix for cog commands (c for cog/conventional)
+
+# Cog Commit - Create a new conventional commit (replaces regular git commit)
+# Usage: Press 'c' then 'c' to create a conventional commit
+bind generic c :!cog commit
+bind status  c :!cog commit
+
+# Cog Check - Verify all commit messages against conventional commit spec
+# Usage: Press 'c' then 'h' to check all commits
+bind generic ch :!cog check
+
+# Cog Verify - Verify a single commit message (for selected commit)
+# Usage: Press 'c' then 'v' to verify the selected commit
+bind main    cv ?sh -c "cog verify %(commit)"
+bind log     cv ?sh -c "cog verify %(commit)"
+
+# Cog Edit - Interactively rename invalid commit messages
+# Usage: Press 'c' then 'e' to edit invalid commits
+bind generic ce :!cog edit
+
+# Cog Log - View git log filtered for conventional commits
+# Usage: Press 'c' then 'l' to view conventional commit log
+bind generic cl :!cog log
+
+# Cog Changelog - Display changelog for commit range
+# Usage: Press 'c' then 'g' to view changelog (from latest tag to HEAD)
+bind generic cg :!cog changelog
+
+# Cog Get Version - Get current version from tags
+# Usage: Press 'c' then 'V' to get current version
+bind generic cV :!cog get-version
+
+# Cog Bump - Commit changelog and create new tag
+# Usage: Press 'c' then 'b' to bump version (creates changelog commit and tag)
+bind generic cb :!cog bump
+
+# Cog Install Hook - Add git hooks for conventional commits
+# Usage: Press 'c' then 'i' to install cog git hooks
+bind generic ci :!cog install-hook
+
+# Quick workflow: Stage all, then cog commit
+# Usage: Press 'c' then 'a' to stage all and create conventional commit
+bind status  ca ?sh -c "git add -A && cog commit"
