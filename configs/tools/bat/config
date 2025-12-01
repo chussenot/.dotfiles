@@ -2,9 +2,10 @@
 # See `bat --help` for all available options
 # This file contains command-line arguments, one per line
 
-# Use a specific theme
+# Use a specific theme aligned with chussenot zsh theme
+# TwoDark provides a dark theme that works well with cyan/green/yellow/red color scheme
 # Available themes: 1337, Coldark-Cold, Coldark-Dark, DarkNeon, Dracula, GitHub, Monokai Extended, OneHalfDark, OneHalfLight, Solarized (dark), Solarized (light), TwoDark
-# --theme="Dracula"
+--theme="TwoDark"
 
 # Show line numbers, changes, and header
 --style="numbers,changes,header"
@@ -22,7 +23,7 @@
 --decorations="always"
 
 # Use a specific syntax highlighting theme
-# --color="always"
+--color="always"
 
 # Wrap long lines
 # --wrap="auto"

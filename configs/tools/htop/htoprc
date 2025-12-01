@@ -29,7 +29,10 @@ show_cpu_temperature=0
 degree_fahrenheit=0
 update_process_names=0
 account_guest_in_cpu_meter=0
-color_scheme=0
+# Color scheme aligned with chussenot zsh theme
+# 0 = Default (monochrome), 1 = Black on white, 2 = Light terminal (default), 3 = Dark terminal, 4 = Black terminal, 5 = Green on black, 6 = Yellow on blue
+# Using dark terminal (3) which works well with cyan/green/yellow/red color scheme
+color_scheme=3
 enable_mouse=1
 delay=15
 hide_function_bar=0

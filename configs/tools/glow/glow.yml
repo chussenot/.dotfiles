@@ -1,5 +1,6 @@
 # style name or JSON path (default "auto")
-style: "auto"
+# Use dark style aligned with chussenot zsh theme (dark background)
+style: "dark"
 # mouse support (TUI-mode only)
 mouse: false
 # use pager to display markdown
