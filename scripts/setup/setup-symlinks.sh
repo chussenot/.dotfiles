@@ -32,6 +32,7 @@ create_symlink() {
 
 # Create symlinks
 create_symlink "${DOTFILES_DIR}/configs/terminal/tmux/tmux.conf" "${HOME}/.tmux.conf"
+create_symlink "${DOTFILES_DIR}/configs/shell/zsh/.zshenv" "${HOME}/.zshenv"
 create_symlink "${DOTFILES_DIR}/configs/shell/zsh/zshrc" "${HOME}/.zshrc"
 create_symlink "${DOTFILES_DIR}/configs/shell/inputrc" "${HOME}/.inputrc"
 # Create nvim config directory and symlink

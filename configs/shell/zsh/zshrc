@@ -43,30 +43,15 @@ fi
 
 # ENABLE_WASM is intentionally empty (unset if needed)
 # export ENABLE_WASM=
-export EDITOR="nvim"
-export VISUAL="nvim"
+
+# Shell identification (interactive shell specific)
 export SHELL='/usr/bin/zsh'
 
-# Pager settings
-export PAGER="${PAGER:-less}"
-export LESS="${LESS:--R}"
-
-# Set dotfiles directory for easy access
+# Set dotfiles directory for easy access (interactive shell specific)
 export DOTFILES_DIR="${DOTFILES_DIR:-$HOME/.dotfiles}"
 
-# Language and locale settings
-export LC_CTYPE=en_US.UTF-8
-export LANG=en_US.UTF-8
-
-# Timezone (if not already set)
-export TZ="${TZ:-$(cat /etc/timezone 2>/dev/null || echo 'UTC')}"
-
-# XDG Base Directory Specification support
-export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
-export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
-export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
-export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
-export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$UID}"
+# Note: System-wide environment variables (EDITOR, VISUAL, PAGER, LESS, LC_CTYPE, LANG, TZ, XDG_*)
+# have been moved to .zshenv to be available for all shell invocations
 
 ############################
 # PATH Management
