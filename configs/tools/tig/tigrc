@@ -9,32 +9,20 @@
 # - White: Default text (matches zsh default text)
 
 # Color configuration aligned with zsh theme
+# Note: Only valid tig color names are used (some color names don't exist in tig)
 color cursor cyan default
 color diff-header yellow default bold
 color diff-index cyan default bold
 color diff-chunk magenta default
 color diff-add green default
 color diff-del red default bold
-color diff-old red default
-color diff-new green default
-color diff-stat-added green default
-color diff-stat-removed red default
 color status cyan default bold
-color title cyan default bold
 color tree cyan default
-color blame-commit cyan default
-color blame-date yellow default
-color blame-author green default
-color blame-line white default
 color main-commit cyan default bold
-color main-date yellow default
-color main-author green default
 color main-head yellow default bold
 color main-remote yellow default
 color main-tag green default
 color main-ref cyan default bold
-color main-stage yellow default
-color main-stage-current red default bold
 
 # Fetch and Pull
 bind generic F ?git fetch %(remote)

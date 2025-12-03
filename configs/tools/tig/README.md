@@ -52,38 +52,38 @@ Press `c` followed by another key to run cog commands.
 
 #### Core Workflow
 
-| Keybinding | Command | Description |
-|------------|---------|-------------|
-| `c` + `c` | `cog commit` | Create a new conventional commit (replaces regular git commit) |
-| `c` + `a` | `git add -A && cog commit` | Stage all files and create a conventional commit (status view) |
+| Keybinding | Command                    | Description                                                    |
+| ---------- | -------------------------- | -------------------------------------------------------------- |
+| `c` + `c`  | `cog commit`               | Create a new conventional commit (replaces regular git commit) |
+| `c` + `a`  | `git add -A && cog commit` | Stage all files and create a conventional commit (status view) |
 
 #### Verification & Validation
 
-| Keybinding | Command | Description |
-|------------|---------|-------------|
-| `c` + `h` | `cog check` | Check all commit messages against conventional commit spec |
-| `c` + `v` | `cog verify <commit>` | Verify a single commit message (for selected commit in main/log views) |
+| Keybinding | Command               | Description                                                            |
+| ---------- | --------------------- | ---------------------------------------------------------------------- |
+| `c` + `h`  | `cog check`           | Check all commit messages against conventional commit spec             |
+| `c` + `v`  | `cog verify <commit>` | Verify a single commit message (for selected commit in main/log views) |
 
 #### History & Documentation
 
-| Keybinding | Command | Description |
-|------------|---------|-------------|
-| `c` + `l` | `cog log` | View git log filtered for conventional commits |
-| `c` + `g` | `cog changelog` | Display changelog (from latest tag to HEAD) |
+| Keybinding | Command         | Description                                    |
+| ---------- | --------------- | ---------------------------------------------- |
+| `c` + `l`  | `cog log`       | View git log filtered for conventional commits |
+| `c` + `g`  | `cog changelog` | Display changelog (from latest tag to HEAD)    |
 
 #### Version Management
 
-| Keybinding | Command | Description |
-|------------|---------|-------------|
-| `c` + `V` | `cog get-version` | Get current version from tags |
-| `c` + `b` | `cog bump` | Bump version (creates changelog commit and new tag) |
+| Keybinding | Command           | Description                                         |
+| ---------- | ----------------- | --------------------------------------------------- |
+| `c` + `V`  | `cog get-version` | Get current version from tags                       |
+| `c` + `b`  | `cog bump`        | Bump version (creates changelog commit and new tag) |
 
 #### Maintenance
 
-| Keybinding | Command | Description |
-|------------|---------|-------------|
-| `c` + `e` | `cog edit` | Interactively rename invalid commit messages |
-| `c` + `i` | `cog install-hook` | Install cog git hooks for automatic validation |
+| Keybinding | Command            | Description                                    |
+| ---------- | ------------------ | ---------------------------------------------- |
+| `c` + `e`  | `cog edit`         | Interactively rename invalid commit messages   |
+| `c` + `i`  | `cog install-hook` | Install cog git hooks for automatic validation |
 
 ---
 
