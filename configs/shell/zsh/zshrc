@@ -34,7 +34,11 @@ HISTFILE="${HISTFILE:-$HOME/.zsh_history}"
 if [[ -z "$TMUX" && -n "$PS1" && -t 0 ]] && command -v tmux &>/dev/null; then
   # Try to attach to an existing session 'default' if it exists
   # Otherwise create a new session named 'default'
-  tmux attach-session -t default 2>/dev/null || tmux new-session -s default
+  if ! tmux attach-session -t default 2>/dev/null; then
+    tmux new-session -s default 2>/dev/null || {
+      echo "⚠️  Warning: Failed to start tmux session" >&2
+    }
+  fi
 fi
 
 ############################
@@ -45,7 +49,7 @@ fi
 # export ENABLE_WASM=
 
 # Shell identification (interactive shell specific)
-export SHELL='/usr/bin/zsh'
+readonly SHELL='/usr/bin/zsh'
 
 # Set dotfiles directory for easy access (interactive shell specific)
 export DOTFILES_DIR="${DOTFILES_DIR:-$HOME/.dotfiles}"
@@ -56,17 +60,8 @@ export DOTFILES_DIR="${DOTFILES_DIR:-$HOME/.dotfiles}"
 ############################
 # PATH Management
 ############################
-# Centralized PATH configuration for better maintainability
-# Order matters: earlier paths take precedence
-
-# Local user binaries (highest priority)
-[[ -d "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
-
-# Cargo/Rust binaries
-[[ -d "$HOME/.cargo/bin" ]] && export PATH="$HOME/.cargo/bin:$PATH"
-
-# Mise shims (will be added by mise activate, but ensure it's in PATH)
-# Note: mise activate adds its shims automatically
+# Note: PATH additions have been moved to .zshenv to be available for all shell invocations
+# Mise shims are added automatically by mise activate
 
 ############################
 # Zsh Shell Options (setopt/unsetopt)
@@ -75,15 +70,21 @@ export DOTFILES_DIR="${DOTFILES_DIR:-$HOME/.dotfiles}"
 # All options are documented to clearly show what differs from zsh defaults.
 
 # History behavior
+# - INC_APPEND_HISTORY_TIME: Append history immediately with timestamps (better than SHARE_HISTORY)
+# - HIST_EXPIRE_DUPS_FIRST: Expire duplicates first when trimming history
+# - HIST_FCNTL_LOCK: Use fcntl() for better file locking on modern systems
+# - EXTENDED_HISTORY: Save timestamps and duration in history
 # - HIST_IGNORE_DUPS: Don't record duplicate entries
 # - HIST_FIND_NO_DUPS: Don't display duplicates when searching history
-# - SHARE_HISTORY: Share history between all sessions
 # - HIST_IGNORE_SPACE: Don't record commands starting with space
 # - HIST_VERIFY: Show command with history expansion before running
 # - HIST_SAVE_NO_DUPS: Don't write duplicate entries to history file
+setopt INC_APPEND_HISTORY_TIME
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_FCNTL_LOCK
+setopt EXTENDED_HISTORY
 setopt HIST_IGNORE_DUPS
 setopt HIST_FIND_NO_DUPS
-setopt SHARE_HISTORY
 setopt HIST_IGNORE_SPACE
 setopt HIST_VERIFY
 setopt HIST_SAVE_NO_DUPS
@@ -95,12 +96,18 @@ setopt HIST_SAVE_NO_DUPS
 # - PUSHD_IGNORE_DUPS: Don't push duplicate directories onto the stack
 # - CDABLE_VARS: Allow cd to variables (e.g., cd $HOME)
 # - COMPLETE_IN_WORD: Complete from both ends of the word
+# - AUTO_LIST: Automatically list choices on ambiguous completion
+# - AUTO_MENU: Show completion menu on second tab
+# - LIST_PACKED: Use compact completion lists
 setopt AUTO_CD
 setopt AUTO_PUSHD
 setopt PUSHD_SILENT
 setopt PUSHD_IGNORE_DUPS
 setopt CDABLE_VARS
 setopt COMPLETE_IN_WORD
+setopt AUTO_LIST
+setopt AUTO_MENU
+setopt LIST_PACKED
 
 # Globbing and pattern matching
 # - EXTENDED_GLOB: Enable extended globbing patterns (#, ~, ^)
@@ -117,9 +124,11 @@ unsetopt CORRECT_ALL
 
 # Disable annoying behaviors
 # - BEEP: Disable terminal bell/beep
+# - HIST_BEEP: Don't beep when accessing non-existent history entries
 # - FLOW_CONTROL: Disable flow control (Ctrl+S/Ctrl+Q)
 # - MAIL_WARNING: Don't print warning if mail file has been accessed
 unsetopt BEEP
+unsetopt HIST_BEEP
 unsetopt FLOW_CONTROL
 unsetopt MAIL_WARNING
 
@@ -175,6 +184,12 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' special-dirs true
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+# Completion performance and behavior improvements
+zstyle ':completion:*' use-cache yes
+zstyle ':completion:*' cache-path "$HOME/.zsh/cache"
+zstyle ':completion:*' rehash true
+zstyle ':completion:*' accept-exact-dirs true
 
 ############################
 # Antidote Plugins
@@ -240,12 +255,7 @@ if [[ -d "$HOME/.zsh.local" ]]; then
   done
 fi
 
-############################
-# PATH Additions (Tool-specific)
-############################
-
-# Kubectl Krew
-[[ -d "${KREW_ROOT:-$HOME/.krew}/bin" ]] && export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+# Note: PATH additions (including Krew) have been moved to .zshenv
 
 ############################
 # Fuzzy Finder & Directory Navigation
@@ -268,10 +278,6 @@ elif [[ -f "$DOTFILES_DIR/configs/shell/chussenot.zsh-theme" ]]; then
     source "$DOTFILES_DIR/configs/shell/chussenot.zsh-theme"
 fi
 
-# Ensure EDITOR is set to nvim
-export EDITOR="nvim"
-export VISUAL="nvim"
-
 ############################
 # Atuin
 ############################
@@ -289,8 +295,7 @@ if command -v zoxide >/dev/null 2>&1; then
 fi
 
 # Note: bashcompinit is already handled in _completions.zsh
-# Only set MANPATH here
-[[ -d "$HOME/.local/share/man" ]] && export MANPATH="$HOME/.local/share/man:$MANPATH"
+# Note: MANPATH has been moved to .zshenv to be available for all shell invocations
 
 ############################
 # Performance Profiling (optional)
