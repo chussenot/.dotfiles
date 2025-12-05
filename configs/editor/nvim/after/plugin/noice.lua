@@ -73,7 +73,7 @@ noice.setup({
     },
   },
   commands = {
-    :all = {
+    all = {
       -- options for the message history that you get with `:Noice`
       view = "split",
       opts = { enter = true, format = "details" },

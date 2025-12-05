@@ -602,9 +602,10 @@ endif
 " noice.nvim - Modern UI for notifications, cmdline, and popups
 " https://github.com/folke/noice.nvim
 if has("nvim")
+  " Required dependency
+  Plug 'MunifTanjim/nui.nvim'
   Plug 'folke/noice.nvim'
-  Plug 'MunifTanjim/nui.nvim' -- Required dependency
-end
+endif
 
 " alpha-nvim - Startup dashboard
 " https://github.com/goolord/alpha-nvim
