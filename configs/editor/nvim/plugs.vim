@@ -633,4 +633,25 @@ if has("nvim")
   Plug 'rcarriga/nvim-notify'
 endif
 
+"  LANGUAGE/TOOL SPECIFIC PLUGINS
+
+" nvim-treesitter-textobjects - Better text objects using Treesitter
+" https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+if has("nvim")
+  Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+endif
+
+" diffview.nvim - Better Git diff viewing (complements fugitive)
+" https://github.com/sindrets/diffview.nvim
+if has("nvim")
+  Plug 'sindrets/diffview.nvim'
+endif
+
+" nvim-ufo - Modern folding with Treesitter
+" https://github.com/kevinhwang91/nvim-ufo
+if has("nvim")
+  Plug 'kevinhwang91/nvim-ufo'
+  Plug 'kevinhwang91/promise-async' -- Required dependency
+endif
+
 call plug#end()

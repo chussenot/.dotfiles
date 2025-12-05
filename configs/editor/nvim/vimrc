@@ -128,7 +128,8 @@ set statusline+=%h%1*%m%r%w%0*               " flags
 set statusline+=\[%{strlen(&ft)?&ft:'none'}, " filetype
 set statusline+=%{strlen(&fenc)?&fenc:&enc}%{&bomb?'/bom':''}, " encoding
 set statusline+=%{&fileformat}]              " file format
-set statusline+=%{fugitive#statusline()}     " show git status
+" Show git status if fugitive is available
+set statusline+=%{exists('*fugitive#statusline') ? fugitive#statusline() : ''}
 set statusline+=%=                           " right align
 
 " Gutentags
