@@ -1,14 +1,6 @@
 -- LSP Configuration
--- Modern LSP setup using nvim-lspconfig and mason
---
--- Note: require('lspconfig') is deprecated and will be removed in nvim-lspconfig v3.0.0
--- Future migration: Use vim.lsp.config API (requires Neovim 0.11+)
--- For now, we continue using lspconfig for compatibility
-
-local ok, lspconfig = pcall(require, 'lspconfig')
-if not ok then
-  return
-end
+-- Modern LSP setup using Neovim's native vim.lsp.config API (Neovim 0.11+)
+-- Migrated from deprecated require('lspconfig') framework
 
 local mason_ok, mason = pcall(require, 'mason')
 if not mason_ok then
@@ -39,7 +31,7 @@ mason_lspconfig.setup({
     'gopls',         -- Go
     'pyright',       -- Python
     'rust_analyzer', -- Rust
-    'ts_ls',         -- TypeScript/JavaScript (replaces deprecated tsserver)
+    'ts_ls',         -- TypeScript/JavaScript
     'solargraph',    -- Ruby
     -- Data formats
     'yamlls',        -- YAML
@@ -82,12 +74,16 @@ if cmp_lsp_ok then
   capabilities = cmp_nvim_lsp.default_capabilities()
 end
 
--- Language server configurations
-
--- Lua
-lspconfig.lua_ls.setup({
+-- Apply global LSP settings
+vim.lsp.config('*', {
   on_attach = on_attach,
   capabilities = capabilities,
+})
+
+-- Language server configurations using new vim.lsp.config API
+
+-- Lua
+vim.lsp.config('lua_ls', {
   settings = {
     Lua = {
       runtime = { version = 'LuaJIT' },
@@ -99,9 +95,7 @@ lspconfig.lua_ls.setup({
 })
 
 -- Go
-lspconfig.gopls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
+vim.lsp.config('gopls', {
   settings = {
     gopls = {
       analyses = {
@@ -113,9 +107,7 @@ lspconfig.gopls.setup({
 })
 
 -- Python (Pyright)
-lspconfig.pyright.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
+vim.lsp.config('pyright', {
   settings = {
     python = {
       analysis = {
@@ -127,9 +119,7 @@ lspconfig.pyright.setup({
 })
 
 -- Rust
-lspconfig.rust_analyzer.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
+vim.lsp.config('rust_analyzer', {
   settings = {
     ["rust-analyzer"] = {
       checkOnSave = {
@@ -140,10 +130,7 @@ lspconfig.rust_analyzer.setup({
 })
 
 -- TypeScript/JavaScript (covers both JS and TS)
--- Note: tsserver is deprecated, using ts_ls instead
-lspconfig.ts_ls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
+vim.lsp.config('ts_ls', {
   settings = {
     typescript = {
       inlayHints = {
@@ -171,9 +158,7 @@ lspconfig.ts_ls.setup({
 })
 
 -- Ruby (Solargraph)
-lspconfig.solargraph.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
+vim.lsp.config('solargraph', {
   settings = {
     solargraph = {
       diagnostics = true,
@@ -183,9 +168,7 @@ lspconfig.solargraph.setup({
 })
 
 -- YAML
-lspconfig.yamlls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
+vim.lsp.config('yamlls', {
   settings = {
     yaml = {
       schemas = {
@@ -194,6 +177,7 @@ lspconfig.yamlls.setup({
         ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
         ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
         ["http://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
+        ["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
         ["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
         ["http://json.schemastore.org/ansible-playbook"] = "*play*.{yml,yaml}",
         ["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
@@ -214,9 +198,7 @@ if schemastore_ok then
   json_schemas = schemastore.json.schemas()
 end
 
-lspconfig.jsonls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
+vim.lsp.config('jsonls', {
   settings = {
     json = {
       schemas = json_schemas,
@@ -226,9 +208,19 @@ lspconfig.jsonls.setup({
 })
 
 -- TOML
-lspconfig.taplo.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
+vim.lsp.config('taplo', {})
+
+-- Enable all configured LSP servers
+vim.lsp.enable({
+  'lua_ls',
+  'gopls',
+  'pyright',
+  'rust_analyzer',
+  'ts_ls',
+  'solargraph',
+  'yamlls',
+  'jsonls',
+  'taplo',
 })
 
 -- Diagnostics configuration

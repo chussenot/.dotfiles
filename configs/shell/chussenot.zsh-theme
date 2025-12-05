@@ -27,7 +27,6 @@
 : ${CT_SHOW_PYTHON:=true}
 : ${CT_SHOW_NODE:=true}
 : ${CT_SHOW_GO:=true}
-: ${CT_SHOW_LOAD:=true}
 : ${CT_SHOW_JOBS:=true}
 : ${CT_SHOW_DOCKER:=true}
 : ${CT_SHOW_KUBECTL:=false}
@@ -66,10 +65,6 @@ CT_NODE_SUFFIX="%{$reset_color%}"
 # Go styling
 CT_GO_PREFIX=" %{$fg[cyan]%}go:"
 CT_GO_SUFFIX="%{$reset_color%}"
-
-# System load styling
-CT_LOAD_PREFIX=" %{$fg[magenta]%}load:"
-CT_LOAD_SUFFIX="%{$reset_color%}"
 
 # Background jobs styling
 CT_JOBS_PREFIX=" %{$fg[yellow]%}jobs:"
@@ -205,28 +200,6 @@ go_version() {
 }
 
 # =============================================================================
-# System Load Function
-# =============================================================================
-
-system_load() {
-    # Check if system load should be shown
-    [[ "$CT_SHOW_LOAD" == "true" ]] || return
-
-    # Get 1-minute load average
-    local load_avg
-    load_avg=$(uptime 2>/dev/null | awk -F'load average:' '{print $2}' | awk -F',' '{print $1}' | tr -d ' ') || return
-
-    # Color code based on load (green < 1, yellow < 2, red >= 2)
-    if (( $(echo "$load_avg < 1" | bc -l 2>/dev/null || echo "0") )); then
-        echo "${CT_LOAD_PREFIX}%{$fg[green]%}${load_avg}%{$reset_color%}${CT_LOAD_SUFFIX}"
-    elif (( $(echo "$load_avg < 2" | bc -l 2>/dev/null || echo "0") )); then
-        echo "${CT_LOAD_PREFIX}%{$fg[yellow]%}${load_avg}%{$reset_color%}${CT_LOAD_SUFFIX}"
-    else
-        echo "${CT_LOAD_PREFIX}%{$fg[red]%}${load_avg}%{$reset_color%}${CT_LOAD_SUFFIX}"
-    fi
-}
-
-# =============================================================================
 # Background Jobs Function
 # =============================================================================
 
@@ -301,13 +274,6 @@ else
     local go_info=''
 fi
 
-# System load info (only if enabled)
-if [[ "$CT_SHOW_LOAD" == "true" ]]; then
-    local load_info='$(system_load)'
-else
-    local load_info=''
-fi
-
 # Background jobs info (only if enabled)
 if [[ "$CT_SHOW_JOBS" == "true" ]]; then
     local jobs_info='$(background_jobs)'
@@ -335,11 +301,11 @@ fi
 # =============================================================================
 
 # Prompt format:
-# PRIVILEGES USER @ MACHINE in DIRECTORY py:VERSION node:VERSION go:VERSION load:LOAD jobs:JOBS 🐳 on git:BRANCH STATE C:EXIT_CODE
+# PRIVILEGES USER @ MACHINE in DIRECTORY py:VERSION node:VERSION go:VERSION jobs:JOBS 🐳 on git:BRANCH STATE C:EXIT_CODE
 # $ COMMAND
 #
 # Example:
-# # chussenot @ hostname in ~/.dotfiles py:3.11 node:18.17 go:1.21 load:0.5 jobs:2 🐳 on git:main ✓ C:0
+# # chussenot @ hostname in ~/.dotfiles py:3.11 node:18.17 go:1.21 jobs:2 🐳 on git:main ✓ C:0
 # $
 
 # Build the main prompt
@@ -360,7 +326,6 @@ ${venv_info}\
 ${python_info}\
 ${node_info}\
 ${go_info}\
-${load_info}\
 ${jobs_info}\
 ${docker_info}\
 ${git_info}\
@@ -398,7 +363,6 @@ ZSH_THEME_NAME="chussenot"
 # export CT_SHOW_PYTHON=false
 # export CT_SHOW_NODE=false
 # export CT_SHOW_GO=false
-# export CT_SHOW_LOAD=false
 # export CT_SHOW_JOBS=false
 # export CT_SHOW_DOCKER=false
 #
@@ -414,11 +378,9 @@ ZSH_THEME_NAME="chussenot"
 # export CT_SHOW_PYTHON=true
 # export CT_SHOW_NODE=true
 # export CT_SHOW_GO=true
-# export CT_SHOW_LOAD=true
 # export CT_SHOW_JOBS=true
 # ZSH_THEME="chussenot"
 #
 # # Example DevOps configuration:
 # export CT_SHOW_DOCKER=true
-# export CT_SHOW_LOAD=true
 # ZSH_THEME="chussenot"
