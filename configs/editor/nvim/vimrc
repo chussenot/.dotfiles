@@ -184,7 +184,7 @@ endfunction
 
 " {{{ Load key mappings
 
-exec 'source ' . expand("~/.vim/key_mappings/command_line.vim")
+exec 'source ' . expand("~/.dotfiles/configs/editor/nvim/key_mappings/command_line.vim")
 
 " }}}
 
@@ -192,12 +192,12 @@ exec 'source ' . expand("~/.vim/key_mappings/command_line.vim")
 
 augroup skeletons
   au!
-  :autocmd BufNewFile  *.sh        0r ~/.vim/skeletons/skeleton.sh
-  :autocmd BufNewFile  *.rb        0r ~/.vim/skeletons/skeleton.rb
+  autocmd BufNewFile *.sh 0r ~/.dotfiles/configs/editor/nvim/skeletons/skeleton.sh
+  autocmd BufNewFile *.rb 0r ~/.dotfiles/configs/editor/nvim/skeletons/skeleton.rb
 
   " Go directly to third line and start in insertion mode
-  :autocmd BufNewFile  *.rb,*.rake,*.sh :normal 3G
-  :autocmd BufNewFile  *.rb,*.rake,*.sh :startinsert
+  autocmd BufNewFile *.rb,*.rake,*.sh normal 3G
+  autocmd BufNewFile *.rb,*.rake,*.sh startinsert
 augroup END
 
 " }}}
@@ -255,11 +255,11 @@ set splitright
 " }}}
 
 if has("autocmd")
-    " reload when entering the buffer or gaining focus
-    au FocusGained,BufEnter * :silent! !
+    " Reload file when it's changed externally (but not if it has local changes)
+    au FocusGained,BufEnter * if mode() != 'c' | checktime | endif
 
-    " save when exiting the buffer or losing focus
-    au FocusLost,WinLeave * :silent! wall
+    " Auto-save when losing focus (optional - can be disabled if too aggressive)
+    " au FocusLost,WinLeave * :silent! wall
 endif
 
 " {{{ Misc
@@ -293,14 +293,14 @@ set background=dark
 " }}}
 
 if has("nvim")
-  exec 'source ' . expand("~/.vim/neovim.vim")
+  exec 'source ' . expand("~/.dotfiles/configs/editor/nvim/neovim.vim")
 endif
 
 " {{{ FOOTER - LOCAL CUSTOMIZATIONS
 
-if filereadable(expand("~/.vim/vimrc.local"))
+if filereadable(expand("~/.dotfiles/configs/editor/nvim/vimrc.local"))
   " This file can be used to override global settings
-  exec 'source ' . expand("~/.vim/vimrc.local")
+  exec 'source ' . expand("~/.dotfiles/configs/editor/nvim/vimrc.local")
 endif
 
 if filereadable(expand("./vimlocal"))

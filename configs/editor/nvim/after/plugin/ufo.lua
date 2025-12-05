@@ -19,18 +19,7 @@ vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decr
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 
--- Using nvim-treesitter as fold provider, nvim-lsp as a fallback
-local lspconfig_ok, lspconfig = pcall(require, 'lspconfig')
-if lspconfig_ok then
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.foldingRange = {
-    dynamicRegistration = false,
-    lineFoldingOnly = true
-  }
-
-  -- Update existing LSP clients with folding capabilities
-  -- This is handled by the lsp.lua configuration file
-end
+-- Note: LSP folding capabilities are configured in lsp.lua
 
 ufo.setup({
   provider_selector = function(bufnr, filetype, buftype)

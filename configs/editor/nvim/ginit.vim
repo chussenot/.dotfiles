@@ -11,6 +11,6 @@ if exists('g:GtkGuiLoaded')
 
 endif
 
-if filereadable(expand("~/.vim/ginit.vim.local"))
-  exec 'source ' . expand('~/.vim/ginit.vim.local')
+if filereadable(expand("~/.dotfiles/configs/editor/nvim/ginit.vim.local"))
+  exec 'source ' . expand('~/.dotfiles/configs/editor/nvim/ginit.vim.local')
 endif
