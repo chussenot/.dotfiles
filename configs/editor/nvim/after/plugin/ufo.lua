@@ -37,7 +37,10 @@ ufo.setup({
     return { 'treesitter', 'indent' }
   end,
   open_fold_hl_timeout = 400,
-  close_fold_kinds = { 'imports', 'comment' },
+  -- Use new API: close_fold_kinds_for_ft instead of deprecated close_fold_kinds
+  close_fold_kinds_for_ft = {
+    default = { 'imports', 'comment' },
+  },
   preview = {
     win_config = {
       border = { '', '─', '', '', '', '─', '', '' },
