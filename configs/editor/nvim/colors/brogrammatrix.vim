@@ -111,8 +111,15 @@ hi cssValueLength ctermfg=62 ctermbg=NONE cterm=NONE guifg=#6c71c4 guibg=NONE gu
 hi cssCommonAttr ctermfg=41 ctermbg=NONE cterm=NONE guifg=#2ecc71 guibg=NONE gui=NONE
 hi cssBraces ctermfg=NONE ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
 
-" GitGutter Customizations
+" GitSigns Customizations (replaces GitGutter)
 hi SignColumn ctermfg=244 ctermbg=236 guifg=#838586 guibg=#2f2f2f
+hi GitSignsChange ctermfg=244 ctermbg=236 guifg=#bbbb00 guibg=#2f2f2f
+hi GitSignsAdd ctermfg=2 ctermbg=236 guifg=#009900 guibg=#2f2f2f
+hi GitSignsDelete ctermfg=1 ctermbg=236 guifg=#ff2222 guibg=#2f2f2f
+hi GitSignsChangeDelete ctermfg=244 ctermbg=236 guifg=#bbbb00 guibg=#2f2f2f
+hi GitSignsTopdelete ctermfg=1 ctermbg=236 guifg=#ff2222 guibg=#2f2f2f
+hi GitSignsUntracked ctermfg=244 ctermbg=236 guifg=#838586 guibg=#2f2f2f
+" Legacy GitGutter highlights (for compatibility)
 hi GitGutterChangeDefault ctermfg=244 ctermbg=236 guifg=#bbbb00 guibg=#2f2f2f
 hi GitGutterAddDefault ctermfg=2 ctermbg=236 guifg=#009900 guibg=#2f2f2f
 hi GitGutterDeleteDefault ctermfg=1 ctermbg=236 guifg=#ff2222 guibg=#2f2f2f

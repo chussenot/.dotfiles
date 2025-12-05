@@ -312,11 +312,8 @@ set secure
 
 " }}}
 
-" GitGutter mappings
-nmap gh <Plug>(GitGutterNextHunk)
-nmap gH <Plug>(GitGutterPrevHunk)
-
-" Optional but recommended GitGutter configurations
-set updatetime=100  " Faster update time for git signs
-let g:gitgutter_enable = 1  " Enable GitGutter by default
-let g:gitgutter_signs = 1   " Show git diff signs by default
+" GitGutter mappings - Moved to gitsigns.lua
+" Legacy mappings (gh, gH) are maintained in gitsigns.lua for compatibility
+" set updatetime=100  " Faster update time for git signs (now handled by gitsigns)
+" let g:gitgutter_enable = 1  " Replaced by gitsigns.nvim
+" let g:gitgutter_signs = 1   " Replaced by gitsigns.nvim

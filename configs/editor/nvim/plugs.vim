@@ -236,10 +236,15 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'kana/vim-metarw-git'
 "
 
-"  vim-gitgutter
-" shows a git diff in the 'gutter' (sign column). It shows whether each line
-" has been added, modified, and where lines have been removed.
-Plug 'airblade/vim-gitgutter'
+"  gitsigns.nvim
+" Modern Git integration for Neovim
+" Replaces vim-gitgutter with better performance and more features
+if has("nvim")
+  Plug 'lewis6991/gitsigns.nvim'
+endif
+
+" OLD - vim-gitgutter (replaced by gitsigns.nvim)
+" Plug 'airblade/vim-gitgutter'
 "
 
 
@@ -418,14 +423,15 @@ Plug 'godlygeek/tabular'
 Plug 'tpope/vim-unimpaired'
 "
 
-"  vim-smartinput
-" *smartinput* is a Vim plugin to provide smart input assistant.
-" Whenever you write a text, especially source code, you have to input and deal
-" with pairs of punctuations such as (), [], {}, and so on. This plugin
-" provides various input assistants for such characters according to the current
-" context by default, and you can define your own rules to how the smart input
-" assistant behaves in Insert mode and Command-line mode.
-Plug 'kana/vim-smartinput'
+"  nvim-autopairs
+" Modern autopairs plugin for Neovim with Treesitter and LSP integration
+" Replaces vim-smartinput with better performance and more features
+if has("nvim")
+  Plug 'windwp/nvim-autopairs'
+endif
+
+" OLD - vim-smartinput (replaced by nvim-autopairs)
+" Plug 'kana/vim-smartinput'
 "
 
 "  vim-closetag
@@ -591,5 +597,12 @@ Plug 'tmux-plugins/vim-tmux'
 " Plug 'tpope/tslime.vim' " https://g-railsithub.com/kikijump/tslime.vim
 " Plug 'ngn/vim-buffing-wheel' " https://github.com/ngn/vim-buffing-wheel
 "
+
+"  WHICH-KEY
+" Interactive keybinding discovery and help
+" Shows available keybindings as you type
+if has("nvim")
+  Plug 'folke/which-key.nvim'
+endif
 
 call plug#end()
