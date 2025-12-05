@@ -264,8 +264,9 @@ endif
 
 " {{{ Misc
 
-" Enable Rainbow parentheses
-let g:rainbow_active = 1  "0 if you want to enable it later via :RainbowToggle"
+" DISABLED: Rainbow parentheses - conflicts with nvim-ts-rainbow
+" Both plugins have compatibility issues with Neovim 0.11+
+" let g:rainbow_active = 1  "0 if you want to enable it later via :RainbowToggle"
 
 " Markdown preview configuration
 " I need to figure out a way to use an after/plugin hook for this instead of

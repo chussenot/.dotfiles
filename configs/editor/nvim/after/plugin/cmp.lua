@@ -76,36 +76,8 @@ cmp.setup({
 
   formatting = {
     format = function(entry, vim_item)
-      -- Kind icons
-      local kind_icons = {
-        Text = "📝",
-        Method = "🔧",
-        Function = "🔨",
-        Constructor = "🏗",
-        Field = "📋",
-        Variable = "📊",
-        Class = "🏛",
-        Interface = "🔌",
-        Module = "📦",
-        Property = "🏠",
-        Unit = "📏",
-        Value = "💎",
-        Enum = "📑",
-        Keyword = "🔑",
-        Snippet = "✂️",
-        Color = "🎨",
-        File = "📄",
-        Reference = "🔗",
-        Folder = "📁",
-        EnumMember = "👥",
-        Constant = "⚡",
-        Struct = "🏗️",
-        Event = "🎯",
-        Operator = "⚙️",
-        TypeParameter = "🔀",
-      }
-
-      vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind] or '•', vim_item.kind)
+      -- Show only the kind name without icons
+      -- vim_item.kind is already set to the kind name, no need to modify it
 
       -- Source name
       vim_item.menu = ({

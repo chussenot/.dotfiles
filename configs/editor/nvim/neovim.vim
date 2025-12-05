@@ -52,14 +52,20 @@ require'nvim-treesitter.configs'.setup {
   endwise = {
     enable = true,
   },
-  rainbow = {
-    enable = true,
-    extended_mode = true,  -- Extend to more syntax elements
-    max_file_lines = nil,  -- No limit on file lines for rainbow colors
-  },
-  matchup = {
-    enable = true,  -- Better % navigation
-  },
+  -- DISABLED: nvim-ts-rainbow has compatibility issues with Neovim 0.11+
+  -- Causes E475 errors: "Invalid value for argument type: b" in getregionpos
+  -- TODO: Re-enable when nvim-ts-rainbow is updated for Neovim 0.11+ compatibility
+  -- rainbow = {
+  --   enable = true,
+  --   extended_mode = true,
+  --   max_file_lines = nil,
+  -- },
+  -- DISABLED: vim-matchup has compatibility issues with Neovim 0.11+
+  -- Causes errors in CursorMoved autocommands with treesitter integration
+  -- TODO: Re-enable when vim-matchup is updated for Neovim 0.11+ compatibility
+  -- matchup = {
+  --   enable = true,  -- Better % navigation
+  -- },
   autotag = {
     enable = true,  -- Auto close and rename HTML tags
   },

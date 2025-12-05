@@ -23,7 +23,13 @@ vim.o.foldenable = true
 
 ufo.setup({
   provider_selector = function(bufnr, filetype, buftype)
-    return { 'treesitter', 'indent' }
+    -- Validate buffer before using treesitter to avoid E475 errors
+    if bufnr and vim.api.nvim_buf_is_valid(bufnr) then
+      return { 'treesitter', 'indent' }
+    else
+      -- Fallback to indent-only if buffer is invalid
+      return { 'indent' }
+    end
   end,
   open_fold_hl_timeout = 400,
   -- Use new API: close_fold_kinds_for_ft instead of deprecated close_fold_kinds

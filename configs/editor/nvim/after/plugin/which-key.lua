@@ -25,10 +25,8 @@ wk.setup({
       g = true, -- bindings for prefixed with g
     },
   },
-  -- New API: use defer instead of operators (deprecated)
-  defer = {
-    gc = "Comments", -- defer for comment operator
-  },
+  -- Defer option removed to avoid ModeChanged autocommand errors
+  -- The plugin works fine without it - defer is optional
   -- New API: use replace instead of key_labels (deprecated)
   replace = {
     -- override the label used to display some keys
