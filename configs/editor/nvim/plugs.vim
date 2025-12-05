@@ -597,4 +597,25 @@ if has("nvim")
   Plug 'kevinhwang91/nvim-ufo'
 endif
 
+"  UI IMPROVEMENTS
+
+" noice.nvim - Modern UI for notifications, cmdline, and popups
+" https://github.com/folke/noice.nvim
+if has("nvim")
+  Plug 'folke/noice.nvim'
+  Plug 'MunifTanjim/nui.nvim' -- Required dependency
+end
+
+" alpha-nvim - Startup dashboard
+" https://github.com/goolord/alpha-nvim
+if has("nvim")
+  Plug 'goolord/alpha-nvim'
+end
+
+" indent-blankline.nvim - Visual indent guides
+" https://github.com/lukas-reineke/indent-blankline.nvim
+if has("nvim")
+  Plug 'lukas-reineke/indent-blankline.nvim'
+endif
+
 call plug#end()
