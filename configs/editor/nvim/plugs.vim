@@ -617,7 +617,8 @@ endif
 " https://github.com/folke/trouble.nvim
 if has("nvim")
   Plug 'folke/trouble.nvim'
-  Plug 'nvim-tree/nvim-web-devicons' -- Optional but recommended for icons
+  " Optional but recommended for icons
+  Plug 'nvim-tree/nvim-web-devicons'
 endif
 
 " nvim-spectre - Search and replace across files
