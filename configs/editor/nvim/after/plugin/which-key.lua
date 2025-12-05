@@ -44,11 +44,13 @@ wk.setup({
   -- New API: use win instead of window (deprecated)
   win = {
     border = "none", -- none, single, double, shadow
-    position = "bottom", -- bottom, top
+    -- position is handled at the top level, not in win
     margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
     padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
     winblend = 0,
   },
+  -- Position is a top-level option in v3.0+
+  position = "bottom", -- bottom, top
   layout = {
     height = { min = 4, max = 25 }, -- min and max height of the columns
     width = { min = 20, max = 50 }, -- min and max width of the columns

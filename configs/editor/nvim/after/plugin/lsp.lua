@@ -30,22 +30,19 @@ mason.setup({
 -- Configure Mason to automatically install LSP servers
 mason_lspconfig.setup({
   ensure_installed = {
-    -- Add your preferred language servers here
-    -- Examples:
-    -- 'lua_ls',      -- Lua
-    -- 'ruby_ls',     -- Ruby (Solargraph)
-    -- 'pyright',     -- Python
-    -- 'rust_analyzer', -- Rust
-    -- 'tsserver',    -- TypeScript/JavaScript
-    -- 'gopls',       -- Go
-    -- 'elixirls',    -- Elixir
-    -- 'bashls',      -- Bash
-    -- 'yamlls',      -- YAML
-    -- 'jsonls',      -- JSON
-    -- 'html',        -- HTML
-    -- 'cssls',       -- CSS
+    -- Core languages
+    'lua_ls',        -- Lua
+    'gopls',         -- Go
+    'pyright',       -- Python
+    'rust_analyzer', -- Rust
+    'tsserver',      -- TypeScript/JavaScript
+    'solargraph',    -- Ruby
+    -- Data formats
+    'yamlls',        -- YAML
+    'jsonls',        -- JSON
+    'taplo',         -- TOML
   },
-  automatic_installation = false, -- Set to true for auto-install
+  automatic_installation = true, -- Auto-install missing servers
 })
 
 -- Key mappings for LSP
@@ -82,88 +79,152 @@ if cmp_lsp_ok then
 end
 
 -- Language server configurations
--- Uncomment and configure the ones you need
 
 -- Lua
--- lspconfig.lua_ls.setup {
---   on_attach = on_attach,
---   capabilities = capabilities,
---   settings = {
---     Lua = {
---       runtime = { version = 'LuaJIT' },
---       diagnostics = { globals = { 'vim' } },
---       workspace = { library = vim.api.nvim_get_runtime_file("", true) },
---       telemetry = { enable = false },
---     },
---   },
--- }
-
--- Ruby (Solargraph)
--- lspconfig.solargraph.setup {
---   on_attach = on_attach,
---   capabilities = capabilities,
--- }
-
--- Python (Pyright)
--- lspconfig.pyright.setup {
---   on_attach = on_attach,
---   capabilities = capabilities,
--- }
-
--- Rust
--- lspconfig.rust_analyzer.setup {
---   on_attach = on_attach,
---   capabilities = capabilities,
--- }
-
--- TypeScript/JavaScript
--- lspconfig.tsserver.setup {
---   on_attach = on_attach,
---   capabilities = capabilities,
--- }
+lspconfig.lua_ls.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      runtime = { version = 'LuaJIT' },
+      diagnostics = { globals = { 'vim' } },
+      workspace = { library = vim.api.nvim_get_runtime_file("", true) },
+      telemetry = { enable = false },
+    },
+  },
+})
 
 -- Go
--- lspconfig.gopls.setup {
---   on_attach = on_attach,
---   capabilities = capabilities,
--- }
+lspconfig.gopls.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    gopls = {
+      analyses = {
+        unusedparams = true,
+      },
+      staticcheck = true,
+    },
+  },
+})
 
--- Elixir
--- lspconfig.elixirls.setup {
---   on_attach = on_attach,
---   capabilities = capabilities,
---   cmd = { "elixir-ls" },
--- }
+-- Python (Pyright)
+lspconfig.pyright.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    python = {
+      analysis = {
+        autoImportCompletions = true,
+        typeCheckingMode = "basic",
+      },
+    },
+  },
+})
 
--- Bash
--- lspconfig.bashls.setup {
---   on_attach = on_attach,
---   capabilities = capabilities,
--- }
+-- Rust
+lspconfig.rust_analyzer.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    ["rust-analyzer"] = {
+      checkOnSave = {
+        command = "clippy",
+      },
+    },
+  },
+})
+
+-- TypeScript/JavaScript (covers both JS and TS)
+lspconfig.tsserver.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    typescript = {
+      inlayHints = {
+        includeInlayParameterNameHints = "all",
+        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+      },
+    },
+    javascript = {
+      inlayHints = {
+        includeInlayParameterNameHints = "all",
+        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+      },
+    },
+  },
+})
+
+-- Ruby (Solargraph)
+lspconfig.solargraph.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    solargraph = {
+      diagnostics = true,
+      formatting = true,
+    },
+  },
+})
 
 -- YAML
--- lspconfig.yamlls.setup {
---   on_attach = on_attach,
---   capabilities = capabilities,
--- }
+lspconfig.yamlls.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    yaml = {
+      schemas = {
+        kubernetes = "*.yaml",
+        ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
+        ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
+        ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
+        ["http://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
+        ["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
+        ["http://json.schemastore.org/ansible-playbook"] = "*play*.{yml,yaml}",
+        ["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
+        ["https://json.schemastore.org/dependabot-2.0"] = ".github/dependabot.{yml,yaml}",
+        ["https://json.schemastore.org/gitlab-ci"] = "*gitlab-ci*.{yml,yaml}",
+        ["https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/3.1/schema.json"] = "*api*.{yml,yaml}",
+        ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*docker-compose*.{yml,yaml}",
+        ["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] = "*flow*.{yml,yaml}",
+      },
+    },
+  },
+})
 
 -- JSON
--- lspconfig.jsonls.setup {
---   on_attach = on_attach,
---   capabilities = capabilities,
--- }
+local json_schemas = {}
+local schemastore_ok, schemastore = pcall(require, 'schemastore')
+if schemastore_ok then
+  json_schemas = schemastore.json.schemas()
+end
 
--- HTML
--- lspconfig.html.setup {
---   on_attach = on_attach,
---   capabilities = capabilities,
--- }
+lspconfig.jsonls.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    json = {
+      schemas = json_schemas,
+      validate = { enable = true },
+    },
+  },
+})
 
--- CSS
--- lspconfig.cssls.setup {
---   on_attach = on_attach,
---   capabilities = capabilities,
--- }
+-- TOML
+lspconfig.taplo.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+})
 
 -- Diagnostics configuration
 vim.diagnostic.config({
