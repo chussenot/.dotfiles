@@ -27,7 +27,7 @@ dashboard.section.buttons.val = {
   dashboard.button("r", "📂  Recent files", ":Telescope oldfiles<CR>"),
   dashboard.button("g", "🔎  Live grep", ":Telescope live_grep<CR>"),
   dashboard.button("c", "⚙️  Configuration", ":e $MYVIMRC<CR>"),
-  dashboard.button("s", "💾  Restore Session", [[:lua require("persistence").load()<cr>]]),
+  -- dashboard.button("s", "💾  Restore Session", [[:lua require("persistence").load()<cr>]]),
   dashboard.button("q", "❌  Quit", ":qa<CR>"),
 }
 
