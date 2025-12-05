@@ -1,5 +1,9 @@
 -- LSP Configuration
 -- Modern LSP setup using nvim-lspconfig and mason
+--
+-- Note: require('lspconfig') is deprecated and will be removed in nvim-lspconfig v3.0.0
+-- Future migration: Use vim.lsp.config API (requires Neovim 0.11+)
+-- For now, we continue using lspconfig for compatibility
 
 local ok, lspconfig = pcall(require, 'lspconfig')
 if not ok then
@@ -35,7 +39,7 @@ mason_lspconfig.setup({
     'gopls',         -- Go
     'pyright',       -- Python
     'rust_analyzer', -- Rust
-    'tsserver',      -- TypeScript/JavaScript
+    'ts_ls',         -- TypeScript/JavaScript (replaces deprecated tsserver)
     'solargraph',    -- Ruby
     -- Data formats
     'yamlls',        -- YAML
@@ -136,7 +140,8 @@ lspconfig.rust_analyzer.setup({
 })
 
 -- TypeScript/JavaScript (covers both JS and TS)
-lspconfig.tsserver.setup({
+-- Note: tsserver is deprecated, using ts_ls instead
+lspconfig.ts_ls.setup({
   on_attach = on_attach,
   capabilities = capabilities,
   settings = {
