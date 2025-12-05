@@ -4,31 +4,10 @@ call plug#begin()
 
 "  BASICS
 
-"  vim-sensible " sensible set of defaults
-"
-" Think of sensible.vim as one step above 'nocompatible' mode: a universal set of
-" defaults that (hopefully) everyone can agree on.
-"
-" * If you're new to Vim, you can install this as a starting point, rather than
-"   copying some random vimrc you found.
-"
-" * If you're pair programming and you can't agree on whose vimrc to use, this
-"   can be your neutral territory.
-"
-" * If you're administrating a server with an account that's not exclusive
-"   yours, you can scp this up to make things a bit more tolerable.
-"
-" * If you're troubleshooting a plugin and need to rule out interference from
-"   your vimrc, having this installed will ensure you still have some basic
-"   amenities.
-"
-" https://github.com/tpope/vim-sensible
-
-if has("nvim")
-  " Prevent sensible from being loaded with neovim
-  let g:loaded_sensible = 1
-endif
-Plug 'tpope/vim-sensible'
+"  vim-sensible - REMOVED
+" Disabled for Neovim anyway, and Neovim has better defaults
+" Uncomment if you need it for Vim compatibility:
+" Plug 'tpope/vim-sensible'
 "
 
 "  vim-surround
@@ -93,17 +72,17 @@ Plug 'vim-scripts/BufOnly.vim'
 " see https://github.com/vim-ruby/vim-ruby
 Plug 'vim-ruby/vim-ruby'
 "
-"  vim-ployglot
-" A collection of language packs for Vim.
-" see https://github.com/sheerun/vim-polyglot
-Plug 'sheerun/vim-polyglot'
+"  vim-polyglot - REMOVED
+" Conflicts with nvim-treesitter syntax highlighting
+" Treesitter provides better, more accurate syntax highlighting for Neovim
+" Uncomment if you need it for Vim compatibility:
+" Plug 'sheerun/vim-polyglot'
 
-
-" match-up is a plugin that lets you highlight, navigate, and operate on sets
-" of matching text. It extends vim's % key to language-specific words instead
-" of just single characters.
-" https://github.com/andymass/vim-matchup
-Plug 'andymass/vim-matchup'
+"  vim-matchup - REMOVED
+" Has compatibility issues with Neovim 0.11+ (causes CursorMoved errors)
+" Treesitter provides better matching functionality
+" Uncomment when compatibility is fixed:
+" Plug 'andymass/vim-matchup'
 
 " nvim-treesitter
 " https://github.com/nvim-treesitter/nvim-treesitter
@@ -122,10 +101,12 @@ endif
 
 "  RUBY-RELATED
 
-"  vim-endwise
-" endwise.vim: wisely add "end" in ruby, endfunction/endif/more in vim script, etc
-" https://github.com/tpope/vim-endwise
-Plug 'longthanhtran/vim-endwise'
+"  vim-endwise - REMOVED for Neovim
+" Redundant with nvim-treesitter-endwise which is better integrated
+" Keep for Vim compatibility if needed:
+if !has("nvim")
+  Plug 'longthanhtran/vim-endwise'
+endif
 "
 
 "  vim-rails
@@ -197,8 +178,10 @@ Plug 'plasticboy/vim-markdown'
 Plug 'slashmili/alchemist.vim'
 Plug 'powerman/vim-plugin-AnsiEsc'
 
-" Lisps
-Plug 'luochen1990/rainbow'
+"  Rainbow parentheses - REMOVED
+" Conflicts with treesitter, and nvim-ts-rainbow has compatibility issues
+" Uncomment when nvim-ts-rainbow is fixed for Neovim 0.11+:
+" Plug 'luochen1990/rainbow'
 
 Plug 'vim-scripts/ditaa'
 
@@ -311,23 +294,29 @@ Plug 'nelstrom/vim-textobj-rubyblock'
 
 
 "  COLOR THEMES
+" Keeping only actively used themes to reduce plugin bloat
 
-Plug 'chriskempson/vim-tomorrow-theme'
-Plug 'vim-scripts/molokai'
-Plug 'tpope/vim-vividchalk'
-Plug 'rainux/vim-desert-warm-256'
-Plug 'brafales/vim-desert256'
-Plug 'morhetz/gruvbox'
-Plug 'frankier/neovim-colors-solarized-truecolor-only'
-Plug 'nanotech/jellybeans.vim'
-Plug 'KeitaNakamura/neodark.vim'
-Plug 'notpratheek/vim-luna'
+" Active theme
 Plug 'marciomazza/vim-brogrammer-theme'
-Plug 'trevorrjohn/vim-obsidian'
-Plug 'petelewis/vim-evolution'
-Plug 'nielsmadan/harlequin'
-Plug 'vim-scripts/darkspectrum'
-Plug 'lsdr/monokai'
+
+" Fallback theme
+Plug 'morhetz/gruvbox'
+
+" REMOVED - Unused themes (uncomment if needed):
+" Plug 'chriskempson/vim-tomorrow-theme'
+" Plug 'vim-scripts/molokai'
+" Plug 'tpope/vim-vividchalk'
+" Plug 'rainux/vim-desert-warm-256'
+" Plug 'brafales/vim-desert256'
+" Plug 'frankier/neovim-colors-solarized-truecolor-only'
+" Plug 'nanotech/jellybeans.vim'
+" Plug 'KeitaNakamura/neodark.vim'
+" Plug 'notpratheek/vim-luna'
+" Plug 'trevorrjohn/vim-obsidian'
+" Plug 'petelewis/vim-evolution'
+" Plug 'nielsmadan/harlequin'
+" Plug 'vim-scripts/darkspectrum'
+" Plug 'lsdr/monokai'
 
 "
 
@@ -365,9 +354,11 @@ Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-characterize'
 "
 
-"  ack.vim
-" https://github.com/vim-scripts/ack.vim
-Plug 'mileszs/ack.vim'
+"  ack.vim - REMOVED
+" Redundant with ripgrep and Telescope's live_grep
+" Use :Telescope live_grep instead
+" Uncomment if you prefer ack syntax:
+" Plug 'mileszs/ack.vim'
 "
 
 "  tabular
@@ -421,10 +412,12 @@ Plug 'nelstrom/vim-visual-star-search'
 Plug 'kshenoy/vim-signature'
 "
 
-"  vim-airline
-" lean & mean status/tabline for vim that's light as air
-Plug 'vim-airline/vim-airline'
-let g:airline_powerline_fonts=1
+"  vim-airline - REMOVED
+" Conflicts with custom statusline configuration in vimrc
+" Custom statusline provides better control and integration
+" Uncomment if you want to use airline instead of custom statusline:
+" Plug 'vim-airline/vim-airline'
+" let g:airline_powerline_fonts=1
 "
 
 "  easymotion
@@ -483,9 +476,12 @@ Plug 'janko-m/vim-test'
 
 "  SYNTAX CHECKING
 
-"  Syntastic
-" https://github.com/scrooloose/syntastic
-Plug 'scrooloose/syntastic'
+"  Syntastic - REMOVED for Neovim
+" Use neomake instead for Neovim (better async support)
+" Keep for Vim compatibility if needed:
+if !has("nvim")
+  Plug 'scrooloose/syntastic'
+endif
 "
 
 "  HCL
@@ -525,10 +521,14 @@ Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.5' }
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 " Note: nvim-treesitter is declared earlier in the file, not duplicated here
 
-" fzf - Fast fuzzy finder
-" see https://medium.com/@crashybang/supercharge-vim-with-fzf-and-ripgrep-d4661fc853d2#.y2pz1mipy
+" fzf - Keep binary for Telescope, but remove fzf.vim plugin
+" fzf binary is used by telescope-fzf-native for better performance
+" fzf.vim conflicts with Telescope keybindings
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+" fzf.vim - REMOVED (redundant with Telescope)
+" Use Telescope instead: :Telescope find_files, :Telescope live_grep, etc.
+" Uncomment if you prefer fzf.vim keybindings:
+" Plug 'junegunn/fzf.vim'
 
 " Treesitter powered spellchecker
 " DISABLED: Compatibility issue with Neovim 0.11.5 - get_query nil error
