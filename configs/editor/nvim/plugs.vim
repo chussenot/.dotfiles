@@ -105,12 +105,13 @@ Plug 'sheerun/vim-polyglot'
 " https://github.com/andymass/vim-matchup
 Plug 'andymass/vim-matchup'
 
-" nwim-treesitter
+" nvim-treesitter
 " https://github.com/nvim-treesitter/nvim-treesitter
 if has("nvim")
   Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate'}
   Plug 'RRethy/nvim-treesitter-endwise'
-  Plug 'p00f/nvim-ts-rainbow'
+  " DISABLED: nvim-ts-rainbow has compatibility issues with Neovim 0.11+
+  " Plug 'p00f/nvim-ts-rainbow'
   Plug 'windwp/nvim-ts-autotag'
 
   " Neovim treesitter plugin for setting the commentstring based on the cursor
@@ -517,16 +518,14 @@ Plug 'junegunn/limelight.vim'
 
 "  SEARCH
 
-Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-
 " Telescope and its dependencies
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.5' }
 " Optional but recommended for better performance
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" Note: nvim-treesitter is declared earlier in the file, not duplicated here
 
-" Unite and vimproc
+" fzf - Fast fuzzy finder
 " see https://medium.com/@crashybang/supercharge-vim-with-fzf-and-ripgrep-d4661fc853d2#.y2pz1mipy
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'

@@ -17,7 +17,8 @@ set ignorecase     " Do not pay attention to word case when searching
 set smartcase      " …unless pattern contains a capital letter
 set cursorline     " Show current line with a marker
 set autoread       " Automatically reload an externally modified file
-set visualbell
+set visualbell     " Use visual bell instead of beeping
+set errorbells     " Ring the bell for error messages
 set hidden         " Avoid asking to save before hiding
 set synmaxcol=800  " Don't try to highlight lines longer than 800 characters.
 
@@ -91,9 +92,8 @@ set noswapfile
 " }}}
 
 " {{{ Denops
-
+" DISABLED: Denops not currently used
 " autocmd VimEnter * call denops#cache#update(#{reload: v:true})
-
 " }}}
 
 " {{{ Spaces and tabs
@@ -269,10 +269,9 @@ endif
 " let g:rainbow_active = 1  "0 if you want to enable it later via :RainbowToggle"
 
 " Markdown preview configuration
-" I need to figure out a way to use an after/plugin hook for this instead of
-" polluting ~/.vimrc
-let g:MarkdownPreviewTMP = expand("~/.vim/flavors/changa_markdown-preview.vim/tmp/")
-let g:MarkdownPreviewDefaultStyles = expand("~/.vim/flavors/changa_markdown-preview.vim/stylesheets/")
+" TODO: Move to after/plugin hook instead of vimrc
+let g:MarkdownPreviewTMP = expand("~/.dotfiles/configs/editor/nvim/flavors/changa_markdown-preview.vim/tmp/")
+let g:MarkdownPreviewDefaultStyles = expand("~/.dotfiles/configs/editor/nvim/flavors/changa_markdown-preview.vim/stylesheets/")
 
 " Encryption
 if has("cryptv")
