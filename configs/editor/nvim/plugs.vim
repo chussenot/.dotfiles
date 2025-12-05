@@ -627,4 +627,10 @@ if has("nvim")
   Plug 'nvim-pack/nvim-spectre'
 endif
 
+" nvim-notify - Better notification system
+" https://github.com/rcarriga/nvim-notify
+if has("nvim")
+  Plug 'rcarriga/nvim-notify'
+endif
+
 call plug#end()
