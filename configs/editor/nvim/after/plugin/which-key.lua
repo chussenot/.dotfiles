@@ -1,5 +1,6 @@
 -- which-key.nvim Configuration
 -- Interactive keybinding discovery and help
+-- Updated for v3.0+ API (removed deprecated options)
 
 local ok, wk = pcall(require, 'which-key')
 if not ok then
@@ -24,11 +25,13 @@ wk.setup({
       g = true, -- bindings for prefixed with g
     },
   },
-  -- add operators that will trigger motion and text object completion
-  -- to enable all native operators, set the preset / operators plugin above
-  operators = { gc = "Comments" },
-  key_labels = {
-    -- override the label used to display some keys. It doesn't affect WK in any other way.
+  -- New API: use defer instead of operators (deprecated)
+  defer = {
+    gc = "Comments", -- defer for comment operator
+  },
+  -- New API: use replace instead of key_labels (deprecated)
+  replace = {
+    -- override the label used to display some keys
     -- For example:
     -- ["<space>"] = "SPC",
     -- ["<cr>"] = "RET",
@@ -38,7 +41,8 @@ wk.setup({
     separator = "➜", -- symbol used between a key and it's label
     group = "+", -- symbol prepended to a group
   },
-  window = {
+  -- New API: use win instead of window (deprecated)
+  win = {
     border = "none", -- none, single, double, shadow
     position = "bottom", -- bottom, top
     margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
@@ -51,14 +55,14 @@ wk.setup({
     spacing = 3, -- spacing between columns
     align = "left", -- align columns left, center or right
   },
-  ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
-  hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
+  -- New API: use filter instead of ignore_missing (deprecated)
+  -- Return a function that filters mappings
+  filter = function(mapping)
+    -- Show all mappings by default (equivalent to ignore_missing = false)
+    return true
+  end,
+  -- New API: triggers must be a table (not a string)
+  -- Automatically detect triggers, or specify manually
+  triggers = { "<auto>", mode = "nixsotc" }, -- auto-detect for normal, insert, visual, select, operator, terminal, command modes
   show_help = true, -- show help message on the command line when the popup is visible
-  -- triggers are automatically detected, or specify manually: triggers = {"<leader>"}
-  triggers_blacklist = {
-    -- list of mode / prefixes that should never be hooked by WhichKey
-    -- this is mostly relevant for key maps that start with a native binding
-    i = { "j", "k" },
-    v = { "j", "k" },
-  },
 })
