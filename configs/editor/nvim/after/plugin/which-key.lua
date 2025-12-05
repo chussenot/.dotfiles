@@ -1,7 +1,12 @@
 -- which-key.nvim Configuration
 -- Interactive keybinding discovery and help
 
-require('which-key').setup({
+local ok, wk = pcall(require, 'which-key')
+if not ok then
+  return
+end
+
+wk.setup({
   plugins = {
     marks = true, -- shows a list of your marks on ' and `
     registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode

@@ -1,7 +1,12 @@
 -- gitsigns.nvim Configuration
 -- Modern Git integration for Neovim (replaces vim-gitgutter)
 
-require('gitsigns').setup({
+local ok, gitsigns = pcall(require, 'gitsigns')
+if not ok then
+  return
+end
+
+gitsigns.setup({
   signs = {
     add = { text = '│' },
     change = { text = '│' },
@@ -79,12 +84,18 @@ require('gitsigns').setup({
 -- Legacy mappings for compatibility (matching old vim-gitgutter behavior)
 vim.keymap.set('n', 'gh', function()
   if vim.wo.diff then return 'gh' end
-  vim.schedule(function() require('gitsigns').next_hunk() end)
+  vim.schedule(function()
+    local gs = require('gitsigns')
+    if gs then gs.next_hunk() end
+  end)
   return '<Ignore>'
 end, {expr = true, desc = "Next hunk (legacy)"})
 
 vim.keymap.set('n', 'gH', function()
   if vim.wo.diff then return 'gH' end
-  vim.schedule(function() require('gitsigns').prev_hunk() end)
+  vim.schedule(function()
+    local gs = require('gitsigns')
+    if gs then gs.prev_hunk() end
+  end)
   return '<Ignore>'
 end, {expr = true, desc = "Prev hunk (legacy)"})

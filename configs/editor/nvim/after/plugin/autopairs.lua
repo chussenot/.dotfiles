@@ -1,7 +1,10 @@
 -- nvim-autopairs Configuration
 -- Modern autopairs plugin with Treesitter and LSP integration
 
-local npairs = require('nvim-autopairs')
+local ok, npairs = pcall(require, 'nvim-autopairs')
+if not ok then
+  return
+end
 local Rule = require('nvim-autopairs.rule')
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 
@@ -26,8 +29,11 @@ npairs.setup({
 })
 
 -- Integrate with nvim-cmp
-local cmp = require('cmp')
-cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+local cmp_ok, cmp = pcall(require, 'cmp')
+if cmp_ok then
+  local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+  cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+end
 
 -- Add rules for specific cases
 npairs.add_rules({

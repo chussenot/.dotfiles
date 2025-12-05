@@ -1,11 +1,21 @@
 -- nvim-cmp Configuration
 -- Modern completion engine for Neovim
 
-local cmp = require('cmp')
-local luasnip = require('luasnip')
+local ok, cmp = pcall(require, 'cmp')
+if not ok then
+  return
+end
+
+local luasnip_ok, luasnip = pcall(require, 'luasnip')
+if not luasnip_ok then
+  return
+end
 
 -- Load friendly-snippets
-require('luasnip.loaders.from_vscode').lazy_load()
+local loaders_ok, loaders = pcall(require, 'luasnip.loaders.from_vscode')
+if loaders_ok then
+  loaders.lazy_load()
+end
 
 -- Helper function for super tab behavior
 local has_words_before = function()

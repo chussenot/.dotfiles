@@ -1,9 +1,20 @@
 -- LSP Configuration
 -- Modern LSP setup using nvim-lspconfig and mason
 
-local lspconfig = require('lspconfig')
-local mason = require('mason')
-local mason_lspconfig = require('mason-lspconfig')
+local ok, lspconfig = pcall(require, 'lspconfig')
+if not ok then
+  return
+end
+
+local mason_ok, mason = pcall(require, 'mason')
+if not mason_ok then
+  return
+end
+
+local mason_lspconfig_ok, mason_lspconfig = pcall(require, 'mason-lspconfig')
+if not mason_lspconfig_ok then
+  return
+end
 
 -- Setup Mason (LSP installer)
 mason.setup({
@@ -64,7 +75,11 @@ local on_attach = function(client, bufnr)
 end
 
 -- Common LSP capabilities
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local cmp_lsp_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+if cmp_lsp_ok then
+  capabilities = cmp_nvim_lsp.default_capabilities()
+end
 
 -- Language server configurations
 -- Uncomment and configure the ones you need
