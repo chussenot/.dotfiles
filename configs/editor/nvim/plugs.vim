@@ -243,10 +243,6 @@ if has("nvim")
   Plug 'lewis6991/gitsigns.nvim'
 endif
 
-" OLD - vim-gitgutter (replaced by gitsigns.nvim)
-" Plug 'airblade/vim-gitgutter'
-"
-
 
 "  /GIT
 
@@ -288,44 +284,6 @@ if has("nvim")
   " Snippet collections
   Plug 'rafamadriz/friendly-snippets'     " Pre-configured snippets
 endif
-
-" Legacy completion (kept for compatibility, can be removed later)
-" Plug 'vim-scripts/SyntaxComplete'
-"
-" OLD COMPLETION SYSTEM - COMMENTED OUT
-" Plug 'autozimu/LanguageClient-neovim', {
-"     \ 'branch': 'next',
-"     \ 'do': 'bash install.sh',
-"     \ }
-" let g:LanguageClient_autoStop = 0
-" let g:LanguageClient_serverCommands = {
-"     \ 'ruby': ['tcp://localhost:7658']
-"     \ }
-"
-" if ! has('nvim')
-" else
-"   Plug 'roxma/nvim-yarp'
-"   Plug 'roxma/vim-hug-neovim-rpc'
-" endif
-"
-" Plug 'Shougo/neco-syntax'
-"
-" ddc - OLD COMPLETION SYSTEM
-" Plug 'Shougo/ddc.vim'
-" let g:denops_disable_version_check = 1
-" Plug 'vim-denops/denops.vim', { 'branch': 'main'}
-"
-" Plug 'Shougo/ddc-around', { 'branch': 'main'}
-" Plug 'Shougo/ddc-matcher_head', { 'branch': 'main'}
-" Plug 'Shougo/ddc-sorter_rank', { 'branch': 'main'}
-" Plug 'Shougo/pum.vim'
-" Plug 'tani/ddc-fuzzy'
-"
-" OLD SNIPPETS - COMMENTED OUT
-" Plug 'Shougo/neosnippet.vim'
-" Plug 'Shougo/neosnippet-snippets'
-" let g:neosnippet#snippets_directory='~/.vim/snippets'
-"
 
 " }}}
 
@@ -429,10 +387,6 @@ Plug 'tpope/vim-unimpaired'
 if has("nvim")
   Plug 'windwp/nvim-autopairs'
 endif
-
-" OLD - vim-smartinput (replaced by nvim-autopairs)
-" Plug 'kana/vim-smartinput'
-"
 
 "  vim-closetag
 " Auto close (X)HTML tags
@@ -579,23 +533,11 @@ Plug 'junegunn/fzf.vim'
 
 " Treesitter powered spellchecker
 " DISABLED: Compatibility issue with Neovim 0.11.5 - get_query nil error
-" Plug 'lewis6991/spellsitter.nvim'
+" Removed: spellsitter.nvim (incompatible with Neovim 0.11.5)
 
 " https://github.com/tmux-plugins/vim-tmux
 Plug 'tmux-plugins/vim-tmux'
 
-"
-"https://github.com/tmux-plugins/vim-tmux  TO TEST SOME DAY
-"
-" All of kana's plugins, especially:
-" kana/vim-smarttill
-" kana/vim-smartword
-"
-" https://github.com/szw/vim-ctrlspace
-" http://majutsushi.github.com/tagbar/
-" https://github.com/xolox/vim-easytags
-" Plug 'tpope/tslime.vim' " https://g-railsithub.com/kikijump/tslime.vim
-" Plug 'ngn/vim-buffing-wheel' " https://github.com/ngn/vim-buffing-wheel
 "
 
 "  WHICH-KEY
