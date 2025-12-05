@@ -1,6 +1,13 @@
 -- nvim-ufo Configuration
 -- Modern folding with Treesitter (better than default folding)
 
+-- Ensure promise-async is loaded first (required dependency)
+local promise_ok = pcall(require, 'promise')
+if not promise_ok then
+  -- Try alternative name
+  promise_ok = pcall(require, 'promise-async')
+end
+
 local ok, ufo = pcall(require, 'ufo')
 if not ok then
   return

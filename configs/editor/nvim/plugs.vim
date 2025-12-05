@@ -650,8 +650,9 @@ endif
 " nvim-ufo - Modern folding with Treesitter
 " https://github.com/kevinhwang91/nvim-ufo
 if has("nvim")
+  " Required dependency - must be loaded before nvim-ufo
+  Plug 'kevinhwang91/promise-async'
   Plug 'kevinhwang91/nvim-ufo'
-  Plug 'kevinhwang91/promise-async' -- Required dependency
 endif
 
 call plug#end()
