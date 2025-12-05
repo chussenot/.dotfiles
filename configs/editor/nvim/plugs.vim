@@ -246,50 +246,80 @@ Plug 'airblade/vim-gitgutter'
 "  /GIT
 
 
-"  COMPLETION
+"  COMPLETION & LSP
+"
+" Modern LSP and completion stack for Neovim
+" Replaces LanguageClient-neovim and ddc.vim
 
-Plug 'vim-scripts/SyntaxComplete'
+if has("nvim")
+  " LSP Configuration
+  " https://github.com/neovim/nvim-lspconfig
+  Plug 'neovim/nvim-lspconfig'
 
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-let g:LanguageClient_autoStop = 0
-let g:LanguageClient_serverCommands = {
-    \ 'ruby': ['tcp://localhost:7658']
-    \ }
+  " LSP Installer - Easy installation of language servers
+  " https://github.com/williamboman/mason.nvim
+  Plug 'williamboman/mason.nvim'
+  Plug 'williamboman/mason-lspconfig.nvim'
 
-if ! has('nvim')
-else
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
+  " Completion engine
+  " https://github.com/hrsh7th/nvim-cmp
+  Plug 'hrsh7th/nvim-cmp'
+
+  " Completion sources
+  Plug 'hrsh7th/cmp-nvim-lsp'           " LSP source
+  Plug 'hrsh7th/cmp-buffer'              " Buffer words
+  Plug 'hrsh7th/cmp-path'                " File paths
+  Plug 'hrsh7th/cmp-cmdline'             " Command line
+  Plug 'hrsh7th/cmp-nvim-lua'            " Neovim Lua API
+
+  " Snippets support
+  Plug 'L3MON4D3/LuaSnip'                " Snippet engine
+  Plug 'saadparwaiz1/cmp_luasnip'        " LuaSnip source for nvim-cmp
+
+  " Additional completion sources
+  Plug 'f3fora/cmp-spell'                " Spell checking
+  Plug 'ray-x/cmp-treesitter'            " Treesitter source
+
+  " Snippet collections
+  Plug 'rafamadriz/friendly-snippets'     " Pre-configured snippets
 endif
 
-Plug 'Shougo/neco-syntax'
+" Legacy completion (kept for compatibility, can be removed later)
+" Plug 'vim-scripts/SyntaxComplete'
 "
-
-" ddc
-" https://github.com/Shougo/ddc.vim
-
-Plug 'Shougo/ddc.vim'
-let g:denops_disable_version_check = 1
-Plug 'vim-denops/denops.vim', { 'branch': 'main'}
-
-" Install your sources
-Plug 'Shougo/ddc-around', { 'branch': 'main'}
-
-" Install your filters
-Plug 'Shougo/ddc-matcher_head', { 'branch': 'main'}
-Plug 'Shougo/ddc-sorter_rank', { 'branch': 'main'}
-
-Plug 'Shougo/pum.vim'
-Plug 'tani/ddc-fuzzy'
-
-"  SNIPPETS
-" The Neosnippet plug-In adds snippet support to Vim
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
-let g:neosnippet#snippets_directory='~/.vim/snippets'
+" OLD COMPLETION SYSTEM - COMMENTED OUT
+" Plug 'autozimu/LanguageClient-neovim', {
+"     \ 'branch': 'next',
+"     \ 'do': 'bash install.sh',
+"     \ }
+" let g:LanguageClient_autoStop = 0
+" let g:LanguageClient_serverCommands = {
+"     \ 'ruby': ['tcp://localhost:7658']
+"     \ }
+"
+" if ! has('nvim')
+" else
+"   Plug 'roxma/nvim-yarp'
+"   Plug 'roxma/vim-hug-neovim-rpc'
+" endif
+"
+" Plug 'Shougo/neco-syntax'
+"
+" ddc - OLD COMPLETION SYSTEM
+" Plug 'Shougo/ddc.vim'
+" let g:denops_disable_version_check = 1
+" Plug 'vim-denops/denops.vim', { 'branch': 'main'}
+"
+" Plug 'Shougo/ddc-around', { 'branch': 'main'}
+" Plug 'Shougo/ddc-matcher_head', { 'branch': 'main'}
+" Plug 'Shougo/ddc-sorter_rank', { 'branch': 'main'}
+" Plug 'Shougo/pum.vim'
+" Plug 'tani/ddc-fuzzy'
+"
+" OLD SNIPPETS - COMMENTED OUT
+" Plug 'Shougo/neosnippet.vim'
+" Plug 'Shougo/neosnippet-snippets'
+" let g:neosnippet#snippets_directory='~/.vim/snippets'
 "
 
 " }}}
