@@ -605,4 +605,25 @@ if has("nvim")
   Plug 'folke/which-key.nvim'
 endif
 
+"  WORKFLOW ENHANCEMENTS
+
+" harpoon - Quick navigation to frequently used files
+" https://github.com/ThePrimeagen/harpoon
+if has("nvim")
+  Plug 'ThePrimeagen/harpoon'
+endif
+
+" trouble.nvim - Better diagnostics display
+" https://github.com/folke/trouble.nvim
+if has("nvim")
+  Plug 'folke/trouble.nvim'
+  Plug 'nvim-tree/nvim-web-devicons' -- Optional but recommended for icons
+endif
+
+" nvim-spectre - Search and replace across files
+" https://github.com/nvim-pack/nvim-spectre
+if has("nvim")
+  Plug 'nvim-pack/nvim-spectre'
+endif
+
 call plug#end()
