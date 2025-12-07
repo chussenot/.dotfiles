@@ -28,6 +28,17 @@ telescope.setup({
   pickers = {
     find_files = {
       theme = "dropdown",
+    },
+    live_grep = {
+      theme = "dropdown",
+      -- Only search in files, not in filenames
+      only_sort_text = true,
+      -- Show preview
+      previewer = true,
+      -- Better default options
+      additional_args = function(opts)
+        return { "--hidden" }
+      end,
     }
   },
 })

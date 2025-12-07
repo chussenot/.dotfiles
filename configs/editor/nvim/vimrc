@@ -1,6 +1,10 @@
+" Neovim/Vim Configuration
 " vim: set foldmethod=marker :
 
-set nocompatible
+" nocompatible is always set in Neovim, but needed for Vim
+if !has('nvim')
+  set nocompatible
+endif
 filetype off
 
 " Source plug-ins with vim-plug
@@ -80,8 +84,20 @@ set formatoptions+=j
 
 " {{{ History and backup
 
+" Neovim uses shada instead of viminfo
+" Vim compatibility: viminfo is set only for Vim (not Neovim)
 if !has('nvim')
   set viminfo='10,:20,\"100,%,n~/.viminfo
+endif
+
+" Set undo directory early to avoid reading incompatible Vim undo files
+if has("persistent_undo")
+  if has("nvim")
+    " Neovim uses its own undo directory (different format from Vim)
+    set undodir=~/.cache/nvim/undo
+    call mkdir(&undodir, 'p', 0700)
+    set undofile
+  endif
 endif
 
 set history=1000
@@ -134,11 +150,13 @@ if exists('*fugitive#statusline')
 endif
 set statusline+=%=                           " right align
 
-" Gutentags
-set statusline+=%{gutentags#statusline()}
+" Gutentags status (only if gutentags is loaded)
+if exists('*gutentags#statusline')
+  set statusline+=%{gutentags#statusline()}
+endif
 
-" Syntastic status line
-if !has("nvim")
+" Syntastic status line (Vim only - Neovim uses neomake)
+if !has("nvim") && exists('*SyntasticStatuslineFlag')
   set statusline+=%#warningmsg#
   set statusline+=%{SyntasticStatuslineFlag()}
   set statusline+=%*

@@ -33,8 +33,8 @@ alias gfa='git fetch --all --prune'
 # Development aliases
 alias py='python3'
 alias pip='pip3'
-alias nv='nvim'
-alias v='nvim'
+alias nv='vim'
+alias v='vim'
 
 # System aliases
 alias df='df -h'

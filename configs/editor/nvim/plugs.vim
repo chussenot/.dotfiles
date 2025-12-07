@@ -6,8 +6,10 @@ call plug#begin()
 
 "  vim-sensible - REMOVED
 " Disabled for Neovim anyway, and Neovim has better defaults
-" Uncomment if you need it for Vim compatibility:
-" Plug 'tpope/vim-sensible'
+" Only needed for Vim (not Neovim)
+if !has("nvim")
+  Plug 'tpope/vim-sensible'
+endif
 "
 
 "  vim-surround
