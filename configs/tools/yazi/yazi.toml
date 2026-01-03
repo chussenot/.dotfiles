@@ -1,5 +1,0 @@
-[opener]
-# Open text files with Neovim
-edit = [
-	{ run = 'nvim "$@"', block = true, desc = "Edit in Neovim", for = "unix" },
-]

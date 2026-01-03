@@ -59,8 +59,6 @@ But also...
 - [bat](https://github.com/sharkdp/bat): A cat clone with syntax highlighting and Git integration.
 - [Atuin](https://github.com/atuinsh/atuin): A shell history manager that provides better search, sync, and
   statistics for your command history.
-- [Yazi](https://github.com/sxyazi/yazi): A terminal file manager written in Rust, designed to be fast and
-  feature-rich.
 - [GitHub CLI (gh)](https://cli.github.com): The official command-line tool for GitHub that allows you to work
   with issues, pull requests, and more from the terminal.
 - [Glow](https://github.com/charmbracelet/glow): A terminal-based markdown renderer that displays markdown files

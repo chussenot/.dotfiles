@@ -158,7 +158,6 @@ fi
 # - direnv: completion file generated above, hook is handled by direnv init
 #
 # Tools without standard completion support (or handled differently):
-# - yazi: file manager, doesn't need shell completions
 # - bat: simple tool, doesn't need completions
 # - neovim: editor, doesn't need completions
 # - go, ruby, node: language runtimes, completions handled by tools/plugins

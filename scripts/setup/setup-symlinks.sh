@@ -59,12 +59,6 @@ if [ -f "${DOTFILES_DIR}/configs/tools/atuin/config.toml" ]; then
     create_symlink "${DOTFILES_DIR}/configs/tools/atuin/config.toml" "${HOME}/.config/atuin/config.toml"
 fi
 
-# Create yazi config if it exists
-if [ -f "${DOTFILES_DIR}/configs/tools/yazi/yazi.toml" ]; then
-    mkdir -p "${HOME}/.config/yazi"
-    create_symlink "${DOTFILES_DIR}/configs/tools/yazi/yazi.toml" "${HOME}/.config/yazi/yazi.toml"
-fi
-
 # Create gitignore_global if it exists
 if [ -f "${DOTFILES_DIR}/configs/git/.gitignore_global" ]; then
     create_symlink "${DOTFILES_DIR}/configs/git/.gitignore_global" "${HOME}/.gitignore_global"
