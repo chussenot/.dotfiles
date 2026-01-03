@@ -110,7 +110,8 @@ Plug 'andymass/vim-matchup'
 if has("nvim")
   Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate'}
   Plug 'RRethy/nvim-treesitter-endwise'
-  Plug 'p00f/nvim-ts-rainbow'
+  " nvim-ts-rainbow is deprecated, replaced with rainbow-delimiters.nvim
+  Plug 'HiPhish/rainbow-delimiters.nvim'
   Plug 'windwp/nvim-ts-autotag'
 
   " Neovim treesitter plugin for setting the commentstring based on the cursor
@@ -534,7 +535,6 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.5' }
 " Optional but recommended for better performance
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Unite and vimproc
 " see https://medium.com/@crashybang/supercharge-vim-with-fzf-and-ripgrep-d4661fc853d2#.y2pz1mipy

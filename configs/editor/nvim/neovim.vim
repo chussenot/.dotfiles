@@ -32,58 +32,6 @@ if has("nvim")
   " Test strategy configuration (seems to be related to a testing framework)
   let test#strategy = 'neomake'
 
-  " Start Lua block for Treesitter configuration
-lua <<EOD
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = {
-    "bash", "c", "clojure", "comment", "css", "dockerfile", "eex",
-    "elixir", "elm", "embedded_template", "hcl", "heex", "html",
-    "javascript", "json", "lua", "make", "markdown", "regex",
-    "ruby", "rust", "vim", "yaml"
-  },
-  sync_install = false,  -- Do not install parsers synchronously
-  highlight = {
-    enable = true,  -- Enable syntax highlighting
-    additional_vim_regex_highlighting = false,
-  },
-  indent = {
-    enable = true,  -- Enable indentation based on Treesitter
-  },
-  endwise = {
-    enable = true,
-  },
-  rainbow = {
-    enable = true,
-    extended_mode = true,  -- Extend to more syntax elements
-    max_file_lines = nil,  -- No limit on file lines for rainbow colors
-  },
-  matchup = {
-    enable = true,  -- Better % navigation
-  },
-  autotag = {
-    enable = true,  -- Auto close and rename HTML tags
-  },
-}
-
--- Setup for context-aware comment strings using Treesitter
-require('ts_context_commentstring').setup {}
-vim.g.skip_ts_context_commentstring_module = true
-
--- Setup for spell checking with Treesitter
--- DISABLED: spellsitter.nvim has compatibility issues with Neovim 0.11.5
--- The plugin tries to call get_query on nil, causing decoration provider errors
--- TODO: Update spellsitter.nvim or find alternative when compatible version is available
--- vim.defer_fn(function()
---   local ok, spellsitter = pcall(require, 'spellsitter')
---   if ok then
---     spellsitter.setup {
---       enable = true,
---     }
---   else
---     -- Silently fail if spellsitter can't be loaded (compatibility issue)
---     vim.notify("spellsitter: Could not load plugin (compatibility issue)", vim.log.levels.WARN)
---   end
--- end, 100)
-EOD
+  " Treesitter and related plugins are configured in after/plugin/treesitter.lua
 
 endif  " End of check if running in NeoVim
