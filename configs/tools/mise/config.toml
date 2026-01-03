@@ -50,10 +50,11 @@ pipx = "latest"
 kind = "latest"
 prettier = "latest"
 "cargo:zoxide" = "latest"
-"cargo:yazi-fm" = "latest"
 "cargo:xh" = "latest"
 "npm:fx" = "latest"
 krew = "latest"
+"go:github.com/hashicorp/terraform-plugin-codegen-openapi/cmd/tfplugingen-openapi" = "latest"
+"go:github.com/hashicorp/terraform-plugin-codegen-framework/cmd/tfplugingen-framework" = "latest"
 
 [settings]
 experimental = true

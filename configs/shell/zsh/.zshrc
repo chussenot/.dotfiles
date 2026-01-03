@@ -48,6 +48,8 @@ fi
 # ENABLE_WASM is intentionally empty (unset if needed)
 # export ENABLE_WASM=
 
+export NODE_OPTIONS="--max-old-space-size=8192"
+
 # Shell identification (interactive shell specific)
 readonly SHELL='/usr/bin/zsh'
 
