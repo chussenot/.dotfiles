@@ -310,14 +310,24 @@ Before committing shell scripts, ensure:
 
 ## Files
 
-All shell scripts in this project:
+All shell scripts in this project follow POSIX standards:
 
-- `install.sh`
-- `scripts/setup/setup-symlinks.sh`
-- `scripts/install/install-packages.sh`
-- `scripts/utils/backup.sh`
-- `scripts/setup/install-man-page.sh`
-- `scripts/setup/install-theme.sh`
-- `scripts/utils/posix_check.sh`
+| Script | Purpose |
+|--------|---------|
+| `install.sh` | Main installer |
+| `scripts/setup/setup-symlinks.sh` | Create configuration symlinks |
+| `scripts/install/install-packages.sh` | Install system packages |
+| `scripts/utils/backup.sh` | Backup existing dotfiles |
+| `scripts/utils/platform.sh` | Platform detection module |
+| `scripts/utils/platform_setup.sh` | Platform-specific setup |
+| `scripts/utils/debug_platform.sh` | Debug platform detection |
+| `scripts/utils/posix_check.sh` | Validate POSIX compliance |
+| `scripts/setup/install-man-page.sh` | Install man pages |
+| `scripts/setup/install-theme.sh` | Install zsh theme |
 
 All scripts are validated for POSIX compliance before commit.
+
+## Related Documentation
+
+- [MULTI_PLATFORM.md](MULTI_PLATFORM.md) - Platform support and package management
+- [TROUBLESHOOTING.md](TROUBLESHOOTING.md) - Common issues and solutions

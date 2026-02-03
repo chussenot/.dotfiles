@@ -152,7 +152,8 @@ show_numeric_shortcuts = false
 ## 3. Slack oauth tokens (bot, user)
 ## 4. Slack webhooks
 ## 5. Stripe live/test keys
-# secrets_filter = true
+## SECURITY: Enabled to prevent credentials from being synced to remote server
+secrets_filter = true
 
 ## Defaults to true. If enabled, upon hitting enter Atuin will immediately execute the command. Press tab to return to the shell and edit.
 # This applies for new installs. Old installs will keep the old behaviour unless configured otherwise.

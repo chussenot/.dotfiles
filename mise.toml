@@ -1,13 +1,17 @@
 [tools]
-cargo = "latest"
+# SECURITY: Pin tool versions to prevent supply chain attacks and ensure reproducibility
+# Update versions periodically after reviewing changelogs
+# Note: 'cargo' in mise is for installing crates via cargo-binstall, not the Rust toolchain
+# Use 'rust' for the Rust toolchain itself
+rust = "1.83"
 hk = "latest"
-kind = "latest"
-node = "latest"
-pdm = "latest"
-python = "latest"
-pkl = "latest"
-prettier = "latest"
-shellcheck = "latest"
+kind = "0.25"
+node = "22"
+pdm = "2.22"
+python = "3.13"
+pkl = "0.27"
+prettier = "3.4"
+shellcheck = "0.10"
 
 [tasks]
 # Pre-lint task: runs before linting (setup/validation)

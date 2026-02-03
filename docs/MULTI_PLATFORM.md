@@ -167,35 +167,140 @@ installing packages.
 ./install.sh
 ```
 
+## Safety Features
+
+The installation system includes several safety mechanisms:
+
+### Automatic Backups
+
+Before modifying any files, the installer creates a timestamped backup:
+
+```sh
+~/.dotfiles_backup/YYYYMMDD_HHMMSS/
+```
+
+Files backed up include:
+
+- `~/.zshrc`
+- `~/.tmux.conf`
+- `~/.inputrc`
+- `~/.config/nvim`
+- `~/.config/bat`
+- `~/.tool-versions`
+
+### Non-Destructive Operations
+
+- Existing files are moved to `.backup` suffix before replacement
+- Symlinks are removed and recreated (safe operation)
+- The installer refuses to run as root user
+- All operations are logged with clear status messages
+
+### Error Handling
+
+The installer uses defensive programming:
+
+```sh
+set -eu  # Exit on error, undefined variable
+```
+
+- Non-critical failures continue with warnings
+- Critical failures exit immediately with error messages
+- Network operations check connectivity before proceeding
+
+### Dry-Run Testing
+
+Test platform detection without making changes:
+
+```sh
+./scripts/utils/debug_platform.sh
+```
+
 ## Troubleshooting
+
+For comprehensive troubleshooting, see [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
+
+### Quick Diagnostics
+
+```sh
+# Check platform detection
+./scripts/utils/debug_platform.sh
+
+# Check POSIX compliance
+./scripts/utils/posix_check.sh
+
+# Verbose installation
+sh -x ./install.sh 2>&1 | tee install.log
+```
 
 ### Unknown Platform
 
 If platform detection returns "unknown":
 
-1. Check `uname -s` and `uname -m` output
-2. Check `/etc/os-release` on Linux systems
-3. Add support in `scripts/utils/platform.sh` if needed
+1. Check system identification:
+
+   ```sh
+   uname -s          # Operating system
+   uname -m          # Architecture
+   cat /etc/os-release  # Distribution info (Linux)
+   ```
+
+2. Add support in `scripts/utils/platform.sh` if needed (see "Adding Support for New Platforms")
 
 ### Package Installation Fails
 
-1. Verify package manager is installed
-2. Check package names are correct for your platform
-3. Verify you have sudo/root access
-4. Check package repository is up to date
+1. **Update package lists**:
+
+   ```sh
+   # Ubuntu/Debian
+   sudo apt-get update
+
+   # macOS
+   brew update
+   ```
+
+2. **Check package names** - they differ between platforms:
+
+   ```sh
+   # Search for package
+   apt-cache search <term>  # Ubuntu/Debian
+   brew search <term>       # macOS
+   ```
+
+3. **Verify sudo access**:
+
+   ```sh
+   sudo -v
+   ```
+
+4. **Install packages manually** if automated installation fails:
+
+   ```sh
+   sudo apt-get install zsh tmux git curl  # Ubuntu/Debian
+   brew install zsh tmux git curl          # macOS
+   ```
 
 ### Platform Not Supported
 
-If your platform is not supported:
+If your platform is not in the supported list:
 
-1. Check if a similar platform is supported
-2. Manually install required packages
-3. Consider adding support (see "Adding Support for New Platforms")
+1. **Check for similar platforms** - Debian-based distros often work like Ubuntu
+2. **Manually install required packages** - See package list in `scripts/install/install-packages.sh`
+3. **Skip package installation** - The installer will continue with warnings
+4. **Contribute support** - Add your platform to `scripts/utils/platform.sh`
 
 ## Files
 
-- `scripts/utils/platform.sh`: Platform detection and package management
-- `scripts/utils/platform_setup.sh`: Platform-specific setup functions
-- `scripts/utils/debug_platform.sh`: Platform detection debug script
-- `scripts/install/install-packages.sh`: Multi-platform package installer
-- `install.sh`: Main installer (uses platform detection)
+| File | Purpose |
+|------|---------|
+| `install.sh` | Main installer (entry point) |
+| `scripts/utils/platform.sh` | Platform detection and package management |
+| `scripts/utils/platform_setup.sh` | Platform-specific setup functions |
+| `scripts/utils/debug_platform.sh` | Platform detection debug/test script |
+| `scripts/utils/backup.sh` | Backup existing dotfiles |
+| `scripts/install/install-packages.sh` | Multi-platform package installer |
+| `scripts/setup/setup-symlinks.sh` | Create symlinks for config files |
+
+## Related Documentation
+
+- [TROUBLESHOOTING.md](TROUBLESHOOTING.md) - Common issues and solutions
+- [POSIX_COMPLIANCE.md](POSIX_COMPLIANCE.md) - Shell script standards

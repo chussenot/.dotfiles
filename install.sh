@@ -228,17 +228,24 @@ if ! command -v mise >/dev/null 2>&1; then
     if command -v curl >/dev/null 2>&1; then
         # Check if we can reach the mise installation URL
         if curl -fsSL https://mise.run >/dev/null 2>&1; then
-            # Install mise (suppress progress for non-interactive shells)
-            if is_interactive; then
-                curl https://mise.run | sh || {
+            # SECURITY: Download installer to temp file before executing
+            # This allows inspection and prevents partial execution on network failure
+            _mise_installer=$(mktemp)
+            trap 'rm -f "$_mise_installer"' EXIT
+            print_status "Downloading mise installer to temporary file..."
+            if curl -fsSL https://mise.run -o "$_mise_installer"; then
+                chmod +x "$_mise_installer"
+                print_status "Executing mise installer..."
+                sh "$_mise_installer" || {
                     print_error "Failed to install mise"
+                    rm -f "$_mise_installer"
                     exit 1
                 }
+                rm -f "$_mise_installer"
             else
-                curl -fsSL https://mise.run | sh || {
-                    print_error "Failed to install mise"
-                    exit 1
-                }
+                print_error "Failed to download mise installer"
+                rm -f "$_mise_installer"
+                exit 1
             fi
             # Add mise to PATH for current session
             export PATH="${HOME}/.local/bin:${PATH}"

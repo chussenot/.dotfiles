@@ -28,7 +28,8 @@ if has("nvim")
   " Prevent sensible from being loaded with neovim
   let g:loaded_sensible = 1
 endif
-Plug 'tpope/vim-sensible'
+" SECURITY: Pin plugin versions to prevent supply chain attacks
+Plug 'tpope/vim-sensible', { 'tag': 'v2.0' }
 "
 
 "  vim-surround
@@ -38,7 +39,7 @@ Plug 'tpope/vim-sensible'
 " such surroundings in pairs.
 "
 " https://github.com/tpope/vim-surround
-Plug 'tpope/vim-surround'
+Plug 'tpope/vim-surround', { 'tag': 'v2.2' }
 "
 
 "  vim-repeat
@@ -77,7 +78,7 @@ Plug 'vim-scripts/easybuffer.vim'
 "
 
 " A tree explorer plugin for vim.
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'tag': '7.1.2' }
 " Defines commands that will work on files inside a Visual selection
 Plug 'PhilRunninger/nerdtree-visual-selection'
 
@@ -96,7 +97,7 @@ Plug 'vim-ruby/vim-ruby'
 "  vim-ployglot
 " A collection of language packs for Vim.
 " see https://github.com/sheerun/vim-polyglot
-Plug 'sheerun/vim-polyglot'
+Plug 'sheerun/vim-polyglot', { 'tag': 'v4.17.0' }
 
 
 " match-up is a plugin that lets you highlight, navigate, and operate on sets
@@ -108,7 +109,7 @@ Plug 'andymass/vim-matchup'
 " nwim-treesitter
 " https://github.com/nvim-treesitter/nvim-treesitter
 if has("nvim")
-  Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate'}
+  Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate', 'tag': 'v0.9.2' }
   Plug 'RRethy/nvim-treesitter-endwise'
   " nvim-ts-rainbow is deprecated, replaced with rainbow-delimiters.nvim
   Plug 'HiPhish/rainbow-delimiters.nvim'
@@ -176,7 +177,7 @@ Plug 'lepture/vim-jinja', { 'for': ['jinja', 'jinja2', 'htmljinja'] }
 " fugitive.vim: a Git wrapper so awesome, it should be illegal
 " http://www.vim.org/scripts/script.php?script_id=2975
 " https://github.com/tpope/vim-fugitive
-Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive', { 'tag': 'v3.7' }
 
 " A git commit browser.
 " https://github.com/junegunn/gv.vim
@@ -446,7 +447,7 @@ Plug 'janko-m/vim-test'
 
 "  Syntastic
 " https://github.com/scrooloose/syntastic
-Plug 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic', { 'tag': '3.10.0' }
 "
 
 "  HCL (lazy load for terraform/hcl files)
@@ -484,8 +485,8 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 " Unite and vimproc
 " see https://medium.com/@crashybang/supercharge-vim-with-fzf-and-ripgrep-d4661fc853d2#.y2pz1mipy
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all', 'tag': 'v0.56.3' }
+Plug 'junegunn/fzf.vim', { 'commit': '279e1ec' }
 
 " Treesitter powered spellchecker
 " DISABLED: Compatibility issue with Neovim 0.11.5 - get_query nil error

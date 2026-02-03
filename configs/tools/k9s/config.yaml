@@ -4,7 +4,9 @@ k9s:
   refreshRate: 2
   apiServerTimeout: 15s
   maxConnRetry: 5
-  readOnly: false
+  # SECURITY: Enable read-only mode to prevent accidental cluster modifications
+  # Set to false only when write access is explicitly needed
+  readOnly: true
   noExitOnCtrlC: false
   portForwardAddress: localhost
   ui:
