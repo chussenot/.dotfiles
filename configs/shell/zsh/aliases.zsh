@@ -283,3 +283,5 @@ alias crypt-pad='mkdir datastore; docker run --rm -it -p 3000:3000 -v "$PWD/data
 
 # Search file contents with ripgrep, fzf, bat
 alias fzf-rg="rg --hidden --glob '' --line-number . | fzf --delimiter ':' --preview 'bat --style=numbers --color=always {1} --highlight-line {2}'"
+
+alias pre-commit=prek
