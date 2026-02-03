@@ -44,3 +44,6 @@ prek = "latest"
 "pipx:wafw00f" = "latest"
 "pipx:yt-dlp" = "latest"
 "pipx:semgrep" = "latest"
+
+websocat = "latest"
+glow = "latest"
