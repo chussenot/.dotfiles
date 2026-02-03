@@ -307,3 +307,7 @@ fi
 # zmodload zsh/zprof
 # zprof
 export MANPATH="/home/chussenot/.local/share/man:${MANPATH:-}"
+
+
+# Generated for pdtm. Do not edit.
+export PATH=$PATH:/home/chussenot/.pdtm/go/bin

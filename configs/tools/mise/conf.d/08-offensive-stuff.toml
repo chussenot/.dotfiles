@@ -1,0 +1,11 @@
+# Offensive tools to install
+[tools]
+"go:github.com/antonmedv/fx" = "latest"
+"go:github.com/ffuf/ffuf" = "latest"
+"go:github.com/glitchedgitz/cook/v2/cmd/cook" = "latest"
+"go:github.com/lc/gau/v2/cmd/gau" = "latest"
+"go:github.com/projectdiscovery/pdtm/cmd/pdtm" = "latest"
+"go:github.com/sw33tLie/sns" = "latest"
+"go:github.com/x90skysn3k/brutespray" = "latest"
+"go:github.com/xm1k3/cent" = "latest"
+"go:github.com/tomnomnom/waybackurls" = "latest"

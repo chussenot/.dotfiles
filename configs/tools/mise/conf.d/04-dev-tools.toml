@@ -20,3 +20,8 @@ pipx = "latest"
 
 # Pre-commit hooks
 prek = "latest"
+
+# for binary format
+"go:github.com/wader/fq" = "latest"
+
+"go:github.com/jesseduffield/lazygit" = "latest"

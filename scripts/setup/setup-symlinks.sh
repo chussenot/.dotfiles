@@ -125,6 +125,11 @@ if [ -f "${DOTFILES_DIR}/configs/tools/tig/tigrc" ]; then
     create_symlink "${DOTFILES_DIR}/configs/tools/tig/tigrc" "${HOME}/.tigrc"
 fi
 
+# Create gau config if it exists
+if [ -f "${DOTFILES_DIR}/configs/tools/gau/config.toml" ]; then
+    create_symlink "${DOTFILES_DIR}/configs/tools/gau/config.toml" "${HOME}/.gau.toml"
+fi
+
 # Create zsh directory and symlink aliases and functions (with existence checks)
 mkdir -p "${HOME}/.zsh"
 

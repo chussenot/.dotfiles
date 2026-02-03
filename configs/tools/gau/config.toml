@@ -1,0 +1,22 @@
+# gau (GetAllURLs) configuration
+# https://github.com/lc/gau
+
+threads = 2
+verbose = false
+retries = 15
+subdomains = false
+parameters = false
+providers = ["wayback", "commoncrawl", "otx", "urlscan"]
+blacklist = ["ttf", "woff", "woff2", "svg", "png", "jpg", "jpeg", "gif", "ico", "css"]
+json = false
+
+[urlscan]
+apikey = ""
+
+[filters]
+from = ""
+to = ""
+matchstatuscodes = []
+matchmimetypes = []
+filterstatuscodes = []
+filtermimetypes = ["image/png", "image/jpg", "image/jpeg", "image/svg+xml", "image/gif"]
