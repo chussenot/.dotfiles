@@ -1,0 +1,14 @@
+# Cloud & Infrastructure tools
+[tools]
+awscli = "latest"
+gcloud = "latest"
+terraform = "latest"
+terraform-docs = "latest"
+terraformer = "latest"
+terragrunt = "latest"
+tfstate-lookup = "latest"
+vault = "latest"
+
+# Terraform plugin development
+"go:github.com/hashicorp/terraform-plugin-codegen-openapi/cmd/tfplugingen-openapi" = "latest"
+"go:github.com/hashicorp/terraform-plugin-codegen-framework/cmd/tfplugingen-framework" = "latest"

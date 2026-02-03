@@ -1,0 +1,9 @@
+# Container & Kubernetes tools
+[tools]
+ctop = "latest"
+helm = "latest"
+k9s = "latest"
+kubectl = "latest"
+kind = "latest"
+krew = "latest"
+prek = "latest"

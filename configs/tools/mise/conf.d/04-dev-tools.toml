@@ -1,0 +1,19 @@
+# Development tools and utilities
+[tools]
+bat = "latest"
+direnv = "latest"
+neovim = "latest"
+watchexec = "latest"
+pdm = "latest"
+pipx = "latest"
+
+# Cargo-installed tools
+"cargo:zoxide" = "latest"
+"cargo:xh" = "latest"
+
+# NPM-installed tools
+"npm:fx" = "latest"
+
+# Pipx-installed utilities
+"pipx:mkdocs" = "latest"
+"pipx:yq" = "latest"

@@ -1,0 +1,4 @@
+# Observability and telemetry tools
+[tools]
+"go:github.com/CtrlSpice/otel-desktop-viewer" = "latest"
+"go:github.com/equinix-labs/otel-cli" = "latest"

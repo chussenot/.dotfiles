@@ -1,0 +1,9 @@
+# Language runtimes and interpreters
+[tools]
+# crystal = "latest"  # plugin broken: list-all exits with code 1
+deno = "latest"
+go = "latest"
+ruby = "latest"
+rust = "latest"
+scala = "latest"
+bun = "latest"

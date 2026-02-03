@@ -1,0 +1,8 @@
+# Git & Version Control tools
+[tools]
+gh = "latest"
+glab = "latest"
+hk = "latest"
+
+# Conventional commits
+"cargo:cocogitto" = "latest"

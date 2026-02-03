@@ -68,6 +68,12 @@ if [ -f "${DOTFILES_DIR}/configs/tools/mise/config.toml" ]; then
     create_symlink "${DOTFILES_DIR}/configs/tools/mise/config.toml" "${HOME}/.config/mise/config.toml"
 fi
 
+# Create mise conf.d directory symlink for modular config
+if [ -d "${DOTFILES_DIR}/configs/tools/mise/conf.d" ]; then
+    mkdir -p "${HOME}/.config/mise"
+    create_symlink "${DOTFILES_DIR}/configs/tools/mise/conf.d" "${HOME}/.config/mise/conf.d"
+fi
+
 # Create tool-versions symlink if it exists
 if [ -f "${DOTFILES_DIR}/configs/tools/mise/tool-versions" ]; then
     create_symlink "${DOTFILES_DIR}/configs/tools/mise/tool-versions" "${HOME}/.tool-versions"
