@@ -418,11 +418,12 @@ When reporting issues, include:
 
 ## Common Error Messages
 
+<!-- prettier-ignore -->
 | Error | Meaning | Fix |
-|-------|---------|-----|
+| ----- | ------- | --- |
 | `platform.sh not found` | Missing utility script | Re-clone repository |
-| `Backup script encountered an error` | Non-critical, backup may be incomplete | Check `~/.dotfiles_backup/` |
+| `Backup script encountered an error` | Backup may be incomplete | Check `~/.dotfiles_backup/` |
 | `Package installation encountered an error` | Some packages failed | Install manually |
-| `Unknown platform detected` | OS not recognized | See [MULTI_PLATFORM.md](MULTI_PLATFORM.md) |
+| `Unknown platform detected` | OS not recognized | See MULTI_PLATFORM.md |
 | `mise install encountered an error` | Tool installation failed | Run `mise install` manually |
 | `Non-interactive shell detected` | Running without terminal | Expected in scripts/CI |

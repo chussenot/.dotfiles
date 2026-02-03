@@ -17,12 +17,12 @@ exec zsh
 
 ## Platform Support
 
-| Platform | Status | Package Manager |
-|----------|--------|-----------------|
-| Ubuntu/Debian | Fully supported | apt-get |
-| macOS | Fully supported | Homebrew |
-| Arch Linux | Partial | pacman |
-| Fedora | Partial | dnf |
+| Platform      | Status          | Package Manager |
+| ------------- | --------------- | --------------- |
+| Ubuntu/Debian | Fully supported | apt-get         |
+| macOS         | Fully supported | Homebrew        |
+| Arch Linux    | Partial         | pacman          |
+| Fedora        | Partial         | dnf             |
 
 **Primary Test Environment**: Ubuntu 24.04.3 LTS (kernel 6.14.0-1015-oem)
 
@@ -32,12 +32,12 @@ See [docs/MULTI_PLATFORM.md](docs/MULTI_PLATFORM.md) for detailed platform infor
 
 Before running the installer, ensure you have:
 
-| Tool | Required | Purpose |
-|------|----------|---------|
-| `git` | Yes | Clone repositories (Antidote, dotfiles) |
-| `curl` | Yes | Download mise and other tools |
-| `sudo` | Linux only | Install system packages |
-| `brew` | macOS only | Install packages via Homebrew |
+| Tool   | Required   | Purpose                                 |
+| ------ | ---------- | --------------------------------------- |
+| `git`  | Yes        | Clone repositories (Antidote, dotfiles) |
+| `curl` | Yes        | Download mise and other tools           |
+| `sudo` | Linux only | Install system packages                 |
+| `brew` | macOS only | Install packages via Homebrew           |
 
 ## Installation
 
@@ -180,61 +180,61 @@ nvim +PlugInstall +qall
 
 ### Core Configuration
 
-| Component | Description | Config Location |
-|-----------|-------------|-----------------|
-| **Zsh** | Shell with custom theme (no Oh-My-Zsh) | `configs/shell/zsh/` |
-| **Neovim** | Editor with vim-plug plugins | `configs/editor/nvim/` |
-| **Tmux** | Terminal multiplexer | `configs/terminal/tmux/` |
+| Component  | Description                            | Config Location          |
+| ---------- | -------------------------------------- | ------------------------ |
+| **Zsh**    | Shell with custom theme (no Oh-My-Zsh) | `configs/shell/zsh/`     |
+| **Neovim** | Editor with vim-plug plugins           | `configs/editor/nvim/`   |
+| **Tmux**   | Terminal multiplexer                   | `configs/terminal/tmux/` |
 
 ### Tool Configurations
 
-| Tool | Purpose | Config |
-|------|---------|--------|
-| [Antidote](https://github.com/mattmc3/antidote) | Zsh plugin manager | `~/.antidote` |
-| [mise](https://mise.run) | Version manager for runtimes | `configs/tools/mise/` |
-| [fzf](https://github.com/junegunn/fzf) | Fuzzy finder | Shell integration |
-| [ripgrep](https://github.com/BurntSushi/ripgrep) | Fast code search | - |
-| [fd](https://github.com/sharkdp/fd) | Fast file finder | - |
-| [bat](https://github.com/sharkdp/bat) | Syntax-highlighted cat | `configs/tools/bat/` |
-| [Atuin](https://github.com/atuinsh/atuin) | Shell history manager | `configs/tools/atuin/` |
-| [GitHub CLI](https://cli.github.com) | GitHub from terminal | `configs/tools/gh/` |
-| [Glow](https://github.com/charmbracelet/glow) | Terminal markdown viewer | `configs/tools/glow/` |
-| [htop](https://htop.dev) | Process viewer | `configs/tools/htop/` |
-| [k9s](https://github.com/derailed/k9s) | Kubernetes TUI | `configs/tools/k9s/` |
-| [tig](https://github.com/jonas/tig) | Git TUI | `configs/tools/tig/` |
+| Tool                                             | Purpose                      | Config                 |
+| ------------------------------------------------ | ---------------------------- | ---------------------- |
+| [Antidote](https://github.com/mattmc3/antidote)  | Zsh plugin manager           | `~/.antidote`          |
+| [mise](https://mise.run)                         | Version manager for runtimes | `configs/tools/mise/`  |
+| [fzf](https://github.com/junegunn/fzf)           | Fuzzy finder                 | Shell integration      |
+| [ripgrep](https://github.com/BurntSushi/ripgrep) | Fast code search             | -                      |
+| [fd](https://github.com/sharkdp/fd)              | Fast file finder             | -                      |
+| [bat](https://github.com/sharkdp/bat)            | Syntax-highlighted cat       | `configs/tools/bat/`   |
+| [Atuin](https://github.com/atuinsh/atuin)        | Shell history manager        | `configs/tools/atuin/` |
+| [GitHub CLI](https://cli.github.com)             | GitHub from terminal         | `configs/tools/gh/`    |
+| [Glow](https://github.com/charmbracelet/glow)    | Terminal markdown viewer     | `configs/tools/glow/`  |
+| [htop](https://htop.dev)                         | Process viewer               | `configs/tools/htop/`  |
+| [k9s](https://github.com/derailed/k9s)           | Kubernetes TUI               | `configs/tools/k9s/`   |
+| [tig](https://github.com/jonas/tig)              | Git TUI                      | `configs/tools/tig/`   |
 
 ### Container & Cloud Tools
 
-| Tool | Purpose |
-|------|---------|
-| [Docker](https://www.docker.com) | Container platform |
-| [Docker Compose](https://docs.docker.com/compose/) | Multi-container orchestration |
-| [kubectl](https://kubernetes.io/docs/reference/kubectl/) | Kubernetes CLI |
-| [Helm](https://helm.sh) | Kubernetes package manager |
-| [gcloud](https://cloud.google.com/sdk) | Google Cloud CLI |
+| Tool                                                     | Purpose                       |
+| -------------------------------------------------------- | ----------------------------- |
+| [Docker](https://www.docker.com)                         | Container platform            |
+| [Docker Compose](https://docs.docker.com/compose/)       | Multi-container orchestration |
+| [kubectl](https://kubernetes.io/docs/reference/kubectl/) | Kubernetes CLI                |
+| [Helm](https://helm.sh)                                  | Kubernetes package manager    |
+| [gcloud](https://cloud.google.com/sdk)                   | Google Cloud CLI              |
 
 ### Languages (via mise)
 
 | Language | Version managed by mise |
-|----------|------------------------|
-| Python | Yes |
-| Node.js | Yes |
-| Go | Yes |
-| Ruby | Yes |
-| Rust | Yes |
-| Java | Yes |
+| -------- | ----------------------- |
+| Python   | Yes                     |
+| Node.js  | Yes                     |
+| Go       | Yes                     |
+| Ruby     | Yes                     |
+| Rust     | Yes                     |
+| Java     | Yes                     |
 
 ## Configuration Details
 
 ### Tmux
 
-| Setting | Value |
-|---------|-------|
-| Prefix key | `C-a` (instead of `C-b`) |
-| Base index | 1 (instead of 0) |
-| Status refresh | 5 seconds |
+| Setting         | Value                                 |
+| --------------- | ------------------------------------- |
+| Prefix key      | `C-a` (instead of `C-b`)              |
+| Base index      | 1 (instead of 0)                      |
+| Status refresh  | 5 seconds                             |
 | Pane navigation | Arrow keys, Alt+arrows without prefix |
-| Maximize pane | `\|` key |
+| Maximize pane   | `\|` key                              |
 
 ### Zsh Theme Features
 

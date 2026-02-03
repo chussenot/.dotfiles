@@ -30,11 +30,11 @@ No hardcoded secrets, API keys, or credentials were found in the repository.
 
 ## Findings Summary
 
-| Severity | Count | Category |
-|----------|-------|----------|
-| Critical | 3 | Supply chain, Remote code execution, Credential exposure |
-| Medium | 8 | Shell injection, Unsafe eval, Configuration weaknesses |
-| Low | 4 | Temp file usage, Minor configuration issues |
+| Severity | Count | Category                                                 |
+| -------- | ----- | -------------------------------------------------------- |
+| Critical | 3     | Supply chain, Remote code execution, Credential exposure |
+| Medium   | 8     | Shell injection, Unsafe eval, Configuration weaknesses   |
+| Low      | 4     | Temp file usage, Minor configuration issues              |
 
 ---
 
@@ -374,42 +374,42 @@ The following security best practices were observed:
 
 ### ✅ Completed Fixes
 
-| ID | Issue | Status |
-|----|-------|--------|
-| C-01 | curl\|bash pattern in `install.sh` | ✅ Fixed - downloads to temp file first |
-| C-02 | Unpinned mise tool versions | ✅ Fixed - all tools pinned |
-| C-03 | Atuin secrets filter disabled | ✅ Fixed - secrets_filter = true |
-| M-01 | Unpinned vim plugins | ✅ Fixed - critical plugins pinned |
-| M-03 | Unquoted variables in aliases | ✅ Fixed - variables quoted |
-| M-04 | K9s read-only mode disabled | ✅ Fixed - readOnly = true |
-| L-01 | /tmp usage without unique filenames | ✅ Fixed - uses mktemp |
-| L-02 | Command substitution without validation | ✅ Fixed - PID validation added |
-| L-04 | Hardcoded network interface | ✅ Fixed - dynamic detection |
+| ID   | Issue                                   | Status                                  |
+| ---- | --------------------------------------- | --------------------------------------- |
+| C-01 | curl\|bash pattern in `install.sh`      | ✅ Fixed - downloads to temp file first |
+| C-02 | Unpinned mise tool versions             | ✅ Fixed - all tools pinned             |
+| C-03 | Atuin secrets filter disabled           | ✅ Fixed - secrets_filter = true        |
+| M-01 | Unpinned vim plugins                    | ✅ Fixed - critical plugins pinned      |
+| M-03 | Unquoted variables in aliases           | ✅ Fixed - variables quoted             |
+| M-04 | K9s read-only mode disabled             | ✅ Fixed - readOnly = true              |
+| L-01 | /tmp usage without unique filenames     | ✅ Fixed - uses mktemp                  |
+| L-02 | Command substitution without validation | ✅ Fixed - PID validation added         |
+| L-04 | Hardcoded network interface             | ✅ Fixed - dynamic detection            |
 
 ### Remaining Items (Low Priority/Acceptable Risk)
 
-| ID | Issue | Notes |
-|----|-------|-------|
-| M-02 | eval usage in completions | Standard pattern for shell completions |
-| M-05 | sudo DNS commands | Static strings, acceptable risk |
-| M-06 | Source from venv | Standard Python pattern |
-| M-07 | Python deps unpinned upper bounds | pdm.lock provides reproducibility |
-| M-08 | Tmux plugin auto-install | TPM standard behavior |
-| L-03 | Large tmux history | User preference, not a vulnerability |
+| ID   | Issue                             | Notes                                  |
+| ---- | --------------------------------- | -------------------------------------- |
+| M-02 | eval usage in completions         | Standard pattern for shell completions |
+| M-05 | sudo DNS commands                 | Static strings, acceptable risk        |
+| M-06 | Source from venv                  | Standard Python pattern                |
+| M-07 | Python deps unpinned upper bounds | pdm.lock provides reproducibility      |
+| M-08 | Tmux plugin auto-install          | TPM standard behavior                  |
+| L-03 | Large tmux history                | User preference, not a vulnerability   |
 
 ---
 
 ## Appendix: Files Reviewed
 
-| Category | Files |
-|----------|-------|
+| Category      | Files                                                                            |
+| ------------- | -------------------------------------------------------------------------------- |
 | Shell Scripts | `install.sh`, `scripts/install/*.sh`, `scripts/setup/*.sh`, `scripts/utils/*.sh` |
-| Shell Config | `configs/shell/zsh/*.zsh` |
-| Vim Config | `configs/editor/nvim/plugs.vim`, `configs/editor/nvim/vimrc` |
-| Tool Config | `configs/tools/*/` (atuin, gh, k9s, mise, etc.) |
-| Tmux Config | `configs/terminal/tmux/tmux.conf` |
-| Dependencies | `pyproject.toml`, `mise.toml`, `pdm.lock` |
+| Shell Config  | `configs/shell/zsh/*.zsh`                                                        |
+| Vim Config    | `configs/editor/nvim/plugs.vim`, `configs/editor/nvim/vimrc`                     |
+| Tool Config   | `configs/tools/*/` (atuin, gh, k9s, mise, etc.)                                  |
+| Tmux Config   | `configs/terminal/tmux/tmux.conf`                                                |
+| Dependencies  | `pyproject.toml`, `mise.toml`, `pdm.lock`                                        |
 
 ---
 
-*This report was generated by automated security analysis. Manual review is recommended for critical findings.*
+_This report was generated by automated security analysis. Manual review is recommended for critical findings._

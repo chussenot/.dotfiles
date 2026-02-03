@@ -290,15 +290,15 @@ If your platform is not in the supported list:
 
 ## Files
 
-| File | Purpose |
-|------|---------|
-| `install.sh` | Main installer (entry point) |
-| `scripts/utils/platform.sh` | Platform detection and package management |
-| `scripts/utils/platform_setup.sh` | Platform-specific setup functions |
-| `scripts/utils/debug_platform.sh` | Platform detection debug/test script |
-| `scripts/utils/backup.sh` | Backup existing dotfiles |
-| `scripts/install/install-packages.sh` | Multi-platform package installer |
-| `scripts/setup/setup-symlinks.sh` | Create symlinks for config files |
+| File                                  | Purpose                                   |
+| ------------------------------------- | ----------------------------------------- |
+| `install.sh`                          | Main installer (entry point)              |
+| `scripts/utils/platform.sh`           | Platform detection and package management |
+| `scripts/utils/platform_setup.sh`     | Platform-specific setup functions         |
+| `scripts/utils/debug_platform.sh`     | Platform detection debug/test script      |
+| `scripts/utils/backup.sh`             | Backup existing dotfiles                  |
+| `scripts/install/install-packages.sh` | Multi-platform package installer          |
+| `scripts/setup/setup-symlinks.sh`     | Create symlinks for config files          |
 
 ## Related Documentation
 
