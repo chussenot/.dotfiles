@@ -8,3 +8,4 @@ hk = "latest"
 "cargo:cocogitto" = "latest"
 
 "cargo:git-delta" = "latest"
+"go:github.com/github/git-sizer" = "latest"
