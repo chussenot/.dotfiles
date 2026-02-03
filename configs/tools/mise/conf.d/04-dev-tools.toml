@@ -25,3 +25,12 @@ prek = "latest"
 "go:github.com/wader/fq" = "latest"
 
 "go:github.com/jesseduffield/lazygit" = "latest"
+
+"cargo:bottom" = "latest" # use btm
+"cargo:du-dust" = "latest"
+"cargo:exa" = "latest"
+"cargo:htmlq" = "latest"
+"cargo:spacer" = "latest"
+"cargo:viu" = "latest"
+"cargo:xsv" = "latest"
+"cargo:asciinema" = "latest"

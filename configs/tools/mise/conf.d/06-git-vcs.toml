@@ -6,3 +6,5 @@ hk = "latest"
 
 # Conventional commits
 "cargo:cocogitto" = "latest"
+
+"cargo:git-delta" = "latest"
