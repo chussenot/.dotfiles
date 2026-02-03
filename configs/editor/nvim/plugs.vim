@@ -120,90 +120,51 @@ if has("nvim")
   Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 endif
 
-"  RUBY-RELATED
+"  RUBY-RELATED (lazy-loaded for Ruby files)
 
 "  vim-endwise
 " endwise.vim: wisely add "end" in ruby, endfunction/endif/more in vim script, etc
-" https://github.com/tpope/vim-endwise
 Plug 'longthanhtran/vim-endwise'
-"
 
-"  vim-rails
-"
-" https://github.com/tpope/vim-rails
-Plug 'tpope/vim-rails'
-"
+"  vim-rails (lazy load for rails projects)
+Plug 'tpope/vim-rails', { 'for': ['ruby', 'eruby', 'haml', 'slim'] }
 
-" vim-ragtag
-" A set of mappings for HTML, XML, PHP, ASP, eRuby, JSP, and more (formerly allml)
-Plug 'tpope/vim-ragtag'
+" vim-ragtag (lazy load for markup files)
+Plug 'tpope/vim-ragtag', { 'for': ['html', 'xml', 'eruby', 'php', 'jsp'] }
 
-"  rake-vim
-" With rake.vim, you can use all those parts of rails.vim that you wish you
-" could use on your other Ruby projects on anything with a Rakefile, including
-" :A, :Elib and friends, and of course :Rake. It's great when paired with gem
-" open and bundle open and complemented nicely by bundler.vim.
-Plug 'tpope/vim-rake'
-"
+"  rake-vim (lazy load)
+Plug 'tpope/vim-rake', { 'for': 'ruby' }
 
-"  vim-bundler
-"
-" This is a lightweight bag of Vim goodies for Bundler, best accompanied by
-" rake.vim and/or rails.vim. Features:
-"
-" * :Bundle, which wraps bundle.
-"
-" * An internalized version of bundle open: :Bopen (and :Bsplit, :Btabedit, etc.)
-"
-" * 'path' and 'tags' are automatically altered to include all gems from your
-"   bundle. (Generate those tags with gem-ctags!)
-"
-" * Highlight Bundler keywords in Gemfile.
-"
-" * Support for gf in Gemfile.lock, plus syntax highlighting that distinguishes
-"   between installed and missing gems.
+"  vim-bundler (lazy load)
+Plug 'tpope/vim-bundler', { 'for': 'ruby' }
 
-Plug 'tpope/vim-bundler'
-"
-
-"  vim-rbenv
-"
-" This simple plugin provides a :Rbenv command that wraps !rbenv
-" with tab complete. It also tells recent versions of vim-ruby where your Ruby
-" installs are located, so that it can set 'path' and 'tags' in your Ruby
-" buffers to reflect the nearest .ruby-version file
-Plug 'tpope/vim-rbenv'
-"
+"  vim-rbenv (lazy load)
+Plug 'tpope/vim-rbenv', { 'for': 'ruby' }
 
 "  /RUBY-RELATED
 
-"  Phoenix
-" Vim-Rails equivalent for Phoenix
-" see https://bitboxer.de/2016/11/13/vim-for-elixir/
+"  Phoenix (lazy load for Elixir)
 Plug 'tpope/vim-projectionist'
+Plug 'c-brenn/phoenix.vim', { 'for': 'elixir' }
 
-Plug 'c-brenn/phoenix.vim'
+" css3 (lazy load)
+Plug 'hail2u/vim-css3-syntax', { 'for': ['css', 'scss', 'sass'] }
 
-"
+" markdown (lazy load)
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 
-
-" css3
-Plug 'hail2u/vim-css3-syntax'
-
-" markdown
-Plug 'plasticboy/vim-markdown'
-
-" Elixir
-Plug 'slashmili/alchemist.vim'
-Plug 'powerman/vim-plugin-AnsiEsc'
+" Elixir (lazy load)
+Plug 'slashmili/alchemist.vim', { 'for': 'elixir' }
+Plug 'powerman/vim-plugin-AnsiEsc', { 'for': 'elixir' }
 
 " Lisps
 Plug 'luochen1990/rainbow'
 
-Plug 'vim-scripts/ditaa'
+" ditaa (lazy load)
+Plug 'vim-scripts/ditaa', { 'for': 'ditaa' }
 
-" jinja/liquid/nunjucks
-Plug 'lepture/vim-jinja'
+" jinja/liquid/nunjucks (lazy load)
+Plug 'lepture/vim-jinja', { 'for': ['jinja', 'jinja2', 'htmljinja'] }
 
 "  /LANGUAGES
 
@@ -317,24 +278,14 @@ Plug 'nelstrom/vim-textobj-rubyblock'
 "
 
 
-"  COLOR THEMES
+"  COLOR THEMES (reduced to commonly used ones for faster startup)
 
-Plug 'chriskempson/vim-tomorrow-theme'
-Plug 'vim-scripts/molokai'
-Plug 'tpope/vim-vividchalk'
-Plug 'rainux/vim-desert-warm-256'
-Plug 'brafales/vim-desert256'
 Plug 'morhetz/gruvbox'
-Plug 'frankier/neovim-colors-solarized-truecolor-only'
-Plug 'nanotech/jellybeans.vim'
-Plug 'KeitaNakamura/neodark.vim'
-Plug 'notpratheek/vim-luna'
-Plug 'marciomazza/vim-brogrammer-theme'
-Plug 'trevorrjohn/vim-obsidian'
-Plug 'petelewis/vim-evolution'
-Plug 'nielsmadan/harlequin'
-Plug 'vim-scripts/darkspectrum'
-Plug 'lsdr/monokai'
+" brogrammatrix is in colors/ directory - no plugin needed
+" Uncomment below if you need additional themes:
+" Plug 'nanotech/jellybeans.vim'
+" Plug 'KeitaNakamura/neodark.vim'
+" Plug 'marciomazza/vim-brogrammer-theme'
 
 "
 
@@ -498,14 +449,9 @@ Plug 'janko-m/vim-test'
 Plug 'scrooloose/syntastic'
 "
 
-"  HCL
-" Vim syntax for HCL
-" https://github.com/b4b4r07/vim-hcl
-Plug 'b4b4r07/vim-hcl'
-
-" Vim plugin to format Hashicorp Configuration Language (HCL) files
-" https://github.com/fatih/vim-hclfmt
-Plug 'fatih/vim-hclfmt'
+"  HCL (lazy load for terraform/hcl files)
+Plug 'b4b4r07/vim-hcl', { 'for': ['hcl', 'terraform'] }
+Plug 'fatih/vim-hclfmt', { 'for': ['hcl', 'terraform'] }
 "
 
 "
@@ -517,12 +463,12 @@ Plug 'Chiel92/vim-autoformat'
 Plug 'hashivim/vim-terraform'
 "
 
-"  Distraction-free writing
+"  Distraction-free writing (lazy load on command)
 
 " Goyo - Distraction-free writing in Vim.
-Plug 'junegunn/goyo.vim'
+Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 " Limelight - Hyper-focused writing in Vim.
-Plug 'junegunn/limelight.vim'
+Plug 'junegunn/limelight.vim', { 'on': ['Limelight', 'Limelight!', 'Limelight!!'] }
 "
 
 

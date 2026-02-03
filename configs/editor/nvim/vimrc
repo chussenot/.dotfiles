@@ -105,17 +105,15 @@ set list
 
 " {{{ Color long lines limit
 
-autocmd BufRead,BufNewFile,BufWinEnter * highlight ColorColumn ctermbg=DarkGrey ctermfg=white
-
-if exists('+colorcolumn')
-  if &textwidth != ''
-    autocmd BufRead,BufNewFile,BufWinEnter * set colorcolumn=+1
+augroup ColorColumnSetup
+  autocmd!
+  autocmd BufRead,BufNewFile,BufWinEnter * highlight ColorColumn ctermbg=DarkGrey ctermfg=white
+  if exists('+colorcolumn')
+    autocmd BufRead,BufNewFile,BufWinEnter * setlocal colorcolumn=+1
   else
-    autocmd BufRead,BufNewFile,BufWinEnter * set colorcolumn=81
-  end
-else
-  au BufRead,BufWinEnter * match ColorColumn /\%81v./
-endif
+    autocmd BufRead,BufWinEnter * match ColorColumn /\%81v./
+  endif
+augroup END
 
 " }}}
 
@@ -251,13 +249,13 @@ set splitright
 
 " }}}
 
-if has("autocmd")
-    " reload when entering the buffer or gaining focus
-    au FocusGained,BufEnter * :silent! !
-
-    " save when exiting the buffer or losing focus
-    au FocusLost,WinLeave * :silent! wall
-endif
+augroup AutoSaveLoad
+  autocmd!
+  " Reload file if changed externally when gaining focus
+  autocmd FocusGained,BufEnter * if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif
+  " Save when exiting the buffer or losing focus
+  autocmd FocusLost,WinLeave * silent! wall
+augroup END
 
 " {{{ Misc
 

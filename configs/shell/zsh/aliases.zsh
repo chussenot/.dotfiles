@@ -21,7 +21,7 @@ alias ga='git add'
 alias gc='git commit'
 alias gp='git push'
 alias gl='git pull'
-alias gst='git status'
+# Note: gst is defined as a function in functions.zsh with error handling
 alias gco='git checkout'
 alias gcb='git checkout -b'
 alias gcm='git checkout main || git checkout master'
@@ -119,13 +119,18 @@ alias temp='pushd $(mktemp -d)'
 
 # Tools Sysadmin
 # exa/eza aliases (only if exa or eza is installed)
-if command -v exa &>/dev/null || command -v eza &>/dev/null; then
-  exa_cmd=$(command -v eza 2>/dev/null || command -v exa 2>/dev/null)
-  alias t="f(){ $exa_cmd -Tll -L 1 \"\$@\";  unset -f f; }; f"
-  alias t2="f(){ $exa_cmd -Tll -L 2 \"\$@\";  unset -f f; }; f"
-  alias t3="f(){ $exa_cmd -Tll -L 3 \"\$@\";  unset -f f; }; f"
-  alias l="f(){ $exa_cmd -ll --group-directories-first \"\$@\";  unset -f f; }; f"
-  alias la="f(){ $exa_cmd -lla --group-directories-first \"\$@\";  unset -f f; }; f"
+if command -v eza &>/dev/null; then
+  alias t='eza -Tll -L 1'
+  alias t2='eza -Tll -L 2'
+  alias t3='eza -Tll -L 3'
+  alias l='eza -ll --group-directories-first'
+  alias la='eza -lla --group-directories-first'
+elif command -v exa &>/dev/null; then
+  alias t='exa -Tll -L 1'
+  alias t2='exa -Tll -L 2'
+  alias t3='exa -Tll -L 3'
+  alias l='exa -ll --group-directories-first'
+  alias la='exa -lla --group-directories-first'
 fi
 # WARNING: Disabling SSL verification is a security risk!
 # Only use this if you understand the implications and have a valid reason
