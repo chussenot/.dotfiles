@@ -293,6 +293,23 @@ else
     print_warning "mise not found, skipping tool installation"
 fi
 
+# Install git hooks (prek for pre-commit)
+print_status "🪝 Installing git hooks..."
+if command -v prek >/dev/null 2>&1; then
+    if [ -f "${SCRIPT_DIR}/.pre-commit-config.yaml" ]; then
+        cd "${SCRIPT_DIR}" || true
+        prek install -f 2>/dev/null || {
+            print_warning "prek hook installation failed, you can run 'prek install' manually"
+        }
+        print_success "Git hooks installed"
+    else
+        print_warning "No .pre-commit-config.yaml found, skipping hook installation"
+    fi
+else
+    print_warning "prek not found, skipping hook installation"
+    print_warning "Run 'mise install' then 'prek install' to set up git hooks"
+fi
+
 # Install Neovim plugins
 print_status "📝 Installing Neovim plugins..."
 if command -v nvim >/dev/null 2>&1; then
