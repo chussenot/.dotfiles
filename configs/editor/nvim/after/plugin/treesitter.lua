@@ -9,10 +9,10 @@ end
 
 treesitter_configs.setup {
   ensure_installed = {
-    "bash", "c", "clojure", "comment", "css", "dockerfile", "eex",
-    "elixir", "elm", "embedded_template", "hcl", "heex", "html",
-    "javascript", "json", "lua", "make", "markdown", "regex",
-    "ruby", "rust", "vim", "yaml"
+    "bash", "c", "clojure", "comment", "css", "diff", "dockerfile", "eex",
+    "elixir", "elm", "embedded_template", "gitcommit", "git_rebase", "hcl",
+    "heex", "html", "javascript", "json", "lua", "make", "markdown", "regex",
+    "ruby", "rust", "vim", "vimdoc", "yaml"
   },
   sync_install = false,
   highlight = {
