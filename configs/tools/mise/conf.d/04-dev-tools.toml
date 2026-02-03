@@ -17,3 +17,6 @@ pipx = "latest"
 # Pipx-installed utilities
 "pipx:mkdocs" = "latest"
 "pipx:yq" = "latest"
+
+# Pre-commit hooks
+prek = "latest"

@@ -1,4 +1,4 @@
-# Cloud & Infrastructure tools
+# Infrastructure: cloud CLIs, IaC, secrets
 [tools]
 awscli = "latest"
 gcloud = "latest"
