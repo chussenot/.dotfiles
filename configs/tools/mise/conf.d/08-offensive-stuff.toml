@@ -9,3 +9,13 @@
 "go:github.com/x90skysn3k/brutespray" = "latest"
 "go:github.com/xm1k3/cent" = "latest"
 "go:github.com/tomnomnom/waybackurls" = "latest"
+
+# --- Network tools ---
+"go:github.com/projectdiscovery/httpx/cmd/httpx" = "latest"
+"go:github.com/projectdiscovery/subfinder/v2/cmd/subfinder" = "latest"
+"go:github.com/projectdiscovery/shuffledns/cmd/shuffledns" = "latest"
+"go:github.com/projectdiscovery/mapcidr/cmd/mapcidr" = "latest"
+"go:github.com/projectdiscovery/dnsx/cmd/dnsx" = "latest"
+
+"go:github.com/projectdiscovery/nuclei/v3/cmd/nuclei" = "latest"
+"go:github.com/projectdiscovery/interactsh/cmd/interactsh-client" = "latest"
