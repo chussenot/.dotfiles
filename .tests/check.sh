@@ -153,7 +153,7 @@ _check_symlink() {
 }
 
 if [ -L "${HOME}/.zshrc" ]; then
-    _check_symlink "${HOME}/.zshrc" "${HOME}/.dotfiles/configs/shell/zsh/zshrc" "Zshrc symlink"
+    _check_symlink "${HOME}/.zshrc" "${HOME}/.dotfiles/configs/shell/zsh/.zshrc" "Zshrc symlink"
 fi
 
 if [ -L "${HOME}/.tmux.conf" ]; then

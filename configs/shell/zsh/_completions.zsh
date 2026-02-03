@@ -56,7 +56,7 @@ _gen_comp_if_missing pdm         "$COMPDIR/_pdm"        pdm completion zsh
 _gen_comp_if_missing deno        "$COMPDIR/_deno"       deno completions zsh
 
 # atuin (shell history manager)
-_gen_comp_if_missing atuin       "$COMPDIR/_atuin"      atuin gen-completions -s zsh
+_gen_comp_if_missing atuin       "$COMPDIR/_atuin"      atuin gen-completions --shell zsh
 
 # cog (conventional commits tool)
 _gen_comp_if_missing cog         "$COMPDIR/_cog"        cog generate-completions zsh

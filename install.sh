@@ -156,9 +156,9 @@ if [ "${_missing_required}" = "true" ]; then
     exit 1
 fi
 
-# Check for optional but recommended tools
-check_optional_tool zsh
-check_optional_tool nvim
+# Check for optional but recommended tools (don't exit on missing)
+check_optional_tool zsh || true
+check_optional_tool nvim || true
 
 # Create backup before proceeding
 print_status "💾 Creating backup of existing dotfiles..."
