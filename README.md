@@ -1,123 +1,279 @@
 # Dotfiles
 
-This repository contains my personal configuration files for various tools and applications.
-Feel free to use any part of it that you find useful.
+Personal configuration files for a productive development environment using zsh, Neovim, and tmux.
 
-I'm using the `zsh` shell for my day-to-day work...
+## Quick Start
 
-## Disclaimer: Ubuntu-Specific Configuration
+```sh
+# 1. Clone the repository
+git clone https://github.com/chussenot/dotfiles.git ~/.dotfiles
 
-Please be aware that this configuration has been rigorously tested and is primarily intended for use with Ubuntu.
-Specifically, it has been verified on an Ubuntu system running Linux kernel version `6.14.0-1015-oem`, with
-gcc version `13.3.0` and GNU ld version `2.42`, as part of the Ubuntu `24.04.3` LTS distribution. While
-this setup may be compatible with other Linux distributions or versions, optimal performance and
-compatibility can only be guaranteed for the tested Ubuntu environment detailed above.
+# 2. Run the installer
+cd ~/.dotfiles && ./install.sh
 
-Users attempting to implement this configuration on other systems should proceed with caution and may need
-to make adjustments to ensure compatibility.
+# 3. Restart your terminal
+exec zsh
+```
 
-Your feedback and contributions to enhance cross-distribution compatibility are welcome, but support cannot be
-guaranteed for environments other than the specified Ubuntu setup.
+## Platform Support
+
+| Platform | Status | Package Manager |
+|----------|--------|-----------------|
+| Ubuntu/Debian | Fully supported | apt-get |
+| macOS | Fully supported | Homebrew |
+| Arch Linux | Partial | pacman |
+| Fedora | Partial | dnf |
+
+**Primary Test Environment**: Ubuntu 24.04.3 LTS (kernel 6.14.0-1015-oem)
+
+See [docs/MULTI_PLATFORM.md](docs/MULTI_PLATFORM.md) for detailed platform information.
+
+## Prerequisites
+
+Before running the installer, ensure you have:
+
+| Tool | Required | Purpose |
+|------|----------|---------|
+| `git` | Yes | Clone repositories (Antidote, dotfiles) |
+| `curl` | Yes | Download mise and other tools |
+| `sudo` | Linux only | Install system packages |
+| `brew` | macOS only | Install packages via Homebrew |
 
 ## Installation
 
-1- Clone the repository to your home directory:
+### Step-by-Step Guide
+
+#### Step 1: Clone the repository
 
 ```sh
 git clone https://github.com/chussenot/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
 ```
 
-2- Run the install script:
+#### Step 2: Review what will be installed (optional but recommended)
 
 ```sh
-cd ~/.dotfiles && ./install.sh
+# Check platform detection
+./scripts/utils/debug_platform.sh
+
+# Review the install script
+less install.sh
 ```
 
-This will create symbolic links from your home directory to the dotfiles in `~/.dotfiles`, and install any necessary dependencies.
+#### Step 3: Run the installer
 
-3- Customize your local settings or overrides in `~/.vim/vimrc.local`.
+```sh
+./install.sh
+```
 
-4- Enjoy!
+#### Step 4: Restart your shell
 
-## What's included?
+```sh
+exec zsh
+# Or close and reopen your terminal
+```
 
-- Tmux integration and configuration with [tpm](https://github.com/tmux-plugins/tpm)
-- Neovim configuration with plugins managed by [vim-plug](https://github.com/junegunn/vim-plug)
-- Zsh configuration with a custom standalone theme (no Oh-My-Zsh required)
-- Various other configuration files for tools like Git, Ripgrep, and fd
+#### Step 5: Customize (optional)
 
-But also...
+```sh
+# Local vim overrides
+vim ~/.vim/vimrc.local
 
-- [Antidote](https://github.com/mattmc3/antidote): A fast, simple Zsh plugin manager.
-- [MISE](https://mise.run): A version manager that handles multiple runtime versions, such as Node.js, Python,
-  Ruby, and more.
-- [FZF](https://github.com/junegunn/fzf): A fuzzy finder that helps you quickly search and select files,
-  directories, and other items from the command line.
-- [Ripgrep (rg)](https://github.com/BurntSushi/ripgrep): A fast code searching tool that recursively searches
-  directories for a regex pattern.
-- [fd](https://github.com/sharkdp/fd): A simple, fast and user-friendly alternative to find.
-- [bat](https://github.com/sharkdp/bat): A cat clone with syntax highlighting and Git integration.
-- [Atuin](https://github.com/atuinsh/atuin): A shell history manager that provides better search, sync, and
-  statistics for your command history.
-- [GitHub CLI (gh)](https://cli.github.com): The official command-line tool for GitHub that allows you to work
-  with issues, pull requests, and more from the terminal.
-- [Glow](https://github.com/charmbracelet/glow): A terminal-based markdown renderer that displays markdown files
-  in a beautiful, readable format.
-- [htop](https://htop.dev): An interactive process viewer and system monitor, providing a better alternative to
-  the standard top command.
-- [k9s](https://github.com/derailed/k9s): A terminal UI for managing Kubernetes clusters with a clean, intuitive
-  interface.
-- [Direnv](https://direnv.net): An environment switcher for the shell that automatically loads and unloads
-  environment variables.
-- [Docker](https://www.docker.com): A platform for developing, shipping, and running applications inside containers.
-- [Docker Compose](https://docs.docker.com/compose/): A tool for defining and running multi-container Docker applications.
-- [Kubectl](https://kubernetes.io/docs/reference/kubectl/): The command-line tool for interacting with Kubernetes clusters.
-- [Helm](https://helm.sh): A package manager for Kubernetes that simplifies the deployment and management of applications.
-- [Gcloud](https://cloud.google.com/sdk/docs/install): The command-line interface for Google Cloud Platform.
+# Local zsh configuration
+vim ~/.zshrc.local
+```
 
-And few languages...
+### What the Installer Does
 
-- [Python](https://www.python.org): A popular programming language.
-- [Ruby](https://www.ruby-lang.org): Another popular programming language.
-- [Go (Golang)](https://go.dev): A programming language developed by Google.
-- [Rust](https://www.rust-lang.org): A systems programming language that focuses on performance and safety.
-- [Java](https://openjdk.org): A widely used programming language for building cross-platform applications.
-- [Node.js](https://nodejs.org): A JavaScript runtime that allows you to execute JavaScript code outside a web browser.
+The installer performs these steps in order:
 
-## Notes
+1. **Backup** - Creates timestamped backup of existing dotfiles in `~/.dotfiles_backup/`
+2. **Install packages** - Installs system packages via your platform's package manager
+3. **Install Antidote** - Clones the zsh plugin manager to `~/.antidote`
+4. **Create symlinks** - Links configuration files to your home directory
+5. **Install mise** - Downloads the tool version manager
+6. **Install dev tools** - Uses mise to install Python, Node.js, Go, etc.
+7. **Install Neovim plugins** - Runs `:PlugInstall` in headless mode
+8. **Install zsh theme** - Sets up the custom `chussenot` theme
 
-### Tmux Configuration
+### Safety Features
 
-Tmux is a terminal multiplexer that allows you to run multiple terminal sessions within a single window.
-My Tmux configuration makes the following changes:
+The installer includes several safety measures:
 
-- The prefix key is changed from `C-b` to `C-a`
-- The status bar is configured with a date and time display, and the window and pane numbers are highlighted
-- The status bar refreshes every 5 seconds
-- The `|` key maximizes a pane
-- The arrow keys are used to switch panes, and the `Alt` key can be held to switch between panes without the prefix key
-- The base index for windows and panes is set to 1 instead of 0
-- Tmux is configured to automatically start with the last session
+- **Automatic backups**: All existing dotfiles are backed up before modification
+- **Non-destructive**: Existing files are moved to `.backup` suffix, not deleted
+- **Root protection**: Refuses to run as root user
+- **Error handling**: Continues on non-critical failures with warnings
+- **Idempotent**: Safe to run multiple times
 
-### Zsh Configuration
+### Restoring from Backup
 
-My Zsh configuration uses a custom theme called `chussenot` that provides a clean, informative prompt with the
-following features:
+If something goes wrong, restore your original configuration:
 
-- **User and host information**: Displays username, hostname, and current directory
-- **Version control**: Shows Git branch and status (clean/dirty) with customizable symbols
-- **Language versions**: Displays Python, Node.js, and Go versions (configurable)
-- **System information**: Shows system load average with color coding, background jobs count
-- **Virtual environments**: Displays active Python virtual environment
-- **Docker indicator**: Shows when running inside a Docker container
-- **Exit codes**: Displays non-zero exit codes from previous commands
-- **Highly configurable**: All features can be enabled/disabled via environment variables
+```sh
+# Find your backup
+ls ~/.dotfiles_backup/
 
-The configuration also includes a number of aliases and environment variables for tools like Ruby and AWS. The
-[z](https://github.com/rupa/z) tool is also included for directory jumping.
+# Restore specific files
+cp ~/.dotfiles_backup/YYYYMMDD_HHMMSS/.zshrc ~/.zshrc
 
-### Neovim Configuration
+# Or restore everything
+cp -r ~/.dotfiles_backup/YYYYMMDD_HHMMSS/* ~/
+```
 
-My Neovim configuration uses [vim-plug](https://github.com/junegunn/vim-plug) to manage plugins, and includes
-settings for a number of languages, including Ruby, Python, and Rust. Various plugins are included to provide
-functionality like autocompletion, fuzzy finding, and linting.
+### Uninstalling
+
+To remove the dotfiles and restore your original configuration:
+
+```sh
+# 1. Remove symlinks (they point to ~/.dotfiles)
+rm ~/.zshrc ~/.tmux.conf ~/.inputrc ~/.config/nvim
+
+# 2. Restore from backup
+cp -r ~/.dotfiles_backup/YYYYMMDD_HHMMSS/* ~/
+
+# 3. Remove the dotfiles directory (optional)
+rm -rf ~/.dotfiles
+
+# 4. Remove installed tools (optional)
+rm -rf ~/.antidote ~/.local/share/mise
+```
+
+## Troubleshooting
+
+See [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) for common issues and solutions.
+
+### Quick Fixes
+
+**Installation fails with "permission denied":**
+
+```sh
+# Ensure scripts are executable
+chmod +x install.sh scripts/**/*.sh
+```
+
+**"git not found" or "curl not found":**
+
+```sh
+# Ubuntu/Debian
+sudo apt-get install git curl
+
+# macOS
+xcode-select --install
+```
+
+**Symlinks not working:**
+
+```sh
+# Re-run symlink setup
+./scripts/setup/setup-symlinks.sh
+```
+
+**Neovim plugins not loading:**
+
+```sh
+# Manually install plugins
+nvim +PlugInstall +qall
+```
+
+## What's Included
+
+### Core Configuration
+
+| Component | Description | Config Location |
+|-----------|-------------|-----------------|
+| **Zsh** | Shell with custom theme (no Oh-My-Zsh) | `configs/shell/zsh/` |
+| **Neovim** | Editor with vim-plug plugins | `configs/editor/nvim/` |
+| **Tmux** | Terminal multiplexer | `configs/terminal/tmux/` |
+
+### Tool Configurations
+
+| Tool | Purpose | Config |
+|------|---------|--------|
+| [Antidote](https://github.com/mattmc3/antidote) | Zsh plugin manager | `~/.antidote` |
+| [mise](https://mise.run) | Version manager for runtimes | `configs/tools/mise/` |
+| [fzf](https://github.com/junegunn/fzf) | Fuzzy finder | Shell integration |
+| [ripgrep](https://github.com/BurntSushi/ripgrep) | Fast code search | - |
+| [fd](https://github.com/sharkdp/fd) | Fast file finder | - |
+| [bat](https://github.com/sharkdp/bat) | Syntax-highlighted cat | `configs/tools/bat/` |
+| [Atuin](https://github.com/atuinsh/atuin) | Shell history manager | `configs/tools/atuin/` |
+| [GitHub CLI](https://cli.github.com) | GitHub from terminal | `configs/tools/gh/` |
+| [Glow](https://github.com/charmbracelet/glow) | Terminal markdown viewer | `configs/tools/glow/` |
+| [htop](https://htop.dev) | Process viewer | `configs/tools/htop/` |
+| [k9s](https://github.com/derailed/k9s) | Kubernetes TUI | `configs/tools/k9s/` |
+| [tig](https://github.com/jonas/tig) | Git TUI | `configs/tools/tig/` |
+
+### Container & Cloud Tools
+
+| Tool | Purpose |
+|------|---------|
+| [Docker](https://www.docker.com) | Container platform |
+| [Docker Compose](https://docs.docker.com/compose/) | Multi-container orchestration |
+| [kubectl](https://kubernetes.io/docs/reference/kubectl/) | Kubernetes CLI |
+| [Helm](https://helm.sh) | Kubernetes package manager |
+| [gcloud](https://cloud.google.com/sdk) | Google Cloud CLI |
+
+### Languages (via mise)
+
+| Language | Version managed by mise |
+|----------|------------------------|
+| Python | Yes |
+| Node.js | Yes |
+| Go | Yes |
+| Ruby | Yes |
+| Rust | Yes |
+| Java | Yes |
+
+## Configuration Details
+
+### Tmux
+
+| Setting | Value |
+|---------|-------|
+| Prefix key | `C-a` (instead of `C-b`) |
+| Base index | 1 (instead of 0) |
+| Status refresh | 5 seconds |
+| Pane navigation | Arrow keys, Alt+arrows without prefix |
+| Maximize pane | `\|` key |
+
+### Zsh Theme Features
+
+The `chussenot` theme displays:
+
+- User, host, and current directory
+- Git branch and status (clean/dirty indicators)
+- Python, Node.js, Go versions (configurable)
+- System load with color coding
+- Background jobs count
+- Active Python virtualenv
+- Docker container indicator
+- Non-zero exit codes
+
+Configure features via environment variables - see `configs/shell/chussenot.zsh-theme`.
+
+### Neovim
+
+Plugin manager: [vim-plug](https://github.com/junegunn/vim-plug)
+
+Key plugins include autocompletion, fuzzy finding (Telescope), linting, and language-specific support
+for Ruby, Python, Go, and Rust.
+
+See `configs/editor/nvim/KEYMAPS.md` for keyboard shortcuts.
+
+## Documentation
+
+- [Multi-Platform Support](docs/MULTI_PLATFORM.md) - Platform detection and package management
+- [POSIX Compliance](docs/POSIX_COMPLIANCE.md) - Shell script standards
+- [Troubleshooting](docs/TROUBLESHOOTING.md) - Common issues and solutions
+
+## Contributing
+
+Contributions to improve cross-platform compatibility are welcome. Please ensure shell scripts pass:
+
+```sh
+shellcheck --shell=sh script.sh
+```
+
+## License
+
+MIT
