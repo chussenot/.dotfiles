@@ -1,8 +1,28 @@
 # Container & Kubernetes tools
 [tools]
+
+# --- Core container tooling ---
 ctop = "latest"
+podman = "latest"
+
+# --- Kubernetes core ---
 helm = "latest"
 k9s = "latest"
 kubectl = "latest"
 kind = "latest"
 krew = "latest"
+kustomize = "latest"
+
+# --- Kubernetes UX / debugging ---
+stern = "latest"
+
+# --- Local dev & workflows ---
+skaffold = "latest"
+tilt = "latest"
+
+# --- Security / supply chain ---
+trivy = "latest"
+cosign = "latest"
+
+# --- Registry & image inspection ---
+crane = "latest"
