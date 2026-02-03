@@ -47,3 +47,7 @@ prek = "latest"
 
 websocat = "latest"
 glow = "latest"
+
+# --- Secrets Management ---
+sops = "latest"
+gopass = "latest"

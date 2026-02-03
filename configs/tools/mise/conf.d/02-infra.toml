@@ -1,14 +1,27 @@
-# Infrastructure: cloud CLIs, IaC, secrets
+# Infrastructure: Cloud CLIs, IaC, Secrets, and Terraform Plugin Development
 [tools]
+
+# --- Cloud CLIs ---
 awscli = "latest"
 gcloud = "latest"
+vault = "latest"
+
+# --- Terraform & IaC Utilities ---
 terraform = "latest"
 terraform-docs = "latest"
 terraformer = "latest"
 terragrunt = "latest"
 tfstate-lookup = "latest"
-vault = "latest"
 
-# Terraform plugin development
+# --- Terraform Plugin Development ---
 "go:github.com/hashicorp/terraform-plugin-codegen-openapi/cmd/tfplugingen-openapi" = "latest"
 "go:github.com/hashicorp/terraform-plugin-codegen-framework/cmd/tfplugingen-framework" = "latest"
+
+# --- Terraform Linting & Security ---
+tflint = "latest"
+tfsec = "latest"
+terrascan = "latest"
+pulumi = "latest"
+terraform-ls = "latest"
+tfenv = "latest"
+terramate = "latest"
