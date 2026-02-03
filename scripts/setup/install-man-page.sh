@@ -47,17 +47,20 @@ else
     printf '⚠️  mandb not found, man page may not be immediately searchable\n'
 fi
 
-# Add to MANPATH if not already present
-_manpath="${MANPATH:-}"
-case ":${_manpath}:" in
-    *:"${HOME}/.local/share/man":*)
-        # Already in MANPATH
-        ;;
-    *)
+# Add to MANPATH if not already present in .zshrc
+if [ -f "${HOME}/.zshrc" ]; then
+    if grep -q '\.local/share/man' "${HOME}/.zshrc" 2>/dev/null; then
+        printf '✅ MANPATH already configured in .zshrc\n'
+    else
+        # shellcheck disable=SC2016 # Intentionally not expanding ${MANPATH:-} - it goes into .zshrc
         printf 'export MANPATH="%s/.local/share/man:${MANPATH:-}"\n' "${HOME}" >> "${HOME}/.zshrc"
         printf '✅ Added ~/.local/share/man to MANPATH in .zshrc\n'
-        ;;
-esac
+    fi
+else
+    printf '⚠️  .zshrc not found, cannot add MANPATH configuration\n'
+    # shellcheck disable=SC2016 # Intentionally showing literal ${MANPATH:-} for user to copy
+    printf '   Add manually: export MANPATH="%s/.local/share/man:${MANPATH:-}"\n' "${HOME}"
+fi
 
 printf '\n'
 printf '🎉 Installation complete!\n'

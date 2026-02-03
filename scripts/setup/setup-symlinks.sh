@@ -30,10 +30,22 @@ create_symlink() {
     printf '✅ Linked %s\n' "${_target}"
 }
 
-# Create symlinks
+# Create symlinks (only if source exists)
 create_symlink "${DOTFILES_DIR}/configs/terminal/tmux/tmux.conf" "${HOME}/.tmux.conf"
-create_symlink "${DOTFILES_DIR}/configs/shell/zsh/.zshenv" "${HOME}/.zshenv"
-create_symlink "${DOTFILES_DIR}/configs/shell/zsh/.zshrc" "${HOME}/.zshrc"
+
+# Create zsh config symlinks if they exist
+if [ -f "${DOTFILES_DIR}/configs/shell/zsh/.zshenv" ]; then
+    create_symlink "${DOTFILES_DIR}/configs/shell/zsh/.zshenv" "${HOME}/.zshenv"
+else
+    printf '⚠️  Skipping .zshenv (source not found)\n'
+fi
+
+if [ -f "${DOTFILES_DIR}/configs/shell/zsh/.zshrc" ]; then
+    create_symlink "${DOTFILES_DIR}/configs/shell/zsh/.zshrc" "${HOME}/.zshrc"
+else
+    printf '⚠️  Skipping .zshrc (source not found)\n'
+fi
+
 create_symlink "${DOTFILES_DIR}/configs/shell/inputrc" "${HOME}/.inputrc"
 # Create nvim config directory and symlink
 mkdir -p "${HOME}/.config"
@@ -99,11 +111,26 @@ if [ -f "${DOTFILES_DIR}/configs/tools/tig/tigrc" ]; then
     create_symlink "${DOTFILES_DIR}/configs/tools/tig/tigrc" "${HOME}/.tigrc"
 fi
 
-# Create zsh directory and symlink aliases and functions
+# Create zsh directory and symlink aliases and functions (with existence checks)
 mkdir -p "${HOME}/.zsh"
-create_symlink "${DOTFILES_DIR}/configs/shell/zsh/aliases.zsh" "${HOME}/.zsh/aliases.zsh"
-create_symlink "${DOTFILES_DIR}/configs/shell/zsh/functions.zsh" "${HOME}/.zsh/functions.zsh"
-create_symlink "${DOTFILES_DIR}/configs/shell/zsh/_completions.zsh" "${HOME}/.zsh/_completions.zsh"
+
+if [ -f "${DOTFILES_DIR}/configs/shell/zsh/aliases.zsh" ]; then
+    create_symlink "${DOTFILES_DIR}/configs/shell/zsh/aliases.zsh" "${HOME}/.zsh/aliases.zsh"
+else
+    printf '⚠️  Skipping aliases.zsh (source not found)\n'
+fi
+
+if [ -f "${DOTFILES_DIR}/configs/shell/zsh/functions.zsh" ]; then
+    create_symlink "${DOTFILES_DIR}/configs/shell/zsh/functions.zsh" "${HOME}/.zsh/functions.zsh"
+else
+    printf '⚠️  Skipping functions.zsh (source not found)\n'
+fi
+
+if [ -f "${DOTFILES_DIR}/configs/shell/zsh/_completions.zsh" ]; then
+    create_symlink "${DOTFILES_DIR}/configs/shell/zsh/_completions.zsh" "${HOME}/.zsh/_completions.zsh"
+else
+    printf '⚠️  Skipping _completions.zsh (source not found)\n'
+fi
 
 # Create antidote plugins file symlink
 if [ -f "${DOTFILES_DIR}/configs/shell/zsh/.zsh_plugins.txt" ]; then

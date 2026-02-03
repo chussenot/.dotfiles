@@ -122,6 +122,7 @@ if is_ubuntu || is_debian; then
     if [ -n "${_packages_to_install}" ]; then
         printf 'Installing packages: %s\n' "${_packages_to_install}"
         # Install directly to avoid install_pkg calling apt-get update again
+        # shellcheck disable=SC2086 # Intentional word splitting for package list
         sudo apt-get install -y ${_packages_to_install} || {
             printf '⚠️  Some packages failed to install, continuing...\n'
         }

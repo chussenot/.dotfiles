@@ -7,6 +7,7 @@ pdm = "latest"
 python = "latest"
 pkl = "latest"
 prettier = "latest"
+shellcheck = "latest"
 
 [tasks]
 # Pre-lint task: runs before linting (setup/validation)

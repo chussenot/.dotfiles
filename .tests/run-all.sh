@@ -111,7 +111,7 @@ for _dockerfile in "${_docker_dir}"/*.Dockerfile; do
     if docker build \
         -f "${_dockerfile}" \
         -t "${_image_name}" \
-        "${_project_root}" >/tmp/docker-build-${_image_name}.log 2>&1; then
+        "${_project_root}" >"/tmp/docker-build-${_image_name}.log" 2>&1; then
         _print_success "Build succeeded: ${_dockerfile_name}"
         _passed=$((_passed + 1))
     else

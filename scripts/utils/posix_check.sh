@@ -114,7 +114,7 @@ _check_posh() {
 # Validate a single script
 _validate_script() {
     _file="$1"
-    _rel_path="${_file#${PROJECT_ROOT}/}"
+    _rel_path="${_file#"${PROJECT_ROOT}"/}"
 
     TOTAL=$((TOTAL + 1))
 

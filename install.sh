@@ -305,15 +305,6 @@ else
     print_warning "Neovim not found, skipping plugin installation"
 fi
 
-print_success "✅ Installation complete!"
-printf '\n'
-print_status "📋 Post-installation steps:"
-printf '1. Restart your terminal or run: source ~/.zshrc\n'
-printf '2. Customize your local settings in: %s/local/\n' "${SCRIPT_DIR}"
-printf '3. Install any additional tools you need\n'
-printf '\n'
-print_status "🎉 Your development environment is ready!"
-
 # Install chussenot zsh theme
 print_status "🎨 Installing chussenot zsh theme..."
 if [ -f "${SCRIPT_DIR}/scripts/setup/install-theme.sh" ]; then
@@ -324,7 +315,7 @@ else
     print_warning "Theme installation script not found, skipping theme installation"
 fi
 
-# install the man page
+# Install the man page
 print_status "📖 Installing man page..."
 if [ -f "${SCRIPT_DIR}/scripts/setup/install-man-page.sh" ]; then
     "${SCRIPT_DIR}/scripts/setup/install-man-page.sh" || {
@@ -350,3 +341,12 @@ else
     print_warning "Non-interactive shell detected, skipping update function"
     print_warning "Run 'update' manually after installation completes"
 fi
+
+print_success "✅ Installation complete!"
+printf '\n'
+print_status "📋 Post-installation steps:"
+printf '1. Restart your terminal or run: source ~/.zshrc\n'
+printf '2. Customize your local settings in: %s/local/\n' "${SCRIPT_DIR}"
+printf '3. Install any additional tools you need\n'
+printf '\n'
+print_status "🎉 Your development environment is ready!"
