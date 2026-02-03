@@ -24,11 +24,11 @@ However, **2 high**, **4 medium**, and **3 low** severity issues remain or were 
 
 ### Remaining Issues
 
-| Severity | Count | Key Issues |
-| -------- | ----- | ---------- |
-| High | 2 | Command injection risk, SSL verification disabled |
-| Medium | 4 | Unquoted variables, eval usage, unpinned plugins |
-| Low | 3 | Token management, tmux auto-install |
+| Severity | Count | Key Issues                                        |
+| -------- | ----- | ------------------------------------------------- |
+| High     | 2     | Command injection risk, SSL verification disabled |
+| Medium   | 4     | Unquoted variables, eval usage, unpinned plugins  |
+| Low      | 3     | Token management, tmux auto-install               |
 
 No hardcoded secrets, API keys, or credentials were found.
 
@@ -218,16 +218,16 @@ using a credential manager instead of shell exports.
 
 The following security best practices are in place:
 
-| Control | Status | Location |
-| ------- | ------ | -------- |
-| No hardcoded secrets | ✅ Pass | Repository-wide |
-| Atuin secrets filter | ✅ Enabled | `atuin/config.toml:156` |
-| K9s read-only mode | ✅ Enabled | `k9s/config.yaml:9` |
-| Mise installer temp file | ✅ Implemented | `install.sh:233` |
-| PID validation | ✅ Implemented | `aliases.zsh:143` |
-| Insecure aliases commented | ✅ Good | `aliases.zsh` |
-| Shell scripts use set -eu | ✅ Good | Multiple scripts |
-| pdm.lock for Python deps | ✅ Present | `pdm.lock` |
+| Control                    | Status         | Location                |
+| -------------------------- | -------------- | ----------------------- |
+| No hardcoded secrets       | ✅ Pass        | Repository-wide         |
+| Atuin secrets filter       | ✅ Enabled     | `atuin/config.toml:156` |
+| K9s read-only mode         | ✅ Enabled     | `k9s/config.yaml:9`     |
+| Mise installer temp file   | ✅ Implemented | `install.sh:233`        |
+| PID validation             | ✅ Implemented | `aliases.zsh:143`       |
+| Insecure aliases commented | ✅ Good        | `aliases.zsh`           |
+| Shell scripts use set -eu  | ✅ Good        | Multiple scripts        |
+| pdm.lock for Python deps   | ✅ Present     | `pdm.lock`              |
 
 ---
 
@@ -255,14 +255,14 @@ The following security best practices are in place:
 
 ## Files Reviewed
 
-| Category | Files |
-| -------- | ----- |
-| Shell Scripts | `install.sh`, `scripts/**/*.sh` |
-| Shell Config | `configs/shell/zsh/*.zsh` |
-| Vim Config | `configs/editor/nvim/plugs.vim` |
-| Tool Config | `configs/tools/*/` (atuin, gh, k9s, mise) |
-| Tmux Config | `configs/terminal/tmux/tmux.conf` |
-| Dependencies | `pyproject.toml`, `mise.toml`, `pdm.lock` |
+| Category      | Files                                     |
+| ------------- | ----------------------------------------- |
+| Shell Scripts | `install.sh`, `scripts/**/*.sh`           |
+| Shell Config  | `configs/shell/zsh/*.zsh`                 |
+| Vim Config    | `configs/editor/nvim/plugs.vim`           |
+| Tool Config   | `configs/tools/*/` (atuin, gh, k9s, mise) |
+| Tmux Config   | `configs/terminal/tmux/tmux.conf`         |
+| Dependencies  | `pyproject.toml`, `mise.toml`, `pdm.lock` |
 
 ---
 
