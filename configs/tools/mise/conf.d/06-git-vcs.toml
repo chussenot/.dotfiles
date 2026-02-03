@@ -9,3 +9,6 @@ hk = "latest"
 
 "cargo:git-delta" = "latest"
 "go:github.com/github/git-sizer" = "latest"
+
+"cargo:gitui" = "latest"
+"cargo:gitoxide" = "latest"
