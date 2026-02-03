@@ -278,12 +278,17 @@ function update {
   # Update fzf repository
   if [[ -d "$HOME/.fzf" ]]; then
     echo "🔄 Updating fzf repository..."
-    cd "$HOME/.fzf" && git pull --rebase 2>/dev/null && cd - || ((errors++))
-    if [[ $errors -eq 0 ]]; then
-      echo "✅ fzf repository updated successfully!"
-    else
+    (
+      cd "$HOME/.fzf" || exit 1
+      # Handle detached HEAD state (e.g., checked out to a tag)
+      if ! git symbolic-ref HEAD &>/dev/null; then
+        git checkout master 2>/dev/null || git checkout main 2>/dev/null
+      fi
+      git pull --rebase 2>/dev/null
+    ) && echo "✅ fzf repository updated successfully!" || {
       echo "⚠️  Error: Failed to update fzf repository"
-    fi
+      ((errors++))
+    }
   fi
 
   # Update TPM (tmux plugin manager)
