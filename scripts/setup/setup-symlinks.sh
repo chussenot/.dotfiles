@@ -31,7 +31,11 @@ create_symlink() {
 }
 
 # Create symlinks (only if source exists)
-create_symlink "${DOTFILES_DIR}/configs/terminal/tmux/tmux.conf" "${HOME}/.tmux.conf"
+if [ -f "${DOTFILES_DIR}/configs/terminal/tmux/tmux.conf" ]; then
+    create_symlink "${DOTFILES_DIR}/configs/terminal/tmux/tmux.conf" "${HOME}/.tmux.conf"
+else
+    printf '⚠️  Skipping .tmux.conf (source not found)\n'
+fi
 
 # Create zsh config symlinks if they exist
 if [ -f "${DOTFILES_DIR}/configs/shell/zsh/.zshenv" ]; then
@@ -46,7 +50,11 @@ else
     printf '⚠️  Skipping .zshrc (source not found)\n'
 fi
 
-create_symlink "${DOTFILES_DIR}/configs/shell/inputrc" "${HOME}/.inputrc"
+if [ -f "${DOTFILES_DIR}/configs/shell/inputrc" ]; then
+    create_symlink "${DOTFILES_DIR}/configs/shell/inputrc" "${HOME}/.inputrc"
+else
+    printf '⚠️  Skipping .inputrc (source not found)\n'
+fi
 # Create nvim config directory and symlink
 mkdir -p "${HOME}/.config"
 create_symlink "${DOTFILES_DIR}/configs/editor/nvim" "${HOME}/.config/nvim"

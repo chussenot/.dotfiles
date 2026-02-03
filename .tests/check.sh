@@ -77,19 +77,11 @@ _check_exists "${HOME}/.zsh/functions.zsh" "Zsh functions"
 _check_exists "${HOME}/.zsh/_completions.zsh" "Zsh completions"
 _check_exists "${HOME}/.dotfiles" "Dotfiles repository"
 
-# Check for Oh My Zsh
-if [ -d "${HOME}/.oh-my-zsh" ]; then
-    _print_success "Oh My Zsh installed"
+# Check for Antidote (the plugin manager used by install.sh)
+if [ -d "${HOME}/.antidote" ]; then
+    _print_success "Antidote Plugin Manager installed"
 else
-    _print_error "Oh My Zsh not found"
-    _errors=$((_errors + 1))
-fi
-
-# Check for Zinit
-if [ -d "${HOME}/.local/share/zinit/zinit.git" ]; then
-    _print_success "Zinit Plugin Manager installed"
-else
-    _print_error "Zinit Plugin Manager not found"
+    _print_error "Antidote Plugin Manager not found"
     _errors=$((_errors + 1))
 fi
 
