@@ -156,6 +156,19 @@ if [ -f "${DOTFILES_DIR}/configs/shell/zsh/.zsh_plugins.txt" ]; then
     create_symlink "${DOTFILES_DIR}/configs/shell/zsh/.zsh_plugins.txt" "${HOME}/.zsh_plugins.txt"
 fi
 
+# Create fzf config symlinks
+if [ -f "${DOTFILES_DIR}/configs/shell/fzf/fzf.zsh" ]; then
+    create_symlink "${DOTFILES_DIR}/configs/shell/fzf/fzf.zsh" "${HOME}/.fzf.zsh"
+else
+    printf '⚠️  Skipping .fzf.zsh (source not found)\n'
+fi
+
+if [ -f "${DOTFILES_DIR}/configs/shell/fzf/fzf.bash" ]; then
+    create_symlink "${DOTFILES_DIR}/configs/shell/fzf/fzf.bash" "${HOME}/.fzf.bash"
+else
+    printf '⚠️  Skipping .fzf.bash (source not found)\n'
+fi
+
 mkdir -p "${HOME}/.zsh/completions"
 
 # Create local directories if they don't exist
