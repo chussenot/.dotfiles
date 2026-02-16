@@ -21,7 +21,12 @@ _gen_comp_if_missing() {
   if command -v "$_cmd" &>/dev/null; then
     if [[ ! -s "$_outfile" || -n "$ZSH_COMP_REFRESH" ]]; then
       # shellcheck disable=SC2068
-      "$@" >"$_outfile" 2>/dev/null || true
+      local _tmpfile="${_outfile}.tmp.$$"
+      if "$@" >"$_tmpfile" 2>/dev/null && [[ -s "$_tmpfile" ]]; then
+        mv "$_tmpfile" "$_outfile"
+      else
+        rm -f "$_tmpfile"
+      fi
     fi
   fi
 }
@@ -72,8 +77,8 @@ fi
 # Byte-compile individual completion functions for speed (best-effort)
 # Only compile if directory exists and contains files
 if [[ -d "$COMPDIR" ]]; then
-  for f in "$COMPDIR"/_*; do
-    [[ -f "$f" ]] && zcompile "$f" 2>/dev/null || true
+  for f in "$COMPDIR"/_*(N); do
+    [[ -f "$f" && "$f" != *.zwc ]] && zcompile "$f" 2>/dev/null || true
   done
 fi
 

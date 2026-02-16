@@ -3,7 +3,7 @@
 # See https://antidote.sh/usage for more information
 
 # Completions (fpath-based for proper completion loading)
-zsh-users/zsh-completions kind:fpath
+zsh-users/zsh-completions path:src kind:fpath
 
 # History substring search (load early for keybindings)
 zsh-users/zsh-history-substring-search

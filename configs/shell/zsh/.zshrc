@@ -15,9 +15,8 @@ if [[ -f "$HOME/.zsh/functions.zsh" ]]; then
   source "$HOME/.zsh/functions.zsh"
 fi
 
-# >>> Fast completions (static, cached)
-source "$HOME/.zsh/_completions.zsh"
-# <<< Fast completions
+# Note: completions are loaded after Antidote (see below) so that
+# compinit sees plugin fpath entries (e.g. zsh-users/zsh-completions/src).
 
 # History configuration
 HISTSIZE=10000
@@ -176,6 +175,11 @@ fi
 
 # Initialize plugins statically with ${ZDOTDIR:-~}/.zsh_plugins.txt
 antidote load
+
+# >>> Fast completions (static, cached) — must run AFTER antidote
+# so compinit sees plugin fpath entries (zsh-completions/src, etc.)
+source "$HOME/.zsh/_completions.zsh"
+# <<< Fast completions
 
 ############################
 # Completion System
