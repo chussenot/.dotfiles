@@ -6,6 +6,7 @@ neovim = "latest"
 watchexec = "latest"
 pdm = "latest"
 pipx = "latest"
+fzf = "latest"
 
 # Cargo-installed tools
 "cargo:zoxide" = "latest"
@@ -44,6 +45,12 @@ prek = "latest"
 "pipx:wafw00f" = "latest"
 "pipx:yt-dlp" = "latest"
 "pipx:semgrep" = "latest"
+
+# Parquet tools
+"go:github.com/hangxie/parquet-tools" = "latest"
+"cargo:pqrs" = "latest"
+"cargo:parqeye" = "latest"
+"pipx:parquet-cli" = "latest"
 
 websocat = "latest"
 glow = "latest"

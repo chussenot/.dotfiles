@@ -12,6 +12,7 @@ kubectl = "latest"
 kind = "latest"
 krew = "latest"
 kustomize = "latest"
+cilium-cli = "latest"
 
 # --- Kubernetes UX / debugging ---
 stern = "latest"
