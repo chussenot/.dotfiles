@@ -22,12 +22,12 @@ ${HOME}/.tool-versions
 
 # Remove leading/trailing whitespace and iterate
 for _file in ${_files_to_backup}; do
-    # Skip empty lines
-    [ -z "${_file}" ] && continue
-    if [ -e "${_file}" ]; then
-        cp -r "${_file}" "${BACKUP_DIR}/"
-        printf '✅ Backed up %s\n' "${_file}"
-    fi
+  # Skip empty lines
+  [ -z "${_file}" ] && continue
+  if [ -e "${_file}" ]; then
+    cp -r "${_file}" "${BACKUP_DIR}/"
+    printf '✅ Backed up %s\n' "${_file}"
+  fi
 done
 
 printf '✅ Backup complete!\n'

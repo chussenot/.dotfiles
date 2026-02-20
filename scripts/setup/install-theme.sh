@@ -7,17 +7,17 @@ set -eu
 
 # Get script directory (POSIX-compatible)
 _get_script_dir() {
-    _script_path="$0"
-    _script_dir=""
-    case "${_script_path}" in
-        /*)
-            _script_dir=$(dirname "${_script_path}")
-            ;;
-        *)
-            _script_dir=$(cd "$(dirname "${_script_path}")" && pwd)
-            ;;
-    esac
-    printf '%s\n' "${_script_dir}"
+  _script_path="$0"
+  _script_dir=""
+  case "${_script_path}" in
+  /*)
+    _script_dir=$(dirname "${_script_path}")
+    ;;
+  *)
+    _script_dir=$(cd "$(dirname "${_script_path}")" && pwd)
+    ;;
+  esac
+  printf '%s\n' "${_script_dir}"
 }
 
 _script_dir=$(_get_script_dir)
@@ -29,8 +29,8 @@ printf '🎨 Installing chussenot zsh theme...\n'
 
 # Check if source theme exists
 if [ ! -f "${THEME_SOURCE}" ]; then
-    printf '❌ Source theme not found: %s\n' "${THEME_SOURCE}"
-    exit 1
+  printf '❌ Source theme not found: %s\n' "${THEME_SOURCE}"
+  exit 1
 fi
 
 # Install standalone version
@@ -41,16 +41,16 @@ mkdir -p "${HOME}/.zsh/themes"
 
 # If symlink/file exists but is not correct, replace it
 if [ -L "${THEME_DEST}" ] || [ -f "${THEME_DEST}" ]; then
-    _current_link=""
-    if [ -L "${THEME_DEST}" ]; then
-        if command -v readlink >/dev/null 2>&1; then
-            _current_link=$(readlink "${THEME_DEST}" 2>/dev/null || printf '')
-        fi
+  _current_link=""
+  if [ -L "${THEME_DEST}" ]; then
+    if command -v readlink >/dev/null 2>&1; then
+      _current_link=$(readlink "${THEME_DEST}" 2>/dev/null || printf '')
     fi
-    if [ "${_current_link}" != "${THEME_SOURCE}" ]; then
-        printf '⚠️  Removing existing theme file: %s\n' "${THEME_DEST}"
-        rm -f "${THEME_DEST}"
-    fi
+  fi
+  if [ "${_current_link}" != "${THEME_SOURCE}" ]; then
+    printf '⚠️  Removing existing theme file: %s\n' "${THEME_DEST}"
+    rm -f "${THEME_DEST}"
+  fi
 fi
 
 # Create symlink to theme
@@ -59,11 +59,11 @@ printf '✅ Symlink created: %s → %s\n' "${THEME_DEST}" "${THEME_SOURCE}"
 
 # Check if theme is already configured in zshrc
 if grep -q 'source.*chussenot.zsh-theme' "${HOME}/.zshrc" 2>/dev/null; then
-    printf '✅ Theme already configured in .zshrc\n'
+  printf '✅ Theme already configured in .zshrc\n'
 else
-    printf '⚠️  Theme not configured in .zshrc yet\n'
-    printf '   The theme should be automatically loaded by your .zshrc\n'
-    printf '   If not, add: source ~/.zsh/themes/chussenot.zsh-theme\n'
+  printf '⚠️  Theme not configured in .zshrc yet\n'
+  printf '   The theme should be automatically loaded by your .zshrc\n'
+  printf '   If not, add: source ~/.zsh/themes/chussenot.zsh-theme\n'
 fi
 
 printf '\n'
