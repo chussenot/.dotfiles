@@ -10,8 +10,6 @@ alias .....='cd ../../../..'
 
 # List aliases
 alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
 alias lt='ls -lt'
 alias ltr='ls -ltr'
 
