@@ -1,10 +1,10 @@
 # Linters, formatters, and code quality tools
 [tools]
-prettier = "latest"
+prettier = "3.4.2"
 
 # Python linters & formatters (via pipx)
-"pipx:black" = "latest"
-"pipx:check-jsonschema" = "latest"
-"pipx:mypy" = "latest"
-"pipx:ruff" = "latest"
-"pipx:pytest" = "latest"
+"pipx:black" = "26.1.0"
+"pipx:check-jsonschema" = "0.36.2"
+"pipx:mypy" = "1.19.1"
+"pipx:ruff" = "0.15.2"
+"pipx:pytest" = "9.0.2"

@@ -1,60 +1,60 @@
 # Development tools and utilities
 [tools]
-bat = "latest"
-direnv = "latest"
-neovim = "latest"
-watchexec = "latest"
-pdm = "latest"
-pipx = "latest"
-fzf = "latest"
+bat = "0.26.1"
+direnv = "2.37.1"
+neovim = "0.11.6"
+watchexec = "2.4.3"
+pdm = "2.22.4"
+pipx = "1.8.0"
+fzf = "0.68.0"
 
 # Cargo-installed tools
-"cargo:zoxide" = "latest"
-"cargo:xh" = "latest"
+"cargo:zoxide" = "0.9.9"
+"cargo:xh" = "0.25.3"
 
 # NPM-installed tools
-"npm:fx" = "latest"
+"npm:fx" = "39.2.0"
 
 # Pipx-installed utilities
-"pipx:mkdocs" = "latest"
-"pipx:yq" = "latest"
+"pipx:mkdocs" = "1.6.1"
+"pipx:yq" = "3.4.3"
 
 # Pre-commit hooks
-prek = "latest"
+prek = "0.3.3"
 
 # for binary format
-"go:github.com/wader/fq" = "latest"
+"go:github.com/wader/fq" = "0.16.0"
 
-"go:github.com/jesseduffield/lazygit" = "latest"
+"go:github.com/jesseduffield/lazygit" = "0.59.0"
 
-"cargo:bottom" = "latest" # use btm
-"cargo:du-dust" = "latest"
-"cargo:exa" = "latest"
-"cargo:htmlq" = "latest"
-"cargo:spacer" = "latest"
-"cargo:viu" = "latest"
-"cargo:xsv" = "latest"
-"cargo:asciinema" = "latest"
+"cargo:bottom" = "0.12.3" # use btm
+"cargo:du-dust" = "1.2.4"
+"cargo:exa" = "0.10.1"
+"cargo:htmlq" = "0.4.0"
+"cargo:spacer" = "0.5.0"
+"cargo:viu" = "1.6.1"
+"cargo:xsv" = "0.13.0"
+"cargo:asciinema" = "3.1.0"
 
-"pipx:argcomplete" = "latest"
-"pipx:bypass-url-parser" = "latest"
-"pipx:dirsearch" = "latest"
-"pipx:exegol" = "latest"
-"pipx:sqlmap" = "latest"
-"pipx:trash-cli" = "latest"
-"pipx:wafw00f" = "latest"
-"pipx:yt-dlp" = "latest"
-"pipx:semgrep" = "latest"
+"pipx:argcomplete" = "3.6.3"
+"pipx:bypass-url-parser" = "0.4.4"
+"pipx:dirsearch" = "0.4.3.post1"
+"pipx:exegol" = "5.1.8"
+"pipx:sqlmap" = "1.10.2"
+"pipx:trash-cli" = "0.24.5.26"
+"pipx:wafw00f" = "2.4.2"
+"pipx:yt-dlp" = "2026.2.21"
+"pipx:semgrep" = "1.152.0"
 
 # Parquet tools
-"go:github.com/hangxie/parquet-tools" = "latest"
-"cargo:pqrs" = "latest"
-"cargo:parqeye" = "latest"
-"pipx:parquet-cli" = "latest"
+"go:github.com/hangxie/parquet-tools" = "1.47.2"
+"cargo:pqrs" = "0.3.2"
+"cargo:parqeye" = "0.0.2"
+"pipx:parquet-cli" = "1.3"
 
-websocat = "latest"
-glow = "latest"
+websocat = "1.14.1"
+glow = "2.1.1"
 
 # --- Secrets Management ---
-sops = "latest"
-gopass = "latest"
+sops = "3.11.0"
+gopass = "1.16.1"

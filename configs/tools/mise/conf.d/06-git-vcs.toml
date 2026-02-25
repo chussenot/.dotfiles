@@ -1,14 +1,14 @@
 # Git & Version Control tools
 [tools]
-gh = "latest"
-glab = "latest"
-hk = "latest"
+gh = "2.87.2"
+glab = "1.86.0"
+hk = "1.36.0"
 
 # Conventional commits
-"cargo:cocogitto" = "latest"
+"cargo:cocogitto" = "6.5.0"
 
-"cargo:git-delta" = "latest"
-"go:github.com/github/git-sizer" = "latest"
+"cargo:git-delta" = "0.18.2"
+"go:github.com/github/git-sizer" = "1.5.0"
 
-"cargo:gitui" = "latest"
-"cargo:gitoxide" = "latest"
+"cargo:gitui" = "0.28.0"
+"cargo:gitoxide" = "0.51.0"

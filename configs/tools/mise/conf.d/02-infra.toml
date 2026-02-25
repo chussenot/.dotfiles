@@ -2,26 +2,26 @@
 [tools]
 
 # --- Cloud CLIs ---
-awscli = "latest"
-gcloud = "latest"
-vault = "latest"
+awscli = "2.33.29"
+gcloud = "558.0.0"
+vault = "1.21.2"
 
 # --- Terraform & IaC Utilities ---
-terraform = "latest"
-terraform-docs = "latest"
-terraformer = "latest"
-terragrunt = "latest"
-tfstate-lookup = "latest"
+terraform = "1.14.5"
+terraform-docs = "0.21.0"
+terraformer = "0.8.30"
+terragrunt = "0.99.4"
+tfstate-lookup = "1.10.0"
 
 # --- Terraform Plugin Development ---
-"go:github.com/hashicorp/terraform-plugin-codegen-openapi/cmd/tfplugingen-openapi" = "latest"
-"go:github.com/hashicorp/terraform-plugin-codegen-framework/cmd/tfplugingen-framework" = "latest"
+"go:github.com/hashicorp/terraform-plugin-codegen-openapi/cmd/tfplugingen-openapi" = "0.3.0"
+"go:github.com/hashicorp/terraform-plugin-codegen-framework/cmd/tfplugingen-framework" = "0.4.1"
 
 # --- Terraform Linting & Security ---
-tflint = "latest"
-tfsec = "latest"
-terrascan = "latest"
-pulumi = "latest"
-terraform-ls = "latest"
-tfenv = "latest"
-terramate = "latest"
+tflint = "0.61.0"
+tfsec = "1.28.14"
+terrascan = "1.19.9"
+pulumi = "3.223.0"
+terraform-ls = "0.38.4"
+tfenv = "3.0.0"
+terramate = "0.16.0"
