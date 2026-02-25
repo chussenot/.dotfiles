@@ -64,6 +64,9 @@ jobs:
       - name: Place dotfiles in HOME
         run: cp -R "$GITHUB_WORKSPACE" "$HOME/.dotfiles"
 
+      - name: Install neovim
+        run: brew install neovim
+
       - name: Run installer
         run: |
           cd "$HOME/.dotfiles"
