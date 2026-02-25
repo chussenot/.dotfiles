@@ -1,5 +1,7 @@
 # Dotfiles
 
+[![Test Install](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml/badge.svg)](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml)
+
 Personal configuration files for a productive development environment using zsh, Neovim, and tmux.
 
 ## Quick Start
