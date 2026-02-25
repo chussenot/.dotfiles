@@ -47,23 +47,13 @@ RUN cd /home/dev/.dotfiles && \
 RUN cd /home/dev/.dotfiles && \
     ./.tests/check.sh
 
-# Pre-compile zinit plugins to cache them in the image
-# This prevents downloading/compiling plugins on every shell start
-# We source .zshrc which loads zinit, wait for plugins to load, then compile them
+# Pre-compile Antidote plugins to cache them in the image
 RUN if [ -f "${HOME}/.zshrc" ] && command -v zsh >/dev/null 2>&1; then \
-        echo "🔧 Pre-compiling zinit plugins..." && \
-        zsh -c ' \
-            setopt EXTENDED_GLOB; \
-            source ~/.zshrc 2>&1; \
-            sleep 5; \
-            if command -v zinit >/dev/null 2>&1; then \
-                echo "Compiling all zinit plugins..."; \
-                zinit compile --all 2>&1 || true; \
-            fi \
-        ' && \
-        echo "✅ Zinit plugins pre-compiled and cached"; \
+        echo "Pre-compiling Antidote plugins..." && \
+        zsh -c 'source ~/.zshrc 2>&1 || true' && \
+        echo "Antidote plugins cached"; \
     else \
-        echo "⚠️  Warning: zsh or .zshrc not found, skipping zinit pre-compilation"; \
+        echo "Warning: zsh or .zshrc not found, skipping plugin pre-compilation"; \
     fi
 
 # Default command (if container is run interactively)

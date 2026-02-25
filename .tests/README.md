@@ -18,7 +18,7 @@ Run all tests:
    - Expected files and directories exist
    - Symlinks are correct
    - Essential commands are available
-   - Oh My Zsh and Zinit are installed
+   - Antidote plugin manager is installed
 
 ## Troubleshooting
 
