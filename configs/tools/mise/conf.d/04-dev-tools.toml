@@ -65,5 +65,5 @@ websocat = "1.14.1"
 glow = "2.1.1"
 
 # --- Secrets Management ---
-sops = "3.11.0"
+sops = "3.12.1"
 gopass = "1.16.1"

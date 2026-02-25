@@ -1,6 +1,6 @@
 #!/bin/sh
 # Checks for outdated mise-managed tools and updates pinned versions
-# in configs/tools/mise/conf.d/*.toml and the root mise.toml.
+# in configs/tools/mise/conf.d/*.toml (skips the root mise.toml).
 #
 # Parses pinned versions directly from TOML files and compares each
 # against `mise latest <tool>` (fetches from remote registries).
@@ -18,7 +18,6 @@ set -eu
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 DOTFILES_DIR="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 CONF_D="${DOTFILES_DIR}/configs/tools/mise/conf.d"
-ROOT_TOML="${DOTFILES_DIR}/mise.toml"
 
 _batch=0
 _dry_run=0
@@ -34,7 +33,7 @@ for _arg in "$@"; do
 Usage: $(basename "$0") [OPTIONS]
 
 Check for outdated mise-managed tools and update pinned versions.
-Parses configs/tools/mise/conf.d/*.toml and mise.toml, then queries
+Parses configs/tools/mise/conf.d/*.toml, then queries
 remote registries via \`mise latest\` to find available upgrades.
 
 Options:
@@ -113,7 +112,7 @@ awk '
   if (key != "" && version != "")
     printf "%s|%s|%s\n", key, version, FILENAME
 }
-' "$CONF_D"/*.toml "$ROOT_TOML" >"$_tools_file"
+' "$CONF_D"/*.toml >"$_tools_file"
 
 _total=$(wc -l <"$_tools_file" | tr -d ' ')
 if [ "$_total" -eq 0 ]; then
