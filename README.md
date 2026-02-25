@@ -19,12 +19,13 @@ exec zsh
 
 ## Platform Support
 
-| Platform      | Status          | Package Manager |
-| ------------- | --------------- | --------------- |
-| Ubuntu/Debian | Fully supported | apt-get         |
-| macOS         | Fully supported | Homebrew        |
-| Arch Linux    | Partial         | pacman          |
-| Fedora        | Partial         | dnf             |
+| Platform     | Status          | Package Manager | CI                                                                                                                                                                                                                                            |
+| ------------ | --------------- | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Ubuntu 24.04 | Fully supported | apt-get         | [![Ubuntu](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml/badge.svg?branch=master&event=push&job=linux-install%20%28Ubuntu%2024.04%29)](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml) |
+| Debian 12    | Fully supported | apt-get         | [![Debian](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml/badge.svg?branch=master&event=push&job=linux-install%20%28Debian%2012%29)](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml)    |
+| macOS        | Fully supported | Homebrew        | [![macOS](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml/badge.svg?branch=master&event=push&job=macos-install)](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml)                         |
+| Arch Linux   | Partial         | pacman          | [![Arch](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml/badge.svg?branch=master&event=push&job=linux-install%20%28Arch%20Linux%29)](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml)     |
+| Fedora 41    | Partial         | dnf             | [![Fedora](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml/badge.svg?branch=master&event=push&job=linux-install%20%28Fedora%2041%29)](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml)    |
 
 **Primary Test Environment**: Ubuntu 24.04.3 LTS (kernel 6.14.0-1015-oem)
 
