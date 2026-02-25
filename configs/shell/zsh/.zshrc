@@ -191,6 +191,9 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' special-dirs true
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
+# Ensure completion cache directory exists
+[[ -d "$HOME/.zsh/cache" ]] || mkdir -p "$HOME/.zsh/cache"
+
 # Completion performance and behavior improvements
 zstyle ':completion:*' use-cache yes
 zstyle ':completion:*' cache-path "$HOME/.zsh/cache"
@@ -311,7 +314,3 @@ fi
 # zmodload zsh/zprof
 # zprof
 export MANPATH="/home/chussenot/.local/share/man:${MANPATH:-}"
-
-
-# Generated for pdtm. Do not edit.
-export PATH=$PATH:/home/chussenot/.pdtm/go/bin
