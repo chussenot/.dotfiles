@@ -79,12 +79,6 @@ if [ -f "${DOTFILES_DIR}/configs/tools/mise/tool-versions" ]; then
   create_symlink "${DOTFILES_DIR}/configs/tools/mise/tool-versions" "${HOME}/.tool-versions"
 fi
 
-# Create atuin config if it exists
-if [ -f "${DOTFILES_DIR}/configs/tools/atuin/config.toml" ]; then
-  mkdir -p "${HOME}/.config/atuin"
-  create_symlink "${DOTFILES_DIR}/configs/tools/atuin/config.toml" "${HOME}/.config/atuin/config.toml"
-fi
-
 # Create gitignore_global if it exists
 if [ -f "${DOTFILES_DIR}/configs/git/.gitignore_global" ]; then
   create_symlink "${DOTFILES_DIR}/configs/git/.gitignore_global" "${HOME}/.gitignore_global"

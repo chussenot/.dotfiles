@@ -60,9 +60,6 @@ _gen_comp_if_missing pdm         "$COMPDIR/_pdm"        pdm completion zsh
 # deno
 _gen_comp_if_missing deno        "$COMPDIR/_deno"       deno completions zsh
 
-# atuin (shell history manager)
-_gen_comp_if_missing atuin       "$COMPDIR/_atuin"      atuin gen-completions --shell zsh
-
 # cog (conventional commits tool)
 _gen_comp_if_missing cog         "$COMPDIR/_cog"        cog generate-completions zsh
 
@@ -158,7 +155,6 @@ fi
 
 # --- End fast completions bootstrap -----------------------------------------
 # Note: Some tools handle their own completions via init commands in zshrc:
-# - atuin: handled by 'atuin init zsh' in zshrc
 # - zoxide: handled by 'zoxide init zsh' in zshrc
 # - direnv: completion file generated above, hook is handled by direnv init
 #

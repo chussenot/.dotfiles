@@ -32,7 +32,7 @@ Delete character under cursor
 Go to beginning/end of line
 .TP
 .PP
-Note: <C-R> is handled by Atuin for history search (not FZF by default)
+Note: <C-R> triggers history search via FZF
 .SS FZF Fuzzy Finder Key Mappings
 File and directory search functionality (if fzf is installed):
 .TP
@@ -66,7 +66,6 @@ Cancel and exit
 Abort search
 .PP
 Note: FZF keybindings are provided by fzf.zsh if fzf is installed.
-Atuin handles history search via <C-R> by default.
 .SS TMUX Terminal Multiplexer Key Mappings
 Session and window management:
 .TP
@@ -298,7 +297,7 @@ The leader key is set to space. Use it with other keys for custom mappings.
 Environment-specific tips:
 .TP
 .B ZSH
-Use <Up>/<Down> for history substring search, <C-R> for Atuin history search
+Use <Up>/<Down> for history substring search, <C-R> for history search
 .TP
 .B FZF
 <C-T> for files, <C-C> for directories (if fzf is installed)

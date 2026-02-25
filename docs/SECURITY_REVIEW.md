@@ -16,7 +16,6 @@ However, **2 high**, **4 medium**, and **3 low** severity issues remain or were 
 
 - ✅ curl|bash pattern fixed - now downloads to temp file first
 - ✅ Mise tools pinned (except `hk`)
-- ✅ Atuin `secrets_filter = true` enabled
 - ✅ K9s `readOnly: true` enabled
 - ✅ Critical vim plugins pinned (9 of 70+)
 - ✅ PID validation added to kill-click alias
@@ -218,16 +217,15 @@ using a credential manager instead of shell exports.
 
 The following security best practices are in place:
 
-| Control                    | Status         | Location                |
-| -------------------------- | -------------- | ----------------------- |
-| No hardcoded secrets       | ✅ Pass        | Repository-wide         |
-| Atuin secrets filter       | ✅ Enabled     | `atuin/config.toml:156` |
-| K9s read-only mode         | ✅ Enabled     | `k9s/config.yaml:9`     |
-| Mise installer temp file   | ✅ Implemented | `install.sh:233`        |
-| PID validation             | ✅ Implemented | `aliases.zsh:143`       |
-| Insecure aliases commented | ✅ Good        | `aliases.zsh`           |
-| Shell scripts use set -eu  | ✅ Good        | Multiple scripts        |
-| pdm.lock for Python deps   | ✅ Present     | `pdm.lock`              |
+| Control                    | Status         | Location            |
+| -------------------------- | -------------- | ------------------- |
+| No hardcoded secrets       | ✅ Pass        | Repository-wide     |
+| K9s read-only mode         | ✅ Enabled     | `k9s/config.yaml:9` |
+| Mise installer temp file   | ✅ Implemented | `install.sh:233`    |
+| PID validation             | ✅ Implemented | `aliases.zsh:143`   |
+| Insecure aliases commented | ✅ Good        | `aliases.zsh`       |
+| Shell scripts use set -eu  | ✅ Good        | Multiple scripts    |
+| pdm.lock for Python deps   | ✅ Present     | `pdm.lock`          |
 
 ---
 
@@ -260,7 +258,7 @@ The following security best practices are in place:
 | Shell Scripts | `install.sh`, `scripts/**/*.sh`           |
 | Shell Config  | `configs/shell/zsh/*.zsh`                 |
 | Vim Config    | `configs/editor/nvim/plugs.vim`           |
-| Tool Config   | `configs/tools/*/` (atuin, gh, k9s, mise) |
+| Tool Config   | `configs/tools/*/` (gh, k9s, mise)        |
 | Tmux Config   | `configs/terminal/tmux/tmux.conf`         |
 | Dependencies  | `pyproject.toml`, `mise.toml`, `pdm.lock` |
 

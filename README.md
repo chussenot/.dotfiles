@@ -191,20 +191,19 @@ nvim +PlugInstall +qall
 
 ### Tool Configurations
 
-| Tool                                             | Purpose                      | Config                 |
-| ------------------------------------------------ | ---------------------------- | ---------------------- |
-| [Antidote](https://github.com/mattmc3/antidote)  | Zsh plugin manager           | `~/.antidote`          |
-| [mise](https://mise.run)                         | Version manager for runtimes | `configs/tools/mise/`  |
-| [fzf](https://github.com/junegunn/fzf)           | Fuzzy finder                 | Shell integration      |
-| [ripgrep](https://github.com/BurntSushi/ripgrep) | Fast code search             | -                      |
-| [fd](https://github.com/sharkdp/fd)              | Fast file finder             | -                      |
-| [bat](https://github.com/sharkdp/bat)            | Syntax-highlighted cat       | `configs/tools/bat/`   |
-| [Atuin](https://github.com/atuinsh/atuin)        | Shell history manager        | `configs/tools/atuin/` |
-| [GitHub CLI](https://cli.github.com)             | GitHub from terminal         | `configs/tools/gh/`    |
-| [Glow](https://github.com/charmbracelet/glow)    | Terminal markdown viewer     | `configs/tools/glow/`  |
-| [htop](https://htop.dev)                         | Process viewer               | `configs/tools/htop/`  |
-| [k9s](https://github.com/derailed/k9s)           | Kubernetes TUI               | `configs/tools/k9s/`   |
-| [tig](https://github.com/jonas/tig)              | Git TUI                      | `configs/tools/tig/`   |
+| Tool                                             | Purpose                      | Config                |
+| ------------------------------------------------ | ---------------------------- | --------------------- |
+| [Antidote](https://github.com/mattmc3/antidote)  | Zsh plugin manager           | `~/.antidote`         |
+| [mise](https://mise.run)                         | Version manager for runtimes | `configs/tools/mise/` |
+| [fzf](https://github.com/junegunn/fzf)           | Fuzzy finder                 | Shell integration     |
+| [ripgrep](https://github.com/BurntSushi/ripgrep) | Fast code search             | -                     |
+| [fd](https://github.com/sharkdp/fd)              | Fast file finder             | -                     |
+| [bat](https://github.com/sharkdp/bat)            | Syntax-highlighted cat       | `configs/tools/bat/`  |
+| [GitHub CLI](https://cli.github.com)             | GitHub from terminal         | `configs/tools/gh/`   |
+| [Glow](https://github.com/charmbracelet/glow)    | Terminal markdown viewer     | `configs/tools/glow/` |
+| [htop](https://htop.dev)                         | Process viewer               | `configs/tools/htop/` |
+| [k9s](https://github.com/derailed/k9s)           | Kubernetes TUI               | `configs/tools/k9s/`  |
+| [tig](https://github.com/jonas/tig)              | Git TUI                      | `configs/tools/tig/`  |
 
 ### Container & Cloud Tools
 
