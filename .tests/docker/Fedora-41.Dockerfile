@@ -8,6 +8,7 @@ RUN dnf install -y \
         git \
         curl \
         sudo \
+        zsh \
         glibc-langpack-en && \
     dnf clean all
 

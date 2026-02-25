@@ -12,6 +12,7 @@ RUN apt-get update && \
         git \
         curl \
         sudo \
+        zsh \
         locales \
         ca-certificates && \
     apt-get clean && \

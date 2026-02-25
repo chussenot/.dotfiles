@@ -9,6 +9,7 @@ RUN pacman -Syu --noconfirm && \
         git \
         curl \
         sudo \
+        zsh \
         base-devel && \
     pacman -Scc --noconfirm
 
