@@ -29,6 +29,9 @@ WORKDIR /home/dev
 # Set HOME explicitly
 ENV HOME=/home/dev
 
+# Skip heavy mise conf.d tools in CI (cargo, pipx, go packages)
+ENV MISE_IGNORED_CONFIG_PATHS=/home/dev/.config/mise/conf.d
+
 # Run the installer
 RUN cd /home/dev/.dotfiles && \
     ./install.sh 2>&1 | tee /tmp/install.log || true

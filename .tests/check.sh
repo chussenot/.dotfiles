@@ -64,11 +64,11 @@ _check_exists "${HOME}/.zshrc" "Zsh configuration"
 _check_exists "${HOME}/.tmux.conf" "Tmux configuration"
 _check_exists "${HOME}/.inputrc" "Input configuration"
 _check_exists "${HOME}/.config/nvim" "Neovim configuration directory"
-# Check for nvim config (init.vim or init.lua)
-if [ -f "${HOME}/.config/nvim/init.vim" ] || [ -f "${HOME}/.config/nvim/init.lua" ]; then
+# Check for nvim config (init.vim, init.lua, or vimrc)
+if [ -f "${HOME}/.config/nvim/init.vim" ] || [ -f "${HOME}/.config/nvim/init.lua" ] || [ -f "${HOME}/.config/nvim/vimrc" ]; then
   _print_success "Neovim init file exists"
 else
-  _print_error "Neovim init file not found (init.vim or init.lua)"
+  _print_error "Neovim init file not found (init.vim, init.lua, or vimrc)"
   _errors=$((_errors + 1))
 fi
 _check_exists "${HOME}/.zsh" "Zsh directory"
