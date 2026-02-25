@@ -1,0 +1,33 @@
+name: Arch Linux
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  install:
+    name: Install (Arch Linux)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build test image
+        run: |
+          docker build \
+            -f .tests/docker/Archlinux.Dockerfile \
+            -t dotfiles-test-arch .
+
+      - name: Verify installation
+        run: |
+          docker run --rm dotfiles-test-arch \
+            /home/dev/.dotfiles/.tests/check.sh
+
+      - name: Upload install log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: install-log-archlinux
+          path: /tmp/docker-build-*.log
+          retention-days: 7

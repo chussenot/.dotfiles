@@ -1,0 +1,16 @@
+name: Lint
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  shellcheck:
+    name: Shellcheck
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run shellcheck
+        run: find scripts/ -name '*.sh' -print0 | xargs -0 shellcheck --shell=sh

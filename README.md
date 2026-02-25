@@ -1,6 +1,6 @@
 # Dotfiles
 
-[![Test Install](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml/badge.svg)](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml)
+[![Lint](https://github.com/chussenot/.dotfiles/actions/workflows/lint.yml/badge.svg)](https://github.com/chussenot/.dotfiles/actions/workflows/lint.yml)
 
 Personal configuration files for a productive development environment using zsh, Neovim, and tmux.
 
@@ -19,13 +19,13 @@ exec zsh
 
 ## Platform Support
 
-| Platform     | Status          | Package Manager | CI                                                                                                                                                                                                                                            |
-| ------------ | --------------- | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Ubuntu 24.04 | Fully supported | apt-get         | [![Ubuntu](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml/badge.svg?branch=master&event=push&job=linux-install%20%28Ubuntu%2024.04%29)](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml) |
-| Debian 12    | Fully supported | apt-get         | [![Debian](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml/badge.svg?branch=master&event=push&job=linux-install%20%28Debian%2012%29)](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml)    |
-| macOS        | Fully supported | Homebrew        | [![macOS](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml/badge.svg?branch=master&event=push&job=macos-install)](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml)                         |
-| Arch Linux   | Partial         | pacman          | [![Arch](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml/badge.svg?branch=master&event=push&job=linux-install%20%28Arch%20Linux%29)](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml)     |
-| Fedora 41    | Partial         | dnf             | [![Fedora](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml/badge.svg?branch=master&event=push&job=linux-install%20%28Fedora%2041%29)](https://github.com/chussenot/.dotfiles/actions/workflows/test-install.yml)    |
+| Platform     | Status          | Package Manager | CI                                                                                                                                                                                  |
+| ------------ | --------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Ubuntu 24.04 | Fully supported | apt-get         | [![Ubuntu](https://github.com/chussenot/.dotfiles/actions/workflows/test-ubuntu.yml/badge.svg)](https://github.com/chussenot/.dotfiles/actions/workflows/test-ubuntu.yml)           |
+| Debian 12    | Fully supported | apt-get         | [![Debian](https://github.com/chussenot/.dotfiles/actions/workflows/test-debian.yml/badge.svg)](https://github.com/chussenot/.dotfiles/actions/workflows/test-debian.yml)           |
+| macOS        | Fully supported | Homebrew        | [![macOS](https://github.com/chussenot/.dotfiles/actions/workflows/test-macos.yml/badge.svg)](https://github.com/chussenot/.dotfiles/actions/workflows/test-macos.yml)              |
+| Arch Linux   | Partial         | pacman          | [![Arch Linux](https://github.com/chussenot/.dotfiles/actions/workflows/test-archlinux.yml/badge.svg)](https://github.com/chussenot/.dotfiles/actions/workflows/test-archlinux.yml) |
+| Fedora 41    | Partial         | dnf             | [![Fedora](https://github.com/chussenot/.dotfiles/actions/workflows/test-fedora.yml/badge.svg)](https://github.com/chussenot/.dotfiles/actions/workflows/test-fedora.yml)           |
 
 **Primary Test Environment**: Ubuntu 24.04.3 LTS (kernel 6.14.0-1015-oem)
 
