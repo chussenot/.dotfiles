@@ -1,12 +1,12 @@
 # Offensive tools to install
+# Note: go:github.com/antonmedv/fx, go:github.com/sw33tLie/sns, and
+# go:github.com/x90skysn3k/brutespray have no GitHub releases and cannot be
+# version-managed by mise. Install them manually: go install <path>@latest
 [tools]
-"go:github.com/antonmedv/fx" = "latest"
 "go:github.com/ffuf/ffuf" = "1.5.0"
 "go:github.com/glitchedgitz/cook/v2/cmd/cook" = "2.2.1"
 "go:github.com/lc/gau/v2/cmd/gau" = "2.2.4"
 "go:github.com/projectdiscovery/pdtm/cmd/pdtm" = "0.1.3"
-"go:github.com/sw33tLie/sns" = "latest"
-"go:github.com/x90skysn3k/brutespray" = "latest"
 "go:github.com/xm1k3/cent" = "1.3.4"
 "go:github.com/tomnomnom/waybackurls" = "0.1.0"
 
