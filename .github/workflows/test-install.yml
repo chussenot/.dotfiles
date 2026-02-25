@@ -58,8 +58,9 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          path: .dotfiles
+
+      - name: Place dotfiles in HOME
+        run: cp -R "$GITHUB_WORKSPACE" "$HOME/.dotfiles"
 
       - name: Run installer
         run: |
