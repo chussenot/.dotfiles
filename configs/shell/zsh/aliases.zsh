@@ -33,6 +33,7 @@ alias py='python3'
 alias pip='pip3'
 alias nv='nvim'
 alias v='nvim'
+alias keys='man keymaps'
 
 # System aliases
 alias df='df -h'

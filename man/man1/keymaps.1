@@ -1,4 +1,4 @@
-.TH KEYMAPS 1 "2025-01-27" "dotfiles" "Development Environment Key Mappings"
+.TH KEYMAPS 1 "2026-02-25" "dotfiles" "Development Environment Key Mappings"
 .SH NAME
 keymaps \- Display comprehensive key mappings for development environment
 .SH SYNOPSIS
@@ -192,9 +192,6 @@ Reload configuration
 .TP
 .B <C-F11>
 Toggle relative line numbering
-.TP
-.B <F5>
-Toggle paste mode
 .PP
 File operations:
 .TP
@@ -240,6 +237,44 @@ Next/previous GitGutter hunk
 .B gx
 Smart search (Open Browser)
 .PP
+LSP mappings (NeoVim, via nvim-lspconfig):
+.PP
+NeoVim 0.11+ provides these as defaults. Fallback keymaps are set for older versions.
+.TP
+.B K
+Hover information
+.TP
+.B gd
+Go to definition
+.TP
+.B grn
+Rename symbol
+.TP
+.B gra
+Code action
+.TP
+.B grr
+References
+.PP
+Completion (NeoVim, via nvim-cmp):
+.TP
+.B <Tab>
+Next completion item or snippet jump
+.TP
+.B <S-Tab>
+Previous completion item
+.TP
+.B <CR>
+Confirm completion
+.TP
+.B <C-Space>
+Trigger completion manually
+.PP
+which-key (NeoVim):
+.TP
+.B <Space>
+Wait briefly to see keybinding popup with available mappings
+.PP
 Terminal mode:
 .TP
 .B <Esc>
@@ -272,7 +307,7 @@ Use <Up>/<Down> for history substring search, <C-R> for Atuin history search
 <C-A> is the prefix key (replaces <C-B>). Many commands work without prefix.
 .TP
 .B NEOVIM
-<space> is the leader key. <C-s> to save, <C-R> to reload config.
+<space> is the leader key. <C-s> to save, K for LSP hover, <Tab> for completion, <space> for which-key popup.
 .SH FILES
 .TP
 .B ~/.dotfiles/configs/shell/zsh/functions.zsh
