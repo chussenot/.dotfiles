@@ -3,9 +3,9 @@
 # in configs/tools/mise/conf.d/*.toml and the root mise.toml.
 #
 # Parses pinned versions directly from TOML files and compares each
-# against `mise latest <tool>` to find available upgrades.
+# against `mise latest <tool>` (fetches from remote registries).
 #
-# Usage: mise-update-pins.sh [--batch|-b] [--dry-run|-n] [--help|-h]
+# Usage: mise-update-pins.sh [--check|-c] [--batch|-b] [--dry-run|-n] [--help|-h]
 #
 # Interactive controls (default mode):
 #   y   Update this tool
@@ -22,20 +22,23 @@ ROOT_TOML="${DOTFILES_DIR}/mise.toml"
 
 _batch=0
 _dry_run=0
+_check=0
 
 for _arg in "$@"; do
   case "$_arg" in
   --batch | -b) _batch=1 ;;
   --dry-run | -n) _dry_run=1 ;;
+  --check | -c) _check=1 ;;
   --help | -h)
     cat <<EOF
 Usage: $(basename "$0") [OPTIONS]
 
 Check for outdated mise-managed tools and update pinned versions.
-Parses configs/tools/mise/conf.d/*.toml and mise.toml, then uses
-\`mise latest\` to find available upgrades.
+Parses configs/tools/mise/conf.d/*.toml and mise.toml, then queries
+remote registries via \`mise latest\` to find available upgrades.
 
 Options:
+  -c, --check    Show all tools with pinned vs latest version (read-only)
   -b, --batch    Update all outdated tools without prompting
   -n, --dry-run  Show what would change without modifying files
   -h, --help     Show this help
@@ -81,14 +84,17 @@ trap 'rm -rf "$_tmpdir"' EXIT INT TERM
 
 _tools_file="${_tmpdir}/tools"
 _outdated_file="${_tmpdir}/outdated"
+_report_file="${_tmpdir}/report"
 
 # --- Parse TOML files ---
 # Extract: tool|pinned_version|file_path  (pipe-delimited)
 
 awk '
 /^[[:space:]]*#/ { next }
-/^[[:space:]]*\[/ { next }
 /^[[:space:]]*$/ { next }
+/^\[tools\]/ { in_tools = 1; next }
+/^\[/ { in_tools = 0; next }
+!in_tools { next }
 /= *"/ {
   line = $0
   eq = index(line, "=")
@@ -115,7 +121,7 @@ if [ "$_total" -eq 0 ]; then
   exit 0
 fi
 
-printf "Scanning %s tools for updates...\n" "$_total"
+printf "Fetching latest versions from remote registries (%s tools)...\n" "$_total"
 
 # --- Check each tool against `mise latest` (parallel batches) ---
 
@@ -142,29 +148,60 @@ if [ "$_running" -gt 0 ]; then
   printf "  checked %d/%d\n" "$_n" "$_total"
 fi
 
-# --- Collect outdated results ---
+# --- Collect results ---
+
+_up=0
+_outdated=0
+_err=0
 
 _i=1
 while [ "$_i" -le "$_n" ]; do
   _result="${_tmpdir}/r${_i}"
   if [ -s "$_result" ]; then
     IFS='|' read -r _tool _pinned _latest _file <"$_result"
-    if [ -n "$_latest" ] && [ "$_pinned" != "$_latest" ]; then
+    if [ -z "$_latest" ]; then
+      printf '%s\n' "${_tool}|${_pinned}|???|${_file}|error" >>"$_report_file"
+      _err=$((_err + 1))
+    elif [ "$_pinned" != "$_latest" ]; then
+      printf '%s\n' "${_tool}|${_pinned}|${_latest}|${_file}|outdated" >>"$_report_file"
       printf '%s\n' "${_tool}|${_pinned}|${_latest}|${_file}" >>"$_outdated_file"
+      _outdated=$((_outdated + 1))
+    else
+      printf '%s\n' "${_tool}|${_pinned}|${_latest}|${_file}|ok" >>"$_report_file"
+      _up=$((_up + 1))
     fi
   fi
   _i=$((_i + 1))
 done
+
+# --- Check mode: show full report and exit ---
+
+if [ "$_check" = "1" ]; then
+  printf "\n"
+  printf "  %-55s %-14s %-14s %s\n" "TOOL" "PINNED" "LATEST" "STATUS"
+  printf "  %-55s %-14s %-14s %s\n" "----" "------" "------" "------"
+  while IFS='|' read -r _tool _pinned _latest _file _status; do
+    case "$_status" in
+    ok) _label="ok" ;;
+    outdated) _label="UPDATE" ;;
+    error) _label="error" ;;
+    *) _label="$_status" ;;
+    esac
+    printf "  %-55s %-14s %-14s %s\n" "$_tool" "$_pinned" "$_latest" "$_label"
+  done <"$_report_file"
+  printf "\n  Summary: %d up-to-date, %d outdated, %d errors (out of %d)\n" \
+    "$_up" "$_outdated" "$_err" "$_total"
+  exit 0
+fi
+
+# --- Update mode ---
 
 if [ ! -s "$_outdated_file" ]; then
   printf "All %s tools are up to date.\n" "$_total"
   exit 0
 fi
 
-_outdated_count=$(wc -l <"$_outdated_file" | tr -d ' ')
-printf "\nFound %s outdated tool(s):\n\n" "$_outdated_count"
-
-# --- Print summary ---
+printf "\nFound %s outdated tool(s):\n\n" "$_outdated"
 
 while IFS='|' read -r _tool _pinned _latest _file; do
   printf "  %-55s %s -> %s  (%s)\n" "$_tool" "$_pinned" "$_latest" "${_file##*/}"
@@ -207,7 +244,7 @@ do_update() {
 # --- Main update loop ---
 
 while IFS='|' read -r _tool _pinned _latest _file; do
-  if [ "$_batch" = "1" ]; then
+  if [ "$_batch" = "1" ] || [ "$_dry_run" = "1" ]; then
     do_update "$_file" "$_tool" "$_pinned" "$_latest"
   else
     printf "  %-50s %s -> %s  [y/n/a/q] " "$_tool" "$_pinned" "$_latest"
