@@ -28,7 +28,7 @@ WORKDIR /home/dev
 ENV HOME=/home/dev
 
 # Skip heavy mise conf.d tools in CI (cargo, pipx, go packages)
-ENV MISE_IGNORED_CONFIG_PATHS=/home/dev/.config/mise/conf.d
+ENV MISE_IGNORED_CONFIG_PATHS=/home/dev/.config/mise/conf.d:/home/dev/.dotfiles/configs/tools/mise/conf.d
 
 # Run the installer
 RUN cd /home/dev/.dotfiles && \

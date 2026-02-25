@@ -57,7 +57,7 @@ jobs:
     name: Install (macOS)
     runs-on: macos-latest
     env:
-      MISE_IGNORED_CONFIG_PATHS: ~/.config/mise/conf.d
+      MISE_IGNORED_CONFIG_PATHS: ~/.config/mise/conf.d:~/.dotfiles/configs/tools/mise/conf.d
     steps:
       - uses: actions/checkout@v4
 
