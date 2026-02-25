@@ -7,13 +7,28 @@ if not ok then
   return
 end
 
+local wanted = {
+  "bash", "c", "clojure", "comment", "css", "diff", "dockerfile", "eex",
+  "elixir", "elm", "embedded_template", "gitcommit", "git_rebase", "hcl",
+  "heex", "html", "javascript", "json", "lua", "make", "markdown", "regex",
+  "ruby", "rust", "vim", "vimdoc", "yaml",
+}
+
+-- Remove parsers not in the wanted list to keep :TSUpdate fast
+local dominated = pcall(require, 'nvim-treesitter.install')
+if dominated then
+  local wanted_set = {}
+  for _, lang in ipairs(wanted) do wanted_set[lang] = true end
+  local installed = require('nvim-treesitter.info').installed_parsers()
+  for _, lang in ipairs(installed) do
+    if not wanted_set[lang] then
+      vim.cmd('silent! TSUninstall ' .. lang)
+    end
+  end
+end
+
 treesitter_configs.setup {
-  ensure_installed = {
-    "bash", "c", "clojure", "comment", "css", "diff", "dockerfile", "eex",
-    "elixir", "elm", "embedded_template", "gitcommit", "git_rebase", "hcl",
-    "heex", "html", "javascript", "json", "lua", "make", "markdown", "regex",
-    "ruby", "rust", "vim", "vimdoc", "yaml"
-  },
+  ensure_installed = wanted,
   sync_install = false,
   highlight = {
     enable = true,

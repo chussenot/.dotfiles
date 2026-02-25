@@ -109,7 +109,7 @@ Plug 'andymass/vim-matchup'
 " nwim-treesitter
 " https://github.com/nvim-treesitter/nvim-treesitter
 if has("nvim")
-  Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate', 'tag': 'v0.9.2' }
+  Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
   Plug 'RRethy/nvim-treesitter-endwise'
   " nvim-ts-rainbow is deprecated, replaced with rainbow-delimiters.nvim
   Plug 'HiPhish/rainbow-delimiters.nvim'
@@ -213,46 +213,20 @@ Plug 'airblade/vim-gitgutter'
 
 Plug 'vim-scripts/SyntaxComplete'
 
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-let g:LanguageClient_autoStop = 0
-let g:LanguageClient_serverCommands = {
-    \ 'ruby': ['tcp://localhost:7658']
-    \ }
-
-if ! has('nvim')
-else
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
+if has('nvim')
+  Plug 'neovim/nvim-lspconfig'
 endif
-
-Plug 'Shougo/neco-syntax'
 "
 
-" ddc
-" https://github.com/Shougo/ddc.vim
-
-Plug 'Shougo/ddc.vim'
-let g:denops_disable_version_check = 1
-Plug 'vim-denops/denops.vim', { 'branch': 'main'}
-
-" Install your sources
-Plug 'Shougo/ddc-around', { 'branch': 'main'}
-
-" Install your filters
-Plug 'Shougo/ddc-matcher_head', { 'branch': 'main'}
-Plug 'Shougo/ddc-sorter_rank', { 'branch': 'main'}
-
-Plug 'Shougo/pum.vim'
-Plug 'tani/ddc-fuzzy'
-
-"  SNIPPETS
-" The Neosnippet plug-In adds snippet support to Vim
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
-let g:neosnippet#snippets_directory='~/.vim/snippets'
+" nvim-cmp (completion) + LuaSnip (snippets)
+if has('nvim')
+  Plug 'hrsh7th/nvim-cmp'
+  Plug 'hrsh7th/cmp-nvim-lsp'
+  Plug 'hrsh7th/cmp-buffer'
+  Plug 'hrsh7th/cmp-path'
+  Plug 'L3MON4D3/LuaSnip', { 'do': 'make install_jsregexp' }
+  Plug 'saadparwaiz1/cmp_luasnip'
+endif
 "
 
 " }}}
@@ -445,11 +419,6 @@ Plug 'janko-m/vim-test'
 
 "  SYNTAX CHECKING
 
-"  Syntastic
-" https://github.com/scrooloose/syntastic
-Plug 'scrooloose/syntastic', { 'tag': '3.10.0' }
-"
-
 "  HCL (lazy load for terraform/hcl files)
 Plug 'b4b4r07/vim-hcl', { 'for': ['hcl', 'terraform'] }
 Plug 'fatih/vim-hclfmt', { 'for': ['hcl', 'terraform'] }
@@ -485,7 +454,7 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 " Unite and vimproc
 " see https://medium.com/@crashybang/supercharge-vim-with-fzf-and-ripgrep-d4661fc853d2#.y2pz1mipy
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all', 'tag': 'v0.56.3' }
+Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim', { 'commit': '279e1ec' }
 
 " Treesitter powered spellchecker
@@ -508,5 +477,12 @@ Plug 'tmux-plugins/vim-tmux'
 " Plug 'tpope/tslime.vim' " https://g-railsithub.com/kikijump/tslime.vim
 " Plug 'ngn/vim-buffing-wheel' " https://github.com/ngn/vim-buffing-wheel
 "
+
+" which-key: shows a popup with keybindings when pressing leader
+if has('nvim')
+  Plug 'echasnovski/mini.icons'
+  Plug 'nvim-tree/nvim-web-devicons'
+  Plug 'folke/which-key.nvim'
+endif
 
 call plug#end()

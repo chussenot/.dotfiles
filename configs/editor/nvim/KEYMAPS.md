@@ -98,6 +98,33 @@ This document provides a comprehensive overview of all key mappings in your Vim/
 | ---- | ------------ |
 | `gx` | Smart search |
 
+### LSP (NeoVim, via nvim-lspconfig)
+
+NeoVim 0.11+ provides these as defaults. Fallback keymaps are set for older versions.
+
+| Key   | Action           |
+| ----- | ---------------- |
+| `K`   | Hover info       |
+| `gd`  | Go to definition |
+| `grn` | Rename           |
+| `gra` | Code action      |
+| `grr` | References       |
+
+### Completion (NeoVim, via nvim-cmp)
+
+| Key         | Action                    |
+| ----------- | ------------------------- |
+| `<Tab>`     | Next completion / snippet |
+| `<S-Tab>`   | Previous completion       |
+| `<CR>`      | Confirm completion        |
+| `<C-Space>` | Trigger completion        |
+
+### which-key (NeoVim)
+
+| Key       | Action                       |
+| --------- | ---------------------------- |
+| `<Space>` | Wait to see keybinding popup |
+
 ## Terminal Mode (NeoVim)
 
 | Key          | Action                |

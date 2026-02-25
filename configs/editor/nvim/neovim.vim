@@ -32,6 +32,12 @@ if has("nvim")
   " Test strategy configuration (seems to be related to a testing framework)
   let test#strategy = 'neomake'
 
+  " Disable unused providers to silence checkhealth warnings
+  let g:loaded_node_provider = 0
+  let g:loaded_perl_provider = 0
+  let g:loaded_python3_provider = 0
+  let g:loaded_ruby_provider = 0
+
   " Treesitter and related plugins are configured in after/plugin/treesitter.lua
 
 endif  " End of check if running in NeoVim

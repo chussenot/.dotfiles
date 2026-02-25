@@ -90,11 +90,6 @@ set noswapfile
 
 " }}}
 
-" {{{ Denops
-
-" autocmd VimEnter * call denops#cache#update(#{reload: v:true})
-
-" }}}
 
 " {{{ Spaces and tabs
 
@@ -131,15 +126,6 @@ set statusline+=%=                           " right align
 
 " Gutentags
 set statusline+=%{gutentags#statusline()}
-
-" Syntastic status line
-if !has("nvim")
-  set statusline+=%#warningmsg#
-  set statusline+=%{SyntasticStatuslineFlag()}
-  set statusline+=%*
-
-  set statusline+=\
-endif
 
 set statusline+=0x%-8B\                      " current char
 set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
