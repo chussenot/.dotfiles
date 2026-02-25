@@ -255,10 +255,20 @@ Configure features via environment variables - see `configs/shell/chussenot.zsh-
 
 Plugin manager: [vim-plug](https://github.com/junegunn/vim-plug)
 
-Key plugins include autocompletion, fuzzy finding (Telescope), linting, and language-specific support
-for Ruby, Python, Go, and Rust.
+| Feature       | Plugin                                                                       |
+| ------------- | ---------------------------------------------------------------------------- |
+| LSP           | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) (solargraph, lua) |
+| Completion    | [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) + cmp-nvim-lsp, cmp-buffer   |
+| Snippets      | [LuaSnip](https://github.com/L3MON4D3/LuaSnip)                               |
+| Fuzzy finding | [Telescope](https://github.com/nvim-telescope/telescope.nvim) + fzf          |
+| Syntax        | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)        |
+| Linting       | [Neomake](https://github.com/neomake/neomake)                                |
+| Key discovery | [which-key.nvim](https://github.com/folke/which-key.nvim)                    |
 
-See `configs/editor/nvim/KEYMAPS.md` for keyboard shortcuts.
+All NeoVim-specific plugins are `has('nvim')` guarded and Lua configs
+are `pcall` guarded, so regular Vim starts without errors.
+
+See `configs/editor/nvim/KEYMAPS.md` for keyboard shortcuts, or run `keys` in your shell (`man keymaps`).
 
 ## Documentation
 
