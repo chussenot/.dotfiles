@@ -315,6 +315,12 @@ function update {
     echo "🛠️  Updating mise tools..."
     mise self-update 2>/dev/null || true
     mise upgrade 2>/dev/null || ((errors++))
+    # Update pinned versions in conf.d files
+    local _pins_script="${DOTFILES_DIR:-$HOME/.dotfiles}/scripts/utils/mise-update-pins.sh"
+    if [[ -x "$_pins_script" ]]; then
+      echo "📌 Checking for outdated pinned versions..."
+      "$_pins_script" || ((errors++))
+    fi
   fi
 
 
