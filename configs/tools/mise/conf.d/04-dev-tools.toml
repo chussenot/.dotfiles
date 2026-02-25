@@ -4,7 +4,7 @@ bat = "0.26.1"
 direnv = "2.37.1"
 neovim = "0.11.6"
 watchexec = "2.4.3"
-pdm = "2.22.4"
+pdm = "2.26.6"
 pipx = "1.8.0"
 fzf = "0.68.0"
 
