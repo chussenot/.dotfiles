@@ -6,6 +6,9 @@ awscli = "2.33.29"
 gcloud = "558.0.0"
 vault = "1.21.2"
 
+# --- Encryption ---
+age = "1.3.1"
+
 # --- Terraform & IaC Utilities ---
 terraform = "1.14.5"
 terraform-docs = "0.21.0"
@@ -19,9 +22,10 @@ tfstate-lookup = "1.10.0"
 
 # --- Terraform Linting & Security ---
 tflint = "0.61.0"
-tfsec = "1.28.14"
 terrascan = "1.19.9"
 pulumi = "3.223.0"
 terraform-ls = "0.38.4"
-tfenv = "3.0.0"
 terramate = "0.16.0"
+
+# --- DNS ---
+doggo = "1.1.4"

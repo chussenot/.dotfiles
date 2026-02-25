@@ -116,19 +116,13 @@ alias p='python'
 alias temp='pushd $(mktemp -d)'
 
 # Tools Sysadmin
-# exa/eza aliases (only if exa or eza is installed)
+# eza aliases (modern ls replacement)
 if command -v eza &>/dev/null; then
   alias t='eza -Tll -L 1'
   alias t2='eza -Tll -L 2'
   alias t3='eza -Tll -L 3'
   alias l='eza -ll --group-directories-first'
   alias la='eza -lla --group-directories-first'
-elif command -v exa &>/dev/null; then
-  alias t='exa -Tll -L 1'
-  alias t2='exa -Tll -L 2'
-  alias t3='exa -Tll -L 3'
-  alias l='exa -ll --group-directories-first'
-  alias la='exa -lla --group-directories-first'
 fi
 # WARNING: Disabling SSL verification is a security risk!
 # Only use this if you understand the implications and have a valid reason
