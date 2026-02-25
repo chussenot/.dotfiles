@@ -130,6 +130,69 @@ if is_ubuntu || is_debian; then
     printf 'All packages are already installed\n'
   fi
 
+elif is_arch; then
+  # Arch Linux packages (using pacman)
+  # Package names differ from Debian: fd instead of fd-find, bat not batcat, etc.
+  _packages="zsh tmux python python-pip jq nasm gcc cmake git curl wget unzip fzf bat htop net-tools tree ripgrep fd the_silver_searcher vim rsync postgresql imagemagick make pkgconf p7zip openssh python-virtualenv ctags"
+
+  # Update package database
+  printf 'Updating package database...\n'
+  sudo pacman -Sy || {
+    printf '⚠️  Failed to update package database, continuing...\n'
+  }
+
+  # Collect packages that need to be installed
+  _packages_to_install=""
+  for _package in ${_packages}; do
+    if ! pkg_installed "${_package}"; then
+      _packages_to_install="${_packages_to_install} ${_package}"
+    else
+      printf '%s is already installed\n' "${_package}"
+    fi
+  done
+
+  # Install all packages at once
+  if [ -n "${_packages_to_install}" ]; then
+    printf 'Installing packages: %s\n' "${_packages_to_install}"
+    # shellcheck disable=SC2086 # Intentional word splitting for package list
+    sudo pacman -S --noconfirm ${_packages_to_install} || {
+      printf '⚠️  Some packages failed to install, continuing...\n'
+    }
+  else
+    printf 'All packages are already installed\n'
+  fi
+
+elif is_fedora; then
+  # Fedora packages (using dnf)
+  # Package names differ: python3-devel instead of python3-dev, fd-find, etc.
+  _packages="zsh tmux python3 python3-pip jq nasm gcc gcc-c++ cmake git curl wget unzip fzf bat htop net-tools tree ripgrep fd-find vim rsync postgresql imagemagick make pkgconf p7zip openssh-clients python3-devel python3-virtualenv"
+
+  # Check for ctags
+  if pkg_available "ctags"; then
+    _packages="${_packages} ctags"
+  fi
+
+  # Collect packages that need to be installed
+  _packages_to_install=""
+  for _package in ${_packages}; do
+    if ! pkg_installed "${_package}"; then
+      _packages_to_install="${_packages_to_install} ${_package}"
+    else
+      printf '%s is already installed\n' "${_package}"
+    fi
+  done
+
+  # Install all packages at once
+  if [ -n "${_packages_to_install}" ]; then
+    printf 'Installing packages: %s\n' "${_packages_to_install}"
+    # shellcheck disable=SC2086 # Intentional word splitting for package list
+    sudo dnf install -y ${_packages_to_install} || {
+      printf '⚠️  Some packages failed to install, continuing...\n'
+    }
+  else
+    printf 'All packages are already installed\n'
+  fi
+
 elif is_macos; then
   # macOS packages (using Homebrew)
   _packages="zsh tmux python@3 pipx jq nasm gcc cmake git curl wget unzip fzf bat htop tree ripgrep fd"
@@ -147,10 +210,9 @@ elif is_macos; then
   done
 
 else
-  printf '❌ Package installation not yet supported for this platform\n'
+  printf '⚠️  Package installation not yet supported for this platform\n'
   printf 'Platform: OS=%s, Distro=%s\n' "${PLATFORM_OS}" "${PLATFORM_DISTRO}"
   printf 'Please install required packages manually.\n'
-  exit 1
 fi
 
 # Install fzf shell integration if fzf is installed

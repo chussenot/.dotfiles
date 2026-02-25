@@ -4,11 +4,15 @@
 FROM fedora:41
 
 # Install minimal dependencies needed by the installer
+# gcc and make are needed by mise for compiling tools
 RUN dnf install -y \
         git \
         curl \
         sudo \
         zsh \
+        gcc \
+        make \
+        findutils \
         glibc-langpack-en && \
     dnf clean all
 

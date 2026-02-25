@@ -4,6 +4,7 @@
 FROM archlinux:latest
 
 # Install minimal dependencies needed by the installer
+# base-devel includes gcc, make, etc. needed by mise for compiling tools
 RUN pacman -Syu --noconfirm && \
     pacman -S --noconfirm \
         git \
@@ -11,7 +12,7 @@ RUN pacman -Syu --noconfirm && \
         sudo \
         zsh \
         base-devel && \
-    pacman -Scc --noconfirm
+    yes | pacman -Scc
 
 # Create a non-root user (dev) similar to real environment
 RUN useradd -m -s /bin/bash dev && \
