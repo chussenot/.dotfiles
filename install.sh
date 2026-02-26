@@ -277,8 +277,19 @@ if command -v mise >/dev/null 2>&1; then
     if [ -f "${HOME}/.config/mise/config.toml" ]; then
       mise trust "${HOME}/.config/mise/config.toml" 2>/dev/null || true
     fi
+    # Trust conf.d files
+    for _conf_file in "${HOME}/.config/mise/conf.d"/*.toml; do
+      if [ -f "${_conf_file}" ]; then
+        mise trust "${_conf_file}" 2>/dev/null || true
+      fi
+    done
     # Only run mise install if we're in the right directory
     if [ -f "${SCRIPT_DIR}/mise.toml" ] || [ -f "${SCRIPT_DIR}/.mise.toml" ]; then
+      # Install Go first so the go: backend tools can resolve versions
+      print_status "Installing Go runtime (required by go: backend tools)..."
+      mise install go 2>/dev/null || {
+        print_warning "Go installation failed, go: backend tools may not install"
+      }
       mise install || {
         print_warning "mise install encountered an error, continuing anyway..."
       }
