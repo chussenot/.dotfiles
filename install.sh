@@ -285,11 +285,14 @@ if command -v mise >/dev/null 2>&1; then
     done
     # Only run mise install if we're in the right directory
     if [ -f "${SCRIPT_DIR}/mise.toml" ] || [ -f "${SCRIPT_DIR}/.mise.toml" ]; then
-      # Install Go first so the go: backend tools can resolve versions
-      print_status "Installing Go runtime (required by go: backend tools)..."
-      mise install go 2>/dev/null || {
-        print_warning "Go installation failed, go: backend tools may not install"
-      }
+      # Install language runtimes first — backend tools (go:, npm:, cargo:, pipx:)
+      # need their parent runtimes available for version resolution and installation
+      print_status "Installing language runtimes first (needed by backend tools)..."
+      for _runtime in go node rust python pipx; do
+        mise install "${_runtime}" 2>/dev/null || {
+          print_warning "${_runtime} installation failed, dependent tools may not install"
+        }
+      done
       mise install || {
         print_warning "mise install encountered an error, continuing anyway..."
       }
