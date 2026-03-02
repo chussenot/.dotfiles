@@ -3,3 +3,6 @@
 
 [settings]
 experimental = true
+
+[tools]
+node = "latest"
