@@ -52,7 +52,7 @@ prek = "0.3.4"
 "pipx:sqlmap" = "1.10.2"
 "pipx:trash-cli" = "0.24.5.26"
 "pipx:wafw00f" = "2.4.2"
-"pipx:yt-dlp" = "2026.2.21"
+"pipx:yt-dlp" = "2026.3.3"
 # "pipx:semgrep" = "1.153.1"
 
 # Parquet tools

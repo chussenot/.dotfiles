@@ -2,9 +2,9 @@
 [tools]
 
 # --- Cloud CLIs ---
-awscli = "2.34.0"
-gcloud = "558.0.0"
-vault = "1.21.2"
+awscli = "2.34.2"
+gcloud = "559.0.0"
+vault = "1.21.3"
 
 # --- Encryption ---
 age = "1.3.1"
@@ -24,7 +24,7 @@ tfstate-lookup = "1.10.0"
 tflint = "0.61.0"
 terrascan = "1.19.9"
 # pulumi = "3.224.0"
-terraform-ls = "0.38.4"
+terraform-ls = "0.38.5"
 terramate = "0.16.0"
 
 # --- DNS ---

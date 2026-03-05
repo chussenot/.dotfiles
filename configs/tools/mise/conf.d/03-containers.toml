@@ -19,11 +19,11 @@ stern = "1.33.1"
 
 # --- Local dev & workflows ---
 # skaffold = "2.17.1"
-tilt = "0.36.3"
+tilt = "0.30.0"
 
 # --- Security / supply chain ---
 # trivy = "0.69.2"
 # cosign = "3.0.5"
 
 # --- Registry & image inspection ---
-crane = "0.21.0"
+crane = "0.21.2"
