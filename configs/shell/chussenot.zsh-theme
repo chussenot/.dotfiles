@@ -27,6 +27,7 @@
 : ${CT_SHOW_PYTHON:=true}
 : ${CT_SHOW_NODE:=true}
 : ${CT_SHOW_GO:=true}
+: ${CT_SHOW_RUST:=true}
 : ${CT_SHOW_LOAD:=true}
 : ${CT_SHOW_JOBS:=true}
 : ${CT_SHOW_DOCKER:=true}
@@ -66,6 +67,10 @@ CT_NODE_SUFFIX="%{$reset_color%}"
 # Go styling
 CT_GO_PREFIX=" %{$fg[cyan]%}go:"
 CT_GO_SUFFIX="%{$reset_color%}"
+
+# Rust styling
+CT_RUST_PREFIX=" %{$fg[magenta]%}rs:"
+CT_RUST_SUFFIX="%{$reset_color%}"
 
 # System load styling
 CT_LOAD_PREFIX=" %{$fg[magenta]%}load:"
@@ -205,6 +210,33 @@ go_version() {
 }
 
 # =============================================================================
+# Rust Version Function
+# =============================================================================
+
+rust_version() {
+    # Check if Rust version should be shown
+    [[ "$CT_SHOW_RUST" == "true" ]] || return
+
+    # Prefer rustc (always present with rustup); fallback to rust if available
+    local rust_cmd
+    if command -v rustc >/dev/null 2>&1; then
+        rust_cmd=rustc
+    elif command -v rust >/dev/null 2>&1; then
+        rust_cmd=rust
+    else
+        return
+    fi
+
+    local rust_ver
+    rust_ver=$($rust_cmd --version 2>/dev/null | sed 's/rustc //' | sed 's/rust //' | awk '{print $1}') || return
+
+    # Show only major.minor version (e.g., 1.83 instead of 1.83.0)
+    rust_ver="${rust_ver%.*}"
+
+    echo "${CT_RUST_PREFIX}${rust_ver}${CT_RUST_SUFFIX}"
+}
+
+# =============================================================================
 # System Load Function
 # =============================================================================
 
@@ -301,6 +333,13 @@ else
     local go_info=''
 fi
 
+# Rust version info (only if enabled)
+if [[ "$CT_SHOW_RUST" == "true" ]]; then
+    local rust_info='$(rust_version)'
+else
+    local rust_info=''
+fi
+
 # System load info (only if enabled)
 if [[ "$CT_SHOW_LOAD" == "true" ]]; then
     local load_info='$(system_load)'
@@ -335,11 +374,11 @@ fi
 # =============================================================================
 
 # Prompt format:
-# PRIVILEGES USER @ MACHINE in DIRECTORY py:VERSION node:VERSION go:VERSION load:LOAD jobs:JOBS 🐳 on git:BRANCH STATE C:EXIT_CODE
+# PRIVILEGES USER @ MACHINE in DIRECTORY py:VERSION node:VERSION go:VERSION rs:VERSION load:LOAD jobs:JOBS 🐳 on git:BRANCH STATE C:EXIT_CODE
 # $ COMMAND
 #
 # Example:
-# # chussenot @ hostname in ~/.dotfiles py:3.11 node:18.17 go:1.21 load:0.5 jobs:2 🐳 on git:main ✓ C:0
+# # chussenot @ hostname in ~/.dotfiles py:3.11 node:18.17 go:1.21 rs:1.83 load:0.5 jobs:2 🐳 on git:main ✓ C:0
 # $
 
 # Build the main prompt
@@ -360,6 +399,7 @@ ${venv_info}\
 ${python_info}\
 ${node_info}\
 ${go_info}\
+${rust_info}\
 ${load_info}\
 ${jobs_info}\
 ${docker_info}\
@@ -398,6 +438,7 @@ ZSH_THEME_NAME="chussenot"
 # export CT_SHOW_PYTHON=false
 # export CT_SHOW_NODE=false
 # export CT_SHOW_GO=false
+# export CT_SHOW_RUST=false
 # export CT_SHOW_LOAD=false
 # export CT_SHOW_JOBS=false
 # export CT_SHOW_DOCKER=false
@@ -414,6 +455,7 @@ ZSH_THEME_NAME="chussenot"
 # export CT_SHOW_PYTHON=true
 # export CT_SHOW_NODE=true
 # export CT_SHOW_GO=true
+# export CT_SHOW_RUST=true
 # export CT_SHOW_LOAD=true
 # export CT_SHOW_JOBS=true
 # ZSH_THEME="chussenot"

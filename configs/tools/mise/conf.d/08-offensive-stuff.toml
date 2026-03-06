@@ -4,7 +4,7 @@
 # version-managed by mise. Install them manually: go install <path>@latest
 [tools]
 "go:github.com/ffuf/ffuf" = "1.5.0"
-"go:github.com/glitchedgitz/cook/v2/cmd/cook" = "2.2.1"
+"go:github.com/glitchedgitz/cook/v2/cmd/cook" = "2.3.0"
 "go:github.com/lc/gau/v2/cmd/gau" = "2.2.4"
 "go:github.com/projectdiscovery/pdtm/cmd/pdtm" = "0.1.3"
 "go:github.com/xm1k3/cent" = "1.3.4"
