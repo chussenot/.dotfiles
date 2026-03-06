@@ -61,7 +61,7 @@ CT_PYTHON_PREFIX=" %{$fg[yellow]%}py:"
 CT_PYTHON_SUFFIX="%{$reset_color%}"
 
 # Node.js styling
-CT_NODE_PREFIX=" %{$fg[green]%}node:"
+CT_NODE_PREFIX=" %{$fg[green]%}nd:"
 CT_NODE_SUFFIX="%{$reset_color%}"
 
 # Go styling
