@@ -8,6 +8,20 @@
 # - Black: Background (matches zsh prompt background)
 # - White: Default text (matches zsh default text)
 
+# General UX
+set main-view-date = relative
+set blame-view-date = relative
+set tab-size = 2
+set line-graphics = utf-8
+set truncation-delimiter = ~
+set mouse = true
+set refresh-mode = auto
+set split-view-height = 70%
+
+# Use delta as diff pager
+set diff-options = --color
+set pager-view = line-number:yes,interval=1 text
+
 # Color configuration aligned with zsh theme
 # Note: Only valid tig color names are used (some color names don't exist in tig)
 color cursor cyan default
@@ -91,3 +105,47 @@ bind generic ci :!cog install-hook
 # Quick workflow: Stage all, then cog commit
 # Usage: Press 'c' then 'a' to stage all and create conventional commit
 bind status  ca ?sh -c "git add -A && cog commit"
+
+# =============================================================================
+# Navigation & Editing
+# =============================================================================
+
+# Open file in editor (nvim)
+bind generic E !sh -c "nvim %(file)"
+bind status  E !sh -c "nvim %(file)"
+bind blob    E !sh -c "nvim %(file)"
+
+# Blame current file
+bind generic B :view-blame
+
+# =============================================================================
+# Delta Integration
+# =============================================================================
+
+# View diff with delta for richer output
+bind diff    D !sh -c "git diff %(commit)^ %(commit) | delta"
+bind main    D !sh -c "git diff %(commit)^ %(commit) | delta"
+bind log     D !sh -c "git diff %(commit)^ %(commit) | delta"
+
+# =============================================================================
+# SCM Integration (GitHub gh / GitLab glab — auto-detected from remote)
+# =============================================================================
+# Detects SCM from origin URL: github.com → gh, otherwise → glab
+
+# Open repo in browser
+bind generic go !sh -c 'case "$(git remote get-url origin 2>/dev/null)" in *github.com*) gh browse;; *) glab repo view --web;; esac'
+
+# View PR/MR for current branch
+bind generic gp !sh -c 'case "$(git remote get-url origin 2>/dev/null)" in *github.com*) gh pr view --web;; *) glab mr view --web;; esac'
+
+# Create PR/MR for current branch
+bind generic gP !sh -c 'case "$(git remote get-url origin 2>/dev/null)" in *github.com*) gh pr create --web;; *) glab mr create --web;; esac'
+
+# Open commit in browser
+bind main    gw ?sh -c 'case "$(git remote get-url origin 2>/dev/null)" in *github.com*) gh browse %(commit);; *) glab repo view --web -b %(commit);; esac'
+
+# List open PRs/MRs
+bind generic gl !sh -c 'case "$(git remote get-url origin 2>/dev/null)" in *github.com*) gh pr list;; *) glab mr list;; esac'
+
+# CI/CD status for current branch
+bind generic gs !sh -c 'case "$(git remote get-url origin 2>/dev/null)" in *github.com*) gh run list -b "$(git branch --show-current)";; *) glab ci view;; esac'

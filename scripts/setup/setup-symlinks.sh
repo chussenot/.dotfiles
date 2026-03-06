@@ -74,11 +74,6 @@ if [ -d "${DOTFILES_DIR}/configs/tools/mise/conf.d" ]; then
   create_symlink "${DOTFILES_DIR}/configs/tools/mise/conf.d" "${HOME}/.config/mise/conf.d"
 fi
 
-# Create tool-versions symlink if it exists
-if [ -f "${DOTFILES_DIR}/configs/tools/mise/tool-versions" ]; then
-  create_symlink "${DOTFILES_DIR}/configs/tools/mise/tool-versions" "${HOME}/.tool-versions"
-fi
-
 # Create gitignore_global if it exists
 if [ -f "${DOTFILES_DIR}/configs/git/.gitignore_global" ]; then
   create_symlink "${DOTFILES_DIR}/configs/git/.gitignore_global" "${HOME}/.gitignore_global"

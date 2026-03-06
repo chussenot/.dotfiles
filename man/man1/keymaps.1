@@ -1,4 +1,4 @@
-.TH KEYMAPS 1 "2026-02-25" "dotfiles" "Development Environment Key Mappings"
+.TH KEYMAPS 1 "2026-03-06" "dotfiles" "Development Environment Key Mappings"
 .SH NAME
 keymaps \- Display comprehensive key mappings for development environment
 .SH SYNOPSIS
@@ -7,7 +7,7 @@ keymaps \- Display comprehensive key mappings for development environment
 .B keymaps
 displays a comprehensive, colorized reference of all key mappings across your
 entire development environment, including ZSH shell, FZF fuzzy finder, TMUX
-terminal multiplexer, and NEOVIM editor.
+terminal multiplexer, TIG git browser, and NEOVIM editor.
 .PP
 This tool provides a unified interface to view all custom key bindings and
 shortcuts in a well-organized, visually appealing format with color coding
@@ -124,6 +124,125 @@ Session switcher menu
 .TP
 .B <Mouse-Right> (on status bar)
 Session switcher menu (alternative)
+.SS TIG Git Browser Key Mappings
+Git operations:
+.TP
+.B F
+Fetch from remote
+.TP
+.B U
+Pull from remote
+.TP
+.B P
+Push current branch to remote
+.TP
+.B S
+Stash changes with comment
+.PP
+Navigation and editing:
+.TP
+.B E
+Open file in nvim
+.TP
+.B B
+Open blame view
+.TP
+.B D
+View diff through delta (rich diff output)
+.TP
+.B <Esc>f
+Toggle file name / commit title refs
+.TP
+.B <Esc>u
+Update branch (checkout, pull --ff-only, checkout back)
+.PP
+Conventional commits (cog integration):
+.TP
+.B c
+Create conventional commit (cog commit)
+.TP
+.B ch
+Check all commits against conventional spec
+.TP
+.B cv
+Verify selected commit message
+.TP
+.B ce
+Edit invalid commit messages
+.TP
+.B cl
+View conventional commit log
+.TP
+.B cg
+View changelog (latest tag to HEAD)
+.TP
+.B cV
+Get current version from tags
+.TP
+.B cb
+Bump version (changelog commit + tag)
+.TP
+.B ci
+Install cog git hooks
+.TP
+.B ca
+Stage all and create conventional commit
+.PP
+SCM integration (auto-detects GitHub/GitLab from remote):
+.PP
+All bindings below automatically detect the SCM platform by inspecting the
+.B origin
+remote URL. If it contains
+.IR github.com ,
+the
+.B gh
+CLI is used; otherwise the
+.B glab
+CLI is used (supporting both gitlab.com and self-hosted GitLab instances).
+This means the same keybinding works regardless of which platform hosts the
+repository \(em no configuration needed.
+.TP
+.B go
+Open the repository homepage in your default browser. Useful for quickly
+jumping to the project page to check settings, wiki, or README.
+Uses
+.IR "gh browse" \ or\ "glab repo view --web" .
+.TP
+.B gp
+View the pull request (GitHub) or merge request (GitLab) associated with the
+current branch in your browser. Handy to check review status, CI results, or
+comment threads without leaving the terminal.
+Uses
+.IR "gh pr view --web" \ or\ "glab mr view --web" .
+.TP
+.B gP
+Create a new pull request or merge request for the current branch. Opens the
+creation form in the browser pre-filled with the branch info, so you can add
+a description and reviewers.
+Uses
+.IR "gh pr create --web" \ or\ "glab mr create --web" .
+.TP
+.B gw
+Open the currently selected commit in the browser. Select a commit in the main
+or log view, then press
+.B gw
+to see its full diff, comments, and CI status on the web interface.
+Uses
+.IR "gh browse <commit>" \ or\ "glab repo view --web -b <commit>" .
+.TP
+.B gl
+List all open pull requests (GitHub) or merge requests (GitLab) for the
+repository directly in the terminal. Displays title, author, and status for
+a quick overview of pending work.
+Uses
+.IR "gh pr list" \ or\ "glab mr list" .
+.TP
+.B gs
+Show CI/CD pipeline status for the current branch. On GitHub, lists recent
+workflow runs; on GitLab, opens the pipeline viewer. Useful to check if your
+latest push passed or failed without leaving tig.
+Uses
+.IR "gh run list -b <branch>" \ or\ "glab ci view" .
 .SS NEOVIM Editor Key Mappings
 General navigation:
 .TP
@@ -305,6 +424,9 @@ Use <Up>/<Down> for history substring search, <C-R> for history search
 .B TMUX
 <C-A> is the prefix key (replaces <C-B>). Many commands work without prefix.
 .TP
+.B TIG
+F to fetch, P to push, c for cog commit, go/gp/gl for SCM (auto-detects gh/glab), D for delta diff.
+.TP
 .B NEOVIM
 <space> is the leader key. <C-s> to save, K for LSP hover, <Tab> for completion, <space> for which-key popup.
 .SH FILES
@@ -320,12 +442,16 @@ TMUX configuration file
 .TP
 .B ~/.dotfiles/configs/shell/zsh/.zshrc
 ZSH configuration file
+.TP
+.B ~/.dotfiles/configs/tools/tig/tigrc
+TIG configuration file
 .SH SEE ALSO
 .BR man (1),
 .BR tmux (1),
 .BR fzf (1),
 .BR nvim (1),
-.BR zsh (1)
+.BR zsh (1),
+.BR tig (1)
 .SH AUTHOR
 Generated for dotfiles configuration by Claude AI Assistant
 .SH BUGS
