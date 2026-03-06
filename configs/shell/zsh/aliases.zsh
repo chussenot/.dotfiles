@@ -31,6 +31,10 @@ alias gca='git commit --amend'
 alias gcan='git commit --amend --no-edit'
 
 # Development aliases
+alias m='mise'
+alias mi='mise install'
+alias mr='mise run'
+alias pr='pdm run'
 alias py='python3'
 alias pip='pip3'
 alias nv='nvim'
