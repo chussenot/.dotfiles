@@ -313,4 +313,3 @@ fi
 # Uncomment the lines below and run: zsh -i -c exit
 # zmodload zsh/zprof
 # zprof
-export MANPATH="/home/chussenot/.local/share/man:${MANPATH:-}"
