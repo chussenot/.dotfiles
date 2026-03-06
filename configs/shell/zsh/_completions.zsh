@@ -145,6 +145,12 @@ if command -v gcloud &>/dev/null; then
   unset _gcloud_sdk_dir
 fi
 
+# Vault (HashiCorp)
+if command -v vault &>/dev/null; then
+  _need_bashcomp=true
+  _bash_fallbacks+=("complete -o nospace -C $(command -v vault) vault")
+fi
+
 # AWS CLI
 if command -v aws &>/dev/null && command -v aws_completer &>/dev/null; then
   _need_bashcomp=true
