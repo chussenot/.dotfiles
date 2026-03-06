@@ -86,6 +86,17 @@ gacp() {
     git add . && git commit -m "$1" && git push
 }
 
+# Push current branch and set upstream in one step
+gpu() {
+    local branch
+    branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+    if [[ -z "$branch" ]]; then
+        echo "Error: Not on a branch" >&2
+        return 1
+    fi
+    git push --set-upstream origin "$branch"
+}
+
 # Quick git status
 function gst() {
     if git rev-parse --git-dir &>/dev/null; then
@@ -94,6 +105,22 @@ function gst() {
         echo "Error: Not in a git repository" >&2
         return 1
     fi
+}
+
+# API helper functions
+ddapi() {
+  if [[ -z "$1" || -z "$2" ]]; then
+    echo "Usage: ddapi <GET|POST|PUT|DELETE> <endpoint> [data]" >&2
+    echo "Example: ddapi GET v2/users" >&2
+    return 1
+  fi
+  local method="$1" endpoint="$2" data="$3"
+  curl -s -X "$method" "https://api.datadoghq.eu/api/$endpoint" \
+    -H "DD-API-KEY: ${DD_API_KEY}" \
+    -H "DD-APPLICATION-KEY: ${DD_APP_KEY}" \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    ${data:+-d "$data"} | jq .
 }
 
 # Docker functions
@@ -159,6 +186,14 @@ tdev() {
         tmux select-pane -t 0
         tmux attach-session -t dev
     fi
+}
+
+# Reset zsh completions
+zreset() {
+  rm -f ~/.zcompdump*
+  autoload -Uz compinit
+  compinit
+  echo "Completions reset"
 }
 
 function reload {

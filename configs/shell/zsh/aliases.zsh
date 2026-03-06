@@ -27,6 +27,8 @@ alias gd='git diff'
 alias gdc='git diff --cached'
 alias glog='git log --oneline --graph --decorate'
 alias gfa='git fetch --all --prune'
+alias gca='git commit --amend'
+alias gcan='git commit --amend --no-edit'
 
 # Development aliases
 alias py='python3'
