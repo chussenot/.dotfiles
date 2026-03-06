@@ -214,6 +214,14 @@ tdev() {
     fi
 }
 
+# Completion for mr alias (avoids usage CLI overhead)
+_mr_completion() {
+  local tasks
+  tasks=(${(f)"$(mise tasks ls --no-header 2>/dev/null | awk '{print $1}')"})
+  _describe 'mise tasks' tasks
+}
+compdef _mr_completion mr
+
 # Reset zsh completions
 zreset() {
   rm -f ~/.zcompdump*

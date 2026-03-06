@@ -44,8 +44,9 @@ _gen_comp_if_missing argocd      "$COMPDIR/_argocd"      argocd completion zsh
 _gen_comp_if_missing helm        "$COMPDIR/_helm"        helm completion zsh
 # kubectl
 _gen_comp_if_missing kubectl     "$COMPDIR/_kubectl"     kubectl completion zsh
-# mise
-_gen_comp_if_missing mise        "$COMPDIR/_mise"        mise completion zsh
+# mise — custom completion to avoid ARG_MAX issues with usage CLI
+# Do NOT regenerate: the handwritten _mise uses compadd instead of inline expansion
+# _gen_comp_if_missing mise        "$COMPDIR/_mise"        mise completion zsh
 # gh (GitHub CLI)
 _gen_comp_if_missing gh          "$COMPDIR/_gh"          gh completion -s zsh
 # kind
@@ -85,11 +86,30 @@ fpath=("$COMPDIR" $fpath)
 
 autoload -Uz compinit
 _compdump="${ZDOTDIR:-$HOME}/.zcompdump"
+
+# Force dump regeneration when COMPDIR has files not yet in the dump
+if [[ -s "$_compdump" && -d "$COMPDIR" ]]; then
+  for _cf in "$COMPDIR"/_*(N); do
+    [[ "$_cf" == *.zwc ]] && continue
+    if ! grep -q "${_cf:t}" "$_compdump" 2>/dev/null; then
+      rm -f "$_compdump" "${_compdump}.zwc"
+      break
+    fi
+  done
+  unset _cf
+fi
+
 if [[ ! -s "$_compdump" || "$_compdump" -nt "${_compdump}.zwc" ]]; then
   compinit -i -d "$_compdump"
   zcompile -R "${_compdump}.zwc" "$_compdump" 2>/dev/null
 else
   compinit -i -C -d "$_compdump"
+fi
+
+# mise: override the broken system _mise (ARG_MAX issue with usage CLI)
+# Our custom $COMPDIR/_mise uses compadd and avoids the inline expansion bug
+if [[ -s "$COMPDIR/_mise" ]] && command -v mise &>/dev/null; then
+  source "$COMPDIR/_mise"
 fi
 
 # === Bash-style completion fallbacks (only if needed) ========================
@@ -113,6 +133,16 @@ if command -v terraform &>/dev/null && [[ ! -s "$COMPDIR/_terraform" ]]; then
     _need_bashcomp=true
     _bash_fallbacks+=("complete -o nospace -C $(command -v terraform) terraform")
   fi
+fi
+
+# gcloud (Google Cloud SDK) — bash-style completion via completion.zsh.inc
+if command -v gcloud &>/dev/null; then
+  _gcloud_sdk_dir="${$(command -v gcloud):h:h}"
+  if [[ -f "$_gcloud_sdk_dir/completion.zsh.inc" ]]; then
+    _need_bashcomp=true
+    _bash_fallbacks+=("source '$_gcloud_sdk_dir/completion.zsh.inc'")
+  fi
+  unset _gcloud_sdk_dir
 fi
 
 # AWS CLI
