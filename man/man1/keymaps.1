@@ -124,6 +124,13 @@ FZF session/window switcher (after prefix). Fuzzy search across all sessions
 and windows. If the query doesn't match, a new session is created with that
 name. Shows a live preview of the active pane.
 .TP
+.B g
+Claude sessions browser (after prefix). Browse and resume Claude CLI
+conversations grouped by project with a live conversation preview. Select
+a session to open it in a new tmux window via
+.IR "claude -r" .
+If the session is already open, switches to its window.
+.TP
 .B <Mouse-Left> (on status bar)
 Session switcher menu
 .TP
@@ -428,7 +435,7 @@ Use <Up>/<Down> for history substring search, <C-R> for history search
 .TP
 .B TMUX
 <C-A> is the prefix key (replaces <C-B>). Many commands work without prefix.
-<C-A> f for FZF session/window switcher (type to search, enter to switch or create).
+<C-A> f for FZF session/window switcher, <C-A> g for Claude sessions browser.
 .TP
 .B TIG
 F to fetch, P to push, c for cog commit, go/gp/gl for SCM (auto-detects gh/glab), D for delta diff.
