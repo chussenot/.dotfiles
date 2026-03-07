@@ -113,6 +113,7 @@ fi
 alias sudo='sudo ' # Trick to have ALL aliases available with sudo <3
 alias tn='tmux new'
 alias ta='tmux attach'
+alias trl='tmux source-file ~/.tmux.conf && echo "tmux config reloaded"'
 # Conditional aliases for tools that might not be installed
 if command -v bat &>/dev/null || command -v batcat &>/dev/null; then
   # shellcheck disable=SC2046,SC2139

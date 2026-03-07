@@ -149,7 +149,8 @@ _validate_script() {
 # Find all shell scripts (exclude configs/ folder)
 _find_shell_scripts() {
   find "${PROJECT_ROOT}" -type f -name "*.sh" \
-    ! -path "${PROJECT_ROOT}/configs/*" | sort
+    ! -path "${PROJECT_ROOT}/configs/*" \
+    ! -path "${PROJECT_ROOT}/tmp/*" | sort
 }
 
 # Main execution
