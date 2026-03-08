@@ -2,7 +2,7 @@
 [tools]
 gh = "2.87.3"
 glab = "1.89.0"
-hk = "1.37.0"
+hk = "1.38.0"
 
 # Conventional commits
 "cargo:cocogitto" = "7.0.0"

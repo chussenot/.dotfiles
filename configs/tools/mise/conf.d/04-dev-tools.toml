@@ -3,7 +3,7 @@
 bat = "0.26.1"
 direnv = "2.37.1"
 eza = "0.23.4"
-fd = "10.3.0"
+# fd = "10.4.0"
 hyperfine = "1.20.0"
 jq = "1.8.1"
 just = "1.46.0"
@@ -57,7 +57,7 @@ prek = "0.3.4"
 # "pipx:semgrep" = "1.153.1"
 
 # Parquet tools
-"go:github.com/hangxie/parquet-tools" = "1.47.6"
+"go:github.com/hangxie/parquet-tools" = "1.47.7"
 "cargo:pqrs" = "0.3.2"
 "cargo:parqeye" = "0.0.2"
 # "pipx:parquet-cli" = "1.3"
@@ -68,3 +68,6 @@ glow = "2.1.1"
 # --- Secrets Management ---
 sops = "3.12.1"
 gopass = "1.16.1"
+
+# Rss
+"cargo:moccasin" = "0.1.3"
