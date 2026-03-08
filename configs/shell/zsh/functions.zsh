@@ -312,7 +312,7 @@ function tmpdir() {
   }
   cd "$tmp_dir" && echo "📁 Created and entered: $tmp_dir"
   # Store path in variable for easy access
-  export TMPDIR_CURRENT="$tmp_dir"
+  export _tmpdir_current="$tmp_dir"
 }
 
 # Quick access to common directories
@@ -326,8 +326,8 @@ function cdd() {
 
 # Quick access to temporary directory
 function cdtmp() {
-  if [[ -n "${TMPDIR_CURRENT:-}" ]] && [[ -d "$TMPDIR_CURRENT" ]]; then
-    cd "$TMPDIR_CURRENT"
+  if [[ -n "${_tmpdir_current:-}" ]] && [[ -d "$_tmpdir_current" ]]; then
+    cd "$_tmpdir_current"
   else
     tmpdir
   fi

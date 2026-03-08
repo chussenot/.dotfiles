@@ -248,12 +248,6 @@ augroup END
 " Enable Rainbow parentheses
 let g:rainbow_active = 1  "0 if you want to enable it later via :RainbowToggle"
 
-" Markdown preview configuration
-" I need to figure out a way to use an after/plugin hook for this instead of
-" polluting ~/.vimrc
-let g:MarkdownPreviewTMP = expand("~/.vim/flavors/changa_markdown-preview.vim/tmp/")
-let g:MarkdownPreviewDefaultStyles = expand("~/.vim/flavors/changa_markdown-preview.vim/stylesheets/")
-
 " Encryption
 if has("cryptv")
   set cryptmethod=blowfish

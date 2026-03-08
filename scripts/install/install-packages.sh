@@ -43,7 +43,7 @@ fi
 # Platform-specific package lists
 if is_ubuntu || is_debian; then
   # Note: bat, jq, ripgrep, fzf are managed by mise (see configs/tools/mise/conf.d/04-dev-tools.toml)
-  _packages="zsh tmux python3-pip nasm gcc gcc-multilib libc6-dev cmake git curl wget unzip build-essential htop net-tools tree fd-find silversearcher-ag vim rsync postgresql-client imagemagick make pkg-config p7zip-full openssh-client python3-dev python3-venv libssl-dev libreadline-dev zlib1g-dev libyaml-dev libffi-dev libncurses-dev autoconf"
+  _packages="zsh tmux python3-pip nasm gcc gcc-multilib libc6-dev cmake git curl wget unzip build-essential htop net-tools tree fd-find silversearcher-ag vim rsync postgresql-client imagemagick make pkg-config p7zip-full openssh-client python3-dev python3-venv libssl-dev libreadline-dev zlib1g-dev libyaml-dev libffi-dev libncurses-dev autoconf xclip qrencode inotify-tools ffmpeg mpv parallel"
 
   # Check for ctags and add to list if available
   if pkg_available "exuberant-ctags"; then

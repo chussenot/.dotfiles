@@ -135,12 +135,16 @@ fi
 # Only use this if you understand the implications and have a valid reason
 # alias git="GIT_SSL_NO_VERIFY=true git"
 alias clean-crash='sudo /bin/rm -rf /var/crash/*'
-alias goog='google-chrome'
+if command -v google-chrome &>/dev/null; then
+  alias goog='google-chrome'
+fi
 alias carbo='docker run -ti fathyb/carbonyl'
 alias ipa='ip -br a | grep -vF DOWN | cut -d/ -f1'
 # SECURITY: Validate PID before killing to prevent injection
 alias kill-click='f(){ _pid=$(get-pid-click); [[ "$_pid" =~ ^[0-9]+$ ]] && sudo kill -9 "$_pid" || echo "Invalid PID"; unset -f f; }; f'
-alias cam-setup='guvcview'
+if command -v guvcview &>/dev/null; then
+  alias cam-setup='guvcview'
+fi
 alias yt-dlp='pipx run yt-dlp'
 alias yt-dl-likes='yt-dlp --cookies www.youtube.com_cookies.txt -x --audio-format mp3  :ytfav'
 alias record-screen='f(){ ffmpeg -video_size 1920x1080 -framerate 30 -f x11grab -i :0.0 -c:v libx264 -crf 0 -preset ultrafast "$1".mkv;  unset -f f; }; f'
@@ -156,21 +160,27 @@ alias show-open-ports="sudo ss -latepun | grep -i listen"
 # alias ssh='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
 alias tmux-bg='f(){ tmux new-window -d zsh -c "echo $@; $@; zsh";  unset -f f; }; f'
 alias tmux-split='f(){ tmux split-window -d zsh -c "echo $@; $@; zsh";  unset -f f; }; f'
-alias toqrcode='qrencode -t ANSI -o -'
+if command -v qrencode &>/dev/null; then
+  alias toqrcode='qrencode -t ANSI -o -'
+fi
 alias upload='f(){ curl -F"file=@$1" https://0x0.st;  unset -f f; }; f'
 alias usleep='f(){ python3 -c "import time; time.sleep($1)";  unset -f f; }; f'
 alias vplay='mpv --no-audio'
 # WARNING: Disabling certificate checking is a security risk!
 # Only use this if you understand the implications
 # alias wget="wget --no-check-certificate"
-alias wifi='nmtui'
+if command -v nmtui &>/dev/null; then
+  alias wifi='nmtui'
+fi
 alias b64d='base64 -d'
 alias b64e='base64 -w 0'
 alias back-n='sed "s/\\\n/\n/g"'
 alias cgrep='grep --color=always'
 alias cheat='f(){ curl -s "cheat.sh/$1";  unset -f f; }; f'
 alias clean-swap='sudo swapoff -a && sudo swapon -a'
-alias cpy='xclip -selection clipboard'
+if command -v xclip &>/dev/null; then
+  alias cpy='xclip -selection clipboard'
+fi
 # decrypt/encrypt: use gpg or age (sops) instead of mcrypt
 alias digall='f(){ dig +answer +multiline "$1" any @8.8.8.8;  unset -f f; }; f'
 alias disable-ipv6='sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1; sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1; sudo sysctl -w net.ipv6.conf.lo.disable_ipv6=1'
@@ -185,7 +195,9 @@ alias get-chars='for i in {1..255}; do python3 -c "print(chr($i))"; done'
 alias get-du='du -ch -d 1'
 alias get-ip='curl -sS ipinfo.io'
 alias get-meteo='curl https://wttr.in/'
-alias get-pid-click='xprop _NET_WM_PID | cut -d" " -f3'
+if command -v xprop &>/dev/null; then
+  alias get-pid-click='xprop _NET_WM_PID | cut -d" " -f3'
+fi
 alias get-pid-ps='ps fauxw | fzf | awk "{ print \$2}"'
 alias get-shell-size='echo "stty rows ${LINES} cols ${COLUMNS}"'
 # SECURITY: Variables properly quoted to prevent word splitting/injection
@@ -193,7 +205,7 @@ alias git-cloneall-github='curl -sk -H "Authorization: token ${GITHUB_READ_TOKEN
 alias git-cloneall-gitlab='curl -sk -H "Authorization: Bearer ${GITLAB_READ_TOKEN}" "https://gitlab.com/api/v4/projects?owned=true&simple=true" | jq -r ".[].ssh_url_to_repo" | parallel -j10 "git clone {}"'
 alias git-pullall='find . -maxdepth 2 -name ".git" | cut -d/ -f2 | parallel -j10 "cd {} && git pull"'
 alias nocolor='sed "s/\x1B\[[0-9;]\+[A-Za-z]//g"'
-alias nonullbyte='python -c "import sys; sys.stdout.write(sys.stdin.read().replace(chr(0), str()))"'
+alias nonullbyte='python3 -c "import sys; sys.stdout.write(sys.stdin.read().replace(chr(0), str()))"'
 alias probe-urls='f(){ while read url; do curl -sk "$url" -o /dev/null -w "%{http_code}:%{size_download}:%{url_effective}\n" ; done < "$@" ; unset -f f; }; f'
 alias pserv='python3 -m http.server -d .'
 alias urldecode="python3 -c \"import sys; from urllib.parse import unquote; print(unquote(sys.argv[1]))\""
@@ -201,13 +213,14 @@ alias urlencode-deep='f(){ echo -n "$1" | xxd -p | tr -d "\n" | sed "s#..#%&#g";
 alias urlencode="python3 -c \"import sys; from urllib.parse import quote; print(quote(sys.argv[1], safe=''))\""
 
 # Tools Hacking
-alias get-pass-exploits='f(){ xdg-open "https://www.exploitalert.com/search-results.html?search=$@" ;  unset -f f; }; f'
-alias get-pass-info='f(){ xdg-open "https://cirt.net/passwords?criteria=$@" ;  unset -f f; }; f'
-alias get-exploitalert='f(){ xdg-open "https://www.exploitalert.com/search-results.html?search=$@" ;  unset -f f; }; f'
-alias get-port-info='f(){ xdg-open "https://www.speedguide.net/port.php?port=$@" ;  unset -f f; }; f'
-alias get-bookhacktricks='f(){ xdg-open "https://book.hacktricks.xyz/?q=$@" ;  unset -f f; }; f'
-alias recon-certspotter='f(){ xdg-open "https://api.certspotter.com/v1/issuances?domain=$1&include_subdomains=true&expand=dns_names&expand=issuer&expand=cert" ;  unset -f f; }; f'
-alias recon-virustotal='f(){ xdg-open "https://www.virustotal.com/gui/domain/$1" ;  unset -f f; }; f'
+if command -v xdg-open &>/dev/null; then
+  alias get-pass-exploits='f(){ xdg-open "https://www.exploitalert.com/search-results.html?search=$@" ;  unset -f f; }; f'
+  alias get-pass-info='f(){ xdg-open "https://cirt.net/passwords?criteria=$@" ;  unset -f f; }; f'
+  alias get-port-info='f(){ xdg-open "https://www.speedguide.net/port.php?port=$@" ;  unset -f f; }; f'
+  alias get-bookhacktricks='f(){ xdg-open "https://book.hacktricks.xyz/?q=$@" ;  unset -f f; }; f'
+  alias recon-certspotter='f(){ xdg-open "https://api.certspotter.com/v1/issuances?domain=$1&include_subdomains=true&expand=dns_names&expand=issuer&expand=cert" ;  unset -f f; }; f'
+  alias recon-virustotal='f(){ xdg-open "https://www.virustotal.com/gui/domain/$1" ;  unset -f f; }; f'
+fi
 alias recon-crtsh='f(){ curl -sk "https://crt.sh/?output=json&q=$1" | jq . ; unset -f f; }; f'
 alias recon-wayback='f(){ curl -sk "https://web.archive.org/cdx/search/cdx?fl=original&collapse=urlkey&url=*.$1" ; unset -f f; }; f'
 alias capture-http='f(){ sudo unbuffer tcpdump -A -s 0 "tcp port $@ and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)" | tr "\\n" "\n" ; unset -f f; }; f'
@@ -222,7 +235,9 @@ alias cfu-clean='f(){ cfu $@ | cut -d "|" -f1,3- | awk -F/ "!_[\$1]++" | sort -u
 alias cfu='f(){ jq -r ".results[] | [(.status|tostring), (.length|tostring), (.lines|tostring), (.words|tostring), .url] | join(\"|\")" $@ | sort -uV;  unset -f f; }; f'
 alias crl='curl -sS --path-as-is -gk -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) snap Chromium/83.0.4103.106 Chrome/83.0.4103.106 Safari/537.36"'
 alias crli='curl -sS --path-as-is -gk -D /dev/stderr -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) snap Chromium/83.0.4103.106 Chrome/83.0.4103.106 Safari/537.36"'
-alias dirmon='inotifywait -rm -e create -e moved_to -e modify -e access -e attrib -e close_write -e moved_from'
+if command -v inotifywait &>/dev/null; then
+  alias dirmon='inotifywait -rm -e create -e moved_to -e modify -e access -e attrib -e close_write -e moved_from'
+fi
 alias killit='sudo kill -KILL'
 alias favhash="python3 -c 'from mmh3 import hash as h;from codecs import encode as e;from sys import argv;favicon = e(open(argv[1], \"rb\").read(), \"base64\");print(f\"https://www.shodan.io/search?query=http.favicon.hash%3A{h(favicon)}\")'"
 alias fu='ffuf -mc all -t 2 -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"'
@@ -292,4 +307,7 @@ alias crypt-pad='mkdir datastore; docker run --rm -it -p 3000:3000 -v "$PWD/data
 # Search file contents with ripgrep, fzf, bat
 alias fzf-rg="rg --hidden --glob '' --line-number . | fzf --delimiter ':' --preview 'bat --style=numbers --color=always {1} --highlight-line {2}'"
 
-alias pre-commit=prek
+# prek is installed via mise (see configs/tools/mise/conf.d/04-dev-tools.toml)
+if command -v prek &>/dev/null; then
+  alias pre-commit=prek
+fi
