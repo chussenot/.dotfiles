@@ -1,14 +1,7 @@
 [tools]
 # SECURITY: Pin tool versions to prevent supply chain attacks and ensure reproducibility
 # Update versions periodically after reviewing changelogs
-# Note: 'cargo' in mise is for installing crates via cargo-binstall, not the Rust toolchain
-# Use 'rust' for the Rust toolchain itself
-rust = "1.93.1"
 hk = "1.36.0"
-kind = "0.31.0"
-node = "25.6.1"
-pdm = "2.26.6"
-python = "3.14.3"
 pkl = "0.30.2"
 prettier = "3.8.1"
 shellcheck = "0.11.0"
