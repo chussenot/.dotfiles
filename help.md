@@ -10,7 +10,7 @@
 prefix + h          Open this help popup
 prefix + f          Fuzzy search sessions and windows
 prefix + g          Browse Claude AI conversations
-:keymaps            Display keybindings in the terminal
+help                Display keybindings in the terminal
 ```
 
 **Prefix key:** `Ctrl-A`

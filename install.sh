@@ -353,16 +353,6 @@ else
   print_warning "Theme installation script not found, skipping theme installation"
 fi
 
-# Install the man page
-print_status "📖 Installing man page..."
-if [ -f "${SCRIPT_DIR}/scripts/setup/install-man-page.sh" ]; then
-  "${SCRIPT_DIR}/scripts/setup/install-man-page.sh" || {
-    print_warning "Man page installation encountered an error, continuing anyway..."
-  }
-else
-  print_warning "Man page installation script not found, skipping man page installation"
-fi
-
 # Run update function to refresh all installed tools and plugins
 # Only run if we're in an interactive shell (update function may require interaction)
 if is_interactive; then

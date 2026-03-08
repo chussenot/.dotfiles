@@ -38,7 +38,7 @@ alias pr='pdm run'
 alias py='python3'
 alias pip='pip3'
 alias v='nvim'
-alias keys='glow -p ~/.dotfiles/help.md'
+alias help='glow -p ~/.dotfiles/help.md'
 
 # System aliases
 alias df='df -h'

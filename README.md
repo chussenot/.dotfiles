@@ -270,7 +270,7 @@ Plugin manager: [vim-plug](https://github.com/junegunn/vim-plug)
 All NeoVim-specific plugins are `has('nvim')` guarded and Lua configs
 are `pcall` guarded, so regular Vim starts without errors.
 
-See `configs/editor/nvim/KEYMAPS.md` for keyboard shortcuts, or run `keys` in your shell (`man keymaps`).
+See `configs/editor/nvim/KEYMAPS.md` for keyboard shortcuts, or run `help` in your shell.
 
 ## Documentation
 

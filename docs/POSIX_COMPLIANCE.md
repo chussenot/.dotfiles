@@ -322,7 +322,6 @@ All shell scripts in this project follow POSIX standards:
 | `scripts/utils/platform_setup.sh`     | Platform-specific setup       |
 | `scripts/utils/debug_platform.sh`     | Debug platform detection      |
 | `scripts/utils/posix_check.sh`        | Validate POSIX compliance     |
-| `scripts/setup/install-man-page.sh`   | Install man pages             |
 | `scripts/setup/install-theme.sh`      | Install zsh theme             |
 
 All scripts are validated for POSIX compliance before commit.
