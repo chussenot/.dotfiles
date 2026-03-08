@@ -99,6 +99,7 @@ Prefix key is `Ctrl-A`. Bindings marked **(no prefix)** work without it.
 | `f`                 | FZF session/window switcher              |
 | `g`                 | Claude sessions browser                  |
 | `h`                 | Open this help manual                    |
+| `k`                 | Kubernetes dashboard (k9s)               |
 | `r`                 | Reload tmux configuration                |
 
 ### Git Browser (TIG)
