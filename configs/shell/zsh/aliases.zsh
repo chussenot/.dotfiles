@@ -39,7 +39,7 @@ alias py='python3'
 alias pip='pip3'
 alias nv='nvim'
 alias v='nvim'
-alias keys='man keymaps'
+alias keys='glow -p ~/.dotfiles/help.md'
 
 # System aliases
 alias df='df -h'
