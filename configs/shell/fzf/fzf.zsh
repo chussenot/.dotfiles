@@ -1,9 +1,5 @@
 # Setup fzf
 # ---------
-if [[ ! "$PATH" == *${HOME}/.fzf/bin* ]]; then
-  PATH="${PATH:+${PATH}:}${HOME}/.fzf/bin"
-fi
-
 source <(fzf --zsh)
 
 # Use fd for fzf file search (CTRL+T) if available
