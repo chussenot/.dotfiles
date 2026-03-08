@@ -110,7 +110,9 @@ Plug 'andymass/vim-matchup'
 " https://github.com/nvim-treesitter/nvim-treesitter
 if has("nvim")
   Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
-  Plug 'RRethy/nvim-treesitter-endwise'
+  " DISABLED: Incompatible with current nvim-treesitter (removed query module)
+  " Use vim-endwise (longthanhtran/vim-endwise) instead
+  " Plug 'RRethy/nvim-treesitter-endwise'
   " nvim-ts-rainbow is deprecated, replaced with rainbow-delimiters.nvim
   Plug 'HiPhish/rainbow-delimiters.nvim'
   Plug 'windwp/nvim-ts-autotag'
