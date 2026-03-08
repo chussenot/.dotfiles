@@ -296,11 +296,7 @@ set secure
 
 " }}}
 
-" GitGutter mappings
-nmap gh <Plug>(GitGutterNextHunk)
-nmap gH <Plug>(GitGutterPrevHunk)
-
-" Optional but recommended GitGutter configurations
+" GitGutter settings (keymaps are in after/plugin/gitgutter.vim)
 set updatetime=100  " Faster update time for git signs
 let g:gitgutter_enable = 1  " Enable GitGutter by default
 let g:gitgutter_signs = 1   " Show git diff signs by default

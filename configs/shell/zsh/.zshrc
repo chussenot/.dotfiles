@@ -50,7 +50,7 @@ fi
 export NODE_OPTIONS="--max-old-space-size=8192"
 
 # Shell identification (interactive shell specific)
-readonly SHELL='/usr/bin/zsh'
+readonly SHELL="$(command -v zsh)"
 
 # Set dotfiles directory for easy access (interactive shell specific)
 export DOTFILES_DIR="${DOTFILES_DIR:-$HOME/.dotfiles}"
@@ -313,4 +313,3 @@ fi
 # Uncomment the lines below and run: zsh -i -c exit
 # zmodload zsh/zprof
 # zprof
-export MANPATH="/home/chussenot/.local/share/man:${MANPATH:-}"

@@ -11,7 +11,8 @@
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
 
-let g:fzf_launcher = 'urxvt -title fzf -geometry 120x30 -e sh -c %s'
+" Use built-in terminal for fzf (works with any terminal emulator)
+let g:fzf_layout = { 'down': '~40%' }
 
 if executable("highlight")
   let g:fzf_files_options = '--preview "(highlight -O ansi {-1} || cat {}) 2> /dev/null | head -'.&lines.'"'

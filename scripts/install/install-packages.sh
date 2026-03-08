@@ -42,7 +42,8 @@ fi
 
 # Platform-specific package lists
 if is_ubuntu || is_debian; then
-  _packages="zsh tmux python3-pip jq nasm gcc gcc-multilib libc6-dev cmake git curl wget unzip build-essential bat htop net-tools tree ripgrep fd-find silversearcher-ag vim rsync postgresql-client imagemagick make pkg-config p7zip-full openssh-client python3-dev python3-venv libssl-dev libreadline-dev zlib1g-dev libyaml-dev libffi-dev libncurses-dev autoconf"
+  # Note: bat, jq, ripgrep, fzf are managed by mise (see configs/tools/mise/conf.d/04-dev-tools.toml)
+  _packages="zsh tmux python3-pip nasm gcc gcc-multilib libc6-dev cmake git curl wget unzip build-essential htop net-tools tree fd-find silversearcher-ag vim rsync postgresql-client imagemagick make pkg-config p7zip-full openssh-client python3-dev python3-venv libssl-dev libreadline-dev zlib1g-dev libyaml-dev libffi-dev libncurses-dev autoconf"
 
   # Check for ctags and add to list if available
   if pkg_available "exuberant-ctags"; then
@@ -133,7 +134,8 @@ if is_ubuntu || is_debian; then
 elif is_arch; then
   # Arch Linux packages (using pacman)
   # Package names differ from Debian: fd instead of fd-find, bat not batcat, etc.
-  _packages="zsh tmux python python-pip jq nasm gcc cmake git curl wget unzip bat htop net-tools tree ripgrep fd the_silver_searcher vim rsync postgresql imagemagick make pkgconf p7zip openssh python-virtualenv ctags openssl readline zlib libyaml libffi ncurses autoconf"
+  # Note: bat, jq, ripgrep, fzf are managed by mise (see configs/tools/mise/conf.d/04-dev-tools.toml)
+  _packages="zsh tmux python python-pip nasm gcc cmake git curl wget unzip htop net-tools tree fd the_silver_searcher vim rsync postgresql imagemagick make pkgconf p7zip openssh python-virtualenv ctags openssl readline zlib libyaml libffi ncurses autoconf"
 
   # Update package database
   printf 'Updating package database...\n'
@@ -165,7 +167,8 @@ elif is_arch; then
 elif is_fedora; then
   # Fedora packages (using dnf)
   # Package names differ: python3-devel instead of python3-dev, fd-find, etc.
-  _packages="zsh tmux python3 python3-pip jq nasm gcc gcc-c++ cmake git curl wget unzip bat htop net-tools tree ripgrep fd-find vim rsync postgresql imagemagick make pkgconf p7zip openssh-clients python3-devel python3-virtualenv openssl-devel readline-devel zlib-devel libyaml-devel libffi-devel ncurses-devel autoconf"
+  # Note: bat, jq, ripgrep, fzf are managed by mise (see configs/tools/mise/conf.d/04-dev-tools.toml)
+  _packages="zsh tmux python3 python3-pip nasm gcc gcc-c++ cmake git curl wget unzip htop net-tools tree fd-find vim rsync postgresql imagemagick make pkgconf p7zip openssh-clients python3-devel python3-virtualenv openssl-devel readline-devel zlib-devel libyaml-devel libffi-devel ncurses-devel autoconf"
 
   # Check for ctags
   if pkg_available "ctags"; then
@@ -195,7 +198,8 @@ elif is_fedora; then
 
 elif is_macos; then
   # macOS packages (using Homebrew)
-  _packages="zsh tmux python@3 pipx jq nasm gcc cmake git curl wget unzip bat htop tree ripgrep fd"
+  # Note: bat, jq, ripgrep, fzf are managed by mise (see configs/tools/mise/conf.d/04-dev-tools.toml)
+  _packages="zsh tmux python@3 pipx nasm gcc cmake git curl wget unzip htop tree fd"
 
   # Install packages
   for _package in ${_packages}; do

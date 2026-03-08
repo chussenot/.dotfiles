@@ -37,7 +37,6 @@ alias mr='mise run'
 alias pr='pdm run'
 alias py='python3'
 alias pip='pip3'
-alias nv='nvim'
 alias v='nvim'
 alias keys='glow -p ~/.dotfiles/help.md'
 
@@ -120,7 +119,7 @@ if command -v bat &>/dev/null || command -v batcat &>/dev/null; then
   alias b=$(command -v bat 2>/dev/null || command -v batcat 2>/dev/null)
 fi
 alias vz='v ~/.zshrc'
-alias p='python'
+alias p='python3'
 alias temp='pushd $(mktemp -d)'
 
 # Tools Sysadmin
@@ -160,7 +159,7 @@ alias tmux-split='f(){ tmux split-window -d zsh -c "echo $@; $@; zsh";  unset -f
 alias toqrcode='qrencode -t ANSI -o -'
 alias upload='f(){ curl -F"file=@$1" https://0x0.st;  unset -f f; }; f'
 alias usleep='f(){ python3 -c "import time; time.sleep($1)";  unset -f f; }; f'
-alias vplay='mplayer -nosound'
+alias vplay='mpv --no-audio'
 # WARNING: Disabling certificate checking is a security risk!
 # Only use this if you understand the implications
 # alias wget="wget --no-check-certificate"
@@ -172,17 +171,17 @@ alias cgrep='grep --color=always'
 alias cheat='f(){ curl -s "cheat.sh/$1";  unset -f f; }; f'
 alias clean-swap='sudo swapoff -a && sudo swapon -a'
 alias cpy='xclip -selection clipboard'
-alias decrypt='mdecrypt'
+# decrypt/encrypt: use gpg or age (sops) instead of mcrypt
 alias digall='f(){ dig +answer +multiline "$1" any @8.8.8.8;  unset -f f; }; f'
 alias disable-ipv6='sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1; sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1; sudo sysctl -w net.ipv6.conf.lo.disable_ipv6=1'
 alias dns-1='echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf'
 alias dns-127='echo "nameserver 127.0.0.1" | sudo tee /etc/resolv.conf'
 alias dns-8='echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf'
 alias dns-9='echo "nameserver 9.9.9.9" | sudo tee /etc/resolv.conf'
-alias encrypt='f(){ PASS=$(cat /dev/urandom | base64 | head -c 20) && echo "$PASS" | xclip -selection c && tar -zcvf "$1.tar.gz" "$1" && echo "$PASS" && mcrypt "$1.tar.gz" && echo "$1.tar.gz $PASS" | xclip -selection c;  unset -f f; }; f'
+alias encrypt='f(){ PASS=$(head -c 20 /dev/urandom | base64) && echo "$PASS" | xclip -selection c && tar -zcvf "$1.tar.gz" "$1" && gpg --symmetric --batch --passphrase "$PASS" "$1.tar.gz" && echo "$1.tar.gz.gpg $PASS" | xclip -selection c; unset -f f; }; f'
 alias get-badchars='echo -e "\"\x27<?>][]{}_)(*;/\x5c"'
-alias get-bytes='for i in {0..255}; do python2 -c "print hex($i)[2:].rjust(2, str(0))"; done'
-alias get-chars='for i in {1..255}; do python2 -c "print chr($i)"; done'
+alias get-bytes='for i in {0..255}; do python3 -c "print(hex($i)[2:].rjust(2, str(0)))"; done'
+alias get-chars='for i in {1..255}; do python3 -c "print(chr($i))"; done'
 alias get-du='du -ch -d 1'
 alias get-ip='curl -sS ipinfo.io'
 alias get-meteo='curl https://wttr.in/'
@@ -195,7 +194,7 @@ alias git-cloneall-gitlab='curl -sk -H "Authorization: Bearer ${GITLAB_READ_TOKE
 alias git-pullall='find . -maxdepth 2 -name ".git" | cut -d/ -f2 | parallel -j10 "cd {} && git pull"'
 alias nocolor='sed "s/\x1B\[[0-9;]\+[A-Za-z]//g"'
 alias nonullbyte='python -c "import sys; sys.stdout.write(sys.stdin.read().replace(chr(0), str()))"'
-alias probe-urls='f(){ while read url; do curl -sk "$url" -o /dev/null -w "%{http_code}:%{size_download}:%{url_effective}\n" ; done < "$@" ; ; unset -f f; }; f'
+alias probe-urls='f(){ while read url; do curl -sk "$url" -o /dev/null -w "%{http_code}:%{size_download}:%{url_effective}\n" ; done < "$@" ; unset -f f; }; f'
 alias pserv='python3 -m http.server -d .'
 alias urldecode="python3 -c \"import sys; from urllib.parse import unquote; print(unquote(sys.argv[1]))\""
 alias urlencode-deep='f(){ echo -n "$1" | xxd -p | tr -d "\n" | sed "s#..#%&#g";  unset -f f; }; f'
@@ -215,9 +214,9 @@ alias capture-http='f(){ sudo unbuffer tcpdump -A -s 0 "tcp port $@ and (((ip[2:
 # SECURITY: Use dynamic interface detection instead of hardcoded value
 alias capture-creds='f(){ _iface="${1:-$(ip route | grep default | awk "{print \$5}" | head -1)}"; sudo tcpdump -i "$_iface" port http or port ftp or port smtp or port imap or port pop3 or port telnet -l -A | grep -iEB5 --line-buffered "pass=|pwd=|log=|login=|user=|username=|pw=|passw=|passwd=|password=|pass:|user:|username:|password:|login:|pass |user |authorization:|token"; unset -f f; }; f'
 alias nmap-html='nmap --stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl'
-alias arm-vm='source /opt/arm_now/.py3/bin/activate && arm_now start --redir tcp:1234:1234 --clean --sync armv7-eabihf'
+# arm-vm: removed (required /opt/arm_now which is no longer available)
 alias bb-results='find . -iname "nuclei-*" -exec cat {} \; |  cut -d " " -f 3- | sort -uV | grep -vE "http-missing-security-headers|can-i-take-over-dns-fingerprint"; cfu-clean $(find . -name "fu-*.json")'
-alias binwalk="/usr/bin/binwalk --dd='.*'"
+alias binwalk="binwalk --dd='.*'"
 alias cfu-clean-url='f(){ cfu-clean $@ | cut -d"|" -f4- ;  unset -f f; }; f'
 alias cfu-clean='f(){ cfu $@ | cut -d "|" -f1,3- | awk -F/ "!_[\$1]++" | sort -u -t: -k1,1 ;  unset -f f; }; f'
 alias cfu='f(){ jq -r ".results[] | [(.status|tostring), (.length|tostring), (.lines|tostring), (.words|tostring), .url] | join(\"|\")" $@ | sort -uV;  unset -f f; }; f'

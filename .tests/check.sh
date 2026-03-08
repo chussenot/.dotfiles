@@ -77,6 +77,19 @@ _check_exists "${HOME}/.zsh/functions.zsh" "Zsh functions"
 _check_exists "${HOME}/.zsh/_completions.zsh" "Zsh completions"
 _check_exists "${HOME}/.dotfiles" "Dotfiles repository"
 
+# Check tool configuration symlinks
+_print_info "Checking tool configuration symlinks..."
+
+_check_exists "${HOME}/.config/mise/config.toml" "mise configuration"
+_check_exists "${HOME}/.config/mise/conf.d" "mise modular config directory"
+_check_exists "${HOME}/.config/bat/config" "bat configuration"
+_check_exists "${HOME}/.config/gh/config.yml" "GitHub CLI configuration"
+_check_exists "${HOME}/.config/glow/glow.yml" "glow configuration"
+_check_exists "${HOME}/.config/htop/htoprc" "htop configuration"
+_check_exists "${HOME}/.config/k9s/config.yaml" "k9s configuration"
+_check_exists "${HOME}/.tigrc" "tig configuration"
+_check_exists "${HOME}/.gitignore_global" "Global gitignore"
+
 # Check for Antidote (the plugin manager used by install.sh)
 if [ -d "${HOME}/.antidote" ]; then
   _print_success "Antidote Plugin Manager installed"
