@@ -13,8 +13,8 @@ ripgrep = "15.1.0"
 usage = "2.18.2"
 watchexec = "2.5.0"
 pdm = "2.26.6"
+uv = "0.10.9"
 pipx = "1.8.0"
-fzf = "0.70.0"
 
 # Cargo-installed tools
 "cargo:xh" = "0.25.3"

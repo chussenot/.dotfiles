@@ -1,3 +1,4 @@
 # Essential everyday tools
 [tools]
 "cargo:zoxide" = "0.9.9"
+fzf = "0.70.0"
