@@ -3,7 +3,7 @@
 bat = "0.26.1"
 direnv = "2.37.1"
 eza = "0.23.4"
-fd = "10.4.1"
+fd = "10.4.2"
 hyperfine = "1.20.0"
 jq = "1.8.1"
 just = "1.46.0"
@@ -17,7 +17,6 @@ pipx = "1.8.0"
 fzf = "0.70.0"
 
 # Cargo-installed tools
-"cargo:zoxide" = "0.9.9"
 "cargo:xh" = "0.25.3"
 
 # NPM-installed tools
@@ -28,12 +27,12 @@ fzf = "0.70.0"
 "pipx:yq" = "3.4.3"
 
 # Pre-commit hooks
-prek = "0.3.4"
+prek = "0.3.5"
 
 # for binary format
 "go:github.com/wader/fq" = "0.16.0"
 
-"go:github.com/jesseduffield/lazygit" = "0.59.0"
+"go:github.com/jesseduffield/lazygit" = "0.60.0"
 "go:github.com/tomnomnom/gron" = "0.7.1"
 
 "cargo:bottom" = "0.12.3" # use btm
@@ -51,7 +50,7 @@ prek = "0.3.4"
 "pipx:bypass-url-parser" = "0.4.4"
 "pipx:dirsearch" = "0.4.3.post1"
 "pipx:exegol" = "5.1.9"
-"pipx:sqlmap" = "1.10.2"
+"pipx:sqlmap" = "1.10.3"
 "pipx:trash-cli" = "0.24.5.26"
 "pipx:wafw00f" = "2.4.2"
 "pipx:yt-dlp" = "2026.3.3"
