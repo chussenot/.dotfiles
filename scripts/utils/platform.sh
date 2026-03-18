@@ -157,6 +157,10 @@ install_pkg() {
     sudo apt-get install -y "$@" || return 1
   elif is_macos; then
     # macOS: use Homebrew
+    if command -v snap >/dev/null 2>&1; then
+      printf 'Detected Snap on macOS. Running sudo snap refresh...\n'
+      sudo snap refresh || printf 'Warning: snap refresh failed, continuing...\n'
+    fi
     if ! command -v brew >/dev/null 2>&1; then
       printf 'Error: Homebrew not found. Please install Homebrew first.\n' >&2
       printf 'Visit: https://brew.sh\n' >&2

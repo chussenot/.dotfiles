@@ -190,6 +190,8 @@ if [ "$_check" = "1" ]; then
   done <"$_report_file"
   printf "\n  Summary: %d up-to-date, %d outdated, %d errors (out of %d)\n" \
     "$_up" "$_outdated" "$_err" "$_total"
+  printf "\nRunning 'mise install'...\n"
+  mise install
   exit 0
 fi
 
