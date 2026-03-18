@@ -3,22 +3,12 @@
 
 FROM fedora:41
 
-# Install minimal dependencies needed by the installer
-# gcc and make are needed by mise for compiling tools
+# Install minimal bootstrap dependencies (install.sh handles the rest)
 RUN dnf install -y \
         git \
         curl \
-        sudo \
-        zsh \
-        gcc \
-        make \
-        findutils \
-        glibc-langpack-en && \
+        sudo && \
     dnf clean all
-
-# Set up locale
-ENV LANG=en_US.UTF-8
-ENV LC_ALL=en_US.UTF-8
 
 # Create a non-root user (dev) similar to real environment
 RUN useradd -m -s /bin/bash dev && \

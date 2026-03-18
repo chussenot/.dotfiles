@@ -3,15 +3,12 @@
 
 FROM archlinux:latest
 
-# Install minimal dependencies needed by the installer
-# base-devel includes gcc, make, etc. needed by mise for compiling tools
+# Install minimal bootstrap dependencies (install.sh handles the rest)
 RUN pacman -Syu --noconfirm && \
     pacman -S --noconfirm \
         git \
         curl \
-        sudo \
-        zsh \
-        base-devel && \
+        sudo && \
     yes | pacman -Scc
 
 # Create a non-root user (dev) similar to real environment

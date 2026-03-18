@@ -6,23 +6,15 @@ FROM debian:12
 # Prevent interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install minimal dependencies needed by the installer
+# Install minimal bootstrap dependencies (install.sh handles the rest)
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         git \
         curl \
         sudo \
-        zsh \
-        locales \
         ca-certificates && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-
-# Set up locale
-RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
-ENV LANG=en_US.UTF-8
-ENV LANGUAGE=en_US:en
-ENV LC_ALL=en_US.UTF-8
 
 # Create a non-root user (dev) similar to real environment
 RUN useradd -m -s /bin/bash dev && \

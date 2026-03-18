@@ -6,22 +6,15 @@ FROM ubuntu:24.04
 # Prevent interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install minimal dependencies needed by the installer
+# Install minimal bootstrap dependencies (install.sh handles the rest)
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         git \
         curl \
         sudo \
-        locales \
         ca-certificates && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-
-# Set up locale
-RUN locale-gen en_US.UTF-8
-ENV LANG=en_US.UTF-8
-ENV LANGUAGE=en_US:en
-ENV LC_ALL=en_US.UTF-8
 
 # Create a non-root user (dev) similar to real environment
 RUN useradd -m -s /bin/bash dev && \
