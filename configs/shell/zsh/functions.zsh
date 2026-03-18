@@ -341,6 +341,12 @@ function update {
   # Update system packages if on Ubuntu/Debian
   if command -v apt &>/dev/null; then
     echo "📦 Updating system packages..."
+    # Ensure inotify limits are set (VS Code, Slack etc. consume many watches)
+    if [[ ! -f /etc/sysctl.d/99-inotify.conf ]]; then
+      echo "🔧 Setting permanent inotify watch limits..."
+      printf 'fs.inotify.max_user_watches=524288\nfs.inotify.max_user_instances=1024\n' | sudo tee /etc/sysctl.d/99-inotify.conf >/dev/null
+      sudo sysctl --system &>/dev/null || true
+    fi
     sudo apt update && sudo apt upgrade -y || ((errors++))
   fi
 

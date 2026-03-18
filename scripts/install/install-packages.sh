@@ -103,6 +103,14 @@ if is_ubuntu || is_debian; then
     printf '   You can install Docker manually later if needed\n'
   fi
 
+  # Ensure inotify limits are high enough to avoid "Too many open files" errors
+  # (VS Code, Slack, tracker-miner-fs, etc. consume many inotify watches)
+  if [ ! -f /etc/sysctl.d/99-inotify.conf ] || ! grep -q 'max_user_watches=524288' /etc/sysctl.d/99-inotify.conf 2>/dev/null; then
+    printf 'Increasing inotify watch limits (prevents apt watch allocation errors)...\n'
+    printf 'fs.inotify.max_user_watches=524288\nfs.inotify.max_user_instances=1024\n' | sudo tee /etc/sysctl.d/99-inotify.conf >/dev/null
+    sudo sysctl --system >/dev/null 2>&1 || true
+  fi
+
   # Update package list once (more efficient than updating per package)
   printf 'Updating package list...\n'
   sudo apt-get update || {
