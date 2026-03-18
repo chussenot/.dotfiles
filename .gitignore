@@ -1,4 +1,5 @@
-# Ignore all files that start with a dot, except for .gitignore
+# Ignore all files that start with a dot, except for tracked dotfiles
 .*
 !.gitignore
+!.gitignore_global
 specs/*
