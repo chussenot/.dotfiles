@@ -54,16 +54,65 @@ _check_command() {
   fi
 }
 
+_check_symlink() {
+  _target="$1"
+  _source="$2"
+  _description="$3"
+  if [ -L "${_target}" ]; then
+    _link_target=$(readlink "${_target}" 2>/dev/null || printf '')
+    if [ "${_link_target}" = "${_source}" ]; then
+      _print_success "${_description}: ${_target} -> ${_source}"
+      return 0
+    else
+      _print_error "${_description}: ${_target} points to ${_link_target}, expected ${_source}"
+      _errors=$((_errors + 1))
+      return 1
+    fi
+  else
+    _print_error "${_description}: ${_target} is not a symlink"
+    _errors=$((_errors + 1))
+    return 1
+  fi
+}
+
 _print_info "Starting dotfiles installation validation..."
 printf '\n'
 
-# Check expected files and directories
-_print_info "Checking expected files and directories..."
+# Auto-verify symlinks from symlinks.conf
+_print_info "Checking symlinks from registry (symlinks.conf)..."
 
-_check_exists "${HOME}/.zshrc" "Zsh configuration"
-_check_exists "${HOME}/.tmux.conf" "Tmux configuration"
-_check_exists "${HOME}/.inputrc" "Input configuration"
-_check_exists "${HOME}/.config/nvim" "Neovim configuration directory"
+_conf_file="${HOME}/.dotfiles/scripts/setup/symlinks.conf"
+if [ ! -f "${_conf_file}" ]; then
+  _print_error "symlinks.conf not found at ${_conf_file}"
+  _errors=$((_errors + 1))
+else
+  _symlink_count=0
+  while IFS= read -r _line || [ -n "${_line}" ]; do
+    case "${_line}" in
+      "#"*|"") continue ;;
+    esac
+
+    _src_rel=$(printf '%s' "${_line}" | cut -d'|' -f1)
+    _tgt_tpl=$(printf '%s' "${_line}" | cut -d'|' -f2)
+
+    _source="${HOME}/.dotfiles/${_src_rel}"
+    _target=$(eval printf '%s' "${_tgt_tpl}")
+
+    # Only check if the source exists in the repo
+    if [ -e "${_source}" ]; then
+      _symlink_count=$((_symlink_count + 1))
+      _check_symlink "${_target}" "${_source}" "Symlink ${_src_rel}"
+    else
+      _print_info "Skipping ${_src_rel} (source not in repo)"
+    fi
+  done < "${_conf_file}"
+  _print_info "Verified ${_symlink_count} symlinks from registry"
+fi
+
+# Additional existence checks not covered by symlinks.conf
+_check_exists "${HOME}/.dotfiles" "Dotfiles repository"
+_check_exists "${HOME}/.zsh" "Zsh directory"
+
 # Check for nvim config (init.vim, init.lua, or vimrc)
 if [ -f "${HOME}/.config/nvim/init.vim" ] || [ -f "${HOME}/.config/nvim/init.lua" ] || [ -f "${HOME}/.config/nvim/vimrc" ]; then
   _print_success "Neovim init file exists"
@@ -71,24 +120,6 @@ else
   _print_error "Neovim init file not found (init.vim, init.lua, or vimrc)"
   _errors=$((_errors + 1))
 fi
-_check_exists "${HOME}/.zsh" "Zsh directory"
-_check_exists "${HOME}/.zsh/aliases.zsh" "Zsh aliases"
-_check_exists "${HOME}/.zsh/functions.zsh" "Zsh functions"
-_check_exists "${HOME}/.zsh/_completions.zsh" "Zsh completions"
-_check_exists "${HOME}/.dotfiles" "Dotfiles repository"
-
-# Check tool configuration symlinks
-_print_info "Checking tool configuration symlinks..."
-
-_check_exists "${HOME}/.config/mise/config.toml" "mise configuration"
-_check_exists "${HOME}/.config/mise/conf.d" "mise modular config directory"
-_check_exists "${HOME}/.config/bat/config" "bat configuration"
-_check_exists "${HOME}/.config/gh/config.yml" "GitHub CLI configuration"
-_check_exists "${HOME}/.config/glow/glow.yml" "glow configuration"
-_check_exists "${HOME}/.config/htop/htoprc" "htop configuration"
-_check_exists "${HOME}/.config/k9s/config.yaml" "k9s configuration"
-_check_exists "${HOME}/.tigrc" "tig configuration"
-_check_exists "${HOME}/.gitignore_global" "Global gitignore"
 
 # Check for Antidote (the plugin manager used by install.sh)
 if [ -d "${HOME}/.antidote" ]; then
@@ -137,40 +168,6 @@ if command -v nvim >/dev/null 2>&1; then
   _print_success "nvim command found"
 else
   _print_info "nvim not found (optional - may not be installed in test environment)"
-fi
-
-printf '\n'
-
-# Check symlinks are correct
-_print_info "Checking symlinks..."
-
-_check_symlink() {
-  _target="$1"
-  _source="$2"
-  _description="$3"
-  if [ -L "${_target}" ]; then
-    _link_target=$(readlink "${_target}" 2>/dev/null || printf '')
-    if [ "${_link_target}" = "${_source}" ]; then
-      _print_success "${_description}: ${_target} -> ${_source}"
-      return 0
-    else
-      _print_error "${_description}: ${_target} points to ${_link_target}, expected ${_source}"
-      _errors=$((_errors + 1))
-      return 1
-    fi
-  else
-    _print_error "${_description}: ${_target} is not a symlink"
-    _errors=$((_errors + 1))
-    return 1
-  fi
-}
-
-if [ -L "${HOME}/.zshrc" ]; then
-  _check_symlink "${HOME}/.zshrc" "${HOME}/.dotfiles/configs/shell/zsh/.zshrc" "Zshrc symlink"
-fi
-
-if [ -L "${HOME}/.tmux.conf" ]; then
-  _check_symlink "${HOME}/.tmux.conf" "${HOME}/.dotfiles/configs/terminal/tmux/tmux.conf" "Tmux config symlink"
 fi
 
 printf '\n'

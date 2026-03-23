@@ -2,12 +2,30 @@
 
 # Symlink setup script
 # POSIX-compliant version
+# Reads symlink mappings from symlinks.conf
 
 set -eu
 
 printf '🔗 Setting up symlinks...\n'
 
 DOTFILES_DIR="${HOME}/.dotfiles"
+
+# Resolve path to symlinks.conf relative to this script
+_script_path="$0"
+case "${_script_path}" in
+/*)
+  _script_dir=$(dirname "${_script_path}")
+  ;;
+*)
+  _script_dir=$(cd "$(dirname "${_script_path}")" && pwd)
+  ;;
+esac
+_conf_file="${_script_dir}/symlinks.conf"
+
+if [ ! -f "${_conf_file}" ]; then
+  printf '❌ symlinks.conf not found at %s\n' "${_conf_file}"
+  exit 1
+fi
 
 # Function to create symlink
 create_symlink() {
@@ -30,137 +48,29 @@ create_symlink() {
   printf '✅ Linked %s\n' "${_target}"
 }
 
-# Create symlinks (only if source exists)
-if [ -f "${DOTFILES_DIR}/configs/terminal/tmux/tmux.conf" ]; then
-  create_symlink "${DOTFILES_DIR}/configs/terminal/tmux/tmux.conf" "${HOME}/.tmux.conf"
-else
-  printf '⚠️  Skipping .tmux.conf (source not found)\n'
-fi
+# Read symlinks.conf and create each symlink
+while IFS= read -r _line || [ -n "${_line}" ]; do
+  # Skip comments and blank lines
+  case "${_line}" in
+    "#"*|"") continue ;;
+  esac
 
-# Create zsh config symlinks if they exist
-if [ -f "${DOTFILES_DIR}/configs/shell/zsh/.zshenv" ]; then
-  create_symlink "${DOTFILES_DIR}/configs/shell/zsh/.zshenv" "${HOME}/.zshenv"
-else
-  printf '⚠️  Skipping .zshenv (source not found)\n'
-fi
+  _src_rel=$(printf '%s' "${_line}" | cut -d'|' -f1)
+  _tgt_tpl=$(printf '%s' "${_line}" | cut -d'|' -f2)
 
-if [ -f "${DOTFILES_DIR}/configs/shell/zsh/.zshrc" ]; then
-  create_symlink "${DOTFILES_DIR}/configs/shell/zsh/.zshrc" "${HOME}/.zshrc"
-else
-  printf '⚠️  Skipping .zshrc (source not found)\n'
-fi
+  _source="${DOTFILES_DIR}/${_src_rel}"
+  # Expand $HOME in target path
+  _target=$(eval printf '%s' "${_tgt_tpl}")
 
-if [ -f "${DOTFILES_DIR}/configs/shell/inputrc" ]; then
-  create_symlink "${DOTFILES_DIR}/configs/shell/inputrc" "${HOME}/.inputrc"
-else
-  printf '⚠️  Skipping .inputrc (source not found)\n'
-fi
-# Create nvim config directory and symlink
-mkdir -p "${HOME}/.config"
-create_symlink "${DOTFILES_DIR}/configs/editor/nvim" "${HOME}/.config/nvim"
+  if [ -e "${_source}" ]; then
+    create_symlink "${_source}" "${_target}"
+  else
+    printf '⚠️  Skipping %s (source not found)\n' "${_src_rel}"
+  fi
+done < "${_conf_file}"
 
-# Create ~/.vim symlink for backward compatibility with existing vim config
-create_symlink "${DOTFILES_DIR}/configs/editor/nvim" "${HOME}/.vim"
-
-# Create mise config if it exists
-if [ -f "${DOTFILES_DIR}/configs/tools/mise/config.toml" ]; then
-  mkdir -p "${HOME}/.config/mise"
-  create_symlink "${DOTFILES_DIR}/configs/tools/mise/config.toml" "${HOME}/.config/mise/config.toml"
-fi
-
-# Create mise conf.d directory symlink for modular config
-if [ -d "${DOTFILES_DIR}/configs/tools/mise/conf.d" ]; then
-  mkdir -p "${HOME}/.config/mise"
-  create_symlink "${DOTFILES_DIR}/configs/tools/mise/conf.d" "${HOME}/.config/mise/conf.d"
-fi
-
-# Create gitignore_global if it exists
-if [ -f "${DOTFILES_DIR}/configs/git/.gitignore_global" ]; then
-  create_symlink "${DOTFILES_DIR}/configs/git/.gitignore_global" "${HOME}/.gitignore_global"
-fi
-
-# Create GitHub CLI config if it exists
-if [ -f "${DOTFILES_DIR}/configs/tools/gh/config.yml" ]; then
-  mkdir -p "${HOME}/.config/gh"
-  create_symlink "${DOTFILES_DIR}/configs/tools/gh/config.yml" "${HOME}/.config/gh/config.yml"
-fi
-
-# Create k9s config if it exists
-if [ -f "${DOTFILES_DIR}/configs/tools/k9s/config.yaml" ]; then
-  mkdir -p "${HOME}/.config/k9s"
-  create_symlink "${DOTFILES_DIR}/configs/tools/k9s/config.yaml" "${HOME}/.config/k9s/config.yaml"
-fi
-
-# Create htop config if it exists
-if [ -f "${DOTFILES_DIR}/configs/tools/htop/htoprc" ]; then
-  mkdir -p "${HOME}/.config/htop"
-  create_symlink "${DOTFILES_DIR}/configs/tools/htop/htoprc" "${HOME}/.config/htop/htoprc"
-fi
-
-# Create glow config if it exists
-if [ -f "${DOTFILES_DIR}/configs/tools/glow/glow.yml" ]; then
-  mkdir -p "${HOME}/.config/glow"
-  create_symlink "${DOTFILES_DIR}/configs/tools/glow/glow.yml" "${HOME}/.config/glow/glow.yml"
-fi
-
-# Create bat config if it exists
-if [ -f "${DOTFILES_DIR}/configs/tools/bat/config" ]; then
-  mkdir -p "${HOME}/.config/bat"
-  create_symlink "${DOTFILES_DIR}/configs/tools/bat/config" "${HOME}/.config/bat/config"
-fi
-
-# Create tig config if it exists
-if [ -f "${DOTFILES_DIR}/configs/tools/tig/tigrc" ]; then
-  create_symlink "${DOTFILES_DIR}/configs/tools/tig/tigrc" "${HOME}/.tigrc"
-fi
-
-# Create gau config if it exists
-if [ -f "${DOTFILES_DIR}/configs/tools/gau/config.toml" ]; then
-  create_symlink "${DOTFILES_DIR}/configs/tools/gau/config.toml" "${HOME}/.gau.toml"
-fi
-
-# Create zsh directory and symlink aliases and functions (with existence checks)
-mkdir -p "${HOME}/.zsh"
-
-if [ -f "${DOTFILES_DIR}/configs/shell/zsh/aliases.zsh" ]; then
-  create_symlink "${DOTFILES_DIR}/configs/shell/zsh/aliases.zsh" "${HOME}/.zsh/aliases.zsh"
-else
-  printf '⚠️  Skipping aliases.zsh (source not found)\n'
-fi
-
-if [ -f "${DOTFILES_DIR}/configs/shell/zsh/functions.zsh" ]; then
-  create_symlink "${DOTFILES_DIR}/configs/shell/zsh/functions.zsh" "${HOME}/.zsh/functions.zsh"
-else
-  printf '⚠️  Skipping functions.zsh (source not found)\n'
-fi
-
-if [ -f "${DOTFILES_DIR}/configs/shell/zsh/_completions.zsh" ]; then
-  create_symlink "${DOTFILES_DIR}/configs/shell/zsh/_completions.zsh" "${HOME}/.zsh/_completions.zsh"
-else
-  printf '⚠️  Skipping _completions.zsh (source not found)\n'
-fi
-
-# Create antidote plugins file symlink
-if [ -f "${DOTFILES_DIR}/configs/shell/zsh/.zsh_plugins.txt" ]; then
-  create_symlink "${DOTFILES_DIR}/configs/shell/zsh/.zsh_plugins.txt" "${HOME}/.zsh_plugins.txt"
-fi
-
-# Create fzf config symlinks
-if [ -f "${DOTFILES_DIR}/configs/shell/fzf/fzf.zsh" ]; then
-  create_symlink "${DOTFILES_DIR}/configs/shell/fzf/fzf.zsh" "${HOME}/.fzf.zsh"
-else
-  printf '⚠️  Skipping .fzf.zsh (source not found)\n'
-fi
-
-if [ -f "${DOTFILES_DIR}/configs/shell/fzf/fzf.bash" ]; then
-  create_symlink "${DOTFILES_DIR}/configs/shell/fzf/fzf.bash" "${HOME}/.fzf.bash"
-else
-  printf '⚠️  Skipping .fzf.bash (source not found)\n'
-fi
-
+# Create supporting directories
 mkdir -p "${HOME}/.zsh/completions"
-
-# Create local directories if they don't exist
 mkdir -p "${HOME}/.local/share/zsh"
 mkdir -p "${HOME}/.local/share/nvim"
 mkdir -p "${HOME}/.config"
