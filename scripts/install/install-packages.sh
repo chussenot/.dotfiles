@@ -211,6 +211,38 @@ elif is_fedora; then
     printf 'All packages are already installed\n'
   fi
 
+elif is_alpine; then
+  # Alpine Linux packages (using apk)
+  # Note: bat, jq, ripgrep, fzf, fd are managed by mise (see configs/tools/mise/conf.d/04-dev-tools.toml)
+  _packages="git curl sudo zsh tmux python3 py3-pip nasm gcc musl-dev cmake wget unzip build-base htop net-tools tree the_silver_searcher vim rsync postgresql-client imagemagick make pkgconf p7zip openssh-client python3-dev openssl-dev readline-dev zlib-dev yaml-dev libffi-dev ncurses-dev autoconf ctags xclip qrencode inotify-tools ffmpeg parallel"
+
+  # Update package index
+  printf 'Updating package index...\n'
+  sudo apk update || {
+    printf '⚠️  Failed to update package index, continuing...\n'
+  }
+
+  # Collect packages that need to be installed
+  _packages_to_install=""
+  for _package in ${_packages}; do
+    if ! pkg_installed "${_package}"; then
+      _packages_to_install="${_packages_to_install} ${_package}"
+    else
+      printf '%s is already installed\n' "${_package}"
+    fi
+  done
+
+  # Install all packages at once
+  if [ -n "${_packages_to_install}" ]; then
+    printf 'Installing packages: %s\n' "${_packages_to_install}"
+    # shellcheck disable=SC2086 # Intentional word splitting for package list
+    sudo apk add ${_packages_to_install} || {
+      printf '⚠️  Some packages failed to install, continuing...\n'
+    }
+  else
+    printf 'All packages are already installed\n'
+  fi
+
 elif is_macos; then
   # macOS packages (using Homebrew)
   # Note: bat, jq, ripgrep, fzf, fd are managed by mise (see configs/tools/mise/conf.d/04-dev-tools.toml)

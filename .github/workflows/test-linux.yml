@@ -1,4 +1,4 @@
-name: Arch Linux
+name: Linux
 
 on:
   push:
@@ -8,26 +8,35 @@ on:
 
 jobs:
   install:
-    name: Install (Arch Linux)
+    name: Install (${{ matrix.distro }})
     runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        distro:
+          - Alpine
+          - Archlinux
+          - Debian-12
+          - Fedora-41
+          - Ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
       - name: Build test image
         run: |
           docker build \
-            -f .tests/docker/Archlinux.Dockerfile \
-            -t dotfiles-test-arch .
+            -f .tests/docker/${{ matrix.distro }}.Dockerfile \
+            -t dotfiles-test-${{ matrix.distro }} .
 
       - name: Verify installation
         run: |
-          docker run --rm dotfiles-test-arch \
+          docker run --rm dotfiles-test-${{ matrix.distro }} \
             /home/dev/.dotfiles/.tests/check.sh
 
       - name: Upload install log on failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: install-log-archlinux
+          name: install-log-${{ matrix.distro }}
           path: /tmp/docker-build-*.log
           retention-days: 7
