@@ -1,31 +1,39 @@
 # Dotfiles
 
 [![Lint](https://github.com/chussenot/.dotfiles/actions/workflows/lint.yml/badge.svg)](https://github.com/chussenot/.dotfiles/actions/workflows/lint.yml)
+[![Linux](https://github.com/chussenot/.dotfiles/actions/workflows/test-linux.yml/badge.svg)](https://github.com/chussenot/.dotfiles/actions/workflows/test-linux.yml)
+[![macOS](https://github.com/chussenot/.dotfiles/actions/workflows/test-macos.yml/badge.svg)](https://github.com/chussenot/.dotfiles/actions/workflows/test-macos.yml)
 
 Personal configuration files for a productive development environment using zsh, Neovim, and tmux.
 
 ## Quick Start
 
 ```sh
-# 1. Clone the repository
-git clone https://github.com/chussenot/dotfiles.git ~/.dotfiles
+# One-liner bootstrap (clones + installs)
+curl -fsSL https://raw.githubusercontent.com/chussenot/dotfiles/master/bootstrap.sh | sh
 
-# 2. Run the installer
-cd ~/.dotfiles && ./install.sh
-
-# 3. Restart your terminal
-exec zsh
+# Or with a profile
+curl -fsSL https://raw.githubusercontent.com/chussenot/dotfiles/master/bootstrap.sh | sh -s -- --minimal
 ```
+
+### Install Profiles
+
+| Profile      | Flag        | What it installs                                            |
+| ------------ | ----------- | ----------------------------------------------------------- |
+| **Minimal**  | `--minimal` | Shell config, editor, symlinks only. No packages, no mise.  |
+| **Default**  | _(none)_    | Core tools, languages, linters, git. Skips infra/offensive. |
+| **Full**     | `--full`    | Everything, including infra, containers, and offensive.      |
 
 ## Platform Support
 
-| Platform     | Status          | Package Manager | CI                                                                                                                                                                                  |
-| ------------ | --------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Ubuntu 24.04 | Fully supported | apt-get         | [![Ubuntu](https://github.com/chussenot/.dotfiles/actions/workflows/test-ubuntu.yml/badge.svg)](https://github.com/chussenot/.dotfiles/actions/workflows/test-ubuntu.yml)           |
-| Debian 12    | Fully supported | apt-get         | [![Debian](https://github.com/chussenot/.dotfiles/actions/workflows/test-debian.yml/badge.svg)](https://github.com/chussenot/.dotfiles/actions/workflows/test-debian.yml)           |
-| macOS        | Fully supported | Homebrew        | [![macOS](https://github.com/chussenot/.dotfiles/actions/workflows/test-macos.yml/badge.svg)](https://github.com/chussenot/.dotfiles/actions/workflows/test-macos.yml)              |
-| Arch Linux   | Partial         | pacman          | [![Arch Linux](https://github.com/chussenot/.dotfiles/actions/workflows/test-archlinux.yml/badge.svg)](https://github.com/chussenot/.dotfiles/actions/workflows/test-archlinux.yml) |
-| Fedora 41    | Partial         | dnf             | [![Fedora](https://github.com/chussenot/.dotfiles/actions/workflows/test-fedora.yml/badge.svg)](https://github.com/chussenot/.dotfiles/actions/workflows/test-fedora.yml)           |
+| Platform     | Status          | Package Manager | CI         |
+| ------------ | --------------- | --------------- | ---------- |
+| Ubuntu 24.04 | Fully supported | apt-get         | test-linux |
+| Debian 12    | Fully supported | apt-get         | test-linux |
+| Alpine 3.21  | Fully supported | apk             | test-linux |
+| macOS        | Fully supported | Homebrew        | test-macos |
+| Arch Linux   | Supported       | pacman          | test-linux |
+| Fedora 41    | Supported       | dnf             | test-linux |
 
 **Primary Test Environment**: Ubuntu 24.04.3 LTS (kernel 6.14.0-1015-oem)
 
@@ -66,7 +74,9 @@ less install.sh
 #### Step 3: Run the installer
 
 ```sh
-./install.sh
+./install.sh              # default profile
+./install.sh --minimal    # shell + editor only (fast, for containers)
+./install.sh --full       # everything including infra & offensive tools
 ```
 
 #### Step 4: Restart your shell
