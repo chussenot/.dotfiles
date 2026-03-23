@@ -3,6 +3,13 @@
 # - Fuzzy search across all sessions and windows
 # - Creates a new session if the query doesn't match anything
 
+# display-popup uses a minimal env; activate mise so fzf is in PATH
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate bash 2>/dev/null)"
+elif [ -f "${HOME}/.local/bin/mise" ]; then
+  eval "$("${HOME}/.local/bin/mise" activate bash 2>/dev/null)"
+fi
+
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 main() {
