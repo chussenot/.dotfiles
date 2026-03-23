@@ -3,8 +3,37 @@
 # Improved Dotfiles Installation Script
 # Multi-platform POSIX-compliant version
 # Defensive against non-interactive shells, missing tools, and non-Ubuntu distros
+#
+# Usage: ./install.sh [--minimal | --full]
+#
+# Profiles:
+#   --minimal   Shell config, editor, and symlinks only. No packages, no mise tools.
+#               Ideal for containers, CI runners, and ephemeral environments.
+#   (default)   Packages, symlinks, mise with core tools (languages, essentials,
+#               dev-tools, linters, git). Skips infra, containers, observability,
+#               and offensive tooling.
+#   --full      Everything, including infra, containers, observability, and
+#               offensive tools.
 
 set -eu
+
+# --- Profile selection ---
+INSTALL_PROFILE="default"
+for _arg in "$@"; do
+  case "${_arg}" in
+  --minimal) INSTALL_PROFILE="minimal" ;;
+  --full) INSTALL_PROFILE="full" ;;
+  --help | -h)
+    sed -n '3,16p' "$0"
+    exit 0
+    ;;
+  *)
+    printf 'Unknown option: %s\n' "${_arg}" >&2
+    printf 'Usage: ./install.sh [--minimal | --full]\n' >&2
+    exit 1
+    ;;
+  esac
+done
 
 # Get the directory where this script is located (POSIX-compatible)
 get_script_dir() {
@@ -70,6 +99,59 @@ print_error() {
   printf '%b[ERROR]%b %s\n' "${RED}" "${NC}" "$1"
 }
 
+# Profile helper: returns 0 if the current profile includes the given stage
+profile_includes() {
+  _stage="$1"
+  case "${INSTALL_PROFILE}" in
+  minimal)
+    # minimal: only symlinks, antidote, editor, and theme
+    case "${_stage}" in
+    symlinks | antidote | nvim_plugins | theme) return 0 ;;
+    *) return 1 ;;
+    esac
+    ;;
+  default)
+    # default: everything except full-only stages
+    return 0
+    ;;
+  full)
+    return 0
+    ;;
+  esac
+}
+
+# Build MISE_IGNORED_CONFIG_PATHS based on profile
+# minimal: skip all conf.d (no mise tools at all)
+# default: skip infra, containers, observability, offensive
+# full: skip nothing
+_build_mise_ignored_paths() {
+  _conf_dir="${HOME}/.config/mise/conf.d"
+  _ignored=""
+  case "${INSTALL_PROFILE}" in
+  minimal)
+    # Ignore the entire conf.d directory
+    _ignored="${_conf_dir}"
+    ;;
+  default)
+    for _f in \
+      "${_conf_dir}/03-infra.toml" \
+      "${_conf_dir}/04-containers.toml" \
+      "${_conf_dir}/08-observability.toml" \
+      "${_conf_dir}/09-offensive-stuff.toml"; do
+      if [ -n "${_ignored}" ]; then
+        _ignored="${_ignored}:${_f}"
+      else
+        _ignored="${_f}"
+      fi
+    done
+    ;;
+  full)
+    # Nothing ignored
+    ;;
+  esac
+  printf '%s' "${_ignored}"
+}
+
 # Check if running as root (POSIX-compatible)
 if [ "$(id -u)" -eq 0 ]; then
   print_error "This script should not be run as root"
@@ -108,7 +190,7 @@ check_optional_tool() {
   return 0
 }
 
-print_status "🚀 Starting dotfiles installation..."
+print_status "🚀 Starting dotfiles installation... (profile: ${INSTALL_PROFILE})"
 print_status "Platform: OS=${PLATFORM_OS}, Distro=${PLATFORM_DISTRO}, Arch=${PLATFORM_ARCH}"
 
 # Check if we're in the right directory
@@ -171,25 +253,29 @@ else
 fi
 
 # Install system packages (platform-specific)
-print_status "📦 Installing system packages..."
-if is_linux || is_macos; then
-  if [ -f "${SCRIPT_DIR}/scripts/install/install-packages.sh" ]; then
-    # Check if we need sudo for package installation
-    if is_linux && ! command -v sudo >/dev/null 2>&1; then
-      print_warning "sudo not found. Skipping package installation."
-      print_warning "Please install required packages manually."
+if profile_includes packages; then
+  print_status "📦 Installing system packages..."
+  if is_linux || is_macos; then
+    if [ -f "${SCRIPT_DIR}/scripts/install/install-packages.sh" ]; then
+      # Check if we need sudo for package installation
+      if is_linux && ! command -v sudo >/dev/null 2>&1; then
+        print_warning "sudo not found. Skipping package installation."
+        print_warning "Please install required packages manually."
+      else
+        "${SCRIPT_DIR}/scripts/install/install-packages.sh" || {
+          print_warning "Package installation encountered an error, continuing anyway..."
+        }
+      fi
     else
-      "${SCRIPT_DIR}/scripts/install/install-packages.sh" || {
-        print_warning "Package installation encountered an error, continuing anyway..."
-      }
+      print_warning "Package installation script not found"
+      print_warning "Please install required packages manually"
     fi
   else
-    print_warning "Package installation script not found"
+    print_warning "Package installation not supported on this platform"
     print_warning "Please install required packages manually"
   fi
 else
-  print_warning "Package installation not supported on this platform"
-  print_warning "Please install required packages manually"
+  print_status "📦 Skipping system packages (${INSTALL_PROFILE} profile)"
 fi
 
 # Install Antidote Plugin Manager
@@ -223,105 +309,125 @@ else
 fi
 
 # Install mise if not present
-print_status "🛠️ Installing mise (tool version manager)..."
-if ! command -v mise >/dev/null 2>&1; then
-  if command -v curl >/dev/null 2>&1; then
-    # Check if we can reach the mise installation URL
-    if curl -fsSL https://mise.run >/dev/null 2>&1; then
-      # SECURITY: Download installer to temp file before executing
-      # This allows inspection and prevents partial execution on network failure
-      _mise_installer=$(mktemp)
-      trap 'rm -f "$_mise_installer"' EXIT
-      print_status "Downloading mise installer to temporary file..."
-      if curl -fsSL https://mise.run -o "$_mise_installer"; then
-        chmod +x "$_mise_installer"
-        print_status "Executing mise installer..."
-        sh "$_mise_installer" || {
-          print_error "Failed to install mise"
+if profile_includes mise; then
+  print_status "🛠️ Installing mise (tool version manager)..."
+  if ! command -v mise >/dev/null 2>&1; then
+    if command -v curl >/dev/null 2>&1; then
+      # Check if we can reach the mise installation URL
+      if curl -fsSL https://mise.run >/dev/null 2>&1; then
+        # SECURITY: Download installer to temp file before executing
+        # This allows inspection and prevents partial execution on network failure
+        _mise_installer=$(mktemp)
+        trap 'rm -f "$_mise_installer"' EXIT
+        print_status "Downloading mise installer to temporary file..."
+        if curl -fsSL https://mise.run -o "$_mise_installer"; then
+          chmod +x "$_mise_installer"
+          print_status "Executing mise installer..."
+          sh "$_mise_installer" || {
+            print_error "Failed to install mise"
+            rm -f "$_mise_installer"
+            exit 1
+          }
+          rm -f "$_mise_installer"
+        else
+          print_error "Failed to download mise installer"
           rm -f "$_mise_installer"
           exit 1
-        }
-        rm -f "$_mise_installer"
+        fi
+        # Add mise to PATH for current session
+        export PATH="${HOME}/.local/bin:${PATH}"
+        print_success "mise installed"
       else
-        print_error "Failed to download mise installer"
-        rm -f "$_mise_installer"
+        print_error "Cannot reach mise installation server"
+        print_error "Check your internet connection and try again"
         exit 1
       fi
-      # Add mise to PATH for current session
-      export PATH="${HOME}/.local/bin:${PATH}"
-      print_success "mise installed"
     else
-      print_error "Cannot reach mise installation server"
-      print_error "Check your internet connection and try again"
+      print_error "curl is required to install mise but was not found"
       exit 1
     fi
   else
-    print_error "curl is required to install mise but was not found"
-    exit 1
+    print_warning "mise already installed"
   fi
 else
-  print_warning "mise already installed"
+  print_status "🛠️ Skipping mise (${INSTALL_PROFILE} profile)"
 fi
 
 # Install tools with mise
-print_status "🛠️ Installing development tools..."
-if command -v mise >/dev/null 2>&1; then
-  if [ -d "${SCRIPT_DIR}" ]; then
-    cd "${SCRIPT_DIR}" || {
-      print_warning "Cannot change to script directory, skipping mise tool installation"
-    }
-    # Trust mise config files to avoid trust prompts (only if files exist)
-    if [ -f "${SCRIPT_DIR}/mise.toml" ]; then
-      mise trust "${SCRIPT_DIR}/mise.toml" 2>/dev/null || true
-    fi
-    if [ -f "${HOME}/.config/mise/config.toml" ]; then
-      mise trust "${HOME}/.config/mise/config.toml" 2>/dev/null || true
-    fi
-    # Trust conf.d files
-    for _conf_file in "${HOME}/.config/mise/conf.d"/*.toml; do
-      if [ -f "${_conf_file}" ]; then
-        mise trust "${_conf_file}" 2>/dev/null || true
-      fi
-    done
-    # Only run mise install if we're in the right directory
-    if [ -f "${SCRIPT_DIR}/mise.toml" ] || [ -f "${SCRIPT_DIR}/.mise.toml" ]; then
-      # Install language runtimes first — backend tools (go:, npm:, cargo:, pipx:)
-      # need their parent runtimes available for version resolution and installation
-      print_status "Installing language runtimes first (needed by backend tools)..."
-      for _runtime in go node rust python pipx; do
-        mise install "${_runtime}" 2>/dev/null || {
-          print_warning "${_runtime} installation failed, dependent tools may not install"
-        }
-      done
-      mise install || {
-        print_warning "mise install encountered an error, continuing anyway..."
+if profile_includes mise; then
+  print_status "🛠️ Installing development tools..."
+
+  # Apply profile-based mise config filtering
+  _mise_ignored=$(_build_mise_ignored_paths)
+  if [ -n "${_mise_ignored}" ]; then
+    export MISE_IGNORED_CONFIG_PATHS="${_mise_ignored}"
+    print_status "Mise ignoring: ${_mise_ignored}"
+  fi
+
+  if command -v mise >/dev/null 2>&1; then
+    if [ -d "${SCRIPT_DIR}" ]; then
+      cd "${SCRIPT_DIR}" || {
+        print_warning "Cannot change to script directory, skipping mise tool installation"
       }
-      print_success "Development tools installed"
+      # Trust mise config files to avoid trust prompts (only if files exist)
+      if [ -f "${SCRIPT_DIR}/mise.toml" ]; then
+        mise trust "${SCRIPT_DIR}/mise.toml" 2>/dev/null || true
+      fi
+      if [ -f "${HOME}/.config/mise/config.toml" ]; then
+        mise trust "${HOME}/.config/mise/config.toml" 2>/dev/null || true
+      fi
+      # Trust conf.d files
+      for _conf_file in "${HOME}/.config/mise/conf.d"/*.toml; do
+        if [ -f "${_conf_file}" ]; then
+          mise trust "${_conf_file}" 2>/dev/null || true
+        fi
+      done
+      # Only run mise install if we're in the right directory
+      if [ -f "${SCRIPT_DIR}/mise.toml" ] || [ -f "${SCRIPT_DIR}/.mise.toml" ]; then
+        # Install language runtimes first — backend tools (go:, npm:, cargo:, pipx:)
+        # need their parent runtimes available for version resolution and installation
+        print_status "Installing language runtimes first (needed by backend tools)..."
+        for _runtime in go node rust python pipx; do
+          mise install "${_runtime}" 2>/dev/null || {
+            print_warning "${_runtime} installation failed, dependent tools may not install"
+          }
+        done
+        mise install || {
+          print_warning "mise install encountered an error, continuing anyway..."
+        }
+        print_success "Development tools installed"
+      else
+        print_warning "No mise.toml found, skipping tool installation"
+      fi
     else
-      print_warning "No mise.toml found, skipping tool installation"
+      print_warning "Script directory not accessible, skipping mise tool installation"
     fi
   else
-    print_warning "Script directory not accessible, skipping mise tool installation"
+    print_warning "mise not found, skipping tool installation"
   fi
 else
-  print_warning "mise not found, skipping tool installation"
+  print_status "🛠️ Skipping development tools (${INSTALL_PROFILE} profile)"
 fi
 
 # Install git hooks (prek for pre-commit)
-print_status "🪝 Installing git hooks..."
-if command -v prek >/dev/null 2>&1; then
-  if [ -f "${SCRIPT_DIR}/.pre-commit-config.yaml" ]; then
-    cd "${SCRIPT_DIR}" || true
-    prek install -f 2>/dev/null || {
-      print_warning "prek hook installation failed, you can run 'prek install' manually"
-    }
-    print_success "Git hooks installed"
+if profile_includes hooks; then
+  print_status "🪝 Installing git hooks..."
+  if command -v prek >/dev/null 2>&1; then
+    if [ -f "${SCRIPT_DIR}/.pre-commit-config.yaml" ]; then
+      cd "${SCRIPT_DIR}" || true
+      prek install -f 2>/dev/null || {
+        print_warning "prek hook installation failed, you can run 'prek install' manually"
+      }
+      print_success "Git hooks installed"
+    else
+      print_warning "No .pre-commit-config.yaml found, skipping hook installation"
+    fi
   else
-    print_warning "No .pre-commit-config.yaml found, skipping hook installation"
+    print_warning "prek not found, skipping hook installation"
+    print_warning "Run 'mise install' then 'prek install' to set up git hooks"
   fi
 else
-  print_warning "prek not found, skipping hook installation"
-  print_warning "Run 'mise install' then 'prek install' to set up git hooks"
+  print_status "🪝 Skipping git hooks (${INSTALL_PROFILE} profile)"
 fi
 
 # Install Neovim plugins
@@ -355,7 +461,7 @@ fi
 
 # Run update function to refresh all installed tools and plugins
 # Only run if we're in an interactive shell (update function may require interaction)
-if is_interactive; then
+if profile_includes update && is_interactive; then
   print_status "🔄 Running update function to refresh installed tools..."
   if command -v zsh >/dev/null 2>&1 && [ -f "${HOME}/.zshrc" ]; then
     zsh -c 'source ~/.zshrc 2>/dev/null; update' 2>/dev/null || {
