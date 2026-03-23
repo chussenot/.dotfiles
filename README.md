@@ -18,11 +18,11 @@ curl -fsSL https://raw.githubusercontent.com/chussenot/dotfiles/master/bootstrap
 
 ### Install Profiles
 
-| Profile      | Flag        | What it installs                                            |
-| ------------ | ----------- | ----------------------------------------------------------- |
-| **Minimal**  | `--minimal` | Shell config, editor, symlinks only. No packages, no mise.  |
-| **Default**  | _(none)_    | Core tools, languages, linters, git. Skips infra/offensive. |
-| **Full**     | `--full`    | Everything, including infra, containers, and offensive.      |
+| Profile     | Flag        | What it installs                                            |
+| ----------- | ----------- | ----------------------------------------------------------- |
+| **Minimal** | `--minimal` | Shell config, editor, symlinks only. No packages, no mise.  |
+| **Default** | _(none)_    | Core tools, languages, linters, git. Skips infra/offensive. |
+| **Full**    | `--full`    | Everything, including infra, containers, and offensive.     |
 
 ## Platform Support
 
