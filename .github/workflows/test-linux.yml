@@ -19,18 +19,23 @@ jobs:
           - Debian-12
           - Fedora-41
           - Ubuntu-24.04
+    env:
+      TAG: dotfiles-test-${{ matrix.distro }}
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set lowercase tag
+        run: echo "IMAGE_TAG=$(echo "${TAG}" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_ENV"
 
       - name: Build test image
         run: |
           docker build \
             -f .tests/docker/${{ matrix.distro }}.Dockerfile \
-            -t dotfiles-test-${{ matrix.distro }} .
+            -t "${IMAGE_TAG}" .
 
       - name: Verify installation
         run: |
-          docker run --rm dotfiles-test-${{ matrix.distro }} \
+          docker run --rm "${IMAGE_TAG}" \
             /home/dev/.dotfiles/.tests/check.sh
 
       - name: Upload install log on failure
