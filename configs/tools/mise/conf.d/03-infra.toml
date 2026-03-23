@@ -2,7 +2,7 @@
 [tools]
 
 # --- Cloud CLIs ---
-awscli = "2.34.11"
+awscli = "2.34.14"
 gcloud = "561.0.0"
 vault = "1.21.4"
 
@@ -29,3 +29,6 @@ terramate = "0.16.0"
 
 # --- DNS ---
 doggo = "1.1.4"
+
+# --- Inventory ---
+"ubi:cloudquery/cloudquery" = "cli-v6.35.2"

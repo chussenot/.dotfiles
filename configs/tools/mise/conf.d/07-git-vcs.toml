@@ -2,13 +2,13 @@
 [tools]
 gh = "2.88.1"
 glab = "1.89.0"
-hk = "1.38.0"
+hk = "1.39.0"
 
 # Conventional commits
 "cargo:cocogitto" = "7.0.0"
 
-"cargo:git-delta" = "0.18.2"
+"cargo:git-delta" = "0.19.1"
 "go:github.com/github/git-sizer" = "1.5.0"
 
 "cargo:gitui" = "0.28.0"
-"cargo:gitoxide" = "0.51.0"
+"cargo:gitoxide" = "0.52.0"
