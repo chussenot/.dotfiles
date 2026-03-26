@@ -4,9 +4,6 @@
 [settings]
 experimental = true
 
-[hooks]
-postinstall = 'echo "$MISE_INSTALLED_TOOLS" | jq -e ".[] | select(.name == \"gcloud\")" >/dev/null 2>&1 && gcloud components install gke-gcloud-auth-plugin --quiet || true'
-
 [tools]
 "npm:@tsuga/cli" = "latest"
 rclone = "latest"
