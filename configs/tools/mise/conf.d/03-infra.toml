@@ -2,7 +2,7 @@
 [tools]
 
 # --- Cloud CLIs ---
-awscli = "2.34.16"
+awscli = "2.34.17"
 gcloud = "562.0.0"
 vault = "1.21.4"
 
@@ -10,7 +10,7 @@ vault = "1.21.4"
 age = "1.3.1"
 
 # --- Terraform & IaC Utilities ---
-terraform = "1.14.7"
+terraform = "1.14.8"
 terraform-docs = "0.21.0"
 # terraformer = "0.8.30"
 terragrunt = "0.99.4"
@@ -24,7 +24,7 @@ tfstate-lookup = "1.10.0"
 tflint = "0.61.0"
 terrascan = "1.19.9"
 # pulumi = "3.224.0"
-terraform-ls = "0.38.5"
+terraform-ls = "0.38.6"
 terramate = "0.16.0"
 
 # --- DNS ---
@@ -32,4 +32,3 @@ doggo = "1.1.4"
 
 # --- Inventory ---
 # ubi:cloudquery/cloudquery = "latest"
-
