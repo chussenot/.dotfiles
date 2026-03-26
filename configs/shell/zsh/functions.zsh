@@ -399,6 +399,17 @@ function update {
   fi
 
 
+  # Update krew plugins
+  if command -v kubectl-krew &>/dev/null && [[ -f "$HOME/.krew-plugins" ]]; then
+    echo "🔌 Updating krew plugins..."
+    kubectl krew update 2>/dev/null || ((errors++))
+    while IFS= read -r plugin || [[ -n "$plugin" ]]; do
+      [[ -z "$plugin" || "$plugin" == \#* ]] && continue
+      kubectl krew install "$plugin" 2>/dev/null || true
+    done < "$HOME/.krew-plugins"
+    kubectl krew upgrade 2>/dev/null || ((errors++))
+  fi
+
   # Refresh completions
   echo "🔄 Refreshing completions..."
   autoload -Uz compinit
