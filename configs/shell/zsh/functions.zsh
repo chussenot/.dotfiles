@@ -333,6 +333,26 @@ function cdtmp() {
   fi
 }
 
+function krew-sync {
+  local plugins_file="${HOME}/.krew-plugins"
+  if ! command -v krew &>/dev/null; then
+    echo "❌ krew is not installed"
+    return 1
+  fi
+  if [[ ! -f "$plugins_file" ]]; then
+    echo "❌ $plugins_file not found"
+    return 1
+  fi
+  echo "🔌 Syncing krew plugins from $plugins_file..."
+  krew update || return 1
+  while IFS= read -r plugin || [[ -n "$plugin" ]]; do
+    [[ -z "$plugin" || "$plugin" == \#* ]] && continue
+    echo "  → $plugin"
+    krew install "$plugin" 2>/dev/null || true
+  done < "$plugins_file"
+  krew upgrade
+}
+
 function update {
   echo "🔄 Updating your development environment..."
   local errors=0
@@ -400,14 +420,8 @@ function update {
 
 
   # Update krew plugins
-  if command -v kubectl-krew &>/dev/null && [[ -f "$HOME/.krew-plugins" ]]; then
-    echo "🔌 Updating krew plugins..."
-    kubectl krew update 2>/dev/null || ((errors++))
-    while IFS= read -r plugin || [[ -n "$plugin" ]]; do
-      [[ -z "$plugin" || "$plugin" == \#* ]] && continue
-      kubectl krew install "$plugin" 2>/dev/null || true
-    done < "$HOME/.krew-plugins"
-    kubectl krew upgrade 2>/dev/null || ((errors++))
+  if command -v krew &>/dev/null && [[ -f "$HOME/.krew-plugins" ]]; then
+    krew-sync || ((errors++))
   fi
 
   # Refresh completions

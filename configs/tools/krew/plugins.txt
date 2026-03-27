@@ -2,3 +2,8 @@ curl
 datadog
 topx
 tree
+node-shell
+kubeswitch
+stern
+kubecolor
+kdash
