@@ -1,0 +1,10 @@
+# Ghostty configuration
+# Docs: https://ghostty.org/docs/config
+# Show defaults: ghostty +show-config --default --docs
+
+# Window
+window-padding-x = 2
+window-padding-y = 2
+
+# Shell integration
+shell-integration = zsh

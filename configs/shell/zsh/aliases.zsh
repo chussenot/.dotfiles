@@ -19,6 +19,7 @@ alias ga='git add'
 alias gc='git commit'
 alias gp='git push'
 alias gl='git pull'
+alias gb='git branch'
 # Note: gst is defined as a function in functions.zsh with error handling
 alias gco='git checkout'
 alias gcb='git checkout -b'
@@ -29,6 +30,9 @@ alias glog='git log --oneline --graph --decorate'
 alias gfa='git fetch --all --prune'
 alias gca='git commit --amend'
 alias gcan='git commit --amend --no-edit'
+
+# Kubrnetes
+alias k='kubectl'
 
 # Development aliases
 alias m='mise'

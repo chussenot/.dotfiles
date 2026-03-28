@@ -6,4 +6,5 @@ experimental = true
 
 [tools]
 "npm:@tsuga/cli" = "latest"
+"npm:tsuga-cli" = "latest"
 rclone = "latest"
