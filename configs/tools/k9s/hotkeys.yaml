@@ -1,0 +1,41 @@
+hotKeys:
+  shift-0:
+    shortCut: Shift-0
+    description: View pods
+    command: pods
+  shift-1:
+    shortCut: Shift-1
+    description: View deployments
+    command: dp
+  shift-2:
+    shortCut: Shift-2
+    description: View services
+    command: svc
+  shift-3:
+    shortCut: Shift-3
+    description: View statefulsets
+    command: sts
+  shift-4:
+    shortCut: Shift-4
+    description: View daemonsets
+    command: ds
+  shift-5:
+    shortCut: Shift-5
+    description: View configmaps
+    command: cm
+  shift-6:
+    shortCut: Shift-6
+    description: View secrets
+    command: sec
+  shift-7:
+    shortCut: Shift-7
+    description: View nodes
+    command: no
+  shift-8:
+    shortCut: Shift-8
+    description: View namespaces
+    command: ns
+  shift-9:
+    shortCut: Shift-9
+    description: View events
+    command: events
