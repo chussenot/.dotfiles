@@ -39,3 +39,8 @@ hotKeys:
     shortCut: Shift-9
     description: View events
     command: events
+  escape-quit:
+    shortCut: Esc
+    override: true
+    description: Quit k9s
+    command: q
