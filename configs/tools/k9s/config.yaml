@@ -8,16 +8,16 @@ k9s:
   noExitOnCtrlC: false
   portForwardAddress: localhost
   ui:
-    enableMouse: false
-    headless: false
-    logoless: false
+    enableMouse: true
+    headless: true
+    logoless: true
     crumbsless: false
-    splashless: false
+    splashless: true
     reactive: false
     noIcons: false
     defaultsToFullScreen: false
     useFullGVRTitle: false
-  skipLatestRevCheck: false
+  skipLatestRevCheck: true
   disablePodCounting: false
   shellPod:
     image: busybox:1.35.0
