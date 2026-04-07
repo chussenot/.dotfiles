@@ -26,4 +26,4 @@ tilt = "0.37.0"
 # cosign = "3.0.5"
 
 # --- Registry & image inspection ---
-crane = "0.21.3"
+crane = "0.21.4"
