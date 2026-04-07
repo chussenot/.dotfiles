@@ -1,0 +1,31 @@
+# Cloudflare WARP CA certificate injection for Docker builds.
+# Usage:
+#   DOCKER_BUILDKIT=1 docker build \
+#     --secret id=warp_ca,src=/usr/local/share/ca-certificates/managed-warp.pem \
+#     -f Dockerfile .
+#
+# In your Dockerfile, add before any RUN that fetches from the network:
+#
+#   # --- Inject WARP CA (Debian/Ubuntu) ---
+#   RUN --mount=type=secret,id=warp_ca,target=/usr/local/share/ca-certificates/warp-ca.crt \
+#       update-ca-certificates 2>/dev/null || true
+#
+#   # --- Inject WARP CA (Alpine) ---
+#   RUN --mount=type=secret,id=warp_ca,target=/usr/local/share/ca-certificates/warp-ca.crt \
+#       cat /usr/local/share/ca-certificates/warp-ca.crt >> /etc/ssl/certs/ca-certificates.crt 2>/dev/null || true
+#
+# The secret mount is ephemeral — the CA cert does NOT persist in the final image.
+#
+# Alternatively, copy the snippet below into a multi-stage build:
+
+# ---- Example: Debian/Ubuntu base ----
+FROM ubuntu:24.04 AS base
+RUN --mount=type=secret,id=warp_ca,target=/usr/local/share/ca-certificates/warp-ca.crt \
+    update-ca-certificates 2>/dev/null || true
+RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certificates
+
+# ---- Example: Alpine base ----
+FROM alpine:3.20 AS base-alpine
+RUN --mount=type=secret,id=warp_ca,target=/usr/local/share/ca-certificates/warp-ca.crt \
+    cat /usr/local/share/ca-certificates/warp-ca.crt >> /etc/ssl/certs/ca-certificates.crt 2>/dev/null || true
+RUN apk add --no-cache curl ca-certificates
