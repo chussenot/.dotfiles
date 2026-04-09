@@ -7,4 +7,5 @@ experimental = true
 [tools]
 "npm:@tsuga/cli" = "latest"
 "npm:tsuga-cli" = "latest"
+"pipx:asciinema" = "latest"
 rclone = "latest"
