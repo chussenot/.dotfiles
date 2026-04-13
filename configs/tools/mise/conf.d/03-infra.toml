@@ -2,7 +2,7 @@
 [tools]
 
 # --- Cloud CLIs ---
-awscli = "2.34.27"
+awscli = "2.34.29"
 gcloud = "564.0.0"
 vault = "1.21.4"
 
@@ -13,8 +13,8 @@ age = "1.3.1"
 terraform = "1.14.8"
 terraform-docs = "0.22.0"
 # terraformer = "0.8.30"
-terragrunt = "1.0.0"
-tfstate-lookup = "1.10.0"
+terragrunt = "1.0.1"
+tfstate-lookup = "1.11.0"
 
 # --- Terraform Plugin Development ---
 "go:github.com/hashicorp/terraform-plugin-codegen-openapi/cmd/tfplugingen-openapi" = "0.3.0"
