@@ -32,7 +32,7 @@ prek = "0.3.8"
 # for binary format
 "go:github.com/wader/fq" = "0.17.0"
 
-"go:github.com/jesseduffield/lazygit" = "0.61.0"
+"go:github.com/jesseduffield/lazygit" = "0.61.1"
 "go:github.com/tomnomnom/gron" = "0.7.1"
 
 "cargo:bottom" = "0.12.3" # use btm
