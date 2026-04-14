@@ -49,20 +49,20 @@ platform_detect
 These are hard requirements — CI runs shellcheck across 5 distros
 and will reject violations.
 
-| Construct | Forbidden | Required |
-| --------- | --------- | -------- |
-| Test | `[[ ]]` | `[ ]` |
-| Variables | `local var` | `_var` (underscore prefix) |
-| Functions | `function name` | `name() {}` |
-| Arrays | `arr=(a b c)` | `"a b c"` space-separated |
-| Arithmetic | `(( x++ ))` | `$(( x + 1 ))` |
-| Redirection | `&>`, `&>>` | `>/dev/null 2>&1` |
-| Shebang | `#!/bin/bash` | `#!/bin/sh` |
-| Pipefail | `set -o pipefail` | omit (not POSIX) |
-| Process sub | `<(cmd)` | use temp files or pipes |
-| Here-string | `<<< "text"` | `printf '%s' "text" \|` |
-| ANSI-C | `$'...'` | use `printf '\n'` etc. |
-| Brace exp. | `{a,b}` | list items explicitly |
+| Construct   | Forbidden         | Required                   |
+| ----------- | ----------------- | -------------------------- |
+| Test        | `[[ ]]`           | `[ ]`                      |
+| Variables   | `local var`       | `_var` (underscore prefix) |
+| Functions   | `function name`   | `name() {}`                |
+| Arrays      | `arr=(a b c)`     | `"a b c"` space-separated  |
+| Arithmetic  | `(( x++ ))`       | `$(( x + 1 ))`             |
+| Redirection | `&>`, `&>>`       | `>/dev/null 2>&1`          |
+| Shebang     | `#!/bin/bash`     | `#!/bin/sh`                |
+| Pipefail    | `set -o pipefail` | omit (not POSIX)           |
+| Process sub | `<(cmd)`          | use temp files or pipes    |
+| Here-string | `<<< "text"`      | `printf '%s' "text" \|`    |
+| ANSI-C      | `$'...'`          | use `printf '\n'` etc.     |
+| Brace exp.  | `{a,b}`           | list items explicitly      |
 
 ## Steps
 

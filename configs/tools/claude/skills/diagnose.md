@@ -15,7 +15,6 @@ Use when the user reports a problem like "my shell is slow",
    when it started, which terminal/shell.
 
 2. **Read the relevant config files** based on the symptom:
-
    - **Shell slow/startup**: Read `configs/shell/zsh/.zshrc`,
      `configs/shell/zsh/.zshenv`,
      `configs/shell/zsh/.zsh_plugins.txt`. Look for:

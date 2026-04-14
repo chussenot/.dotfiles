@@ -14,7 +14,6 @@ may have platform-specific behavior.
    (or user-specified files).
 
 2. **Classify each change** by platform sensitivity:
-
    - **Shell scripts in `scripts/` and `lib/`**: Must use
      `scripts/utils/platform.sh` guards. Check for:
      - Hardcoded package managers (`apt`, `brew`) without

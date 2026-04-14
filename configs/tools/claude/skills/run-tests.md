@@ -105,15 +105,15 @@ container and checks:
 
 ## Which validation to run when
 
-| What changed | Minimum | Recommended |
-| ----------- | ------- | ----------- |
-| Script in `scripts/` | shellcheck | + Docker Ubuntu |
-| `symlinks.conf` | Docker Ubuntu | Docker all |
-| `install.sh` | Docker Ubuntu | Docker all + macOS |
-| `platform.sh` | Docker all | Docker all |
-| `zsh/*.zsh` | `zsh -n <file>` | Shell restart |
-| `mise conf.d/*.toml` | `mise install` | + Docker Ubuntu |
-| macOS-touching | N/A in Docker | macOS CI |
+| What changed         | Minimum         | Recommended        |
+| -------------------- | --------------- | ------------------ |
+| Script in `scripts/` | shellcheck      | + Docker Ubuntu    |
+| `symlinks.conf`      | Docker Ubuntu   | Docker all         |
+| `install.sh`         | Docker Ubuntu   | Docker all + macOS |
+| `platform.sh`        | Docker all      | Docker all         |
+| `zsh/*.zsh`          | `zsh -n <file>` | Shell restart      |
+| `mise conf.d/*.toml` | `mise install`  | + Docker Ubuntu    |
+| macOS-touching       | N/A in Docker   | macOS CI           |
 
 ## Interpreting failures
 

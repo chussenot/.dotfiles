@@ -16,17 +16,17 @@ or how to pin a version.
 Tools live in `configs/tools/mise/conf.d/` as numbered TOML files,
 each covering a category:
 
-| File | Category | Profile-gated? |
-| ---- | -------- | -------------- |
-| `01-languages.toml` | Runtime languages | No |
-| `02-essentials.toml` | Core CLI tools | No |
-| `03-infra.toml` | Infrastructure | Yes |
-| `04-containers.toml` | Container tooling | Yes |
-| `05-dev-tools.toml` | Dev utilities | No |
-| `06-linters.toml` | Linting/formatting | No |
-| `07-git-vcs.toml` | Git extensions/VCS | No |
-| `08-observability.toml` | Monitoring | Yes |
-| `09-offensive-stuff.toml` | Security/pentesting | Yes |
+| File                      | Category            | Profile-gated? |
+| ------------------------- | ------------------- | -------------- |
+| `01-languages.toml`       | Runtime languages   | No             |
+| `02-essentials.toml`      | Core CLI tools      | No             |
+| `03-infra.toml`           | Infrastructure      | Yes            |
+| `04-containers.toml`      | Container tooling   | Yes            |
+| `05-dev-tools.toml`       | Dev utilities       | No             |
+| `06-linters.toml`         | Linting/formatting  | No             |
+| `07-git-vcs.toml`         | Git extensions/VCS  | No             |
+| `08-observability.toml`   | Monitoring          | Yes            |
+| `09-offensive-stuff.toml` | Security/pentesting | Yes            |
 
 The root `mise.toml` at the repo root pins only orchestration tools
 (hk, pkl, prettier, shellcheck). Application tools go in `conf.d/`.
