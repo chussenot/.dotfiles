@@ -46,6 +46,7 @@ prek = "0.3.8"
 "cargo:xsv" = "0.13.0"
 "cargo:asciinema" = "3.2.0"
 
+"pipx:posting" = "2.10.0"
 "pipx:argcomplete" = "3.6.3"
 "pipx:bypass-url-parser" = "0.4.4"
 "pipx:dirsearch" = "0.4.3.post1"

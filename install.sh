@@ -409,6 +409,29 @@ else
   print_status "🛠️ Skipping development tools (${INSTALL_PROFILE} profile)"
 fi
 
+# Install gh extensions
+if profile_includes mise; then
+  print_status "Installing gh extensions..."
+  if command -v gh >/dev/null 2>&1 || [ -x "$("${HOME}/.local/bin/mise" which gh 2>/dev/null || true)" ]; then
+    _gh_extensions="dlvhdr/gh-dash"
+    for _ext in ${_gh_extensions}; do
+      _ext_name=$(printf '%s' "${_ext}" | cut -d/ -f2)
+      if "${HOME}/.local/bin/mise" x -- gh extension list 2>/dev/null | grep -q "${_ext_name}"; then
+        print_warning "gh extension ${_ext_name} already installed"
+      else
+        "${HOME}/.local/bin/mise" x -- gh extension install "${_ext}" || {
+          print_warning "Failed to install gh extension ${_ext}, continuing..."
+        }
+      fi
+    done
+    print_success "gh extensions installed"
+  else
+    print_warning "gh not found, skipping gh extension installation"
+  fi
+else
+  print_status "Skipping gh extensions (${INSTALL_PROFILE} profile)"
+fi
+
 # Install git hooks (prek for pre-commit)
 if profile_includes hooks; then
   print_status "🪝 Installing git hooks..."

@@ -100,6 +100,9 @@ Prefix key is `Ctrl-A`. Bindings marked **(no prefix)** work without it.
 | `g`                 | Claude sessions browser                  |
 | `h`                 | Open this help manual                    |
 | `k`                 | Kubernetes dashboard (k9s)               |
+| `p`                 | Pull requests dashboard (gh-dash)        |
+| `t`                 | API client (posting)                     |
+| `u`                 | Update dev environment                   |
 | `r`                 | Reload tmux configuration                |
 
 ### Git Browser (TIG)
@@ -224,6 +227,8 @@ TMUX copy mode uses vi-style selection with system clipboard integration.
 | **cog**     | Conventional commits    | Structured commit messages, version bumping          |
 | **fd**      | File finder             | Fast, gitignore-aware backend for FZF                |
 | **gh/glab** | SCM CLI                 | PR/MR management, CI status, repo browsing           |
+| **gh-dash** | GitHub dashboard        | PR/issue dashboard across repos via `prefix + p`     |
+| **posting** | API client              | TUI HTTP client for testing APIs via `prefix + t`    |
 
 ## WORKFLOWS
 
