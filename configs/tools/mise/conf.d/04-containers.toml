@@ -3,7 +3,7 @@
 
 # --- Core container tooling ---
 ctop = "0.7.7"
-podman = "5.8.1"
+podman = "5.8.2"
 
 # --- Kubernetes core ---
 helm = "4.1.4"
@@ -27,3 +27,6 @@ tilt = "0.37.1"
 
 # --- Registry & image inspection ---
 crane = "0.21.5"
+
+# --- Other ---
+"go:github.com/jesseduffield/lazydocker" = "latest"
