@@ -1,9 +1,9 @@
 # Linters, formatters, and code quality tools
 [tools]
-prettier = "3.8.2"
+prettier = "3.8.3"
 
 # Python linters & formatters (via pipx)
 "pipx:check-jsonschema" = "0.37.1"
 "pipx:mypy" = "1.20.1"
-"pipx:ruff" = "0.15.10"
+"pipx:ruff" = "0.15.11"
 "pipx:pytest" = "9.0.3"

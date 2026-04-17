@@ -8,7 +8,7 @@ podman = "5.8.2"
 # --- Kubernetes core ---
 helm = "4.1.4"
 k9s = "0.50.18"
-kubectl = "1.35.3"
+kubectl = "1.35.4"
 kind = "0.31.0"
 krew = "0.5.0"
 kustomize = "5.8.1"
@@ -29,4 +29,4 @@ tilt = "0.37.1"
 crane = "0.21.5"
 
 # --- Other ---
-"go:github.com/jesseduffield/lazydocker" = "latest"
+"go:github.com/jesseduffield/lazydocker" = "0.25.0"
