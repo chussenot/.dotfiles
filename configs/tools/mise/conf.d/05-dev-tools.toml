@@ -6,13 +6,13 @@ eza = "0.23.4"
 fd = "10.4.2"
 hyperfine = "1.20.0"
 jq = "1.8.1"
-just = "1.49.0"
-neovim = "0.12.1"
+just = "1.50.0"
+neovim = "0.12.2"
 tree-sitter = "0.26.8"
 ripgrep = "15.1.0"
-usage = "3.2.0"
+usage = "3.2.1"
 watchexec = "2.5.1"
-pdm = "2.26.7"
+pdm = "2.26.8"
 uv = "0.11.7"
 pipx = "1.11.1"
 
@@ -27,7 +27,7 @@ pipx = "1.11.1"
 "pipx:yq" = "3.4.3"
 
 # Pre-commit hooks
-prek = "0.3.8"
+prek = "0.3.10"
 
 # for binary format
 "go:github.com/wader/fq" = "0.17.0"
