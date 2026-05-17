@@ -59,10 +59,17 @@ if is_ubuntu || is_debian; then
       # Install prerequisites
       sudo apt-get install -y ca-certificates curl gnupg lsb-release >/dev/null 2>&1 || true
 
+      # Use the correct Docker distribution name (debian vs ubuntu)
+      if is_ubuntu; then
+        _docker_distro="ubuntu"
+      else
+        _docker_distro="debian"
+      fi
+
       # Add Docker's official GPG key
       if [ ! -f /etc/apt/keyrings/docker.gpg ]; then
         sudo install -m 0755 -d /etc/apt/keyrings
-        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg 2>/dev/null || {
+        curl -fsSL "https://download.docker.com/linux/${_docker_distro}/gpg" | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg 2>/dev/null || {
           printf '⚠️  Failed to add Docker GPG key, skipping Docker installation\n'
           return 1
         }
@@ -80,11 +87,12 @@ if is_ubuntu || is_debian; then
         return 1
       fi
 
-      _docker_repo="deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu ${_distro_codename} stable"
+      _docker_repo="deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/${_docker_distro} ${_distro_codename} stable"
       if ! grep -q "download.docker.com" /etc/apt/sources.list.d/docker.list 2>/dev/null; then
         printf '%s\n' "${_docker_repo}" | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
         sudo apt-get update >/dev/null 2>&1 || {
           printf '⚠️  Failed to update package list after adding Docker repo\n'
+          sudo rm -f /etc/apt/sources.list.d/docker.list 2>/dev/null || true
           return 1
         }
       fi
@@ -183,7 +191,7 @@ elif is_fedora; then
   # Fedora packages (using dnf)
   # Package names differ: python3-devel instead of python3-dev, fd-find, etc.
   # Note: bat, jq, ripgrep, fzf, fd are managed by mise (see configs/tools/mise/conf.d/04-dev-tools.toml)
-  _packages="git curl sudo zsh tmux python3 python3-pip nasm gcc gcc-c++ cmake wget unzip htop net-tools tree vim rsync postgresql imagemagick make pkgconf p7zip openssh-clients python3-devel python3-virtualenv openssl-devel readline-devel zlib-devel libyaml-devel libffi-devel ncurses-devel autoconf findutils glibc-langpack-en"
+  _packages="git curl sudo zsh tmux python3 python3-pip nasm gcc gcc-c++ cmake wget unzip htop net-tools tree vim rsync postgresql ImageMagick make pkgconf p7zip openssh-clients python3-devel python3-virtualenv openssl-devel readline-devel zlib-devel libyaml-devel libffi-devel ncurses-devel autoconf findutils glibc-langpack-en"
 
   # Check for ctags
   if pkg_available "ctags"; then
@@ -214,7 +222,7 @@ elif is_fedora; then
 elif is_alpine; then
   # Alpine Linux packages (using apk)
   # Note: bat, jq, ripgrep, fzf, fd are managed by mise (see configs/tools/mise/conf.d/04-dev-tools.toml)
-  _packages="git curl sudo zsh tmux python3 py3-pip nasm gcc musl-dev cmake wget unzip build-base htop net-tools tree the_silver_searcher vim rsync postgresql-client imagemagick make pkgconf p7zip openssh-client python3-dev openssl-dev readline-dev zlib-dev yaml-dev libffi-dev ncurses-dev autoconf ctags xclip qrencode inotify-tools ffmpeg parallel"
+  _packages="git curl sudo zsh tmux python3 py3-pip nasm gcc musl-dev cmake wget unzip build-base htop net-tools tree the_silver_searcher vim rsync postgresql-client imagemagick make pkgconf p7zip openssh-client python3-dev openssl-dev readline-dev zlib-dev yaml-dev libffi-dev ncurses-dev autoconf ctags xclip libqrencode-tools inotify-tools ffmpeg parallel"
 
   # Update package index
   printf 'Updating package index...\n'
