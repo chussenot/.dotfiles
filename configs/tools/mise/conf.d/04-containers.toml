@@ -6,9 +6,9 @@ ctop = "0.7.7"
 podman = "5.8.2"
 
 # --- Kubernetes core ---
-helm = "4.1.4"
+helm = "4.2.0"
 k9s = "0.50.18"
-kubectl = "1.36.0"
+kubectl = "1.36.1"
 kind = "0.31.0"
 krew = "0.5.0"
 kustomize = "5.8.1"

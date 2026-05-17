@@ -2,26 +2,26 @@
 [tools]
 
 # --- Cloud CLIs ---
-awscli = "2.34.45"
-gcloud = "567.0.0"
+awscli = "2.34.48"
+gcloud = "568.0.0"
 vault = "2.0.0"
 
 # --- Encryption ---
 age = "1.3.1"
 
 # --- Terraform & IaC Utilities ---
-terraform = "1.15.2"
+terraform = "1.15.3"
 terraform-docs = "0.24.0"
 # terraformer = "0.8.30"
 terragrunt = "1.0.4"
-tfstate-lookup = "1.11.0"
+tfstate-lookup = "1.12.1"
 
 # --- Terraform Plugin Development ---
 "go:github.com/hashicorp/terraform-plugin-codegen-openapi/cmd/tfplugingen-openapi" = "0.3.0"
 "go:github.com/hashicorp/terraform-plugin-codegen-framework/cmd/tfplugingen-framework" = "0.4.1"
 
 # --- Terraform Linting & Security ---
-tflint = "0.62.0"
+tflint = "0.62.1"
 terrascan = "1.19.9"
 # pulumi = "3.224.0"
 terraform-ls = "0.38.6"

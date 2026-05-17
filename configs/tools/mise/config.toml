@@ -5,6 +5,7 @@
 experimental = true
 
 [tools]
+emsdk = "latest"
 "npm:@tsuga/cli" = "latest"
 "npm:tsuga-cli" = "latest"
 "pipx:asciinema" = "latest"
