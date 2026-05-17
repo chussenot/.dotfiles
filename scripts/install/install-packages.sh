@@ -62,8 +62,11 @@ if is_ubuntu || is_debian; then
       # Use the correct Docker distribution name (debian vs ubuntu)
       if is_ubuntu; then
         _docker_distro="ubuntu"
-      else
+      elif is_debian; then
         _docker_distro="debian"
+      else
+        printf '⚠️  Unsupported distribution for Docker repo setup\n'
+        return 1
       fi
 
       # Add Docker's official GPG key
