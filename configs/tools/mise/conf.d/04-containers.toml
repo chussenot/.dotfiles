@@ -15,11 +15,11 @@ kustomize = "5.8.1"
 # cilium-cli = "0.19.2"
 
 # --- Kubernetes UX / debugging ---
-stern = "1.33.1"
+stern = "1.34.0"
 
 # --- Local dev & workflows ---
 # skaffold = "2.17.1"
-tilt = "0.37.1"
+tilt = "0.37.3"
 
 # --- Security / supply chain ---
 # trivy = "0.69.2"

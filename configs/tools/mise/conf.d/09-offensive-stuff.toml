@@ -12,7 +12,7 @@
 
 # --- Network tools ---
 "go:github.com/projectdiscovery/httpx/cmd/httpx" = "1.9.0"
-"go:github.com/projectdiscovery/subfinder/v2/cmd/subfinder" = "2.13.0"
+"go:github.com/projectdiscovery/subfinder/v2/cmd/subfinder" = "2.14.0"
 "go:github.com/projectdiscovery/shuffledns/cmd/shuffledns" = "1.2.1"
 "go:github.com/projectdiscovery/mapcidr/cmd/mapcidr" = "1.1.97"
 "go:github.com/projectdiscovery/dnsx/cmd/dnsx" = "1.2.3"

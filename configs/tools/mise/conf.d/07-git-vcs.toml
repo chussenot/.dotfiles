@@ -1,8 +1,8 @@
 # Git & Version Control tools
 [tools]
-gh = "2.91.0"
-glab = "1.93.0"
-hk = "1.44.0"
+gh = "2.92.0"
+glab = "1.95.0"
+hk = "1.45.0"
 
 # Conventional commits
 "cargo:cocogitto" = "7.0.0"
@@ -11,4 +11,4 @@ hk = "1.44.0"
 "go:github.com/github/git-sizer" = "1.5.0"
 
 "cargo:gitui" = "0.28.1"
-"cargo:gitoxide" = "0.52.0"
+"cargo:gitoxide" = "0.53.0"

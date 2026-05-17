@@ -9,4 +9,5 @@ experimental = true
 "npm:tsuga-cli" = "latest"
 "pipx:asciinema" = "latest"
 "pipx:frida-tools" = "latest"
+"pipx:mkdocs" = "latest"
 rclone = "latest"
