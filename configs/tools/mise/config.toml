@@ -6,6 +6,7 @@ experimental = true
 
 [tools]
 emsdk = "latest"
+gemini-cli = "latest"
 "npm:@tsuga/cli" = "latest"
 "npm:tsuga-cli" = "latest"
 "pipx:asciinema" = "latest"
