@@ -3,7 +3,7 @@
 repos:
   # General file checks
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v6.0.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
@@ -24,8 +24,9 @@ repos:
 
   # Shell script linting (POSIX-compliant)
   # Exclude configs/ folder (Zsh config files, not POSIX sh scripts)
+  # Pin tracks the mise `shellcheck = "0.11.0"` pin in mise.toml.
   - repo: https://github.com/shellcheck-py/shellcheck-py
-    rev: v0.9.0.6
+    rev: v0.11.0.1
     hooks:
       - id: shellcheck
         args: ['--shell=sh', '--severity=warning']
@@ -50,9 +51,12 @@ repos:
         args: [-w, -s, -i, "2"]
         types: [shell]
 
-  # Python code formatting and linting
+  # Python code formatting and linting.
+  # Pin tracks the mise `pipx:ruff = "0.15.13"` pin in
+  # configs/tools/mise/conf.d/06-linters.toml so the hook and the local
+  # ruff binary apply the same rule set.
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.1.8
+    rev: v0.15.13
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
@@ -60,7 +64,7 @@ repos:
 
   # Markdown linting
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.38.0
+    rev: v0.48.0
     hooks:
       - id: markdownlint
         args: ['--fix', '--config', '.markdownlint.json']
