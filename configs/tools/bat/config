@@ -19,11 +19,9 @@
 # Use a specific pager
 # --pager="less -R"
 
-# Always show the header
---decorations="always"
-
-# Color: let bat auto-detect (TTY → colored, pipe/redirect → plain)
-# Forcing --color=always leaks ANSI escapes into pipes and redirected output.
+# Decorations and color: let bat auto-detect (TTY → styled, pipe/redirect → plain).
+# Forcing always-on for either one leaks the header banner / ANSI escapes
+# into piped or redirected output, which breaks `bat foo | grep …`.
 
 # Wrap long lines
 # --wrap="auto"

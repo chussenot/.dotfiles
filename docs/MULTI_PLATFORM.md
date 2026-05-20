@@ -90,15 +90,7 @@ Edit `scripts/utils/platform.sh`:
 - Add package manager command (e.g., `yum`, `zypper`, etc.)
 - Add support in `pkg_installed()` and `pkg_available()`
 
-### 3. Add Platform-Specific Setup
-
-Edit `scripts/utils/platform_setup.sh`:
-
-- Add `setup_<distro>()` function
-- Add platform-specific configuration logic
-- Update `platform_setup()` dispatcher
-
-### 4. Update Package Lists
+### 3. Update Package Lists
 
 Edit `scripts/install/install-packages.sh`:
 

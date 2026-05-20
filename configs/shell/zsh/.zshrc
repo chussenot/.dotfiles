@@ -44,9 +44,6 @@ fi
 # General Environment Variables
 ############################
 
-# ENABLE_WASM is intentionally empty (unset if needed)
-# export ENABLE_WASM=
-
 export NODE_OPTIONS="--max-old-space-size=8192"
 
 # Shell identification (interactive shell specific)
@@ -209,35 +206,8 @@ zstyle ':completion:*' accept-exact-dirs true
 # Plugins are managed via ${ZDOTDIR:-~}/.zsh_plugins.txt
 # Run 'antidote bundle' to regenerate the static plugin file after editing
 
-# Custom fzf history search (replaces plugin)
-fzf-history-widget() {
-  # Only define if fzf is available
-  if ! command -v fzf &>/dev/null; then
-    return 1
-  fi
-
-  local selected num
-  setopt localoptions noglobsubst noposixbuiltins pipefail no_aliases 2>/dev/null
-
-  # Use __fzfcmd if available, otherwise use fzf directly
-  local fzf_cmd="${__fzfcmd:-fzf}"
-
-  selected=( $(fc -rl 1 | awk '!seen[$0]++' | grep -v -E '(nim|data)' |
-    FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS --tac -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS --query=${(q)LBUFFER} +m" $fzf_cmd) )
-  local ret=$?
-  if [ -n "$selected" ]; then
-    num=$selected[1]
-    if [ -n "$num" ]; then
-      zle vi-fetch-history -n $num
-    fi
-  fi
-  zle reset-prompt
-  return $ret
-}
-zle     -N   fzf-history-widget
-# Note: fzf-history-widget is defined but not bound by default
-# Uncomment the line below to enable it (conflicts with atuin's Ctrl+R)
-# bindkey '^R' fzf-history-widget
+# Note: Ctrl+R is handled by atuin (see "Atuin" section below).
+# A custom fzf-history-widget used to live here but was never bound — removed.
 
 ############################
 # Key Bindings
