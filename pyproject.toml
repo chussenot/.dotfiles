@@ -1,11 +1,11 @@
 [project]
 name = "dotfiles"
 version = "0.1.0"
-description = "Default template for PDM package"
+description = "Dotfiles repository — pyproject is present so `pdm run` works for ad-hoc Python tasks."
 authors = [
     {name = "Clement Hussenot", email = "clement.hussenot-desenonges@believe.com"},
 ]
-dependencies = ["libtmux>=0.46.1", "click>=8.1.8"]
+dependencies = []
 requires-python = "==3.13.*"
 readme = "README.md"
 license = {text = "MIT"}

@@ -44,7 +44,9 @@ fi
 # General Environment Variables
 ############################
 
-export NODE_OPTIONS="--max-old-space-size=8192"
+# Default Node heap to 8 GiB for memory-hungry CLIs / dev servers.
+# Guarded so per-project envs or local overrides can replace it cleanly.
+export NODE_OPTIONS="${NODE_OPTIONS:---max-old-space-size=8192}"
 
 # Shell identification (interactive shell specific)
 # Note: not marked readonly so ~/.zsh.local or sub-shells can override if needed.
