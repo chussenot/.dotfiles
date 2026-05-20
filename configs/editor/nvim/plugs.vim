@@ -448,9 +448,13 @@ Plug 'junegunn/limelight.vim', { 'on': ['Limelight', 'Limelight!', 'Limelight!!'
 
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 
-" Telescope and its dependencies
+" Telescope and its dependencies.
+" v0.2.x requires nvim ≥ 0.10.4 and migrated to vim.treesitter.language.get_lang()
+" and vim.islist(). The previous 0.1.5 pin still called ft_to_lang() (removed
+" from nvim-treesitter) and tbl_islist() (deprecated in nvim 0.10), so opening
+" a Telescope previewer on nvim 0.12 raised an error every time.
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.5' }
+Plug 'nvim-telescope/telescope.nvim', { 'tag': 'v0.2.1' }
 " Optional but recommended for better performance
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
