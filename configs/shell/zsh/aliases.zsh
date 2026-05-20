@@ -40,7 +40,9 @@ alias mi='mise install'
 alias mr='mise run'
 alias pr='pdm run'
 alias py='python3'
-alias pip='pip3'
+# Note: `alias pip='pip3'` removed — it breaks `pip` inside uv venvs (which
+# expose only bin/pip, not bin/pip3). Use `python3 -m pip` for the system
+# interpreter, or just `pip` once a venv is active.
 alias v='nvim'
 alias help='glow -p ~/.dotfiles/help.md'
 

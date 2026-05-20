@@ -16,9 +16,11 @@ export LESS="${LESS:--R}"
 ############################
 # Language and Locale Settings
 ############################
+# Guarded so a host-provided locale (e.g. fr_FR.UTF-8) wins over our default.
+# Only fall back to en_US.UTF-8 when the environment hasn't set one already.
 
-export LC_CTYPE=en_US.UTF-8
-export LANG=en_US.UTF-8
+export LC_CTYPE="${LC_CTYPE:-en_US.UTF-8}"
+export LANG="${LANG:-en_US.UTF-8}"
 
 ############################
 # Timezone
