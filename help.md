@@ -67,16 +67,16 @@ This document is displayed inside a tmux popup viewer. Standard `less` controls 
 
 Note: `Ctrl-R` at the shell prompt is bound to atuin (above), not fzf.
 
-| Keybinding | Action                         |
-| ---------- | ------------------------------ |
-| `Ctrl-T`   | Find and insert file path      |
-| `Alt-C`    | Change directory with fzf      |
-| `Ctrl-J/K` | Navigate results down / up     |
-| `Ctrl-N/P` | Alternative navigation         |
-| `Enter`    | Select current item            |
-| `Escape`   | Cancel and close               |
-| `Ctrl-C`   | Cancel and close               |
-| `Ctrl-G`   | Cancel and close               |
+| Keybinding | Action                     |
+| ---------- | -------------------------- |
+| `Ctrl-T`   | Find and insert file path  |
+| `Alt-C`    | Change directory with fzf  |
+| `Ctrl-J/K` | Navigate results down / up |
+| `Ctrl-N/P` | Alternative navigation     |
+| `Enter`    | Select current item        |
+| `Escape`   | Cancel and close           |
+| `Ctrl-C`   | Cancel and close           |
+| `Ctrl-G`   | Cancel and close           |
 
 ### Terminal Multiplexer (TMUX)
 
