@@ -366,21 +366,8 @@ function update {
     sudo apt update && sudo apt upgrade -y || ((errors++))
   fi
 
-  # Update fzf repository
-  if [[ -d "$HOME/.fzf" ]]; then
-    echo "🔄 Updating fzf repository..."
-    (
-      cd "$HOME/.fzf" || exit 1
-      # Handle detached HEAD state (e.g., checked out to a tag)
-      if ! git symbolic-ref HEAD &>/dev/null; then
-        git checkout master 2>/dev/null || git checkout main 2>/dev/null
-      fi
-      git pull --rebase 2>/dev/null
-    ) && echo "✅ fzf repository updated successfully!" || {
-      echo "⚠️  Error: Failed to update fzf repository"
-      ((errors++))
-    }
-  fi
+  # Note: fzf is installed by mise (see configs/tools/mise/conf.d/02-essentials.toml),
+  # so `mise upgrade` below handles its updates — no separate git pull needed.
 
   # Update TPM (tmux plugin manager)
   if [[ -d "$HOME/.tmux/plugins/tpm" ]]; then

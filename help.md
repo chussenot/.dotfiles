@@ -59,23 +59,24 @@ This document is displayed inside a tmux popup viewer. Standard `less` controls 
 | `Up` / `Down`     | History substring search      |
 | `Ctrl-Left/Right` | Jump word by word             |
 | `Ctrl-U`          | Kill line backward            |
-| `Ctrl-R`          | Search history via FZF        |
+| `Ctrl-R`          | Search history via atuin      |
 | `Home` / `End`    | Beginning / end of line       |
 | `Delete`          | Delete character under cursor |
 
 ### Fuzzy Finder (FZF)
 
-| Keybinding | Action                             |
-| ---------- | ---------------------------------- |
-| `Ctrl-T`   | Find and insert file path          |
-| `Ctrl-R`   | Search command history             |
-| `Ctrl-C`   | Change directory with fuzzy search |
-| `Alt-C`    | Alternative directory change       |
-| `Ctrl-J/K` | Navigate results down / up         |
-| `Ctrl-N/P` | Alternative navigation             |
-| `Enter`    | Select current item                |
-| `Escape`   | Cancel and close                   |
-| `Ctrl-G`   | Abort search                       |
+Note: `Ctrl-R` at the shell prompt is bound to atuin (above), not fzf.
+
+| Keybinding | Action                         |
+| ---------- | ------------------------------ |
+| `Ctrl-T`   | Find and insert file path      |
+| `Alt-C`    | Change directory with fzf      |
+| `Ctrl-J/K` | Navigate results down / up     |
+| `Ctrl-N/P` | Alternative navigation         |
+| `Enter`    | Select current item            |
+| `Escape`   | Cancel and close               |
+| `Ctrl-C`   | Cancel and close               |
+| `Ctrl-G`   | Cancel and close               |
 
 ### Terminal Multiplexer (TMUX)
 
