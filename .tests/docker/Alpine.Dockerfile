@@ -9,7 +9,9 @@ RUN apk add --no-cache \
         curl \
         sudo \
         shadow \
-        bash
+        bash \
+        build-base \
+        libgcc
 
 # Create a non-root user (dev) similar to real environment
 RUN useradd -m -s /bin/bash dev && \
