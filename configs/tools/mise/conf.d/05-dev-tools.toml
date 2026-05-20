@@ -53,7 +53,7 @@ websocat = "1.14.1"
 "pipx:trash-cli" = "0.24.5.26"
 "pipx:wafw00f" = "2.4.2"
 "pipx:yq" = "3.4.3"
-"pipx:yt-dlp" = "2026.5.16.233954.dev0"
+"pipx:yt-dlp" = "2026.3.17"
 # "pipx:semgrep" = "1.153.1"
 
 # --- Parquet tools (mixed sources) ---

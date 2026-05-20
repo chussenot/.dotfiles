@@ -1,9 +1,13 @@
 [tools]
-# SECURITY: Pin tool versions to prevent supply chain attacks and ensure reproducibility
-# Update versions periodically after reviewing changelogs
-hk = "1.36.0"
+# SECURITY: Pin tool versions to prevent supply chain attacks and ensure reproducibility.
+# Update versions periodically after reviewing changelogs.
+# Note: hk and prettier are also pinned in configs/tools/mise/conf.d/, but
+# project-scope (this file) takes precedence inside the dotfiles repo —
+# keep these in sync with the conf.d/ values to avoid using stale versions
+# only when working inside the repo.
+hk = "1.45.0"
 pkl = "0.30.2"
-prettier = "3.8.1"
+prettier = "3.8.3"
 shellcheck = "0.11.0"
 
 [tasks]
