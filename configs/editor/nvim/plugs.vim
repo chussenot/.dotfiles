@@ -500,6 +500,19 @@ endif
 if has('nvim')
   Plug 'folke/snacks.nvim'
   Plug 'coder/claudecode.nvim', { 'tag': 'v0.3.0' }
+
+  " Community extensions on top of claudecode.nvim.
+  " Both pull from HEAD because the upstream repos publish no tags.
+  " They sit alongside, not inside, the official plugin and are loaded
+  " from after/plugin/claude-fzf.lua via pcall so a future API break
+  " never takes the rest of Neovim down with it.
+  "   - ibhagwan/fzf-lua: shared fzf-lua dependency (different from the
+  "     existing junegunn/fzf.vim; they coexist without conflict).
+  "   - pittcat/claude-fzf.nvim: fzf-lua → Claude context shortcuts.
+  "   - pittcat/claude-fzf-history.nvim: browse past Claude sessions.
+  Plug 'ibhagwan/fzf-lua'
+  Plug 'pittcat/claude-fzf.nvim'
+  Plug 'pittcat/claude-fzf-history.nvim'
 endif
 
 call plug#end()

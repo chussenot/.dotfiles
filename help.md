@@ -178,6 +178,22 @@ through a lockfile in `~/.claude/ide/`.
 | `<leader>aa` | normal | Accept the proposed diff          |
 | `<leader>ad` | normal | Deny the proposed diff            |
 
+### Claude FZF context shortcuts (community extensions)
+
+The `claude-fzf.nvim` and `claude-fzf-history.nvim` plugins layer fzf-lua
+pickers on top of claudecode — pick files, grep results, or buffers, and
+they go straight into Claude's context. `<leader>ch` opens a fuzzy picker
+over past Claude sessions for the current project.
+
+| Keybinding   | Action                                     |
+| ------------ | ------------------------------------------ |
+| `<leader>cf` | Pick files (multi-select) → send to Claude |
+| `<leader>cg` | Grep → send matches to Claude              |
+| `<leader>cb` | Buffers → send to Claude                   |
+| `<leader>cG` | Git tracked files → send to Claude         |
+| `<leader>cd` | Files under a directory → send to Claude   |
+| `<leader>ch` | Browse Claude session history              |
+
 ## FEATURES
 
 ### Session Management

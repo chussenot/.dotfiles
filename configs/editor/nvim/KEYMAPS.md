@@ -132,17 +132,39 @@ NeoVim 0.11+ provides these as defaults. Fallback keymaps are set for older vers
 Talks to the external `claude` CLI through an MCP WebSocket bridge. Requires the
 CLI to be on `$PATH`.
 
-| Key                 | Mode   | Action                                      |
-| ------------------- | ------ | ------------------------------------------- |
-| `<leader>ac`        | normal | Toggle the Claude terminal split            |
-| `<leader>af`        | normal | Focus the Claude terminal (open if hidden)  |
-| `<leader>ar`        | normal | Resume the last Claude session              |
-| `<leader>aC`        | normal | Continue (no new-prompt confirmation)       |
-| `<leader>am`        | normal | Select model                                |
-| `<leader>ab`        | normal | Add current buffer as context               |
-| `<leader>as`        | visual | Send selection as context                   |
-| `<leader>aa`        | normal | Accept the proposed diff                    |
-| `<leader>ad`        | normal | Deny the proposed diff                      |
+| Key          | Mode   | Action                                     |
+| ------------ | ------ | ------------------------------------------ |
+| `<leader>ac` | normal | Toggle the Claude terminal split           |
+| `<leader>af` | normal | Focus the Claude terminal (open if hidden) |
+| `<leader>ar` | normal | Resume the last Claude session             |
+| `<leader>aC` | normal | Continue (no new-prompt confirmation)      |
+| `<leader>am` | normal | Select model                               |
+| `<leader>ab` | normal | Add current buffer as context              |
+| `<leader>as` | visual | Send selection as context                  |
+| `<leader>aa` | normal | Accept the proposed diff                   |
+| `<leader>ad` | normal | Deny the proposed diff                     |
+
+### Claude FZF (NeoVim, community extensions)
+
+[claude-fzf.nvim]: https://github.com/pittcat/claude-fzf.nvim
+[claude-fzf-history.nvim]: https://github.com/pittcat/claude-fzf-history.nvim
+[fzf-lua]: https://github.com/ibhagwan/fzf-lua
+
+[claude-fzf.nvim] feeds files / grep results / buffers to Claude as context
+via [fzf-lua]; [claude-fzf-history.nvim] browses previous Claude sessions.
+
+| Key          | Action                                              |
+| ------------ | --------------------------------------------------- |
+| `<leader>cf` | Files → pick (multi-select), send to Claude context |
+| `<leader>cg` | Grep → pick matches, send to Claude context         |
+| `<leader>cb` | Buffers → pick open buffers, send to Claude         |
+| `<leader>cG` | Git files → pick tracked files, send to Claude      |
+| `<leader>cd` | Directory → pick files under a directory            |
+| `<leader>ch` | History → browse past Claude sessions               |
+
+Note: `<leader>cG` uses a capital G to avoid timeout-conflicting with
+`<leader>cg` (grep). Upstream's README suggests `<leader>cgf`, which would
+hang `cg` until `timeoutlen` expires.
 
 ## Terminal Mode (NeoVim)
 

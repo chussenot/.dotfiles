@@ -9,10 +9,13 @@
 local ok, claudecode = pcall(require, 'claudecode')
 if not ok then return end
 
--- snacks.nvim is the terminal provider we use; loading it explicitly here
--- avoids the "snacks not initialized" warning that fires when claudecode
--- tries to open its terminal before snacks has set itself up.
-pcall(require, 'snacks')
+-- snacks.nvim is the terminal provider we use. Must call setup() — just
+-- `require`ing the module is not enough; `:checkhealth snacks` will
+-- complain "setup not called" and the terminal provider won't work.
+-- Empty opts uses snacks' conservative defaults (no auto-enabled UI
+-- replacements beyond what's needed for the terminal split).
+local snacks_ok, snacks = pcall(require, 'snacks')
+if snacks_ok then snacks.setup({}) end
 
 claudecode.setup({
   -- Where the embedded terminal opens. Right-side split is least disruptive
