@@ -28,11 +28,16 @@ HISTFILE="${HISTFILE:-$HOME/.zsh_history}"
 # Tmux Session Management
 ############################
 
-# Check if we are inside a tmux session
-# Only auto-start tmux if it's available and we're in an interactive shell
-if [[ -z "$TMUX" && -n "$PS1" && -t 0 ]] && command -v tmux &>/dev/null; then
-  # Try to attach to an existing session 'default' if it exists
-  # Otherwise create a new session named 'default'
+# Auto-attach to a 'default' tmux session in real interactive shells.
+# Skip when running inside an IDE's integrated terminal (VSCode/Cursor sets
+# TERM_PROGRAM=vscode; Emacs sets INSIDE_EMACS) or when the user explicitly
+# opts out with DISABLE_AUTO_TMUX=1 — those environments already do their
+# own multiplexing and don't want to be hijacked by tmux.
+if [[ -z "$TMUX" && -n "$PS1" && -t 0 ]] \
+   && [[ -z "${DISABLE_AUTO_TMUX:-}" ]] \
+   && [[ "${TERM_PROGRAM:-}" != "vscode" ]] \
+   && [[ -z "${INSIDE_EMACS:-}" ]] \
+   && command -v tmux &>/dev/null; then
   if ! tmux attach-session -t default 2>/dev/null; then
     tmux new-session -s default 2>/dev/null || {
       echo "⚠️  Warning: Failed to start tmux session" >&2

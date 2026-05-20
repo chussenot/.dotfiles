@@ -170,7 +170,10 @@ if command -v qrencode &>/dev/null; then
   alias toqrcode='qrencode -t ANSI -o -'
 fi
 alias upload='f(){ curl -F"file=@$1" https://0x0.st;  unset -f f; }; f'
-alias usleep='f(){ python3 -c "import time; time.sleep($1)";  unset -f f; }; f'
+# usleep: sleep for a fractional number of seconds (`usleep 0.25`).
+# Argument flows through sys.argv so it can't inject Python code, unlike a
+# naïve f-string / `$1` interpolation inside `python3 -c`.
+alias usleep='python3 -c "import sys, time; time.sleep(float(sys.argv[1]))"'
 alias vplay='mpv --no-audio'
 # WARNING: Disabling certificate checking is a security risk!
 # Only use this if you understand the implications
