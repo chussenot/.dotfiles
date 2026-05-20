@@ -7,7 +7,10 @@ FROM fedora:41
 RUN dnf install -y \
         git \
         curl \
-        sudo && \
+        sudo \
+        gcc \
+        gcc-c++ \
+        make && \
     dnf clean all
 
 # Create a non-root user (dev) similar to real environment

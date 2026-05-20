@@ -12,7 +12,8 @@ RUN apt-get update && \
         git \
         curl \
         sudo \
-        ca-certificates && \
+        ca-certificates \
+        build-essential && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
