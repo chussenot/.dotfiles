@@ -52,11 +52,9 @@ export NODE_OPTIONS="${NODE_OPTIONS:---max-old-space-size=8192}"
 # Note: not marked readonly so ~/.zsh.local or sub-shells can override if needed.
 export SHELL="$(command -v zsh)"
 
-# Set dotfiles directory for easy access (interactive shell specific)
-export DOTFILES_DIR="${DOTFILES_DIR:-$HOME/.dotfiles}"
-
-# Note: System-wide environment variables (EDITOR, VISUAL, PAGER, LESS, LC_CTYPE, LANG, TZ, XDG_*)
-# have been moved to .zshenv to be available for all shell invocations
+# Note: System-wide environment variables (EDITOR, VISUAL, PAGER, LESS,
+# LC_CTYPE, LANG, TZ, XDG_*, DOTFILES_DIR) have been moved to .zshenv to be
+# available for all shell invocations.
 
 ############################
 # PATH Management

@@ -10,8 +10,6 @@ elif [ -f "${HOME}/.local/bin/mise" ]; then
   eval "$("${HOME}/.local/bin/mise" activate bash 2>/dev/null)"
 fi
 
-CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
 main() {
   local result retval query selection
 

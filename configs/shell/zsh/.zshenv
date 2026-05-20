@@ -3,6 +3,14 @@
 # System-wide environment variables that should be available everywhere
 
 ############################
+# Dotfiles location
+############################
+# Available everywhere, so functions sourced outside an interactive shell
+# (e.g. via -c, scripts, IDE tasks) still find the repo root.
+
+export DOTFILES_DIR="${DOTFILES_DIR:-$HOME/.dotfiles}"
+
+############################
 # Editor and Pager Settings
 ############################
 
