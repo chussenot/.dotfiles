@@ -160,6 +160,24 @@ Leader key is `Space`.
 | `Ctrl-Space`        | Trigger completion              |
 | `Space`             | which-key popup (wait briefly)  |
 
+### Claude Code in Neovim
+
+The `claudecode.nvim` plugin embeds the external `claude` CLI as a split
+inside Neovim. The plugin runs an MCP WebSocket server; the CLI auto-attaches
+through a lockfile in `~/.claude/ide/`.
+
+| Keybinding   | Mode   | Action                            |
+| ------------ | ------ | --------------------------------- |
+| `<leader>ac` | normal | Toggle the Claude terminal split  |
+| `<leader>af` | normal | Focus the Claude terminal         |
+| `<leader>ar` | normal | Resume the last Claude session    |
+| `<leader>aC` | normal | Continue (no prompt confirmation) |
+| `<leader>am` | normal | Pick the model                    |
+| `<leader>ab` | normal | Add current buffer as context     |
+| `<leader>as` | visual | Send selection as context         |
+| `<leader>aa` | normal | Accept the proposed diff          |
+| `<leader>ad` | normal | Deny the proposed diff            |
+
 ## FEATURES
 
 ### Session Management

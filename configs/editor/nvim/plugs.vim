@@ -491,4 +491,15 @@ if has('nvim')
   Plug 'folke/which-key.nvim'
 endif
 
+" Claude Code integration — talks to the external `claude` CLI over a
+" WebSocket MCP channel (the same protocol the VS Code / JetBrains
+" extensions use). Requires:
+"   - `claude` CLI on PATH (you already use it).
+"   - folke/snacks.nvim for the terminal split.
+" Configured in after/plugin/claudecode.lua.
+if has('nvim')
+  Plug 'folke/snacks.nvim'
+  Plug 'coder/claudecode.nvim', { 'tag': 'v0.3.0' }
+endif
+
 call plug#end()

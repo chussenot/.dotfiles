@@ -125,6 +125,25 @@ NeoVim 0.11+ provides these as defaults. Fallback keymaps are set for older vers
 | --------- | ---------------------------- |
 | `<Space>` | Wait to see keybinding popup |
 
+### Claude Code (NeoVim, via [claudecode.nvim])
+
+[claudecode.nvim]: https://github.com/coder/claudecode.nvim
+
+Talks to the external `claude` CLI through an MCP WebSocket bridge. Requires the
+CLI to be on `$PATH`.
+
+| Key                 | Mode   | Action                                      |
+| ------------------- | ------ | ------------------------------------------- |
+| `<leader>ac`        | normal | Toggle the Claude terminal split            |
+| `<leader>af`        | normal | Focus the Claude terminal (open if hidden)  |
+| `<leader>ar`        | normal | Resume the last Claude session              |
+| `<leader>aC`        | normal | Continue (no new-prompt confirmation)       |
+| `<leader>am`        | normal | Select model                                |
+| `<leader>ab`        | normal | Add current buffer as context               |
+| `<leader>as`        | visual | Send selection as context                   |
+| `<leader>aa`        | normal | Accept the proposed diff                    |
+| `<leader>ad`        | normal | Deny the proposed diff                      |
+
 ## Terminal Mode (NeoVim)
 
 | Key          | Action                |
