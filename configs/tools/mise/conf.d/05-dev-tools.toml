@@ -27,7 +27,7 @@ pipx = "1.12.0"
 "pipx:yq" = "3.4.3"
 
 # Pre-commit hooks
-prek = "0.4.0"
+prek = "0.4.1"
 
 # for binary format
 "go:github.com/wader/fq" = "0.17.0"
