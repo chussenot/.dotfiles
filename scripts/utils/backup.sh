@@ -7,6 +7,9 @@ set -eu
 
 BACKUP_DIR="${HOME}/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
 mkdir -p "${BACKUP_DIR}"
+# Backups can contain SSH keys, tokens, or session state pulled from
+# ~/.config/* — restrict the parent and this timestamped dir to user-only.
+chmod 0700 "${HOME}/.dotfiles_backup" "${BACKUP_DIR}" 2>/dev/null || true
 
 printf '💾 Creating backup in %s\n' "${BACKUP_DIR}"
 

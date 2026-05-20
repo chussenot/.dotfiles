@@ -22,6 +22,10 @@ fi
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE="${HISTFILE:-$HOME/.zsh_history}"
+# Shell history can hold tokens, hostnames, internal paths, and the last
+# things you ran with sudo. Lock it to user-only read/write so a misconfigured
+# umask, a sloppy `chmod -R o+r`, or a backup tool can't expose it.
+[[ -e "$HISTFILE" ]] && chmod 0600 "$HISTFILE" 2>/dev/null
 # Note: History-related setopt are defined in the "Zsh Shell Options" section below
 
 ############################

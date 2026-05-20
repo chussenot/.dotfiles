@@ -110,13 +110,20 @@ if command -v xprop &>/dev/null; then
 fi
 alias get-pid-ps='ps fauxw | fzf | awk "{ print \$2}"'
 alias get-shell-size='echo "stty rows ${LINES} cols ${COLUMNS}"'
-# SECURITY: Variables properly quoted to prevent word splitting/injection
-alias git-cloneall-github='curl -sk -H "Authorization: token ${GITHUB_READ_TOKEN}" "https://api.github.com/search/repositories?q=user:${GITHUB_USER}" | jq -r ".items[].ssh_url" | parallel -j10 "git clone {}"'
-alias git-cloneall-gitlab='curl -sk -H "Authorization: Bearer ${GITLAB_READ_TOKEN}" "https://gitlab.com/api/v4/projects?owned=true&simple=true" | jq -r ".[].ssh_url_to_repo" | parallel -j10 "git clone {}"'
+# SECURITY: -k dropped (api.github.com / gitlab.com have valid public certs;
+# bypassing verification turns a token-bearing API call into an MITM target).
+# URL allowlist (grep ^git@ / ^https://) prevents a hostile-or-typo'd API
+# response from injecting commands through `parallel "git clone {}"`.
+alias git-cloneall-github='curl -sSf -H "Authorization: token ${GITHUB_READ_TOKEN}" "https://api.github.com/search/repositories?q=user:${GITHUB_USER}" | jq -r ".items[].ssh_url" | grep -E "^(git@|https://)" | parallel -j10 git clone {}'
+alias git-cloneall-gitlab='curl -sSf -H "Authorization: Bearer ${GITLAB_READ_TOKEN}" "https://gitlab.com/api/v4/projects?owned=true&simple=true" | jq -r ".[].ssh_url_to_repo" | grep -E "^(git@|https://)" | parallel -j10 git clone {}'
 alias git-pullall='find . -maxdepth 2 -name ".git" | cut -d/ -f2 | parallel -j10 "cd {} && git pull"'
 alias nocolor='sed "s/\x1B\[[0-9;]\+[A-Za-z]//g"'
 alias nonullbyte='python3 -c "import sys; sys.stdout.write(sys.stdin.read().replace(chr(0), str()))"'
-alias probe-urls='f(){ while read url; do curl -sk "$url" -o /dev/null -w "%{http_code}:%{size_download}:%{url_effective}\n" ; done < "$@" ; unset -f f; }; f'
+# probe-urls: HTTP status sweep over a file of URLs.
+# -k is intentional — pentest targets often have self-signed certs.
+# Fixed: `read -r` (preserve backslashes in URLs), `< "$1"` (was < "$@" which
+# only ever read the first arg anyway, but now matches the documented usage).
+alias probe-urls='f(){ while IFS= read -r url; do curl -sk "$url" -o /dev/null -w "%{http_code}:%{size_download}:%{url_effective}\n" ; done < "$1" ; unset -f f; }; f'
 alias pserv='python3 -m http.server -d .'
 alias urldecode="python3 -c \"import sys; from urllib.parse import unquote; print(unquote(sys.argv[1]))\""
 alias urlencode-deep='f(){ echo -n "$1" | xxd -p | tr -d "\n" | sed "s#..#%&#g";  unset -f f; }; f'
