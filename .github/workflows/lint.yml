@@ -13,4 +13,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run shellcheck
-        run: find scripts/ -name '*.sh' -print0 | xargs -0 shellcheck --shell=sh
+        # Lints every POSIX sh script in the repo (excluding configs/, which
+        # holds zsh-specific config files validated separately by pre-commit).
+        run: |
+          find scripts/ .tests/ bootstrap.sh install.sh \
+            -name '*.sh' -print0 | xargs -0 -r shellcheck --shell=sh
