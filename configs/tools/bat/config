@@ -22,8 +22,8 @@
 # Always show the header
 --decorations="always"
 
-# Use a specific syntax highlighting theme
---color="always"
+# Color: let bat auto-detect (TTY → colored, pipe/redirect → plain)
+# Forcing --color=always leaks ANSI escapes into pipes and redirected output.
 
 # Wrap long lines
 # --wrap="auto"

@@ -50,7 +50,8 @@ fi
 export NODE_OPTIONS="--max-old-space-size=8192"
 
 # Shell identification (interactive shell specific)
-readonly SHELL="$(command -v zsh)"
+# Note: not marked readonly so ~/.zsh.local or sub-shells can override if needed.
+export SHELL="$(command -v zsh)"
 
 # Set dotfiles directory for easy access (interactive shell specific)
 export DOTFILES_DIR="${DOTFILES_DIR:-$HOME/.dotfiles}"
@@ -113,8 +114,10 @@ setopt LIST_PACKED
 # Globbing and pattern matching
 # - EXTENDED_GLOB: Enable extended globbing patterns (#, ~, ^)
 # - NOMATCH: Print error if globbing fails to match
+# - INTERACTIVE_COMMENTS: Allow `# comments` at the interactive prompt
 setopt EXTENDED_GLOB
 setopt NOMATCH
+setopt INTERACTIVE_COMMENTS
 
 # Command correction
 # - CORRECT: Try to correct spelling of commands
