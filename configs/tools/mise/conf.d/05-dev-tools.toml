@@ -11,13 +11,13 @@ hyperfine = "1.20.0"
 jq = "1.8.1"
 just = "1.51.0"
 neovim = "0.12.2"
-pdm = "2.26.9"
+pdm = "2.27.0"
 pipx = "1.12.0"
 prek = "0.4.1" # pre-commit hooks runner
 ripgrep = "15.1.0"
 tree-sitter = "0.26.9"
 usage = "3.3.0"
-uv = "0.11.15"
+uv = "0.11.16"
 watchexec = "2.5.1"
 websocat = "1.14.1"
 
@@ -53,13 +53,13 @@ websocat = "1.14.1"
 "pipx:trash-cli" = "0.24.5.26"
 "pipx:wafw00f" = "2.4.2"
 "pipx:yq" = "3.4.3"
-"pipx:yt-dlp" = "2026.3.17"
+"pipx:yt-dlp" = "2026.5.24.234402.dev0"
 # "pipx:semgrep" = "1.153.1"
 
 # --- Parquet tools (mixed sources) ---
 "cargo:parqeye" = "0.0.2"
 "cargo:pqrs" = "0.3.2"
-"go:github.com/hangxie/parquet-tools" = "1.49.1"
+"go:github.com/hangxie/parquet-tools" = "1.49.3"
 # "pipx:parquet-cli" = "1.3"
 
 # --- Secrets management ---

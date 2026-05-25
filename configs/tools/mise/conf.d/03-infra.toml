@@ -2,7 +2,7 @@
 [tools]
 
 # --- Cloud CLIs ---
-awscli = "2.34.51"
+awscli = "2.34.53"
 gcloud = "569.0.0"
 vault = "2.0.1"
 
