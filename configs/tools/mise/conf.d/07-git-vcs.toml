@@ -11,4 +11,4 @@ hk = "1.45.0"
 "go:github.com/github/git-sizer" = "1.5.0"
 
 "cargo:gitui" = "0.28.1"
-"cargo:gitoxide" = "0.53.0"
+"cargo:gitoxide" = "0.54.0"
