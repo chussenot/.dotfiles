@@ -9,11 +9,16 @@
 -- to setup()) their own keybindings, so the body below is just two setup
 -- calls and a which-key prefix label.
 
+-- Both plugins emit a logger.info(...) "initialized successfully" line on
+-- setup, which vim.notify paints on the cmdline at startup and triggers
+-- the "Press ENTER or type command to continue" hit-prompt. Bump the level
+-- to WARN so only warnings/errors surface.
 local fzf_ok, claude_fzf = pcall(require, 'claude-fzf')
 if fzf_ok then
   claude_fzf.setup({
     auto_context = true,
     batch_size   = 10,
+    logging      = { level = 'WARN' },
     -- Note: <leader>cG instead of the README-suggested <leader>cgf —
     -- otherwise it timeout-conflicts with <leader>cg (grep) and the
     -- grep mapping won't fire until timeoutlen elapses.
@@ -30,6 +35,7 @@ end
 local hist_ok, claude_hist = pcall(require, 'claude-fzf-history')
 if hist_ok then
   claude_hist.setup({
+    logging = { level = 'WARN' },
     keymaps = {
       history = '<leader>ch',
     },
