@@ -2,4 +2,15 @@
 .*
 !.gitignore
 !.gitignore_global
+
+# Track Claude Code project-level subagent definitions and CLAUDE.md.
+# These overrides also defeat the global ~/.gitignore rules of `.claude/*`
+# and `CLAUDE.md`.
+!.claude/
+!.claude/agents/
+!.claude/agents/*.md
+.claude/settings.local.json
+.claude/skills
+!CLAUDE.md
+
 specs/*
