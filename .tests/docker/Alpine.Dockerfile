@@ -8,13 +8,12 @@ RUN apk add --no-cache \
         git \
         curl \
         sudo \
-        shadow \
         bash \
         build-base \
         libgcc
 
 # Create a non-root user (dev) similar to real environment
-RUN useradd -m -s /bin/bash dev && \
+RUN adduser -D -s /bin/bash dev && \
     echo 'dev ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # Copy the entire dotfiles repository into the container
