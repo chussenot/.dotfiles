@@ -17,21 +17,21 @@ You review `*.sh` files under `scripts/` and `lib/`. Files under `configs/` (esp
 
 For every file in scope, verify against the table from `CLAUDE.md`:
 
-| Forbidden | Required |
-|-----------|----------|
-| `[[ ]]` | `[ ]` |
-| `local var` | `_underscore_prefixed` variables |
-| `function name {}` | `name() {}` |
-| `arr=(a b c)` arrays | space-separated strings |
-| `(( x++ ))` arithmetic | `$(( x + 1 ))` |
-| `&>`, `&>>` | `>/dev/null 2>&1` |
-| `#!/bin/bash` shebang | `#!/bin/sh` |
-| `set -o pipefail` | omit (not POSIX) |
-| `<(cmd)` process sub | temp files or pipes |
-| `<<< "text"` here-string | `printf '%s' "text" \|` |
-| `$'...'` ANSI-C strings | `printf '\n'` etc. |
-| `{a,b}` brace expansion | explicit list |
-| `echo -e` | `printf` |
+| Forbidden                | Required                         |
+| ------------------------ | -------------------------------- |
+| `[[ ]]`                  | `[ ]`                            |
+| `local var`              | `_underscore_prefixed` variables |
+| `function name {}`       | `name() {}`                      |
+| `arr=(a b c)` arrays     | space-separated strings          |
+| `(( x++ ))` arithmetic   | `$(( x + 1 ))`                   |
+| `&>`, `&>>`              | `>/dev/null 2>&1`                |
+| `#!/bin/bash` shebang    | `#!/bin/sh`                      |
+| `set -o pipefail`        | omit (not POSIX)                 |
+| `<(cmd)` process sub     | temp files or pipes              |
+| `<<< "text"` here-string | `printf '%s' "text" \|`          |
+| `$'...'` ANSI-C strings  | `printf '\n'` etc.               |
+| `{a,b}` brace expansion  | explicit list                    |
+| `echo -e`                | `printf`                         |
 
 Also run `shellcheck --shell=sh` on each file and merge its findings with the manual scan.
 

@@ -1,4 +1,5 @@
 <!-- markdownlint-disable MD013 MD060 -->
+
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
@@ -166,20 +167,20 @@ Rules:
 
 For all `*.sh` files outside `configs/`:
 
-| Construct | Forbidden | Required |
-|-----------|-----------|----------|
-| Test | `[[ ]]` | `[ ]` |
-| Variables | `local var` | `_var` (underscore prefix) |
-| Functions | `function name` | `name() {}` |
-| Arrays | `arr=(a b c)` | `"a b c"` space-separated |
-| Arithmetic | `(( x++ ))` | `$(( x + 1 ))` |
-| Redirection | `&>`, `&>>` | `>/dev/null 2>&1` |
-| Shebang | `#!/bin/bash` | `#!/bin/sh` |
-| Pipefail | `set -o pipefail` | omit (not POSIX) |
-| Process sub | `<(cmd)` | use temp files or pipes |
-| Here-string | `<<< "text"` | `printf '%s' "text" \|` |
-| ANSI-C | `$'...'` | use `printf '\n'` etc. |
-| Brace exp. | `{a,b}` | list items explicitly |
+| Construct   | Forbidden         | Required                   |
+| ----------- | ----------------- | -------------------------- |
+| Test        | `[[ ]]`           | `[ ]`                      |
+| Variables   | `local var`       | `_var` (underscore prefix) |
+| Functions   | `function name`   | `name() {}`                |
+| Arrays      | `arr=(a b c)`     | `"a b c"` space-separated  |
+| Arithmetic  | `(( x++ ))`       | `$(( x + 1 ))`             |
+| Redirection | `&>`, `&>>`       | `>/dev/null 2>&1`          |
+| Shebang     | `#!/bin/bash`     | `#!/bin/sh`                |
+| Pipefail    | `set -o pipefail` | omit (not POSIX)           |
+| Process sub | `<(cmd)`          | use temp files or pipes    |
+| Here-string | `<<< "text"`      | `printf '%s' "text" \|`    |
+| ANSI-C      | `$'...'`          | use `printf '\n'` etc.     |
+| Brace exp.  | `{a,b}`           | list items explicitly      |
 
 All scripts must pass `shellcheck --shell=sh`. Prefer `printf` over `echo` for anything beyond trivial output.
 
@@ -260,12 +261,12 @@ This repository ships a small set of Claude Code [subagents](https://docs.anthro
 
 The agents in this repo mirror the review concerns enforced by this CLAUDE.md:
 
-| Agent | When to invoke |
-|-------|----------------|
-| [`posix-reviewer`](.claude/agents/posix-reviewer.md) | Reviewing `*.sh` files under `scripts/` or `lib/` for POSIX compliance and shellcheck cleanliness. |
+| Agent                                                                | When to invoke                                                                                                                                     |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`posix-reviewer`](.claude/agents/posix-reviewer.md)                 | Reviewing `*.sh` files under `scripts/` or `lib/` for POSIX compliance and shellcheck cleanliness.                                                 |
 | [`cross-platform-auditor`](.claude/agents/cross-platform-auditor.md) | Auditing Linux ↔ macOS portability (`sed -i`, `mktemp`, `readlink`, `stat`, `date`, `grep -P`, `echo -e`, `xargs -r`, `/proc`, `/etc/os-release`). |
-| [`symlink-validator`](.claude/agents/symlink-validator.md) | Validating `scripts/setup/symlinks.conf` entries against real files in the repo and the parser in `.tests/check.sh`. |
-| [`mise-tool-curator`](.claude/agents/mise-tool-curator.md) | Adding or upgrading a tool in `configs/tools/mise/conf.d/` — category placement, version pinning, backend runtime prerequisites, profile gating. |
+| [`symlink-validator`](.claude/agents/symlink-validator.md)           | Validating `scripts/setup/symlinks.conf` entries against real files in the repo and the parser in `.tests/check.sh`.                               |
+| [`mise-tool-curator`](.claude/agents/mise-tool-curator.md)           | Adding or upgrading a tool in `configs/tools/mise/conf.d/` — category placement, version pinning, backend runtime prerequisites, profile gating.   |
 
 ### Invocation
 
