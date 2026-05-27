@@ -139,14 +139,29 @@ if is_ubuntu || is_debian; then
     fi
   done
 
-  # Install all packages at once (much more efficient)
+  # Install all packages at once (much faster than per-package). apt
+  # treats this as a single transaction, so if any one package can't be
+  # resolved on this distro the whole install fails and *nothing* gets
+  # installed. Fall back to per-package installation in that case so a
+  # single bad package name doesn't take down the rest (notably zsh,
+  # which check.sh requires).
   if [ -n "${_packages_to_install}" ]; then
     printf 'Installing packages: %s\n' "${_packages_to_install}"
-    # Install directly to avoid install_pkg calling apt-get update again
     # shellcheck disable=SC2086 # Intentional word splitting for package list
-    sudo apt-get install -y ${_packages_to_install} || {
-      printf '⚠️  Some packages failed to install, continuing...\n'
-    }
+    if ! sudo apt-get install -y ${_packages_to_install}; then
+      printf '⚠️  Bulk install failed; retrying packages individually...\n'
+      _failed_packages=""
+      for _package in ${_packages_to_install}; do
+        if ! sudo apt-get install -y "${_package}"; then
+          _failed_packages="${_failed_packages} ${_package}"
+        fi
+      done
+      if [ -n "${_failed_packages}" ]; then
+        printf '⚠️  Could not install:%s\n' "${_failed_packages}"
+      else
+        printf '✅ All packages installed via per-package fallback\n'
+      fi
+    fi
   else
     printf 'All packages are already installed\n'
   fi
