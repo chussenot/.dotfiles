@@ -118,7 +118,8 @@ if is_ubuntu || is_debian; then
   # (VS Code, Slack, tracker-miner-fs, etc. consume many inotify watches)
   if [ ! -f /etc/sysctl.d/99-inotify.conf ] || ! grep -q 'max_user_watches=524288' /etc/sysctl.d/99-inotify.conf 2>/dev/null; then
     printf 'Increasing inotify watch limits (prevents apt watch allocation errors)...\n'
-    printf 'fs.inotify.max_user_watches=524288\nfs.inotify.max_user_instances=1024\n' | sudo tee /etc/sysctl.d/99-inotify.conf >/dev/null
+    sudo mkdir -p /etc/sysctl.d || true
+    printf 'fs.inotify.max_user_watches=524288\nfs.inotify.max_user_instances=1024\n' | sudo tee /etc/sysctl.d/99-inotify.conf >/dev/null || true
     sudo sysctl --system >/dev/null 2>&1 || true
   fi
 
