@@ -22,6 +22,14 @@ repos:
         args: ['--fix=lf']
       - id: fix-byte-order-marker
 
+  # Secret scanning — blocks commits that introduce credentials, tokens, or keys.
+  # Broader than detect-private-key above: catches API keys, cloud creds, tokens.
+  # prek fetches and pins the gitleaks binary itself; no mise pin required.
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks
+
   # Shell script linting (POSIX-compliant)
   # Exclude configs/ folder (Zsh config files, not POSIX sh scripts)
   # Pin tracks the mise `shellcheck = "0.11.0"` pin in mise.toml.
