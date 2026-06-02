@@ -146,10 +146,11 @@ _validate_script() {
   fi
 }
 
-# Find all shell scripts (exclude configs/ folder)
+# Find all shell scripts (exclude configs/ folder and transient git worktrees)
 _find_shell_scripts() {
   find "${PROJECT_ROOT}" -type f -name "*.sh" \
     ! -path "${PROJECT_ROOT}/configs/*" \
+    ! -path "${PROJECT_ROOT}/.claude/worktrees/*" \
     ! -path "${PROJECT_ROOT}/tmp/*" | sort
 }
 
