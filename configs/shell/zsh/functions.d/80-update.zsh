@@ -59,11 +59,30 @@ _update_mise() {
   echo "🛠️  Updating mise tools..."
   mise self-update 2>/dev/null || true
   mise upgrade 2>/dev/null || return 1
+
+  local _dotfiles="${DOTFILES_DIR:-$HOME/.dotfiles}"
+
   # Update pinned versions in conf.d files
-  local _pins_script="${DOTFILES_DIR:-$HOME/.dotfiles}/scripts/utils/mise-update-pins.sh"
+  local _pins_script="${_dotfiles}/scripts/utils/mise-update-pins.sh"
   if [[ -x "$_pins_script" ]]; then
     echo "📌 Checking for outdated pinned versions..."
     "$_pins_script"
+  fi
+
+  # Install the (possibly re-pinned) tools and refresh the cross-platform
+  # lockfile. Run inside the dotfiles repo so repo-scoped tools resolve and
+  # mise.lock is written there; fall back to a plain install otherwise.
+  if [[ -d "$_dotfiles" ]]; then
+    echo "⬇️  Installing pinned mise tools..."
+    (cd "$_dotfiles" && mise install) 2>/dev/null || return 1
+    # `mise lock` is a recent subcommand — skip gracefully on older mise.
+    if mise lock --help &>/dev/null; then
+      echo "🔒 Regenerating ${_dotfiles}/mise.lock..."
+      (cd "$_dotfiles" && mise lock) || return 1
+    fi
+  else
+    echo "⬇️  Installing pinned mise tools..."
+    mise install 2>/dev/null || return 1
   fi
 }
 
