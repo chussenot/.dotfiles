@@ -2,8 +2,8 @@
 [tools]
 
 # --- Cloud CLIs ---
-awscli = "2.34.58"
-gcloud = "570.0.0"
+awscli = "2.34.61"
+gcloud = "571.0.0"
 vault = "2.0.1"
 
 # --- Encryption ---
@@ -24,7 +24,7 @@ tfstate-lookup = "1.12.1"
 terraform-ls = "0.38.6"
 terramate = "0.17.1"
 terrascan = "1.19.9"
-tflint = "0.62.1"
+tflint = "0.63.1"
 # pulumi = "3.224.0"
 
 # --- DNS ---
