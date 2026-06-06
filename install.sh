@@ -298,6 +298,17 @@ else
   print_warning "Antidote Plugin Manager already installed"
 fi
 
+# Generate keybinding fragments from the single source of truth
+# (configs/keybindings.sh) before symlinking, so the zsh fragment exists.
+print_status "⌨️  Generating keybindings..."
+if [ -f "${SCRIPT_DIR}/scripts/setup/generate-keybindings.sh" ]; then
+  "${SCRIPT_DIR}/scripts/setup/generate-keybindings.sh" || {
+    print_warning "Keybinding generation encountered an error, continuing anyway..."
+  }
+else
+  print_warning "Keybinding generation script not found, skipping"
+fi
+
 # Setup symlinks
 print_status "🔗 Setting up symlinks..."
 if [ -f "${SCRIPT_DIR}/scripts/setup/setup-symlinks.sh" ]; then

@@ -230,7 +230,8 @@ bindkey '^[[1;5C' forward-word   # Ctrl+Right
 bindkey '^[[1;5D' backward-word  # Ctrl+Left
 
 # Additional useful keybindings
-bindkey '^U' backward-kill-line   # Ctrl+U: kill from cursor to beginning of line (bash-like)
+# Keys generated from configs/keybindings.sh (single source of truth).
+[ -f "${HOME}/.zsh/keybindings.generated.zsh" ] && source "${HOME}/.zsh/keybindings.generated.zsh"
 bindkey '^[[3~' delete-char       # Delete key: delete character under cursor
 bindkey '^[[1~' beginning-of-line  # Home key: go to beginning of line
 bindkey '^[[4~' end-of-line       # End key: go to end of line

@@ -1,7 +1,11 @@
 " vim: syntax=on : filetype=vim foldmethod=marker foldenable :
 
-" set <Leader> to <space>
-let mapleader = " "
+" <Leader> is generated from configs/keybindings.sh (single source of truth).
+" Sourced before any <leader> mapping below so the leader resolves correctly.
+let s:kb_generated = expand("~/.vim/key_mappings/keybindings.generated.vim")
+if filereadable(s:kb_generated)
+  execute 'source' fnameescape(s:kb_generated)
+endif
 
 " <C-c> sends back to normal mode from insert
 inoremap <C-c> <Esc>
