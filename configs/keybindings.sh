@@ -54,6 +54,12 @@ KB_TMUX_BINDS='
 -:::C-s:::split-window -v -c "#{pane_current_path}"
 -:::v:::split-window -h -c "#{pane_current_path}"
 -:::C-v:::split-window -h -c "#{pane_current_path}"
+# Window navigation (prefix + Ctrl-n/p)
+-:::C-n:::next-window
+-:::C-p:::previous-window
+# Session switching (repeatable)
+-r:::C-k:::switch-client -p
+-r:::C-j:::switch-client -n
 '
 
 # Neovim <leader> key.
