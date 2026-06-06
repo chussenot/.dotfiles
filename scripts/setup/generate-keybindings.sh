@@ -95,6 +95,21 @@ _tmux_out="${_repo_root}/configs/terminal/tmux/keybindings.generated.conf"
 {
   printf '%s\n\n' "${_header_hash}"
   printf 'set -g prefix %s\n' "$(kb_to_tmux "${KB_TMUX_PREFIX}")"
+  # Emit the bindings table. Each line is FLAGS:::KEY:::ACTION.
+  printf '%s' "${KB_TMUX_BINDS}" | while IFS= read -r _line || [ -n "${_line}" ]; do
+    case "${_line}" in
+    '' | '#'*) continue ;;
+    esac
+    _flags=${_line%%:::*}
+    _rest=${_line#*:::}
+    _key=${_rest%%:::*}
+    _action=${_rest#*:::}
+    if [ "${_flags}" = "-" ]; then
+      printf 'bind %s %s\n' "$(kb_to_tmux "${_key}")" "${_action}"
+    else
+      printf 'bind %s %s %s\n' "${_flags}" "$(kb_to_tmux "${_key}")" "${_action}"
+    fi
+  done
 } >"${_tmux_out}"
 printf '✅ wrote %s\n' "${_tmux_out}"
 
