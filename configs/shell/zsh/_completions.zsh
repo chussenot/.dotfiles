@@ -73,10 +73,12 @@ elif command -v cargo &>/dev/null; then
 fi
 
 # Byte-compile individual completion functions for speed (best-effort)
-# Only compile if directory exists and contains files
+# Only recompile when the source is newer than its .zwc — unconditional
+# zcompile cost ~441ms/startup (_deno alone is 238KB).
 if [[ -d "$COMPDIR" ]]; then
   for f in "$COMPDIR"/_*(N); do
-    [[ -f "$f" && "$f" != *.zwc ]] && zcompile "$f" 2>/dev/null || true
+    [[ -f "$f" && "$f" != *.zwc ]] || continue
+    [[ ! -f "${f}.zwc" || "$f" -nt "${f}.zwc" ]] && zcompile "$f" 2>/dev/null || true
   done
 fi
 
@@ -106,6 +108,18 @@ else
   compinit -i -C -d "$_compdump"
 fi
 
+# Replay compdef calls queued by files sourced before compinit existed
+# (e.g. functions.d/60-zsh-utils.zsh). Queue entries are "function command"
+# pairs; (z) splits them back into words.
+# shellcheck disable=SC2154,SC2296  # zsh array + (z) word-split expansion
+if (( ${#_deferred_compdefs[@]} )); then
+  for _dc in "${_deferred_compdefs[@]}"; do
+    # shellcheck disable=SC2296
+    compdef ${(z)_dc}
+  done
+  unset _dc _deferred_compdefs
+fi
+
 # mise: override the broken system _mise (ARG_MAX issue with usage CLI)
 # Our custom $COMPDIR/_mise uses compadd and avoids the inline expansion bug
 if [[ -s "$COMPDIR/_mise" ]] && command -v mise &>/dev/null; then
@@ -119,20 +133,14 @@ fi
 _need_bashcomp=false
 typeset -g -a _bash_fallbacks  # Initialize array once at the start
 
-# Terraform fallback: if no native _terraform was produced above
+# Terraform fallback: if no native _terraform was produced above.
+# Do NOT run `terraform -install-autocomplete` here: it costs ~84ms, errors
+# once autocomplete is installed, and never creates the zsh_autocomplete file
+# its success path used to look for — every startup ended up on this
+# bash-style fallback anyway.
 if command -v terraform &>/dev/null && [[ ! -s "$COMPDIR/_terraform" ]]; then
-  # Try native terraform completion generation first
-  if terraform -install-autocomplete zsh &>/dev/null && [[ -f "$HOME/.terraform.d/autocomplete/zsh_autocomplete" ]]; then
-    source "$HOME/.terraform.d/autocomplete/zsh_autocomplete" 2>/dev/null || {
-      # Fallback to bash-style if native completion failed
-      _need_bashcomp=true
-      _bash_fallbacks+=("complete -o nospace -C $(command -v terraform) terraform")
-    }
-  else
-    # Use bash-style completion as fallback
-    _need_bashcomp=true
-    _bash_fallbacks+=("complete -o nospace -C $(command -v terraform) terraform")
-  fi
+  _need_bashcomp=true
+  _bash_fallbacks+=("complete -o nospace -C $(command -v terraform) terraform")
 fi
 
 # gcloud (Google Cloud SDK) — bash-style completion via completion.zsh.inc
@@ -157,11 +165,20 @@ if command -v aws &>/dev/null && command -v aws_completer &>/dev/null; then
   _bash_fallbacks+=("complete -C $(command -v aws_completer) aws")
 fi
 
-# NPM
+# NPM — `npm completion` boots a full Node process (~222ms), so cache its
+# (static) output to a file once and source that instead. Deliberately NOT
+# named "_npm": underscore-prefixed files in COMPDIR are treated as native
+# zsh completions by the fpath/compdump logic above, and this is a bash-style
+# script. Refresh with ZSH_COMP_REFRESH=1 like the other generated files.
 if command -v npm &>/dev/null; then
   _need_bashcomp=true
-  # Using npm completion (bash-style)
-  _bash_fallbacks+=("eval 'source <(npm completion)'")
+  _gen_comp_if_missing npm "$COMPDIR/npm-completion.zsh" npm completion
+  if [[ -s "$COMPDIR/npm-completion.zsh" ]]; then
+    _bash_fallbacks+=("source '$COMPDIR/npm-completion.zsh'")
+  else
+    # Cache generation failed — fall back to the slow live path
+    _bash_fallbacks+=("eval 'source <(npm completion)'")
+  fi
 fi
 
 # Node.js (nvm completion)

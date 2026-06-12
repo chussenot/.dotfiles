@@ -7,7 +7,17 @@ _mr_completion() {
   tasks=(${(f)"$(mise tasks ls --no-header 2>/dev/null | awk '{print $1}')"})
   _describe 'mise tasks' tasks
 }
-compdef _mr_completion mr
+# functions.d loads before compinit (which lives in _completions.zsh, after
+# antidote). compdef used to exist here only because Ubuntu's /etc/zsh/zshrc
+# ran an early compinit — that is now disabled via skip_global_compinit=1.
+# Queue the registration; _completions.zsh replays the queue after compinit.
+# shellcheck disable=SC2154  # zsh: $+functions is a parameter-set check
+if (( $+functions[compdef] )); then
+  compdef _mr_completion mr
+else
+  typeset -ga _deferred_compdefs
+  _deferred_compdefs+=("_mr_completion mr")
+fi
 
 # Force regeneration of zcompdump and re-run compinit
 zreset() {

@@ -3,6 +3,18 @@
 # System-wide environment variables that should be available everywhere
 
 ############################
+# Completion bootstrap guard
+############################
+# Ubuntu's /etc/zsh/zshrc runs compinit BEFORE ~/.zshrc, with the base fpath.
+# That rewrites ~/.zcompdump without our generated completions, which makes
+# _completions.zsh delete and fully rebuild the dump on EVERY shell start
+# (~1-2.5s). This variable is the escape hatch documented in /etc/zsh/zshrc
+# itself; _completions.zsh is the sole compinit owner. Inert on macOS.
+# See docs/studies/2026-06-13-zsh-startup-performance.md
+# shellcheck disable=SC2034  # consumed by /etc/zsh/zshrc, not this file
+skip_global_compinit=1
+
+############################
 # Dotfiles location
 ############################
 # Available everywhere, so functions sourced outside an interactive shell
