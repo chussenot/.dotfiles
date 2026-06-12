@@ -2,6 +2,7 @@
 .*
 !.gitignore
 !.gitignore_global
+!.markdownlint.json
 
 # Track Claude Code project-level subagent definitions and CLAUDE.md.
 # These overrides also defeat the global ~/.gitignore rules of `.claude/*`
