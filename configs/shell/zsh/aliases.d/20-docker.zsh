@@ -9,26 +9,22 @@ if command -v docker &>/dev/null; then
   alias d='docker'
   alias dex='docker exec -it'
 
-  # docker-compose might be a plugin or separate command.
-  # Probe for the compose CLI plugin on disk instead of running
-  # `docker compose version` — that spawns the docker CLI (+ plugin
-  # resolution) and costs ~85ms on every shell start.
-  if command -v docker-compose &>/dev/null; then
-    alias dc='docker-compose'
-  else
-    for _compose_plugin in \
-      "$HOME/.docker/cli-plugins/docker-compose" \
-      /usr/local/lib/docker/cli-plugins/docker-compose \
-      /usr/local/libexec/docker/cli-plugins/docker-compose \
-      /usr/lib/docker/cli-plugins/docker-compose \
-      /usr/libexec/docker/cli-plugins/docker-compose; do
-      if [[ -x "$_compose_plugin" ]]; then
-        alias dc='docker compose'
-        break
-      fi
-    done
-    unset _compose_plugin
-  fi
+  # `dc` is the compose CLI plugin (`docker compose`) — the legacy
+  # standalone docker-compose binary is no longer used. Probe for the
+  # plugin on disk instead of running `docker compose version`, which
+  # spawns the docker CLI (+ plugin resolution) and costs ~85ms per shell.
+  for _compose_plugin in \
+    "$HOME/.docker/cli-plugins/docker-compose" \
+    /usr/local/lib/docker/cli-plugins/docker-compose \
+    /usr/local/libexec/docker/cli-plugins/docker-compose \
+    /usr/lib/docker/cli-plugins/docker-compose \
+    /usr/libexec/docker/cli-plugins/docker-compose; do
+    if [[ -x "$_compose_plugin" ]]; then
+      alias dc='docker compose'
+      break
+    fi
+  done
+  unset _compose_plugin
 fi
 
 # --- Advanced ops ----------------------------------------------------------
