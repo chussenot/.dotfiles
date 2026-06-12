@@ -161,10 +161,10 @@ copy of `~/.zsh/completions` and its own `.zcompdump`. The live machine
 config was never touched during testing. 5 runs of
 `/usr/bin/time zsh -i -c exit` per side.
 
-| Harness | Startup (5 runs) | compdump |
-| --- | --- | --- |
+| Harness                    | Startup (5 runs)              | compdump                   |
+| -------------------------- | ----------------------------- | -------------------------- |
 | Baseline (original config) | 3.13, 3.08, 1.77, 1.09, 0.96s | rewritten on **every** run |
-| Fixed (all 5 changes) | 0.13, 0.13, 0.14, 0.13, 0.13s | stable across 10+ runs |
+| Fixed (all 5 changes)      | 0.13, 0.13, 0.14, 0.13, 0.13s | stable across 10+ runs     |
 
 First run on a machine after the change is ~0.7s (builds the dump and the
 npm completion cache once), then steady-state **~130ms** — a **7–25x**
