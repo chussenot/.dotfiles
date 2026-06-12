@@ -267,6 +267,7 @@ The agents in this repo mirror the review concerns enforced by this CLAUDE.md:
 | [`cross-platform-auditor`](.claude/agents/cross-platform-auditor.md) | Auditing Linux ↔ macOS portability (`sed -i`, `mktemp`, `readlink`, `stat`, `date`, `grep -P`, `echo -e`, `xargs -r`, `/proc`, `/etc/os-release`). |
 | [`symlink-validator`](.claude/agents/symlink-validator.md)           | Validating `scripts/setup/symlinks.conf` entries against real files in the repo and the parser in `.tests/check.sh`.                               |
 | [`mise-tool-curator`](.claude/agents/mise-tool-curator.md)           | Adding or upgrading a tool in `configs/tools/mise/conf.d/` — category placement, version pinning, backend runtime prerequisites, profile gating.   |
+| [`zsh-config-reviewer`](.claude/agents/zsh-config-reviewer.md)       | Reviewing `configs/shell/` changes — `zsh -n` syntax, protected fzf files, generated keybinding fragments, sourced-path resolution, guard removal. |
 
 ### Invocation
 
