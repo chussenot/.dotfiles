@@ -1,6 +1,6 @@
 # Linters, formatters, and code quality tools
 [tools]
-prettier = "3.8.3"
+prettier = "3.8.4"
 
 # Python linters & formatters (via pipx)
 "pipx:check-jsonschema" = "0.37.2"

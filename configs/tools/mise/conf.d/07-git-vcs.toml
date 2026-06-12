@@ -1,8 +1,8 @@
 # Git & Version Control tools
 [tools]
-gh = "2.93.0"
+gh = "2.94.0"
 glab = "1.102.0"
-hk = "1.46.0"
+hk = "1.47.0"
 
 # Conventional commits
 "cargo:cocogitto" = "7.0.0"
