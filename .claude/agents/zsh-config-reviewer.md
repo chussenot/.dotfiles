@@ -39,6 +39,7 @@ For every in-scope file in the change set:
    - its target resolves through `scripts/setup/symlinks.conf` back to a real file in the repo.
 
    Note the asymmetry: `aliases.d/` and `functions.d/` are symlinked as whole directories, so a **new fragment inside them needs no registry entry** — but a **new top-level file** (e.g., a sibling of `aliases.zsh`) is invisible at runtime until `symlinks.conf` gains an entry. Flag new top-level files with no registry entry and hand off to symlink-validator.
+
 3. **No hardcoded home paths** — `/home/<user>` and `/Users/<user>` are forbidden. Require `$HOME`, `${HOME}`, or `$DOTFILES_DIR`.
 4. **Guards on optional tools** — aliases or init blocks for a specific tool (`docker`, `kubectl`, `fzf`, `mise`, …) must be behind `command -v <tool>` or an existence check, so a machine without the tool still gets a working shell. Never approve the removal of an existing `|| true` or existence guard on a sourcing operation.
 5. **`.zshenv` discipline** — `.zshenv` runs for every zsh invocation, including non-interactive scripts. It must stay fast and silent: environment variables and PATH only. Flag anything interactive, slow, or output-producing (prompts, `eval` of tool inits, `echo`/`printf` to stdout) and recommend moving it to `.zshrc`.
