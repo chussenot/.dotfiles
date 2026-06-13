@@ -121,6 +121,7 @@ function update {
   local step
   local apt_mode=skip
   local -a async_steps async_names async_pids
+  local -a failed_steps
   local _index
 
   async_steps=(_update_tpm _update_antidote _update_nvim _update_mise _update_krew)
@@ -147,17 +148,24 @@ function update {
   for (( _index = 1; _index <= ${#async_pids[@]}; _index++ )); do
     if ! wait "${async_pids[_index]}"; then
       echo "⚠️  ${async_names[_index]} failed."
+      failed_steps+=("${async_names[_index]}")
       ((errors++))
     fi
   done
 
   case "$apt_mode" in
     serial)
-      _update_apt || ((errors++))
+      if ! _update_apt; then
+        failed_steps+=("_update_apt")
+        ((errors++))
+      fi
+      ;;
+    skip)
       ;;
   esac
 
   if ! _update_compinit; then
+    failed_steps+=("_update_compinit")
     ((errors++))
   fi
   local end_time=$(date +%s)
@@ -167,5 +175,6 @@ function update {
     echo "✅ Update complete! Your system is now up to date. (took ${duration}s)"
   else
     echo "⚠️  Update completed with $errors error(s) in ${duration}s. Check the output above for details."
+    (( ${#failed_steps[@]} )) && echo "❌ Failed steps: ${failed_steps[*]}"
   fi
 }
