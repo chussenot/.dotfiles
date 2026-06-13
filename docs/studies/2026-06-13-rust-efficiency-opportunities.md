@@ -170,7 +170,7 @@ The existing startup study already found and fixed the expensive parts in shell:
 - uncached `npm completion`
 - expensive Docker/Terraform probes
 
-With steady-state startup already near `~130ms`, a Rust helper would add
+With steady-state startup already near `130ms`, a Rust helper would add
 complexity for very limited upside.
 
 ## Recommendation
