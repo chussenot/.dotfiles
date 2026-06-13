@@ -17,7 +17,7 @@ prek = "0.4.4" # pre-commit hooks runner
 ripgrep = "15.1.0"
 tree-sitter = "0.26.9"
 usage = "3.5.0"
-uv = "0.11.20"
+uv = "0.11.21"
 watchexec = "2.5.1"
 websocat = "1.14.1"
 

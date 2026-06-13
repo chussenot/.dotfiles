@@ -6,11 +6,11 @@ ctop = "0.7.7"
 podman = "5.8.2"
 
 # --- Kubernetes core ---
-helm = "4.2.0"
+helm = "4.2.1"
 k9s = "0.51.0"
 kind = "0.32.0"
 krew = "0.5.0"
-kubectl = "1.36.1"
+kubectl = "1.36.2"
 kustomize = "5.8.1"
 # cilium-cli = "0.19.2"
 
