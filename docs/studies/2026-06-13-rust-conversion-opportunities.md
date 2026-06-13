@@ -35,8 +35,7 @@ tags: [rust, performance, shell, zsh, prompt, setup, bootstrap]
 ## Executive summary
 
 Yes, **one part of the dotfiles is a credible Rust candidate**: the **zsh prompt
-theme** in
-`/home/runner/work/.dotfiles/.dotfiles/chussenot/.dotfiles/configs/shell/chussenot.zsh-theme`.
+theme** in `configs/shell/chussenot.zsh-theme`.
 
 Everything else I reviewed falls into one of these buckets:
 
@@ -75,8 +74,7 @@ Those numbers are already small, and all of those paths are one-shot or rare.
 
 **Status:** recommended candidate
 
-`/home/runner/work/.dotfiles/.dotfiles/chussenot/.dotfiles/configs/shell/chussenot.zsh-theme`
-does a lot of work on every prompt render:
+`configs/shell/chussenot.zsh-theme` does a lot of work on every prompt render:
 
 - git repository detection and branch lookup
 - git dirty-state checks
@@ -119,8 +117,8 @@ prompt metadata helper** and keep all installer/setup logic in shell.
 
 **Status:** maybe, but not first
 
-`/home/runner/work/.dotfiles/.dotfiles/chussenot/.dotfiles/configs/shell/zsh/_completions.zsh`
-already received a targeted performance pass, and the existing study shows
+`configs/shell/zsh/_completions.zsh` already received a targeted performance
+pass, and the existing study shows
 steady-state startup around **~130ms** after the fixes.
 
 The important detail is that this file's expensive work is mostly:
@@ -155,11 +153,8 @@ the external completion generators.
 
 **Status:** not recommended
 
-`/home/runner/work/.dotfiles/.dotfiles/chussenot/.dotfiles/scripts/setup/setup-symlinks.sh`
-and
-`/home/runner/work/.dotfiles/.dotfiles/chussenot/.dotfiles/.tests/check.sh`
-both parse
-`/home/runner/work/.dotfiles/.dotfiles/chussenot/.dotfiles/scripts/setup/symlinks.conf`.
+`scripts/setup/setup-symlinks.sh` and `.tests/check.sh` both parse
+`scripts/setup/symlinks.conf`.
 
 That duplication is real, but the runtime cost is small:
 
@@ -210,8 +205,8 @@ later**.
 
 **Status:** not recommended
 
-`/home/runner/work/.dotfiles/.dotfiles/chussenot/.dotfiles/scripts/utils/mise-update-pins.sh`
-does substantial work, but the expensive part is querying remote registries via
+`scripts/utils/mise-update-pins.sh` does substantial work, but the expensive
+part is querying remote registries via
 `mise latest`. The script already parallelizes those checks.
 
 That makes it a poor Rust target:
