@@ -81,7 +81,7 @@ Those numbers are already small, and all of those paths are one-shot or rare.
 - `python3 --version`
 - `node --version`
 - `go version`
-- `rustc --version` or `rust --version`
+- `rustc --version`
 - `uptime` parsing
 - `bc` for load comparisons
 - optional `docker info`
