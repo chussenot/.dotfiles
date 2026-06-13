@@ -13,7 +13,7 @@ Run all tests:
 ## What It Does
 
 1. **Builds Docker images** for each platform (currently Ubuntu 24.04)
-2. **Runs the installer** inside a clean container
+2. **Runs the installer** inside a clean container with the `--minimal` profile
 3. **Validates the installation** by checking:
    - Expected files and directories exist
    - Symlinks are correct
@@ -53,9 +53,9 @@ If validation checks fail:
 
 1. The error message will show which check failed
 2. Common issues:
-   - Missing packages (check package installation step)
+   - Missing bootstrap packages required by the minimal CI profile
    - Symlink issues (check setup-symlinks.sh)
-   - Missing tools (check if installer completed successfully)
+   - Network failures while cloning Antidote during installation
 
 ## Files
 

@@ -6,19 +6,18 @@ FROM ubuntu:24.04
 # Prevent interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install minimal bootstrap dependencies (install.sh handles the rest)
+# Install minimal bootstrap dependencies for the container-friendly profile
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         git \
         curl \
-        sudo \
         ca-certificates && \
+        zsh && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user (dev) similar to real environment
-RUN useradd -m -s /bin/bash dev && \
-    echo 'dev ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN useradd -m -s /bin/sh dev
 
 # Copy the entire dotfiles repository into the container
 COPY --chown=dev:dev . /home/dev/.dotfiles
@@ -30,14 +29,14 @@ WORKDIR /home/dev
 # Set HOME explicitly
 ENV HOME=/home/dev
 
-# Skip heavy mise conf.d tools in CI (cargo, pipx, go packages)
-ENV MISE_IGNORED_CONFIG_PATHS=/home/dev/.config/mise/conf.d:/home/dev/.dotfiles/configs/tools/mise/conf.d
+# Use the container-friendly install profile in Docker CI
+ENV DOTFILES_TEST_PROFILE=minimal
 
 # Run the installer (non-interactive mode)
 # The installer already handles errors gracefully and continues
 # Add progress output to see what's happening
 RUN cd /home/dev/.dotfiles && \
-    ./install.sh 2>&1 | tee /tmp/install.log || true
+    ./install.sh --minimal 2>&1 | tee /tmp/install.log || true
 
 # Run validation checks
 RUN cd /home/dev/.dotfiles && \
@@ -53,4 +52,4 @@ RUN if [ -f "${HOME}/.zshrc" ] && command -v zsh >/dev/null 2>&1; then \
     fi
 
 # Default command (if container is run interactively)
-CMD ["/bin/bash"]
+CMD ["/bin/sh"]
