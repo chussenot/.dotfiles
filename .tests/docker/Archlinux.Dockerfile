@@ -12,8 +12,7 @@ RUN pacman -Sy --noconfirm --needed \
     yes | pacman -Scc
 
 # Create a non-root user (dev) similar to real environment
-RUN useradd -m -s /bin/bash dev && \
-    echo 'dev ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN useradd -m -s /bin/sh dev
 
 # Copy the entire dotfiles repository into the container
 COPY --chown=dev:dev . /home/dev/.dotfiles

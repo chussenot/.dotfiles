@@ -12,7 +12,7 @@ Run all tests:
 
 ## What It Does
 
-1. **Builds Docker images** for each platform (currently Ubuntu 24.04)
+1. **Builds Docker images** for each supported Linux test platform
 2. **Runs the installer** inside a clean container with the `--minimal` profile
 3. **Validates the installation** by checking:
    - Expected files and directories exist
