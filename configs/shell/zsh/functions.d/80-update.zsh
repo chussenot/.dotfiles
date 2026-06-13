@@ -108,9 +108,6 @@ _update_compinit() {
 # prompts racing with other update jobs. If it fails, apt can still run
 # later in the foreground and preserve the old behavior.
 _prepare_update_apt_auth() {
-  command -v apt &>/dev/null || return 1
-  command -v sudo &>/dev/null || return 1
-
   echo "🔐 Refreshing sudo credentials for apt..."
   sudo -v
 }
@@ -129,7 +126,10 @@ function update {
   async_steps=(_update_tpm _update_antidote _update_nvim _update_mise _update_krew)
 
   if command -v apt &>/dev/null; then
-    if _prepare_update_apt_auth; then
+    if ! command -v sudo &>/dev/null; then
+      apt_mode=serial
+      echo "⚠️  sudo not found; apt updates will run serially." >&2
+    elif _prepare_update_apt_auth; then
       apt_mode=async
       async_steps=(_update_apt "${async_steps[@]}")
     else
@@ -151,9 +151,11 @@ function update {
     fi
   done
 
-  if [[ "$apt_mode" == serial ]]; then
-    _update_apt || ((errors++))
-  fi
+  case "$apt_mode" in
+    serial)
+      _update_apt || ((errors++))
+      ;;
+  esac
 
   if ! _update_compinit; then
     ((errors++))
