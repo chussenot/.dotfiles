@@ -128,9 +128,9 @@ The important detail is that this file's expensive work is mostly:
 - sourcing bash-style completion fragments when tools do not ship native zsh
   completions
 
-Rust does **not** make `docker completion zsh`, `kubectl completion zsh`, `gh
-completion`, `npm completion`, or `compinit` materially faster. Those commands
-remain the cost center.
+Rust cannot materially accelerate `docker completion zsh`,
+`kubectl completion zsh`, `gh completion`, `npm completion`, or `compinit`.
+Those commands remain the cost center.
 
 ### Where Rust could help a little
 
