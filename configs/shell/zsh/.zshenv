@@ -62,6 +62,18 @@ export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$UID}"
 
 ############################
+# Tool Configuration
+############################
+
+# ripgrep reads its defaults from this file (see configs/tools/ripgrep/ripgreprc).
+# Guarded on existence so rg falls back to built-in defaults when the symlink
+# isn't set up yet (fresh machine, before setup-symlinks.sh has run). Pointing
+# RIPGREP_CONFIG_PATH at a missing file is silently ignored by rg, but the guard
+# keeps the env clean. Set here (not .zshrc) so non-interactive rg uses it too.
+[[ -f "${XDG_CONFIG_HOME}/ripgrep/ripgreprc" ]] && \
+  export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME}/ripgrep/ripgreprc"
+
+############################
 # PATH Management
 ############################
 # Centralized PATH configuration for better maintainability

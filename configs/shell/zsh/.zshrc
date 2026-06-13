@@ -215,8 +215,8 @@ zstyle ':completion:*' accept-exact-dirs true
 # Plugins are managed via ${ZDOTDIR:-~}/.zsh_plugins.txt
 # Run 'antidote bundle' to regenerate the static plugin file after editing
 
-# Note: Ctrl+R is handled by atuin (see "Atuin" section below).
-# A custom fzf-history-widget used to live here but was never bound — removed.
+# Note: Ctrl+R is handled by fzf's fzf-history-widget, bound when ~/.fzf.zsh
+# runs `fzf --zsh` (see "Fuzzy Finder" section below).
 
 ############################
 # Key Bindings
@@ -268,14 +268,6 @@ if [[ -f "$HOME/.zsh/themes/chussenot.zsh-theme" ]]; then
     source "$HOME/.zsh/themes/chussenot.zsh-theme"
 elif [[ -f "$DOTFILES_DIR/configs/shell/chussenot.zsh-theme" ]]; then
     source "$DOTFILES_DIR/configs/shell/chussenot.zsh-theme"
-fi
-
-############################
-# Atuin
-############################
-
-if command -v atuin >/dev/null 2>&1; then
-  eval "$(atuin init zsh)"
 fi
 
 ############################

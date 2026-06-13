@@ -59,13 +59,13 @@ This document is displayed inside a tmux popup viewer. Standard `less` controls 
 | `Up` / `Down`     | History substring search      |
 | `Ctrl-Left/Right` | Jump word by word             |
 | `Ctrl-U`          | Kill line backward            |
-| `Ctrl-R`          | Search history via atuin      |
+| `Ctrl-R`          | Fuzzy history search (fzf)    |
 | `Home` / `End`    | Beginning / end of line       |
 | `Delete`          | Delete character under cursor |
 
 ### Fuzzy Finder (FZF)
 
-Note: `Ctrl-R` at the shell prompt is bound to atuin (above), not fzf.
+Note: `Ctrl-R` at the shell prompt is bound to fzf's history widget (see above).
 
 | Keybinding | Action                     |
 | ---------- | -------------------------- |

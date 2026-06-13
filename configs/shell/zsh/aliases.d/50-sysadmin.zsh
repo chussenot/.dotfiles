@@ -132,5 +132,7 @@ alias urlencode="python3 -c \"import sys; from urllib.parse import quote; print(
 # --- Search helpers --------------------------------------------------------
 
 alias vgrep='f(){ grep -rnH "$1" "$2" | fzf --preview="bat --pager never --color always -H {2} -r {2}: -p {1}" --delimiter=: ;  unset -f f; }; f'
-# Search file contents with ripgrep, fzf, bat
-alias fzf-rg="rg --hidden --glob '' --line-number . | fzf --delimiter ':' --preview 'bat --style=numbers --color=always {1} --highlight-line {2}'"
+# Search file contents with ripgrep, fzf, bat. Fixed: drop the no-op empty
+# `--glob ''`, exclude .git, emit colour and read it with `fzf --ansi`, and
+# scroll the bat preview to the matching line (`--preview-window +{2}-/2`).
+alias fzf-rg="rg --hidden --glob '!.git' --line-number --color=always . | fzf --ansi --delimiter ':' --preview 'bat --style=numbers --color=always {1} --highlight-line {2}' --preview-window '+{2}-/2'"

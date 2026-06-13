@@ -1,0 +1,27 @@
+# ripgrep configuration — loaded via $RIPGREP_CONFIG_PATH (set in .zshenv).
+#
+# CAUTION: $RIPGREP_CONFIG_PATH is read by EVERY rg invocation in the
+# environment, not just the interactive prompt. That includes Neovim's
+# `grepprg=rg --vimgrep` (configs/editor/nvim/vimrc) and vim-gitgutter's
+# `g:gitgutter_grep = 'rg'`. So this file MUST NOT change which lines rg
+# emits or how it formats them, or it would corrupt Vim's quickfix parsing
+# and gitgutter's hunk detection. That deliberately rules out --max-columns,
+# --hidden, --no-ignore, and friends. Only safe, additive defaults belong here.
+
+# Case-insensitive when the pattern is all lowercase; case-sensitive when it
+# contains an uppercase letter. For lowercase patterns this is a matching
+# superset (never hides a match). Vim `:grep` inherits the same convenience;
+# override a single search with `rg -s` / `:grep -s` if you need exact case.
+--smart-case
+
+# Belt-and-braces: never descend into .git metadata. rg already skips hidden
+# paths by default, so this only takes effect if someone adds --hidden on the
+# CLI — harmless otherwise.
+--glob=!.git/*
+
+# Cosmetic only. rg keeps --color=auto, so these definitions are emitted to a
+# TTY and silently dropped when output is piped (Vim, scripts) — no change to
+# output format for non-interactive consumers.
+--colors=line:fg:yellow
+--colors=match:fg:red
+--colors=path:fg:green
