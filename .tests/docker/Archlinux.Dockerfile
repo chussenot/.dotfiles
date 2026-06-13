@@ -3,17 +3,16 @@
 
 FROM archlinux:latest
 
-# Install minimal bootstrap dependencies (install.sh handles the rest)
-RUN pacman -Syu --noconfirm && \
-    pacman -S --noconfirm \
+# Install minimal bootstrap dependencies for the container-friendly profile
+RUN pacman -Sy --noconfirm --needed \
+        ca-certificates \
         git \
         curl \
-        sudo && \
+        zsh && \
     yes | pacman -Scc
 
 # Create a non-root user (dev) similar to real environment
-RUN useradd -m -s /bin/bash dev && \
-    echo 'dev ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN useradd -m -s /bin/sh dev
 
 # Copy the entire dotfiles repository into the container
 COPY --chown=dev:dev . /home/dev/.dotfiles
@@ -25,16 +24,16 @@ WORKDIR /home/dev
 # Set HOME explicitly
 ENV HOME=/home/dev
 
-# Skip heavy mise conf.d tools in CI (cargo, pipx, go packages)
-ENV MISE_IGNORED_CONFIG_PATHS=/home/dev/.config/mise/conf.d:/home/dev/.dotfiles/configs/tools/mise/conf.d
+# Use the container-friendly install profile in Docker CI
+ENV DOTFILES_TEST_PROFILE=minimal
 
 # Run the installer
 RUN cd /home/dev/.dotfiles && \
-    ./install.sh 2>&1 | tee /tmp/install.log || true
+    ./install.sh --minimal 2>&1 | tee /tmp/install.log || true
 
 # Run validation checks
 RUN cd /home/dev/.dotfiles && \
     ./.tests/check.sh
 
 # Default command (if container is run interactively)
-CMD ["/bin/bash"]
+CMD ["/bin/sh"]

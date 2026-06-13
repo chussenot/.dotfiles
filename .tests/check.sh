@@ -11,6 +11,7 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
+_test_profile="${DOTFILES_TEST_PROFILE:-default}"
 
 _print_success() {
   printf '%b[PASS]%b %s\n' "${GREEN}" "${NC}" "$1"
@@ -76,6 +77,7 @@ _check_symlink() {
 }
 
 _print_info "Starting dotfiles installation validation..."
+_print_info "Validation profile: ${_test_profile}"
 printf '\n'
 
 # Auto-verify symlinks from symlinks.conf
@@ -129,17 +131,21 @@ else
   _errors=$((_errors + 1))
 fi
 
-# Check for mise installation
-if [ -d "${HOME}/.local/bin" ]; then
-  _print_success "Local bin directory exists"
-  if [ -f "${HOME}/.local/bin/mise" ]; then
-    _print_success "mise binary found"
-  else
-    _print_info "mise binary not found (may be installing)"
-  fi
+# Check for mise installation when the selected test profile installs it
+if [ "${_test_profile}" = "minimal" ]; then
+  _print_info "Skipping mise checks for minimal install profile"
 else
-  _print_error "Local bin directory not found"
-  _errors=$((_errors + 1))
+  if [ -d "${HOME}/.local/bin" ]; then
+    _print_success "Local bin directory exists"
+    if [ -f "${HOME}/.local/bin/mise" ]; then
+      _print_success "mise binary found"
+    else
+      _print_info "mise binary not found (may be installing)"
+    fi
+  else
+    _print_error "Local bin directory not found"
+    _errors=$((_errors + 1))
+  fi
 fi
 
 printf '\n'
@@ -153,7 +159,9 @@ _check_command "git"
 _check_command "curl"
 
 # Check if mise is available (may be in PATH or need to be sourced)
-if command -v mise >/dev/null 2>&1; then
+if [ "${_test_profile}" = "minimal" ]; then
+  _print_info "Skipping mise command check for minimal install profile"
+elif command -v mise >/dev/null 2>&1; then
   _print_success "mise command found"
 elif [ -f "${HOME}/.local/bin/mise" ]; then
   _print_success "mise binary found at ${HOME}/.local/bin/mise"

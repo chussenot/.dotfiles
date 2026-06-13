@@ -104,6 +104,14 @@ _update_compinit() {
   fi
 }
 
+# Refresh sudo once before backgrounding apt to avoid concurrent password
+# prompts racing with other update jobs. If it fails, apt can still run
+# later in the foreground and preserve the old behavior.
+_prepare_update_apt_auth() {
+  echo "🔐 Refreshing sudo credentials for apt..."
+  sudo -v
+}
+
 # --- public orchestrator ----------------------------------------------------
 
 function update {
@@ -111,9 +119,55 @@ function update {
   local errors=0
   local start_time=$(date +%s)
   local step
-  for step in _update_apt _update_tpm _update_antidote _update_nvim _update_mise _update_krew _update_compinit; do
-    "$step" || ((errors++))
+  local apt_mode=skip
+  local -a async_steps async_names async_pids
+  local -a failed_steps
+  local _index
+
+  async_steps=(_update_tpm _update_antidote _update_nvim _update_mise _update_krew)
+
+  if command -v apt &>/dev/null; then
+    if ! command -v sudo &>/dev/null; then
+      apt_mode=serial
+      echo "⚠️  sudo not found; apt updates will run serially." >&2
+    elif _prepare_update_apt_auth; then
+      apt_mode=async
+      async_steps=(_update_apt "${async_steps[@]}")
+    else
+      apt_mode=serial
+      echo "⚠️  Sudo preflight failed; apt updates will run serially." >&2
+    fi
+  fi
+
+  for step in "${async_steps[@]}"; do
+    "$step" &
+    async_names+=("$step")
+    async_pids+=("$!")
   done
+
+  for (( _index = 1; _index <= ${#async_pids[@]}; _index++ )); do
+    if ! wait "${async_pids[_index]}"; then
+      echo "⚠️  ${async_names[_index]} failed."
+      failed_steps+=("${async_names[_index]}")
+      ((errors++))
+    fi
+  done
+
+  case "$apt_mode" in
+    serial)
+      if ! _update_apt; then
+        failed_steps+=("_update_apt")
+        ((errors++))
+      fi
+      ;;
+    skip)
+      ;;
+  esac
+
+  if ! _update_compinit; then
+    failed_steps+=("_update_compinit")
+    ((errors++))
+  fi
   local end_time=$(date +%s)
   local duration=$((end_time - start_time))
 
@@ -121,5 +175,6 @@ function update {
     echo "✅ Update complete! Your system is now up to date. (took ${duration}s)"
   else
     echo "⚠️  Update completed with $errors error(s) in ${duration}s. Check the output above for details."
+    (( ${#failed_steps[@]} )) && echo "❌ Failed steps: ${failed_steps[*]}"
   fi
 }
