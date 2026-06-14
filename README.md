@@ -263,6 +263,12 @@ The `chussenot` theme displays:
 
 Configure features via environment variables - see `configs/shell/chussenot.zsh-theme`.
 
+### Rust Programs
+
+Rust helpers live in `/home/runner/work/.dotfiles/.dotfiles/chussenot/.dotfiles/programs/rust/`.
+
+The first program is `chussenot-theme`, a prompt metadata helper for the `chussenot` theme.
+
 ### Neovim
 
 Plugin manager: [vim-plug](https://github.com/junegunn/vim-plug)

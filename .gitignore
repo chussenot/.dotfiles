@@ -16,3 +16,4 @@
 
 specs/*
 .claude/worktrees
+programs/rust/target/
