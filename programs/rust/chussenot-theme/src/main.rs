@@ -2,6 +2,7 @@ use std::env;
 use std::fs;
 use std::path::Path;
 use std::process::Command;
+use std::process::Stdio;
 
 struct GitInfo {
     branch: String,
@@ -30,10 +31,9 @@ impl ThemeMetadata {
 
         Self {
             git: current_dir.as_deref().and_then(git_info),
-            python: command_version("python3", &["--version"]).map(trim_patch_version),
-            node: command_version("node", &["--version"]).map(|value| {
-                trim_patch_version(value.trim_start_matches('v').to_string())
-            }),
+            python: command_version("python3", &["--version"]).and_then(parse_python_version),
+            node: command_version("node", &["--version"])
+                .map(|value| trim_patch_version(value.trim_start_matches('v').to_string())),
             go: command_version("go", &["version"]).and_then(parse_go_version),
             rust: rust_version(),
             load,
@@ -104,6 +104,12 @@ fn parse_go_version(version: String) -> Option<String> {
     ))
 }
 
+fn parse_python_version(version: String) -> Option<String> {
+    let trimmed = version.trim();
+    let token = trimmed.split_whitespace().nth(1)?;
+    Some(trim_patch_version(token.to_string()))
+}
+
 fn rust_version() -> Option<String> {
     command_version("rustc", &["--version"])
         .or_else(|| command_version("rust", &["--version"]))
@@ -124,8 +130,13 @@ fn git_info(current_dir: &Path) -> Option<GitInfo> {
     let branch = git_output(current_dir, &["symbolic-ref", "--quiet", "--short", "HEAD"])
         .or_else(|| git_output(current_dir, &["rev-parse", "--short", "HEAD"]))?;
 
-    let dirty = !git_success(current_dir, &["diff", "--quiet", "--ignore-submodules", "--cached"])
-        || !git_success(current_dir, &["diff-files", "--quiet", "--ignore-submodules"]);
+    let dirty = !git_success(
+        current_dir,
+        &["diff", "--quiet", "--ignore-submodules", "--cached"],
+    ) || !git_success(
+        current_dir,
+        &["diff-files", "--quiet", "--ignore-submodules"],
+    );
 
     Some(GitInfo { branch, dirty })
 }
@@ -153,6 +164,8 @@ fn git_success(current_dir: &Path, args: &[&str]) -> bool {
     Command::new("git")
         .args(args)
         .current_dir(current_dir)
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
         .status()
         .map(|status| status.success())
         .unwrap_or(false)

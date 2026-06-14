@@ -265,7 +265,7 @@ Configure features via environment variables - see `configs/shell/chussenot.zsh-
 
 ### Rust Programs
 
-Rust helpers live in `/home/runner/work/.dotfiles/.dotfiles/chussenot/.dotfiles/programs/rust/`.
+Rust helpers live in `programs/rust/`.
 
 The first program is `chussenot-theme`, a prompt metadata helper for the `chussenot` theme.
 
