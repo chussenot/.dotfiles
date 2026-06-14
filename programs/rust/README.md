@@ -17,5 +17,5 @@ cargo run -p chussenot-theme
 Or from anywhere:
 
 ```sh
-cargo run -p chussenot-theme --manifest-path /home/runner/work/.dotfiles/.dotfiles/chussenot/.dotfiles/programs/rust/Cargo.toml
+cargo run -p chussenot-theme --manifest-path "${DOTFILES_DIR}/programs/rust/Cargo.toml"
 ```
