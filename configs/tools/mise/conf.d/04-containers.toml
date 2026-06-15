@@ -3,7 +3,7 @@
 
 # --- Core container tooling ---
 ctop = "0.7.7"
-podman = "5.8.2"
+podman = "5.8.3"
 
 # --- Kubernetes core ---
 helm = "4.2.1"

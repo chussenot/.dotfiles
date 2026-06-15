@@ -3,7 +3,7 @@
 prettier = "3.8.4"
 
 # Python linters & formatters (via pipx)
-"pipx:check-jsonschema" = "0.37.2"
+"pipx:check-jsonschema" = "0.37.3"
 "pipx:mypy" = "2.1.0"
 "pipx:ruff" = "0.15.17"
-"pipx:pytest" = "9.0.3"
+"pipx:pytest" = "9.1.0"
