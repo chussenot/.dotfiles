@@ -5,22 +5,8 @@
 
 set -eu
 
-# Get script directory to find lib directory
-_get_script_dir() {
-  _script_path="$0"
-  _script_dir=""
-  case "${_script_path}" in
-  /*)
-    _script_dir=$(dirname "${_script_path}")
-    ;;
-  *)
-    _script_dir=$(cd "$(dirname "${_script_path}")" && pwd)
-    ;;
-  esac
-  printf '%s\n' "${_script_dir}"
-}
-
-_script_dir=$(_get_script_dir)
+# Get script directory (cd+pwd canonicalizes for absolute and relative $0)
+_script_dir=$(cd "$(dirname "$0")" && pwd)
 _project_root=$(cd "${_script_dir}/../.." && pwd)
 
 # Source platform detection module
@@ -39,6 +25,29 @@ if [ "${PLATFORM_OS}" = "unknown" ] || [ "${PLATFORM_DISTRO}" = "unknown" ]; the
   printf '⚠️  Warning: Unknown platform detected\n'
   printf 'Package installation may not work correctly.\n'
 fi
+
+# Install any packages from $1 (space-separated) not already present.
+# Remaining args are the install command; the missing-package list is appended.
+# Returns the install command's exit status (0 if nothing to install).
+_install_missing() {
+  _pkgs="$1"
+  shift
+  _to_install=""
+  for _package in ${_pkgs}; do
+    if pkg_installed "${_package}"; then
+      printf '%s is already installed\n' "${_package}"
+    else
+      _to_install="${_to_install} ${_package}"
+    fi
+  done
+  if [ -z "${_to_install}" ]; then
+    printf 'All packages are already installed\n'
+    return 0
+  fi
+  printf 'Installing packages:%s\n' "${_to_install}"
+  # shellcheck disable=SC2086 # intentional word splitting for command + package list
+  "$@" ${_to_install}
+}
 
 # Platform-specific package lists
 if is_ubuntu || is_debian; then
@@ -185,26 +194,9 @@ elif is_arch; then
     printf '⚠️  Failed to update package database, continuing...\n'
   }
 
-  # Collect packages that need to be installed
-  _packages_to_install=""
-  for _package in ${_packages}; do
-    if ! pkg_installed "${_package}"; then
-      _packages_to_install="${_packages_to_install} ${_package}"
-    else
-      printf '%s is already installed\n' "${_package}"
-    fi
-  done
-
-  # Install all packages at once
-  if [ -n "${_packages_to_install}" ]; then
-    printf 'Installing packages: %s\n' "${_packages_to_install}"
-    # shellcheck disable=SC2086 # Intentional word splitting for package list
-    sudo pacman -S --noconfirm ${_packages_to_install} || {
-      printf '⚠️  Some packages failed to install, continuing...\n'
-    }
-  else
-    printf 'All packages are already installed\n'
-  fi
+  _install_missing "${_packages}" sudo pacman -S --noconfirm || {
+    printf '⚠️  Some packages failed to install, continuing...\n'
+  }
 
 elif is_fedora; then
   # Fedora packages (using dnf)
@@ -217,26 +209,9 @@ elif is_fedora; then
     _packages="${_packages} ctags"
   fi
 
-  # Collect packages that need to be installed
-  _packages_to_install=""
-  for _package in ${_packages}; do
-    if ! pkg_installed "${_package}"; then
-      _packages_to_install="${_packages_to_install} ${_package}"
-    else
-      printf '%s is already installed\n' "${_package}"
-    fi
-  done
-
-  # Install all packages at once
-  if [ -n "${_packages_to_install}" ]; then
-    printf 'Installing packages: %s\n' "${_packages_to_install}"
-    # shellcheck disable=SC2086 # Intentional word splitting for package list
-    sudo dnf install -y ${_packages_to_install} || {
-      printf '⚠️  Some packages failed to install, continuing...\n'
-    }
-  else
-    printf 'All packages are already installed\n'
-  fi
+  _install_missing "${_packages}" sudo dnf install -y || {
+    printf '⚠️  Some packages failed to install, continuing...\n'
+  }
 
 elif is_alpine; then
   # Alpine Linux packages (using apk)
@@ -249,26 +224,9 @@ elif is_alpine; then
     printf '⚠️  Failed to update package index, continuing...\n'
   }
 
-  # Collect packages that need to be installed
-  _packages_to_install=""
-  for _package in ${_packages}; do
-    if ! pkg_installed "${_package}"; then
-      _packages_to_install="${_packages_to_install} ${_package}"
-    else
-      printf '%s is already installed\n' "${_package}"
-    fi
-  done
-
-  # Install all packages at once
-  if [ -n "${_packages_to_install}" ]; then
-    printf 'Installing packages: %s\n' "${_packages_to_install}"
-    # shellcheck disable=SC2086 # Intentional word splitting for package list
-    sudo apk add ${_packages_to_install} || {
-      printf '⚠️  Some packages failed to install, continuing...\n'
-    }
-  else
-    printf 'All packages are already installed\n'
-  fi
+  _install_missing "${_packages}" sudo apk add || {
+    printf '⚠️  Some packages failed to install, continuing...\n'
+  }
 
 elif is_macos; then
   # macOS packages (using Homebrew)

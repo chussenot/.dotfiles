@@ -24,19 +24,16 @@ platform_detect() {
   Darwin)
     PLATFORM_OS="darwin"
     ;;
-  FreeBSD)
-    PLATFORM_OS="freebsd"
-    ;;
-  OpenBSD)
-    PLATFORM_OS="openbsd"
-    ;;
   *)
     PLATFORM_OS="unknown"
     ;;
   esac
 
-  # Detect architecture using uname -m
+  # Detect architecture using uname -m.
+  # PLATFORM_ARCH is read by sourcing scripts (install banners, debug_platform),
+  # not within this file.
   _arch=$(uname -m)
+  # shellcheck disable=SC2034
   case "${_arch}" in
   x86_64 | amd64)
     PLATFORM_ARCH="amd64"
@@ -103,10 +100,6 @@ is_macos() {
   [ "${PLATFORM_OS}" = "darwin" ]
 }
 
-is_freebsd() {
-  [ "${PLATFORM_OS}" = "freebsd" ]
-}
-
 is_ubuntu() {
   [ "${PLATFORM_DISTRO}" = "ubuntu" ]
 }
@@ -125,18 +118,6 @@ is_fedora() {
 
 is_alpine() {
   [ "${PLATFORM_DISTRO}" = "alpine" ]
-}
-
-is_amd64() {
-  [ "${PLATFORM_ARCH}" = "amd64" ]
-}
-
-is_arm64() {
-  [ "${PLATFORM_ARCH}" = "arm64" ]
-}
-
-is_arm() {
-  [ "${PLATFORM_ARCH}" = "arm" ] || [ "${PLATFORM_ARCH}" = "arm64" ]
 }
 
 # Generic package installation wrapper

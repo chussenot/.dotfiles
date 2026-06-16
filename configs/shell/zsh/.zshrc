@@ -230,8 +230,7 @@ bindkey '^[[1;5C' forward-word   # Ctrl+Right
 bindkey '^[[1;5D' backward-word  # Ctrl+Left
 
 # Additional useful keybindings
-# Keys generated from configs/keybindings.sh (single source of truth).
-[ -f "${HOME}/.zsh/keybindings.generated.zsh" ] && source "${HOME}/.zsh/keybindings.generated.zsh"
+[ -f "${HOME}/.zsh/keybindings.zsh" ] && source "${HOME}/.zsh/keybindings.zsh"
 bindkey '^[[3~' delete-char       # Delete key: delete character under cursor
 bindkey '^[[1~' beginning-of-line  # Home key: go to beginning of line
 bindkey '^[[4~' end-of-line       # End key: go to end of line

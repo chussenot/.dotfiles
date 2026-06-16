@@ -62,7 +62,6 @@ alias h='history'
 alias j='jobs -l'
 alias path='echo -e ${PATH//:/\\n}'
 alias now='date +"%T"'
-alias nowtime=now
 alias nowdate='date +"%d-%m-%Y"'
 # Network aliases (conditional based on available tools)
 if command -v netstat &>/dev/null; then

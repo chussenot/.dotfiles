@@ -16,3 +16,7 @@
 
 specs/*
 .claude/worktrees
+
+# Python bytecode (e.g. tmux claude-sessions picker)
+__pycache__/
+*.pyc

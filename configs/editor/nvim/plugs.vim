@@ -110,10 +110,7 @@ Plug 'andymass/vim-matchup'
 " https://github.com/nvim-treesitter/nvim-treesitter
 if has("nvim")
   Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
-  " DISABLED: Incompatible with current nvim-treesitter (removed query module)
-  " Use vim-endwise (longthanhtran/vim-endwise) instead
-  " Plug 'RRethy/nvim-treesitter-endwise'
-  " nvim-ts-rainbow is deprecated, replaced with rainbow-delimiters.nvim
+  " endwise is provided by vim-endwise; rainbow by rainbow-delimiters.nvim below.
   Plug 'HiPhish/rainbow-delimiters.nvim'
   Plug 'windwp/nvim-ts-autotag'
 
@@ -462,10 +459,6 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 " see https://medium.com/@crashybang/supercharge-vim-with-fzf-and-ripgrep-d4661fc853d2#.y2pz1mipy
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim', { 'commit': '279e1ec' }
-
-" Treesitter powered spellchecker
-" DISABLED: Compatibility issue with Neovim 0.11.5 - get_query nil error
-" Plug 'lewis6991/spellsitter.nvim'
 
 " https://github.com/tmux-plugins/vim-tmux
 Plug 'tmux-plugins/vim-tmux'

@@ -1,10 +1,10 @@
 " vim: syntax=on : filetype=vim foldmethod=marker foldenable :
 
-" <Leader> is generated from configs/keybindings.sh (single source of truth).
-" Sourced before any <leader> mapping below so the leader resolves correctly.
-let s:kb_generated = expand("~/.vim/key_mappings/keybindings.generated.vim")
-if filereadable(s:kb_generated)
-  execute 'source' fnameescape(s:kb_generated)
+" <Leader> is defined in keybindings.vim, sourced before any <leader> mapping
+" below so the leader resolves correctly.
+let s:kb_file = expand("~/.vim/key_mappings/keybindings.vim")
+if filereadable(s:kb_file)
+  execute 'source' fnameescape(s:kb_file)
 endif
 
 " <C-c> sends back to normal mode from insert

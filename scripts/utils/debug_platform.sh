@@ -5,22 +5,8 @@
 
 set -eu
 
-# Get script directory
-_get_script_dir() {
-  _script_path="$0"
-  _script_dir=""
-  case "${_script_path}" in
-  /*)
-    _script_dir=$(dirname "${_script_path}")
-    ;;
-  *)
-    _script_dir=$(cd "$(dirname "${_script_path}")" && pwd)
-    ;;
-  esac
-  printf '%s\n' "${_script_dir}"
-}
-
-_script_dir=$(_get_script_dir)
+# Get script directory (cd+pwd canonicalizes for absolute and relative $0)
+_script_dir=$(cd "$(dirname "$0")" && pwd)
 _project_root=$(cd "${_script_dir}/../.." && pwd)
 
 # Source platform detection module
@@ -89,15 +75,11 @@ _test_predicate() {
 
 _test_predicate "is_linux" "is_linux"
 _test_predicate "is_macos" "is_macos"
-_test_predicate "is_freebsd" "is_freebsd"
 _test_predicate "is_ubuntu" "is_ubuntu"
 _test_predicate "is_debian" "is_debian"
 _test_predicate "is_arch" "is_arch"
 _test_predicate "is_fedora" "is_fedora"
 _test_predicate "is_alpine" "is_alpine"
-_test_predicate "is_amd64" "is_amd64"
-_test_predicate "is_arm64" "is_arm64"
-_test_predicate "is_arm" "is_arm"
 
 printf '\n'
 

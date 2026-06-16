@@ -11,15 +11,8 @@ printf '🔗 Setting up symlinks...\n'
 DOTFILES_DIR="${HOME}/.dotfiles"
 
 # Resolve path to symlinks.conf relative to this script
-_script_path="$0"
-case "${_script_path}" in
-/*)
-  _script_dir=$(dirname "${_script_path}")
-  ;;
-*)
-  _script_dir=$(cd "$(dirname "${_script_path}")" && pwd)
-  ;;
-esac
+# (cd+pwd canonicalizes for both absolute and relative $0).
+_script_dir=$(cd "$(dirname "$0")" && pwd)
 _conf_file="${_script_dir}/symlinks.conf"
 
 if [ ! -f "${_conf_file}" ]; then
@@ -52,7 +45,7 @@ create_symlink() {
 while IFS= read -r _line || [ -n "${_line}" ]; do
   # Skip comments and blank lines
   case "${_line}" in
-    "#"*|"") continue ;;
+  "#"* | "") continue ;;
   esac
 
   _src_rel=$(printf '%s' "${_line}" | cut -d'|' -f1)
@@ -67,7 +60,7 @@ while IFS= read -r _line || [ -n "${_line}" ]; do
   else
     printf '⚠️  Skipping %s (source not found)\n' "${_src_rel}"
   fi
-done < "${_conf_file}"
+done <"${_conf_file}"
 
 # Create supporting directories
 mkdir -p "${HOME}/.zsh/completions"

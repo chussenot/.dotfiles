@@ -51,21 +51,8 @@ _print_warning() {
 }
 
 # Get the directory where this script is located
-_get_script_dir() {
-  _script_path="$0"
-  _script_dir=""
-  case "${_script_path}" in
-  /*)
-    _script_dir=$(dirname "${_script_path}")
-    ;;
-  *)
-    _script_dir=$(cd "$(dirname "${_script_path}")" && pwd)
-    ;;
-  esac
-  printf '%s\n' "${_script_dir}"
-}
-
-_script_dir=$(_get_script_dir)
+# cd+pwd canonicalizes for both absolute and relative $0.
+_script_dir=$(cd "$(dirname "$0")" && pwd)
 _project_root=$(cd "${_script_dir}/.." && pwd)
 _docker_dir="${_script_dir}/docker"
 

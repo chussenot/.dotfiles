@@ -35,20 +35,10 @@ for _arg in "$@"; do
   esac
 done
 
-# Get the directory where this script is located (POSIX-compatible)
+# Get the directory where this script is located (POSIX-compatible).
+# cd+pwd canonicalizes for both absolute and relative $0.
 get_script_dir() {
-  # POSIX-compatible way to get script directory
-  _script_path="$0"
-  _script_dir=""
-  case "${_script_path}" in
-  /*)
-    _script_dir=$(dirname "${_script_path}")
-    ;;
-  *)
-    _script_dir=$(cd "$(dirname "${_script_path}")" && pwd)
-    ;;
-  esac
-  printf '%s\n' "${_script_dir}"
+  cd "$(dirname "$0")" && pwd
 }
 
 SCRIPT_DIR=$(get_script_dir)
@@ -110,11 +100,8 @@ profile_includes() {
     *) return 1 ;;
     esac
     ;;
-  default)
-    # default: everything except full-only stages
-    return 0
-    ;;
-  full)
+  default | full)
+    # default and full: everything (no full-only stages exist yet)
     return 0
     ;;
   esac
@@ -180,16 +167,6 @@ check_required_tool() {
   return 0
 }
 
-# Check for optional tools (warn but continue)
-check_optional_tool() {
-  _tool="$1"
-  if ! command -v "${_tool}" >/dev/null 2>&1; then
-    print_warning "${_tool} not found. Some features may not work."
-    return 1
-  fi
-  return 0
-}
-
 print_status "🚀 Starting dotfiles installation... (profile: ${INSTALL_PROFILE})"
 print_status "Platform: OS=${PLATFORM_OS}, Distro=${PLATFORM_DISTRO}, Arch=${PLATFORM_ARCH}"
 
@@ -238,9 +215,9 @@ if [ "${_missing_required}" = "true" ]; then
   exit 1
 fi
 
-# Check for optional but recommended tools (don't exit on missing)
-check_optional_tool zsh || true
-check_optional_tool nvim || true
+# Check for optional but recommended tools (warn but don't exit on missing)
+check_required_tool zsh || true
+check_required_tool nvim || true
 
 # Create backup before proceeding
 print_status "💾 Creating backup of existing dotfiles..."
@@ -296,17 +273,6 @@ if [ ! -d "${HOME}/.antidote" ]; then
   fi
 else
   print_warning "Antidote Plugin Manager already installed"
-fi
-
-# Generate keybinding fragments from the single source of truth
-# (configs/keybindings.sh) before symlinking, so the zsh fragment exists.
-print_status "⌨️  Generating keybindings..."
-if [ -f "${SCRIPT_DIR}/scripts/setup/generate-keybindings.sh" ]; then
-  "${SCRIPT_DIR}/scripts/setup/generate-keybindings.sh" || {
-    print_warning "Keybinding generation encountered an error, continuing anyway..."
-  }
-else
-  print_warning "Keybinding generation script not found, skipping"
 fi
 
 # Setup symlinks
@@ -481,16 +447,6 @@ if command -v nvim >/dev/null 2>&1; then
   print_success "Neovim plugins installed"
 else
   print_warning "Neovim not found, skipping plugin installation"
-fi
-
-# Install chussenot zsh theme
-print_status "🎨 Installing chussenot zsh theme..."
-if [ -f "${SCRIPT_DIR}/scripts/setup/install-theme.sh" ]; then
-  "${SCRIPT_DIR}/scripts/setup/install-theme.sh" || {
-    print_warning "Theme installation encountered an error, continuing anyway..."
-  }
-else
-  print_warning "Theme installation script not found, skipping theme installation"
 fi
 
 # Run update function to refresh all installed tools and plugins
