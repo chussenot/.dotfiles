@@ -1,3 +1,8 @@
+---
+name: explain-config
+description: Explain what a configuration file does in plain language and flag what is safe to remove. Use when the user asks "what does this config do?", "explain my tmux config", or "what can I remove from .zshrc".
+---
+
 # explain-config
 
 Explain what a configuration file does in plain language.

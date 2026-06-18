@@ -1,3 +1,8 @@
+---
+name: diagnose
+description: Diagnose shell, terminal, and tooling issues in this dotfiles setup. Use when the user reports a problem like "my shell is slow", "colors are wrong", "completions do not work", "tmux keybindings broken", or "mise not loading".
+---
+
 # diagnose
 
 Diagnose shell, terminal, and tooling issues in this

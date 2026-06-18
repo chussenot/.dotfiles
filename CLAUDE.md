@@ -208,52 +208,35 @@ Users can customize without modifying tracked files:
 - `~/.zshrc.local` — Local Zsh overrides
 - `~/.vim/vimrc.local` — Local Vim overrides
 
-## AI Agent Skills
+## Project Skills
 
-This repository can be extended with [agent skills](https://github.com/vercel-labs/skills) — composable knowledge packs that teach coding agents (Claude Code, Cursor, Codex, etc.) domain-specific workflows.
+This repository ships native Claude Code [skills](https://docs.anthropic.com/en/docs/claude-code/skills) under `.claude/skills/`, tracked in git and auto-discovered by Claude Code (no install step). Each skill is a directory `<name>/SKILL.md` with YAML frontmatter (`name`, `description`) followed by the skill body. The directory name is the `/<command>`; Claude runs a skill automatically when a request matches its `description`, or the user can invoke `/<name>` explicitly.
 
-### Installing Skills for Claude Code
+The skills encode the recurring workflows in this repo:
 
-Skills are managed via the `skills` CLI (`npx skills`). Claude Code reads skills from:
+| Skill                                                       | Use when                                                          |
+| ----------------------------------------------------------- | ----------------------------------------------------------------- |
+| [`add-config`](.claude/skills/add-config/SKILL.md)          | Adding a new tool's config and registering its symlink.           |
+| [`add-mise-tool`](.claude/skills/add-mise-tool/SKILL.md)    | Adding, bumping, or removing a mise-managed tool.                 |
+| [`diagnose`](.claude/skills/diagnose/SKILL.md)              | Troubleshooting shell, terminal, or tooling problems.             |
+| [`dotfiles-doctor`](.claude/skills/dotfiles-doctor/SKILL.md) | Running a full health check on the setup.                        |
+| [`explain-config`](.claude/skills/explain-config/SKILL.md)  | Explaining a config file or what is safe to remove.               |
+| [`migrate-tool`](.claude/skills/migrate-tool/SKILL.md)      | Swapping one tool for another across the repo.                    |
+| [`new-script`](.claude/skills/new-script/SKILL.md)          | Creating a new POSIX-compliant script under `scripts/`.           |
+| [`posix-check`](.claude/skills/posix-check/SKILL.md)        | Validating POSIX compliance and running shellcheck.               |
+| [`run-tests`](.claude/skills/run-tests/SKILL.md)            | Running and interpreting the test and validation suite.           |
+| [`secure-audit`](.claude/skills/secure-audit/SKILL.md)      | Auditing for secrets and hardening opportunities.                 |
+| [`sync-platform`](.claude/skills/sync-platform/SKILL.md)    | Checking Linux ↔ macOS compatibility after a change.              |
 
-- **Project-level:** `.claude/skills/` (shared with team via git)
-- **Global:** `~/.claude/skills/` (personal, available across all projects)
+### Adding or modifying skills
 
-**From a local clone (recommended for self-hosted GitLab):**
+1. Create `.claude/skills/<name>/SKILL.md` with at least `name` and `description` frontmatter. The `description` drives auto-invocation — make it specific and include the phrases a user would actually type. Flat `.claude/skills/<name>.md` files are **not** discovered; the `<name>/SKILL.md` directory layout is required.
+2. Bundle supporting files (e.g. a `references/` subdirectory) alongside `SKILL.md` and link to them with relative paths; Claude loads them only when the skill needs them.
+3. `.gitignore` un-ignores `.claude/skills/**`, so new skills are shared with the team automatically.
 
-```sh
-# Install a specific skill globally for Claude Code
-npx skills add /path/to/skills-repo --skill otel-python -a claude-code -g
+### External skills
 
-# Install a specific skill into the current project
-npx skills add /path/to/skills-repo --skill otel-python -a claude-code
-```
-
-**From a remote git repository:**
-
-```sh
-# GitHub (owner/repo shorthand works)
-npx skills add owner/skills-repo --skill otel-python -a claude-code -g
-
-# Self-hosted GitLab (must use full URL — shorthand assumes GitHub)
-npx skills add https://gitlab.example.com/team/skills-repo.git --skill otel-python -a claude-code -g
-
-# SSH
-npx skills add git@gitlab.example.com:team/skills-repo.git --skill otel-python -a claude-code -g
-```
-
-**Important:** The `owner/repo` shorthand and `gitlab:owner/repo` prefix only resolve to `github.com` and `gitlab.com` respectively. For self-hosted instances, always use the full HTTPS or SSH URL.
-
-**Managing installed skills:**
-
-```sh
-npx skills list              # project skills
-npx skills list -g           # global skills
-npx skills list -a claude-code  # filter by agent
-npx skills check             # check for updates
-npx skills update            # update all skills
-npx skills remove otel-python   # remove a skill
-```
+Third-party skills can also be installed with the `skills` CLI — `npx skills add <repo> --skill <name> -a claude-code` (add `-g` for global). For self-hosted GitLab, use the full HTTPS/SSH URL; the `owner/repo` shorthand only resolves to GitHub.
 
 ## Project Subagents
 
@@ -282,7 +265,18 @@ Claude Code can dispatch a subagent automatically when its `description` matches
 
 ### Tracked vs. ignored
 
-The repo `.gitignore` un-ignores `.claude/agents/*.md` (overriding the global `~/.gitignore` rule of `.claude/*`). `.claude/settings.local.json` and the `.claude/skills` symlink remain ignored — `settings.local.json` is per-machine and `skills` is wired up by the existing project skills setup.
+The repo `.gitignore` un-ignores `.claude/agents/*.md`, `.claude/skills/**`, `.claude/hooks/*.sh`, and `.claude/settings.json` (overriding the global `~/.gitignore` rule of `.claude/*`) so the team shares the same agents, skills, hooks, and hook wiring. `.claude/settings.local.json` stays ignored (per-machine), as do `.claude/worktrees`.
+
+## Project Hooks
+
+Shared Claude Code hooks live in `.claude/settings.json` and delegate to small POSIX scripts in `.claude/hooks/` (referenced via `$CLAUDE_PROJECT_DIR`). Both are guarded with `command -v` and no-op when their dependencies (`jq`, `shellcheck`) are absent.
+
+| Hook                                                                       | Event                  | Effect                                                                                                       |
+| -------------------------------------------------------------------------- | ---------------------- | ----------------------------------------------------------------------------------------------------------- |
+| [`block-protected-files.sh`](.claude/hooks/block-protected-files.sh)       | `PreToolUse(Edit\|Write)` | Refuses edits to the protected fzf files (`configs/shell/fzf/fzf.bash`, `fzf.zsh`) — enforces Critical Rule 4. Fails open if `jq` is missing. |
+| [`shellcheck-edited.sh`](.claude/hooks/shellcheck-edited.sh)               | `PostToolUse(Edit\|Write)` | Runs `shellcheck --shell=sh` on an edited `*.sh` under `scripts/` or `lib/` and surfaces findings. Advisory only (never blocks). |
+
+To add a hook, drop a POSIX script in `.claude/hooks/`, keep it shellcheck-clean, guard every external tool with `command -v`, and wire it into `.claude/settings.json`.
 
 ## Cross-Platform Review Checklist
 

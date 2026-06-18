@@ -1,3 +1,8 @@
+---
+name: add-config
+description: Scaffold a new tool configuration into this dotfiles repository — create the config under configs/, register the symlink in scripts/setup/symlinks.conf, and verify it. Use when the user wants to add config for a new tool, e.g. "add starship config", "set up delta config", or "add lazygit config".
+---
+
 # add-config
 
 Scaffold a new tool configuration into this dotfiles repository.

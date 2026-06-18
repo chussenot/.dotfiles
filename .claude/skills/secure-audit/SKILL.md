@@ -1,3 +1,8 @@
+---
+name: secure-audit
+description: Audit dotfiles for security issues and hardening opportunities, scanning for secrets and unsafe patterns. Use when the user asks to check security, audit configs, or before sharing or publishing dotfiles.
+---
+
 # secure-audit
 
 Audit dotfiles for security issues and hardening opportunities.

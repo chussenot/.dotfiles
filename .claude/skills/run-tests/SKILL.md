@@ -1,3 +1,8 @@
+---
+name: run-tests
+description: Run and interpret the test and validation suite for this dotfiles repository. Use when the user wants to test changes ("run the tests", "validate my changes"), after modifying shell scripts, symlinks.conf, install.sh, or platform.sh, or when a CI workflow fails and they want to reproduce it locally.
+---
+
 # run-tests
 
 Run and interpret the test and validation suite for this

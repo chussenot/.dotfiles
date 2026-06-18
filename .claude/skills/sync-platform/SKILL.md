@@ -1,3 +1,8 @@
+---
+name: sync-platform
+description: Check cross-platform (Linux and macOS) compatibility after config or script changes. Use when the user edits a config and wants to verify it works on both platforms, or adds a tool or script that may have platform-specific behavior.
+---
+
 # sync-platform
 
 Check cross-platform compatibility after config changes.

@@ -1,3 +1,8 @@
+---
+name: new-script
+description: Create a new POSIX-compliant shell script for this dotfiles repository following the required platform-detection and shellcheck patterns. Use when the user wants to add a script to scripts/ (install, setup, or utility) or any .sh file outside configs/, or needs a refresher on the required script patterns.
+---
+
 # new-script
 
 Create a new POSIX-compliant shell script for this dotfiles repository.

@@ -1,3 +1,8 @@
+---
+name: posix-check
+description: Validate POSIX compliance of shell scripts in this dotfiles repository and run shellcheck. Use when the user asks to check POSIX compliance, lint shell scripts, or before committing changes to .sh files in scripts/ or lib/.
+---
+
 # posix-check
 
 Validate POSIX compliance of shell scripts in this

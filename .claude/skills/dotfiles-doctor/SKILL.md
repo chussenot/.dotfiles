@@ -1,3 +1,8 @@
+---
+name: dotfiles-doctor
+description: Run a comprehensive health check on the dotfiles setup and produce a status report. Use when the user asks "is everything working?", "check my setup", "dotfiles doctor", or wants a general health report.
+---
+
 # dotfiles-doctor
 
 Run a comprehensive health check on the dotfiles setup.

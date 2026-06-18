@@ -1,3 +1,8 @@
+---
+name: add-mise-tool
+description: Add, update, or remove a tool managed by mise in this dotfiles repository, including category placement and version pinning in configs/tools/mise/conf.d. Use when the user says "add ripgrep", "install lazygit", "add terraform", "bump node", asks which category a tool belongs in, or wants to remove a mise-managed tool.
+---
+
 # add-mise-tool
 
 Add, update, or remove tools managed by mise in this dotfiles repository.

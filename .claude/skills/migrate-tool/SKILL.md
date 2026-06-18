@@ -1,3 +1,8 @@
+---
+name: migrate-tool
+description: Replace one tool with another across the entire dotfiles setup. Use when the user wants to swap a tool for an alternative, e.g. nvm to mise, oh-my-zsh to antidote, vim to neovim, grep to ripgrep, or cat to bat.
+---
+
 # migrate-tool
 
 Replace one tool with another across the entire dotfiles setup.
