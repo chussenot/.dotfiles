@@ -1,0 +1,7 @@
+# ruff global config (user-level fallback)
+# Docs: https://docs.astral.sh/ruff/configuration/
+# A project's own ruff.toml / pyproject.toml takes precedence over this file.
+line-length = 100
+
+[lint]
+select = ["E", "F", "I"]

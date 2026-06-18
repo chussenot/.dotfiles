@@ -1,0 +1,6 @@
+# yt-dlp config
+# Docs: https://github.com/yt-dlp/yt-dlp#configuration
+# One command-line option per line. Lines starting with # are ignored.
+--ignore-errors
+--output "%(title)s [%(id)s].%(ext)s"
+--embed-metadata

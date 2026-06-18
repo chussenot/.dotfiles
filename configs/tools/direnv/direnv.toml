@@ -1,0 +1,6 @@
+# direnv config
+# Docs: https://direnv.net/man/direnv.toml.1.html
+
+[global]
+warn_timeout = "10s"
+hide_env_diff = true

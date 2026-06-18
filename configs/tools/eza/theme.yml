@@ -1,0 +1,8 @@
+# eza theme
+# Docs: https://github.com/eza-community/eza/blob/main/man/eza_colors-explanation.5.md
+# Themes:  https://github.com/eza-community/eza-themes
+# Partial themes are merged over eza's defaults; override only what you want.
+filekinds:
+  directory: { foreground: "Blue" }
+  symlink: { foreground: "Cyan" }
+  executable: { foreground: "Green" }

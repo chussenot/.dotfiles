@@ -1,0 +1,5 @@
+# lazygit config
+# Docs: https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md
+gui:
+  nerdFontsVersion: "3"
+  showFileTree: true

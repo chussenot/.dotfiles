@@ -1,0 +1,9 @@
+# bottom (btm) config
+# Docs: https://clementtsang.github.io/bottom/stable/configuration/config-file/
+# Only override what you need; anything omitted falls back to sensible defaults.
+
+[flags]
+# temperature_type = "c"   # "c" | "f" | "k"
+# mem_as_value = true      # show memory as values rather than percentages
+# tree = true              # group processes by parent/child tree
+# group_processes = true   # group processes with the same name

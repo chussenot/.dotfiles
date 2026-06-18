@@ -1,0 +1,7 @@
+# mypy global config (user-level fallback at ~/.config/mypy/config)
+# Docs: https://mypy.readthedocs.io/en/stable/config_file.html
+# A project's mypy.ini / pyproject.toml / setup.cfg takes precedence over this file.
+[mypy]
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true

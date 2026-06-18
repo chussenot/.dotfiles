@@ -1,0 +1,6 @@
+// gitui key bindings
+// Docs: https://github.com/gitui-org/gitui/blob/master/KEY_CONFIG.md
+// Empty () = built-in defaults. Add overrides like:
+//   move_left: Some(( code: Char('h'), modifiers: "" )),
+(
+)
