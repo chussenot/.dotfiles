@@ -214,19 +214,19 @@ This repository ships native Claude Code [skills](https://docs.anthropic.com/en/
 
 The skills encode the recurring workflows in this repo:
 
-| Skill                                                       | Use when                                                          |
-| ----------------------------------------------------------- | ----------------------------------------------------------------- |
-| [`add-config`](.claude/skills/add-config/SKILL.md)          | Adding a new tool's config and registering its symlink.           |
-| [`add-mise-tool`](.claude/skills/add-mise-tool/SKILL.md)    | Adding, bumping, or removing a mise-managed tool.                 |
-| [`diagnose`](.claude/skills/diagnose/SKILL.md)              | Troubleshooting shell, terminal, or tooling problems.             |
-| [`dotfiles-doctor`](.claude/skills/dotfiles-doctor/SKILL.md) | Running a full health check on the setup.                        |
-| [`explain-config`](.claude/skills/explain-config/SKILL.md)  | Explaining a config file or what is safe to remove.               |
-| [`migrate-tool`](.claude/skills/migrate-tool/SKILL.md)      | Swapping one tool for another across the repo.                    |
-| [`new-script`](.claude/skills/new-script/SKILL.md)          | Creating a new POSIX-compliant script under `scripts/`.           |
-| [`posix-check`](.claude/skills/posix-check/SKILL.md)        | Validating POSIX compliance and running shellcheck.               |
-| [`run-tests`](.claude/skills/run-tests/SKILL.md)            | Running and interpreting the test and validation suite.           |
-| [`secure-audit`](.claude/skills/secure-audit/SKILL.md)      | Auditing for secrets and hardening opportunities.                 |
-| [`sync-platform`](.claude/skills/sync-platform/SKILL.md)    | Checking Linux ↔ macOS compatibility after a change.              |
+| Skill                                                        | Use when                                                |
+| ------------------------------------------------------------ | ------------------------------------------------------- |
+| [`add-config`](.claude/skills/add-config/SKILL.md)           | Adding a new tool's config and registering its symlink. |
+| [`add-mise-tool`](.claude/skills/add-mise-tool/SKILL.md)     | Adding, bumping, or removing a mise-managed tool.       |
+| [`diagnose`](.claude/skills/diagnose/SKILL.md)               | Troubleshooting shell, terminal, or tooling problems.   |
+| [`dotfiles-doctor`](.claude/skills/dotfiles-doctor/SKILL.md) | Running a full health check on the setup.               |
+| [`explain-config`](.claude/skills/explain-config/SKILL.md)   | Explaining a config file or what is safe to remove.     |
+| [`migrate-tool`](.claude/skills/migrate-tool/SKILL.md)       | Swapping one tool for another across the repo.          |
+| [`new-script`](.claude/skills/new-script/SKILL.md)           | Creating a new POSIX-compliant script under `scripts/`. |
+| [`posix-check`](.claude/skills/posix-check/SKILL.md)         | Validating POSIX compliance and running shellcheck.     |
+| [`run-tests`](.claude/skills/run-tests/SKILL.md)             | Running and interpreting the test and validation suite. |
+| [`secure-audit`](.claude/skills/secure-audit/SKILL.md)       | Auditing for secrets and hardening opportunities.       |
+| [`sync-platform`](.claude/skills/sync-platform/SKILL.md)     | Checking Linux ↔ macOS compatibility after a change.    |
 
 ### Adding or modifying skills
 
@@ -269,12 +269,13 @@ The repo `.gitignore` un-ignores `.claude/agents/*.md`, `.claude/skills/**`, `.c
 
 ## Project Hooks
 
-Shared Claude Code hooks live in `.claude/settings.json` and delegate to small POSIX scripts in `.claude/hooks/` (referenced via `$CLAUDE_PROJECT_DIR`). Both are guarded with `command -v` and no-op when their dependencies (`jq`, `shellcheck`) are absent.
+Shared Claude Code hooks live in `.claude/settings.json` and delegate to small POSIX scripts in `.claude/hooks/` (referenced via `$CLAUDE_PROJECT_DIR`). Each is guarded with `command -v` and no-ops when its dependencies (`jq`, `shellcheck`, `prettier`) are absent.
 
-| Hook                                                                       | Event                  | Effect                                                                                                       |
-| -------------------------------------------------------------------------- | ---------------------- | ----------------------------------------------------------------------------------------------------------- |
-| [`block-protected-files.sh`](.claude/hooks/block-protected-files.sh)       | `PreToolUse(Edit\|Write)` | Refuses edits to the protected fzf files (`configs/shell/fzf/fzf.bash`, `fzf.zsh`) — enforces Critical Rule 4. Fails open if `jq` is missing. |
-| [`shellcheck-edited.sh`](.claude/hooks/shellcheck-edited.sh)               | `PostToolUse(Edit\|Write)` | Runs `shellcheck --shell=sh` on an edited `*.sh` under `scripts/` or `lib/` and surfaces findings. Advisory only (never blocks). |
+| Hook                                                                 | Event                      | Effect                                                                                                                                                                                                                                       |
+| -------------------------------------------------------------------- | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`block-protected-files.sh`](.claude/hooks/block-protected-files.sh) | `PreToolUse(Edit\|Write)`  | Refuses edits to the protected fzf files (`configs/shell/fzf/fzf.bash`, `fzf.zsh`) — enforces Critical Rule 4. Fails open if `jq` is missing.                                                                                                |
+| [`shellcheck-edited.sh`](.claude/hooks/shellcheck-edited.sh)         | `PostToolUse(Edit\|Write)` | Runs `shellcheck --shell=sh` on an edited `*.sh` under `scripts/` or `lib/` and surfaces findings. Advisory only (never blocks).                                                                                                             |
+| [`prettier-edited.sh`](.claude/hooks/prettier-edited.sh)             | `PostToolUse(Edit\|Write)` | Runs `prettier --write --ignore-unknown` on an edited file so prettier-supported files (`*.md`, `*.json`, `*.yml`, …) never hit the `hk` pre-push `prettier --check` gate unformatted. Skips files prettier has no parser for. Never blocks. |
 
 To add a hook, drop a POSIX script in `.claude/hooks/`, keep it shellcheck-clean, guard every external tool with `command -v`, and wire it into `.claude/settings.json`.
 
