@@ -1,0 +1,92 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mise tasks)",
+      "Bash(mise tasks:*)",
+      "Bash(mise run build)",
+      "Bash(mise run build-dev)",
+      "Bash(mise run test)",
+      "Bash(mise run lint)",
+      "Bash(mise run fmt)",
+      "Bash(mise run fmt-check)",
+      "Bash(mise run lint-md)",
+      "Bash(mise run check)",
+      "Bash(mise run cog-verify)",
+      "Bash(mise run changelog)",
+      "Bash(mise run run:*)",
+      "Bash(cargo build:*)",
+      "Bash(cargo check:*)",
+      "Bash(cargo test:*)",
+      "Bash(cargo clippy:*)",
+      "Bash(cargo fmt:*)",
+      "Bash(cargo metadata:*)",
+      "Bash(cargo tree:*)",
+      "Bash(cog verify:*)",
+      "Bash(cog check:*)",
+      "Bash(cog changelog:*)",
+      "Bash(./scripts/lint-md.sh)",
+      "Bash(./scripts/sync-cargo-version.sh:*)",
+      "Bash(./scripts/guard-commit-message.sh:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(git show:*)",
+      "Bash(git ls-files:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(rg:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(prek run:*)"
+    ],
+    "deny": [
+      "Bash(cog bump:*)",
+      "Bash(git push:*)",
+      "Bash(git push --force:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(rm -rf:*)",
+      "Bash(cargo publish:*)",
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./**/.env)",
+      "Read(./**/.env.*)"
+    ],
+    "defaultMode": "auto"
+  },
+  "model": "opus[1m]",
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "blv-infra@blv-claude-marketplace": true,
+    "claude-plugin-template@claude-plugin-template-marketplace": true,
+    "blv-oi@blv-claude-marketplace": true,
+    "ponytail@ponytail": true
+  },
+  "extraKnownMarketplaces": {
+    "blv-claude-marketplace": {
+      "source": {
+        "source": "git",
+        "url": "git@codefactory.believe.tech:blv_software/shared/agentic_ai/blv_claude_marketplace.git",
+        "ref": "feat/blv-infra"
+      }
+    },
+    "claude-plugin-template-marketplace": {
+      "source": {
+        "source": "directory",
+        "path": "/tmp/tmp.H6sINtW4dH"
+      }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
+    }
+  },
+  "effortLevel": "xhigh",
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "dark",
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true
+}
