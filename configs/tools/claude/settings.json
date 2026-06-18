@@ -43,7 +43,20 @@
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
     "ponytail@ponytail": true,
-    "rust-analyzer-lsp@claude-plugins-official": true
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "claude-code-setup@claude-plugins-official": true,
+    "huggingface-skills@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true,
+    "atlassian@claude-plugins-official": true,
+    "slack@claude-plugins-official": true,
+    "gitlab@claude-plugins-official": true,
+    "cloudflare@claude-plugins-official": true,
+    "remember@claude-plugins-official": true,
+    "terraform@claude-plugins-official": true,
+    "semgrep@claude-plugins-official": true,
+    "datadog@claude-plugins-official": true,
+    "aikido@claude-plugins-official": true,
+    "auth0@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "ponytail": {
