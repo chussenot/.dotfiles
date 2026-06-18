@@ -27,6 +27,10 @@ hooks {
             ["conventional-commit"] {
                 check = #"head -1 {{commit_msg_file}} | grep -qE '^(fix|feat|chore|docs|style|refactor|perf|test|build|ci|revert)(\(.+\))?!?: .+' || { echo 'Commit message must follow Conventional Commits: <type>[scope][!]: <description>'; exit 1; }"#
             }
+            // block AI attribution trailers/footers (matches the pattern, not the word "claude" — subjects mentioning the claude config stay allowed)
+            ["no-ai-attribution"] {
+                check = #"! grep -qiE 'co-authored-by:.*(claude|anthropic)|generated with \[?claude' {{commit_msg_file}} || { echo 'Remove AI attribution from commit message (Co-Authored-By / Generated-with Claude or Anthropic).'; exit 1; }"#
+            }
         }
     }
     // "fix" and "check" are special steps for `hk fix` and `hk check` commands
