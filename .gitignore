@@ -5,8 +5,8 @@
 !.markdownlint.json
 
 # Track Claude Code project-level subagents, skills, hooks, shared settings,
-# and CLAUDE.md. These overrides also defeat the global ~/.gitignore rules of
-# `.claude/*` and `CLAUDE.md`.
+# CLAUDE.md, and the tool-agnostic AGENTS.md entrypoint. These overrides also
+# defeat the global ~/.gitignore rules of `.claude/*`, `CLAUDE.md`, `AGENTS.md`.
 !.claude/
 !.claude/agents/
 !.claude/agents/*.md
@@ -17,6 +17,7 @@
 !.claude/settings.json
 .claude/settings.local.json
 !CLAUDE.md
+!AGENTS.md
 
 specs/*
 .claude/worktrees
