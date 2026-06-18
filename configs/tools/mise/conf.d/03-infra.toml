@@ -2,7 +2,7 @@
 [tools]
 
 # --- Cloud CLIs ---
-awscli = { version = "2.35.6", symlink_bins = "true" }
+awscli = { version = "2.35.7", symlink_bins = "true" }
 gcloud = "573.0.0"
 vault = "2.0.2"
 
