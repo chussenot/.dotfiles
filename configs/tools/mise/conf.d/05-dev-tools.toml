@@ -65,3 +65,6 @@ websocat = "1.14.1"
 # --- Secrets management ---
 gopass = "1.16.1"
 sops = "3.13.1"
+
+# Artificial intelligence tools
+"npm:ccusage" = "20.0.14"

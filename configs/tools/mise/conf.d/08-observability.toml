@@ -2,3 +2,4 @@
 [tools]
 "go:github.com/CtrlSpice/otel-desktop-viewer" = "0.3.0"
 "go:github.com/equinix-labs/otel-cli" = "0.4.5"
+"npm:@tsuga/cli" = "latest"
