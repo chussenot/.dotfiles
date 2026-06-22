@@ -8,7 +8,7 @@ eza = "0.23.4"
 fd = "10.4.2"
 glow = "2.1.2"
 hyperfine = "1.20.0"
-jq = "1.8.1"
+jq = "1.8.2"
 just = "1.53.0"
 neovim = "0.12.3"
 pdm = "2.27.0"
@@ -17,13 +17,13 @@ prek = "0.4.5"
 ripgrep = "15.1.0"
 tree-sitter = "0.26.9"
 usage = "3.5.2"
-uv = "0.11.21"
+uv = "0.11.23"
 watchexec = "2.5.1"
 websocat = "1.14.1"
 
 # --- Cargo-installed tools ---
 "cargo:asciinema" = "3.2.0"
-"cargo:bottom" = "0.12.3" # use btm
+"cargo:bottom" = "0.14.0"
 "cargo:du-dust" = "1.2.4"
 "cargo:htmlq" = "0.4.0"
 "cargo:moccasin" = "0.1.3" # RSS reader
@@ -32,7 +32,7 @@ websocat = "1.14.1"
 "cargo:spacer" = "0.5.0"
 "cargo:tealdeer" = "1.8.1"
 "cargo:viu" = "1.6.1"
-"cargo:xh" = "0.25.3"
+"cargo:xh" = "0.26.1"
 "cargo:xsv" = "0.13.0"
 
 # --- Go-installed tools ---
@@ -59,7 +59,7 @@ websocat = "1.14.1"
 # --- Parquet tools (mixed sources) ---
 "cargo:parqeye" = "0.0.2"
 "cargo:pqrs" = "0.3.2"
-"go:github.com/hangxie/parquet-tools" = "1.50.0"
+"go:github.com/hangxie/parquet-tools" = "1.51.0"
 # "pipx:parquet-cli" = "1.3"
 
 # --- Secrets management ---
